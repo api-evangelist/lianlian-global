@@ -1,0 +1,249 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Beneficiaries API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Beneficiaries
+paths:
+  /beneficiaries/{beneficiary_id}:
+    parameters:
+    - schema:
+        type: string
+      name: beneficiary_id
+      in: path
+      required: true
+    get:
+      summary: Get a beneficiary by ID
+      tags:
+      - Beneficiaries
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/BeneficiaryResponse.yaml
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: ''
+      description: 根据收款人唯一ID获取收款人详情信息。
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+    delete:
+      summary: Delete a beneficiary
+      operationId: delede_beneficiary
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                    x-stoplight:
+                      id: rxwmctu9xnhf8
+                    description: 删除结果
+                  beneficiary_id:
+                    type: string
+                    x-stoplight:
+                      id: 9ehe79x3fhzcy
+                    description: "收款人ID\r\n\r\n"
+                    maxLength: 64
+                required:
+                - result
+                - beneficiary_id
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nBENEFICIARY_NOT_EXISTS|beneficiary not exists"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      tags:
+      - Beneficiaries
+      description: "删除已经存在的收款人。\r\n- 业务字段（beneficiary_id）相同时，不支持幂等"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+    post:
+      summary: Update a beneficiary
+      operationId: update_beneficiary
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/BeneficiaryUpdateResponse.yaml
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nBENEFICIARY_ATTACHMENTS_EXCEEDS_LIMIT|beneficiary attachments exceeds limit\r\nCHARACTER_INVALID|character_invalid\r\nSTATUS_NOT_SUPPORT|status not support\r\nBENEFICIARY_NOT_EXISTS|beneficiary not exists"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/BeneficiaryUpdateRequest.yaml
+      tags:
+      - Beneficiaries
+      description: "仅允许状态为失败的收款人，进行信息更新。\r\n- 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一beneficiary_id并发提交，会返回REQUEST_CONFLICT\r\n提供了根据beneficiary_id查询的接口获取最新状态"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+  /beneficiaries:
+    parameters: []
+    get:
+      summary: Get list of beneficiaries
+      operationId: listof_beneficiary
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: oh4goruzkhskh
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: 2i5dlqz3akmpu
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: v9t08qudb8bdr
+                    description: 总页数
+                  page_list:
+                    type: array
+                    x-stoplight:
+                      id: f7qky73siifc6
+                    items:
+                      $ref: ../models/BeneficiaryListResponse.yaml
+                      x-stoplight:
+                        id: 8suuyerj6uw9l
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      requestBody:
+        content: {}
+        description: ''
+      description: 获取收款人列表信息。
+      tags:
+      - Beneficiaries
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      - schema:
+          type: string
+        in: query
+        name: account_currency
+        description: 收款银行账户币种
+      - schema:
+          type: string
+        in: query
+        name: purpose
+        description: 交易类型
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: 收款人状态
+      - schema:
+          type: number
+        in: query
+        name: start_time
+        description: 开始时间，13位时间戳毫秒
+      - schema:
+          type: string
+        in: query
+        description: 结束时间，13位时间戳毫秒
+        name: end_time
+      - schema:
+          type: string
+        in: query
+        name: page
+        description: 页码，默认值为1
+      - schema:
+          type: string
+        in: query
+        name: page_size
+        description: 每页查询数量，默认值为20
+      - schema:
+          type: string
+        in: query
+        name: beneficiary_account_type
+        description: 收款账户类型，BANK_ACCOUNT 分发到银行账户、LL_ACCOUNT 分发到连连内部户
+      - schema:
+          type: string
+        in: query
+        name: request_id
+        description: 客户端请求ID
+      x-stoplight:
+        id: req12lu5iqhc7
+    post:
+      summary: Create a beneficiary
+      operationId: create_beneficiary
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/BeneficiaryCreateResponse.yaml
+              examples: {}
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nBENEFICIARY_ATTACHMENTS_EXCEEDS_LIMIT|beneficiary attachments exceeds limit\r\nCHARACTER_INVALID|character_invalid\r\nUSER_NOT_EXIST|user not exist\r\nUSER_KYC_FAILED|user kyc failed\r\nREQUEST_ID_NOT_UNIQUE|request id not unique\r\nWITHDRAW_ACCOUNT_INVALID|withdraw account invalid\r\nBENEFICIARY_ALREADY_EXISTS|beneficiary already exists"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/BeneficiaryRequest .yaml
+            examples: {}
+        description: ''
+      description: "创建一个收款人。\r\n- request_id相同，业务字段相同时，幂等返回\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段相同时，会返回BENEFICIARY_ALREADY_EXISTS\r\n对于接口超时情况，可使用原报文重试或使用request_id调用Get list of beneficiaries收款人列表查询接口。"
+      tags:
+      - Beneficiaries
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization

@@ -1,0 +1,305 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Checkout API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Checkout
+paths:
+  /accept_payments/checkout/sessions:
+    parameters: []
+    post:
+      summary: Create a checkout session
+      tags:
+      - Checkout
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid.\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n EXPIRES_TIME_INVALID|The expires time is not supported.\r\n MERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\n MERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\r\n MERCHANT_ACCT_CUR_ERROR|The merchant does not support this currency.\r\n MERCHANT_ACCT_NOT_EXIST|The merchant currency account doesn't exist.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n MERCHANT_ACCT_BIZ_INVALID|The merchant bizType is invalid.\r\n MERCHANT_PAY_METHOD_NOT_EXIST|Payment method not exist.\r\n MERCHANT_PAY_METHOD_INVALID|Payment method not supported.\r\n ORDER_EXIST_AND_EXPIRED|The order exists but has expired, please change the order information and create again.\r\n CUR_SUPPORT_ERROR|The currency is not supported.\r\n ORDER_AMOUNT_ERROR|Currency order amount is incorrect.\r\n ORDER_AMOUNT_LIMIT_ERROR|The amount exceeds the limit for that currency.\r\n MERCHANT_CHARGE_COLLECT_WAY_BLANK|The charge collect way is blank.\r\n MERCHANT_CHARGE_COLLECT_WAY_INVALID|The charge collect way not supported.\r\n REQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\n CREATE_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_ALREADY_EXISTS|Payment already exists.\r\n PAYMENT_CLOSED|Payment has been closed.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n SUBMIT_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_NOT_EXIST|Payment does not exist.\r\n PAYMENT_REPEAT|Payment has already been successfully paid.\r\n PAYMENT_FAILED|Payment unsuccessful.\r\n PAYMENT_ANOMALY|Payment anomaly.\r\n PAYMENT_PROCESSED|Payment being processed.\r\n REQUEST_CONFLICT|The request cannot be processed as another request is being processed."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '500':
+          description: "code | message \n---------|----------\n INTERNAL_SERVER_ERROR|An internal server error has occurred.\n"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-checkout-sessions
+      x-stoplight:
+        id: w75rld3e64kjt
+      description: "## 功能说明\r\nCheckout是一种预先构建的付款形式，企业可以使用Checkout在网站上完成收款。Checkout Session提供一个支付URL，将客户重定向到支付页面完成付款。通过该接口创建Checkout Session获取收银台的支付URL。\r\n## 防重和幂等说明\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，返回最新的支付收银台url；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付收银台url。"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - amount
+              - currency
+              - customer
+              - product_info
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: ep4ih9igtf051
+                  description: 商户系统中该笔订单的唯一编码
+                  maxLength: 64
+                  minLength: 1
+                  example: 4e95132208654df990eb9b34edfefdca
+                amount:
+                  type: string
+                  x-stoplight:
+                    id: easgu7yu5jlmp
+                  description: 订单金额，商户需要用户支付的订单金额，单位元
+                currency:
+                  type: string
+                  x-stoplight:
+                    id: o9kw04yyi0x6a
+                  description: 订单币种，[ISO 4217](https://www.iso.org/iso-4217-currency-codes.html)三位字母货币代码，商户需要用户支付的订单币种
+                customer:
+                  type: object
+                  x-stoplight:
+                    id: yq6oqxnlqg0zh
+                  required:
+                  - identifier
+                  properties:
+                    identifier:
+                      type: string
+                      x-stoplight:
+                        id: iqbj8fg8ul2z4
+                      description: 用户在商户系统中的唯一编号
+                      minLength: 1
+                      maxLength: 64
+                    name:
+                      type: string
+                      x-stoplight:
+                        id: co6xm504dtdhz
+                      description: 付款人的姓名或公司名称
+                      minLength: 1
+                      maxLength: 64
+                    identification_type:
+                      x-stoplight:
+                        id: e4mtzadoqlllk
+                      enum:
+                      - ID_CARD
+                      - UNIFIED_SOCIAL_CREDIT_ID
+                      description: "付款人的证件类型，payment_method为CN_FAST_PAYMENT_CREDIT_CARD或CN_FAST_PAYMENT_DEBIT_CARD时，identification_type必须填ID_CARD\r\n枚举值|说明\r\n----|----\r\nID_CARD|中国大陆居民身份证\r\nUNIFIED_SOCIAL_CREDIT_ID|中国大陆企业统一社会信用代码证"
+                    id_number:
+                      type: string
+                      x-stoplight:
+                        id: chgwg92je8j2p
+                      description: 付款人的证件号码，18位有效的个人身份证号码或统一社会信用代码证
+                      minLength: 1
+                      maxLength: 24
+                payment_method:
+                  x-stoplight:
+                    id: 1wv4y8l6r4bk0
+                  description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|CNY 快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|CNY 快捷支付借记卡\r\nCNY_COMPANY_BANK_CARD|CNY 企业网银\r\n"
+                  enum:
+                  - CN_FAST_PAYMENT_CREDIT_CARD
+                  - CN_FAST_PAYMENT_DEBIT_CARD
+                  - CNY_COMPANY_BANK_CARD
+                description:
+                  type: string
+                  x-stoplight:
+                    id: 2dq2vv6iv2lf3
+                  description: 订单的描述信息，会显示在收银台页面。默认值：取product_info中的第一条商品名称
+                  maxLength: 256
+                  example: 支付广告年费
+                expires_time:
+                  type: number
+                  x-stoplight:
+                    id: 33pna3yakcw5m
+                  description: 订单的过期时间，13位时间戳毫秒。默认值：从订单创建时间起，7天后过期。超过过期时间，支付状态将变为`EXPIRED`
+                  maximum: 13
+                  minimum: 13
+                  example: 1712635467276
+                product_info:
+                  type: array
+                  x-stoplight:
+                    id: 93bw6rd1pzhfb
+                  description: 商品信息，最多15条商品明细
+                  maxItems: 15
+                  items:
+                    x-stoplight:
+                      id: g2dfm9rlcexds
+                    type: object
+                    required:
+                    - product_name
+                    - quantity
+                    properties:
+                      product_name:
+                        type: string
+                        x-stoplight:
+                          id: e048inpng5ibc
+                        description: 商品名称
+                        maxLength: 256
+                      quantity:
+                        type: integer
+                        x-stoplight:
+                          id: o7nyce1fehpgc
+                        description: 商品数量
+                      category:
+                        type: string
+                        x-stoplight:
+                          id: 0q0qkpnl8f3hd
+                        description: 商品类目
+                        maxLength: 64
+                return_url:
+                  type: string
+                  x-stoplight:
+                    id: 912x2rtgxu3io
+                  description: 用户在收银台页面完成付款或取消支付时，重定向跳回的地址。
+                  maxLength: 255
+                metadata:
+                  type: object
+                  x-stoplight:
+                    id: aolu8xgebax15
+                  description: 商户自定义的数据，可以key-value pairs 的方式设置值。转换为String长度<= 1024 characters
+                additional_info:
+                  type: object
+                  x-stoplight:
+                    id: bg5om60cj6cf0
+                  description: 扩展字段，附加信息
+components:
+  schemas:
+    Payment:
+      title: Payment
+      x-stoplight:
+        id: 0j3wys1kil3ym
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: dpu3lfw0yvobq
+          description: LianLian GLobal系统的唯一编号
+        request_id:
+          type: string
+          x-stoplight:
+            id: cbruq0anfc7my
+          description: 商户系统中该笔订单的唯一编码
+        amount:
+          type: string
+          x-stoplight:
+            id: 1yr0qexvyvwda
+          description: 订单金额，商户需要用户支付的订单金额，单位元
+        currency:
+          type: string
+          x-stoplight:
+            id: 40j3jpzjiklmp
+          description: 订单币种，ISO 4217三位字母货币代码，商户需要用户支付的订单币种
+        status:
+          x-stoplight:
+            id: luwt1l1uh3d4n
+          enum:
+          - CREATED
+          - PROCESSING
+          - SUCCEEDED
+          - CANCELED
+          - EXPIRED
+          - REQUIRES_ACTION
+          description: "支付状态\r\n枚举值|说明\r\n----|----\r\nCREATED|已创建，等待支付\r\nPROCESSING|支付中\r\nREQUIRES_ACTION|待验证码验证支付\r\nSUCCEEDED|成功\r\nCANCELED|已取消\r\nEXPIRED|过期"
+        payment_method:
+          x-stoplight:
+            id: al4uj0pwcgu9j
+          enum:
+          - CN_FAST_PAYMENT_CREDIT_CARD
+          - CN_FAST_PAYMENT_DEBIT_CARD
+          - CNY_COMPANY_BANK_CARD
+          description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|银行卡快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|银行卡快捷支付借记卡\r\nCNY_COMPANY_BANK_CARD|CNY 企业网银\r\n"
+        payment_currency:
+          type: string
+          x-stoplight:
+            id: eg7xw8otcawb4
+          description: 支付币种，ISO 4217三位字母货币代码。
+        payment_amount:
+          type: string
+          x-stoplight:
+            id: j9m8mpafqk950
+          description: 支付金额
+        fx:
+          type: object
+          x-stoplight:
+            id: tenwszm7o2on9
+          description: payment_currency与currency不相同时，对应的汇率
+          properties:
+            rate:
+              type: string
+              x-stoplight:
+                id: 8p6zd6gmwyp11
+              description: 汇率
+            currency_pair:
+              type: string
+              x-stoplight:
+                id: hbx3600outjd4
+              description: 币种对
+            base_currency:
+              type: string
+              x-stoplight:
+                id: 86tklh88pstqy
+              description: 基础币种
+        payment_time:
+          type: number
+          x-stoplight:
+            id: s7r8h0vsyws5i
+          description: 支付完成时间，13位时间戳
+        accounting_date:
+          type: string
+          x-stoplight:
+            id: h02odxwgk62wn
+          description: 记账日期，格式yyyyMMdd，例如20240308
+        metadata:
+          type: object
+          x-stoplight:
+            id: mv18ha5grzh0l
+          description: 商户自定义的数据，可以key-value pairs 的方式设置值。
+        url:
+          type: string
+          x-stoplight:
+            id: c39h6umfg38b0
+          description: 支付收银台的url地址（Checkout URL），可以将用户重定向到该url地址，打开收银台页面。url在40分钟内有效，超过40分钟后需要重新获取。
+        create_time:
+          type: number
+          x-stoplight:
+            id: t5yzt9ife9xgz
+          description: 创建时间，13位时间戳
+        update_time:
+          type: number
+          x-stoplight:
+            id: r2h9170uhq8s1
+          description: 更新时间，13位时间戳
+        business_type:
+          type: string
+          x-stoplight:
+            id: io6j2ri2cd9nb
+          description: "业务类型\r\n枚举 | 说明 \r\n---------|----------\r\nYICAIFU|易采付"

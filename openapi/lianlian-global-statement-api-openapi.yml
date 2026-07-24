@@ -1,0 +1,124 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Statement API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Statement
+paths:
+  /v1/statement/transactions:
+    parameters: []
+    get:
+      summary: 账户资金流水查询
+      tags:
+      - Statement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Statement'
+                  page_size:
+                    type: integer
+                    description: 每页条数
+                  page:
+                    description: 当前页码
+                    type: integer
+                  total_count:
+                    type: integer
+                    description: 总条数
+        '400':
+          description: Bad Request
+      operationId: get-v1-statement
+      description: ''
+      parameters:
+      - schema:
+          type: string
+          maxLength: 32
+        in: query
+        name: account_id
+        description: 账户号
+      - schema:
+          type: string
+        in: query
+        name: begin_time
+        description: 开始时间，10位 秒级时间戳
+      - schema:
+          type: string
+        in: query
+        name: end_time
+        description: 结束时间，10位 秒级时间戳
+      - schema:
+          type: integer
+          maximum: 8
+        in: query
+        name: page
+        description: 页码，默认值为1
+      - schema:
+          type: integer
+          maximum: 8
+        in: query
+        name: page_size
+        description: 每页查询数量，默认值20
+components:
+  schemas:
+    Statement:
+      title: Statement
+      x-stoplight:
+        id: lvtk50rja7ekx
+      type: object
+      description: 账户流水
+      properties:
+        bill_number:
+          type: string
+          description: 账单流水
+          maxLength: 32
+        fund_direction:
+          type: string
+          description: '资金流向 '
+          enum:
+          - CREDIT
+          - DEBIT
+          maxLength: 8
+        currency:
+          type: string
+          maxLength: 3
+        transaction_amount:
+          type: string
+          description: 交易金额
+          maxLength: 16
+        balance:
+          type: string
+          description: 可用余额
+          maxLength: 16
+        account_date:
+          type: string
+          description: 账务日期，YYYYMMDD
+        remark:
+          type: string
+          description: 备注
+          maxLength: 512
+        transaction_time:
+          type: string
+          description: 交易时间，10位秒级时间戳
+      required:
+      - bill_number
+      - fund_direction
+      - currency
+      - transaction_amount
+      - balance
+      - account_date
+      - transaction_time

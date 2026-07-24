@@ -1,0 +1,225 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Payers API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Payers
+paths:
+  /payers:
+    parameters: []
+    post:
+      summary: Create a  payer
+      operationId: post-payers-create
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Payersponse.yaml
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_IS_EXIST|payer is exist\r\nPAYER_APPLY_FAILED|payer create failed"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      security:
+      - 客户端凭据授权: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/PayerRequest1.yaml
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      tags:
+      - Payers
+      description: "创建付款人\r\n- request_id相同，业务字段相同时，幂等返回\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段相同时，会返回PAYER_IS_EXIST\r\n对于接口超时情况，可使用原报文重试或使用request_id调用收款人列表查询接口。"
+    get:
+      summary: Get list of payers
+      tags:
+      - Payers
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: hpxtilfcjncyr
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: gw2hnntx9ae2g
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: k1sls3jfo7ie1
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: a9tefa4oytbwr
+                    description: 总页数
+                  page_list:
+                    type: array
+                    x-stoplight:
+                      id: ctwzb2gjz9otk
+                    items:
+                      $ref: ../models/Payersponse.yaml
+                      x-stoplight:
+                        id: 7ouk3s7b0pu14
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-payers
+      x-stoplight:
+        id: s89ltdc14i5oj
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: query
+        name: start_time
+        description: 开始时间，13位时间戳毫秒
+      - schema:
+          type: string
+        in: query
+        name: end_time
+        description: 结束时间，13位时间戳毫秒
+      - schema:
+          type: string
+        in: query
+        name: page
+        description: 页码，默认值为1
+      - schema:
+          type: string
+        in: query
+        name: page_size
+        description: 每页查询数量，默认值为20
+      - schema:
+          type: string
+        in: query
+        name: request_id
+        description: 客户端请求ID
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: 付款人状态
+  /payers/{payer_id}:
+    parameters:
+    - schema:
+        type: string
+      name: payer_id
+      in: path
+      required: true
+    get:
+      summary: Get a payer by ID
+      tags:
+      - Payers
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Payersponse.yaml
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing. \r\nPAYER_QUERY_FAILED|payer get failed"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-payers-payer_id
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content: {}
+      description: 查询付款人信息
+    post:
+      summary: Update a payer
+      operationId: post-payers-payer_id
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/PayerUpdateResponse.yaml
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_UPDATE_FAILED|payer update failed"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      tags:
+      - Payers
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/PayerUpdateRequest.yaml
+      description: "仅允许状态为失败的付款人，进行信息更新。\r\n- 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一payer_id并发提交，会返回REQUEST_CONFLICT\r\n提供根据payer_id查询的接口获取最新状态"
+    delete:
+      summary: Delete a payer
+      operationId: delete-payers-payer_id
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payer_id:
+                    type: string
+                    maxLength: 64
+                    description: 付款人ID
+                  result:
+                    type: boolean
+                    description: 删除结果
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_DELETE_FAILED|payer delete failed"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      tags:
+      - Payers
+      description: "删除付款人\r\n- 业务字段（payer_id）相同时，不支持幂等"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization

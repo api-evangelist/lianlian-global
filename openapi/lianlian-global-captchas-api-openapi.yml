@@ -1,0 +1,57 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Captchas API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Captchas
+paths:
+  /captchas/phone:
+    parameters: []
+    post:
+      summary: Send a captcha code to phone
+      tags:
+      - Captchas
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  phone:
+                    type: string
+                    x-stoplight:
+                      id: ouotqu6oga4kp
+                    description: 手机
+                  country_code:
+                    type: string
+                    x-stoplight:
+                      id: 76orkbzxnm7h8
+                    description: 手机区号，[ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)两位字母国家（地区）代码
+        '400':
+          description: "code |message | param\n---------|----------|---------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. | e.g: country_code\n PARAM_ERROR | A parameter value is not valid. |\n CAPTCHA_INTERVAL_LIMIT | The captcha sending interval is less than 1 minute. |\n CAPTCHA_INTERVAL_TOTAL_LIMIT | Exceeded the number of verification code sends per user. |\n SMS_TEMPLATE_NOT_FOUND | The sms template does not exist. |\n REMOTE_INVOKE_FAIL | A system or application error occurred. |"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-accounts-captchas-phone
+      x-stoplight:
+        id: ovjk3b1oma0hi
+      security:
+      - 客户端凭据授权: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/AccountsPhoneCaptcha.yaml
+      description: 目前仅允许授权人身份为法人。当法人的证件类型为身份证时，会取法人的手机、全名、证件号进行三要素验证。
+      x-internal: false

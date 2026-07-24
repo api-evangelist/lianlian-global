@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Ew Transactions API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Ew Transactions
+paths:
+  /ew-transactions:
+    parameters: []
+    get:
+      summary: Get list of Transactions
+      tags:
+      - Ew Transactions
+      responses:
+        '200':
+          description: Data list is ordered by create_time desc.
+          content:
+            application/json:
+              schema:
+                $ref: ./CommonModel.json#/components/schemas/get-transaction-list
+              examples:
+                example-1:
+                  value:
+                    data:
+                    - id: string
+                      request_id: string
+                      amount: string
+                      currency: string
+                      name: string
+                      type: PAYOUT
+                      user_id: string
+                      status: PROCESSING
+                      create_time: string
+                    total_count: 1
+            application/xml:
+              schema:
+                $ref: ''
+        '404':
+          description: Transaction Not Found
+      operationId: get-transactions-list
+      description: 'Get list of Transactions.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page:
+                  description: The query page number.
+                  type: integer
+                page_size:
+                  description: The default value is 20. A maximum of 100 data items can be displayed on a page.
+                  type: integer
+                search:
+                  type: string
+                  description: Search by name, Transaction ID or Business Order ID.
+                start_time:
+                  type: string
+                  description: Transaction object creation period start time. Measured in seconds since the Unix epoch.
+                status:
+                  type: string
+                  description: Status of transaction.
+                  enum:
+                  - PENDING
+                  - PROCESSING
+                  - COMPLETED
+                  - CANCELED
+                  - REFUNDING
+                  - REFUNDED
+                  - FAILED
+                type:
+                  type: string
+                  enum:
+                  - PAYOUT
+                  - RECEIPT
+                  - CONVERSION
+                  - WITHDRAWAL
+                  - CARD_PAYMENT
+                  - ADD_FUNDS
+                  - RECEIVING
+                  - REFUND
+                  description: Type of transaction.
+                currency:
+                  type: string
+                  description: 'Three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code. '
+              required:
+              - page
+              - page_size
+            examples: {}
+        description: ''

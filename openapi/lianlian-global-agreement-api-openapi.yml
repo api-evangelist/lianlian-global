@@ -1,0 +1,189 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Agreement API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Agreement
+paths:
+  /accept_payments/agreements:
+    parameters: []
+    get:
+      summary: Get list of agreements
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: kki1qd0pte39r
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: xssvye5my03bb
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: ky5da178cajp6
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: gz7kag8curfig
+                    description: 总页数
+                  page_list:
+                    type: array
+                    x-stoplight:
+                      id: vcxako4ioa7v1
+                    items:
+                      $ref: '#/components/schemas/Agreement'
+                      x-stoplight:
+                        id: 5cjx77iskbd66
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-accept_payments-agreement
+      x-stoplight:
+        id: ly03gf9apeu75
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: query
+        name: customer_identifier
+        description: 用户在商户系统中的唯一编号
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: id
+        description: 授权协议的ID
+      - schema:
+          type: string
+        in: query
+        name: page
+        description: 页码，默认值为1
+      - schema:
+          type: string
+        in: query
+        name: page_size
+        description: 每页条数，默认值为20
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: 协议的状态
+      requestBody:
+        content: {}
+      tags:
+      - Agreement
+  /accept_payments/agreements/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: 授权协议的ID
+    get:
+      summary: Get a agreement by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agreement'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-accept_payments-agreement-agreement_id
+      x-stoplight:
+        id: vel9tarnkj1oj
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      tags:
+      - Agreement
+components:
+  schemas:
+    Agreement:
+      title: Agreement
+      x-stoplight:
+        id: 8fycyvasfltcw
+      type: object
+      description: 支付授权协议
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: qtluyu3z7h4su
+          description: LianLian GLobal系统授权协议的唯一编号
+        customer:
+          type: object
+          x-stoplight:
+            id: dgg6vt73h281x
+          properties:
+            identifier:
+              type: string
+              x-stoplight:
+                id: 8qj94z5kigw7q
+              description: 用户在商户系统中的唯一编号
+        status:
+          type: string
+          x-stoplight:
+            id: qaggzldrbngt1
+          description: "协议的状态\r\n枚举值|说明\r\n----|----\r\nACTIVE|正常\r\nCANCELED|已取消（已解除）\r\nEXPIRED|已过期"
+        create_time:
+          type: number
+          x-stoplight:
+            id: 4ofgegz6x2d3b
+          description: 创建时间，13位时间戳
+        update_time:
+          type: number
+          x-stoplight:
+            id: g6yy7u3kqdjax
+          description: 更新时间，13位时间戳
+        expires_time:
+          type: number
+          x-stoplight:
+            id: oxuhzmdh6q21r
+          description: 协议的到期时间，13位时间戳毫秒。

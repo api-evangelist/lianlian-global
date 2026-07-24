@@ -1,0 +1,115 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Card Payouts API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Card Payouts
+paths:
+  /card-payouts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Transaction ID
+    get:
+      summary: Get Card Payout Info by ID
+      tags:
+      - Card Payouts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardPayout'
+              examples: {}
+        '404':
+          description: User Not Found
+      operationId: get-cardPayout-ID
+      description: Retrieve the information of the Card Payout with the matching transaction ID.
+components:
+  schemas:
+    CardPayout:
+      type: object
+      x-tags:
+      - Models
+      x-examples:
+        example-1:
+          transaction_currency: USD
+          transaction_amount: '1.00'
+          settle_currency: USD
+          settle_amount: '1.00'
+          pay_currency: USD
+          pay_amount: '1.00'
+          fee_currency: USD
+          fee_amount: '0.01'
+          card_no: 1233 1233 1233 9342
+          transaction_id: '8140136728914877865984'
+          merchant_category_code: '5734'
+          merchant_name_location: AMAZON
+          status: PROCESSING
+          create_time: 1632362402000
+      title: CardPayout
+      properties:
+        id:
+          type: string
+          description: Unique ID created by the LianLian Global.
+        business_order_id:
+          type: string
+          description: Business Order ID.
+        transaction_currency:
+          type: string
+          description: The transaction currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).
+        transaction_amount:
+          type: string
+          description: The transaction amount, main currency unit, rounded up to 2 decimal places.
+        settle_currency:
+          type: string
+          description: The settled currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).
+        settle_amount:
+          type: string
+          description: The settled amount, main currency unit, rounded up to 2 decimal places.
+        pay_currency:
+          type: string
+          description: The paid currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).
+        pay_amount:
+          type: string
+          description: The paid amount, main currency unit, rounded up to 2 decimal places.
+        fee_currency:
+          type: string
+          description: The fee amount, main currency unit, rounded up to 2 decimal places.
+        fee_amount:
+          type: string
+          description: The fee amount, main currency unit, rounded up to 2 decimal places.
+        card_no:
+          type: string
+          description: The card NO that paid by.
+        merchant_category_code:
+          type: string
+          description: Category code of merchant.
+        merchant_name_location:
+          type: string
+          description: Merchant name (e.g., AMAZON).
+        status:
+          type: string
+          enum:
+          - PROCESSING
+          - FAILED
+          - CANCELLED
+          - REFUNDING
+          - REFUNDED
+          - COMPLETED
+          description: Status of Card Payout.
+        create_time:
+          type: integer
+          description: The object creation time. Measured in milliseconds since the Unix epoch.

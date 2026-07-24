@@ -1,0 +1,122 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Ew Receivings API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Ew Receivings
+paths:
+  /ew-receivings/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Receiving Info by ID
+      tags:
+      - Ew Receivings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receiving'
+              examples: {}
+        '404':
+          description: Not Found
+      operationId: get-receivings-ID
+      description: Retrieve the information of the Receiving with the matching transaction ID.
+components:
+  schemas:
+    Receiving:
+      type: object
+      x-tags:
+      - Models
+      x-examples:
+        example-1:
+          id: string
+          user_id: string
+          creditor_name: string
+          creditor_account_no: string
+          receive_currency: string
+          receive_amount: string
+          entry_source: string
+          entry_amount: string
+          entry_currency: string
+          fee: string
+          memo: string
+          remind: string
+          ref: string
+          account_no: string
+          receive_account_no: string
+          status: string
+          create_time: 0
+      title: Receiving
+      properties:
+        id:
+          type: string
+          description: Unique ID created by the LianLian Global.
+        business_order_id:
+          type: string
+          description: Business Order ID.
+        user_id:
+          type: string
+          description: Unique identifier of the User.
+        creditor_name:
+          type: string
+          description: Name of creditor.
+        creditor_account_no:
+          type: string
+          description: Account NO of creditor.
+        receive_currency:
+          type: string
+          description: The receive currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).
+        receive_amount:
+          type: string
+          description: The received amount, main currency unit, rounded up to 2 decimal places.
+        entry_platform_name:
+          type: string
+          description: Name of entry platform (e.g., Amazon).
+        entry_amount:
+          type: string
+          description: The entry amount, main currency unit, rounded up to 2 decimal places.
+        entry_currency:
+          type: string
+          description: The entry currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).
+        fee:
+          type: string
+          description: The Receiving fee amount, main currency unit, rounded up to 2 decimal places.
+        memo:
+          type: string
+        reference:
+          type: string
+          description: This is the postscript information.
+        account_id:
+          type: string
+          description: Balance account ID.
+        receive_account_no:
+          type: string
+          description: The Receiving Account NO.
+        status:
+          type: string
+          enum:
+          - PROCESSING
+          - FAILED
+          - CANCELLED
+          - REFUNDING
+          - REFUNDED
+          - COMPLETED
+          description: Status of Receiving.
+        create_time:
+          type: integer
+          description: The object creation time. Measured in milliseconds since the Unix epoch.

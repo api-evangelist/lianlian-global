@@ -1,0 +1,121 @@
+swagger: '2.0'
+info:
+  title: Distribution Account API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Account
+paths:
+  /account/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: account id
+    get:
+      summary: Get account details by ID
+      tags:
+      - Account
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+      operationId: ''
+      description: 获取用户信息。
+      requestBody:
+        content: {}
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      x-stoplight:
+        id: xieu734majyzw
+  /account/list:
+    parameters: []
+    post:
+      summary: Retrieve all balances
+      tags:
+      - Account
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                availableBalance:
+                  type: string
+                currency:
+                  type: string
+            x-examples:
+              Example 1:
+              - availableBalance: string
+                currency: string
+          examples:
+            example 1: ''
+        '400':
+          description: null
+          schema:
+            type: 'null'
+          examples: {}
+      operationId: query-currency-balance
+      description: Retrieve all balances
+      x-stoplight:
+        id: lj0vjww03w7ht
+      parameters:
+      - in: body
+        name: body
+        schema:
+          type: object
+          properties:
+            currency:
+              type: string
+              x-stoplight:
+                id: sor9p91zevdpl
+              x-nullable: true
+components:
+  schemas:
+    Account:
+      title: Account
+      x-stoplight:
+        id: 2ijyp5cgqvcld
+      type: object
+      properties:
+        id:
+          type: string
+          description: ACCOUNT ID
+        phone_district:
+          type: string
+          description: 手机区号
+        phone:
+          type: string
+          description: 手机
+        email:
+          type: string
+          description: 邮箱
+        name:
+          type: string
+          description: 用户在实名认证时的主体名称
+        country_code:
+          type: string
+          description: 二位国家/地区编码，KYC企业所在地
+        entity_type:
+          type: string
+          description: "类型，枚举：`CORPORATE` `INDIVIDUAL`\r\n- `CORPORATE`：企业\r\n- `INDIVIDUAL`：个人"
+        status:
+          type: string
+          description: "状态，枚举：`INIT` `UNDER_REVIEW` `ACTIVE` `SUSPENDED` `CLOSED`\r\n- `INIT`：客户初始创建账号，待补充其他材料或操作（KYC或其他认证）\r\n- `UNDER_REVIEW`：客户账户相关认证材料已提交审核中\r\n- `ACTIVE`：客户账户通过，可以进行资金类交易\r\n- `SUSPENDED`：客户账户被暂停，出金交易会被拒绝\r\n- `CLOSED`：客户账户服务被终止"

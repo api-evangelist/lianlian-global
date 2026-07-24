@@ -1,0 +1,322 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Quotes API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Quotes
+paths:
+  /quotes/get_reference_rate:
+    parameters: []
+    post:
+      summary: Get a reference rate
+      operationId: post_get_reference_rate
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency_pair:
+                    type: string
+                    x-stoplight:
+                      id: i5kvekw9c778c
+                    description: 货币对
+                    minLength: 6
+                    maxLength: 6
+                  base_currency:
+                    type: string
+                    x-stoplight:
+                      id: 5qza2y4fqxmv8
+                    description: 基准币种，ISO 4217三位字母货币代码
+                    minLength: 3
+                    maxLength: 3
+                  client_rate:
+                    type: string
+                    x-stoplight:
+                      id: h7hv13d0gj7cv
+                    description: 参考汇率
+                    maxLength: 16
+                  sell_currency:
+                    type: string
+                    x-stoplight:
+                      id: xwlhrm4nccask
+                    description: 客户卖出币种，ISO 4217三位字母货币代码
+                    minLength: 3
+                    maxLength: 3
+                  buy_currency:
+                    type: string
+                    x-stoplight:
+                      id: xyrqfg8upqk9u
+                    description: 客户买入币种，ISO 4217三位字母货币代码
+                    minLength: 3
+                    maxLength: 3
+                  quote_time:
+                    type: number
+                    x-stoplight:
+                      id: v4c5m09eleeg9
+                    description: 报价时间
+                  settle_date:
+                    type: string
+                    x-stoplight:
+                      id: lo0nplszz2o2n
+                    description: 交割日yyyyMMdd
+                    minLength: 8
+                    maxLength: 8
+                required:
+                - currency_pair
+                - base_currency
+                - client_rate
+                - sell_currency
+                - buy_currency
+                - quote_time
+                - settle_date
+        '400':
+          description: "code | message \r\n---------|----------\r\n INVALID_PARAM | 无效的参数\r\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\r\n RATE_INVAILD|当前汇率不可用，请稍后再试\r\n SERVICE_UNAVAILABLE | 请求的服务当前不可用"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+        '403':
+          description: "code | message\r\n---------|----------\r\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+        '429':
+          description: "code | message\r\n---------|----------\r\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+        '500':
+          description: "code | message\r\n---------|----------\r\n INTERNAL_SERVER_ERROR | An internal server error has occurred."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+      x-stoplight:
+        id: at8axglh35o82
+      description: 获取参考汇率。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                business_type:
+                  type: string
+                  x-stoplight:
+                    id: 6gqofcxx3m787
+                  description: 业务类型
+                  maxLength: 16
+                sell_currency:
+                  type: string
+                  x-stoplight:
+                    id: a3pumt703i7kx
+                  description: 客户卖出币种，ISO 4217三位字母货币代码
+                  minLength: 3
+                  maxLength: 3
+                buy_currency:
+                  type: string
+                  x-stoplight:
+                    id: 1v84qv5gkghw1
+                  description: 客户买入币种，ISO 4217三位字母货币代码
+                  minLength: 3
+                  maxLength: 3
+                settle_type:
+                  type: string
+                  x-stoplight:
+                    id: 3owwqj3gyzf85
+                  description: 交割期限，支持T0/T1/T2，默认`T0`
+                  maxLength: 8
+              required:
+              - business_type
+              - sell_currency
+              - buy_currency
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      tags:
+      - Quotes
+  /quotes/get_conversion_rate:
+    post:
+      summary: Get a conversion rate
+      operationId: post-quotes-get_conversion_rate
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rate_id:
+                    type: string
+                    x-stoplight:
+                      id: acghfb2swzkvh
+                    description: 报价唯一识别码
+                    maxLength: 32
+                    minLength: 16
+                  currency_pair:
+                    type: string
+                    x-stoplight:
+                      id: 5h98xq6uu95nk
+                    description: 货币对
+                    minLength: 6
+                    maxLength: 6
+                  base_currency:
+                    type: string
+                    x-stoplight:
+                      id: z9qcog311slnj
+                    description: 基准币种，ISO 4217三位字母货币代码
+                    minLength: 3
+                    maxLength: 3
+                  client_rate:
+                    type: string
+                    x-stoplight:
+                      id: i52q6sufmxfkf
+                    description: 客户交易汇率
+                    maxLength: 16
+                  sell_currency:
+                    type: string
+                    x-stoplight:
+                      id: q9yh6xjlgl5u7
+                    description: 客户卖出币种，ISO 4217三位字母货币代码
+                    minLength: 3
+                    maxLength: 3
+                  sell_amount:
+                    type: string
+                    x-stoplight:
+                      id: 28s1c3tyhijir
+                    description: 客户卖出金额，单位元，支持2位小数
+                  buy_currency:
+                    type: string
+                    x-stoplight:
+                      id: 8xuyfsejl1xye
+                    description: 客户买入币种，ISO 4217三位字母货币代码
+                    minLength: 3
+                    maxLength: 3
+                  buy_amount:
+                    type: string
+                    x-stoplight:
+                      id: 13u8oub0vuno8
+                    description: 客户买入金额，单位元，支持2位小数
+                  settle_date:
+                    type: string
+                    x-stoplight:
+                      id: s5b80nr62fd8y
+                    description: 交割日yyyyMMdd
+                    minLength: 8
+                    maxLength: 8
+                  valid_time:
+                    type: number
+                    x-stoplight:
+                      id: o212b29n5mcss
+                    description: 报价失效时间
+                  quote_time:
+                    type: number
+                    x-stoplight:
+                      id: ei8uscxftq6z0
+                    description: 报价时间
+                required:
+                - rate_id
+                - currency_pair
+                - base_currency
+                - client_rate
+                - sell_currency
+                - buy_currency
+                - settle_date
+                - valid_time
+                - quote_time
+        '400':
+          description: "code | message \r\n---------|----------\r\n INVALID_PARAM | 无效的参数\r\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\r\n RATE_INVAILD|当前汇率不可用，请稍后再试\r\n SERVICE_UNAVAILABLE | 请求的服务当前不可用"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+        '403':
+          description: "code | message\r\n---------|----------\r\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+        '429':
+          description: "code | message\r\n---------|----------\r\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+        '500':
+          description: "code | message\r\n---------|----------\r\n INTERNAL_SERVER_ERROR | An internal server error has occurred."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParamandTraceId.yaml
+      x-stoplight:
+        id: h20rclnt8a9s8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                business_type:
+                  type: string
+                  x-stoplight:
+                    id: 96oemzeespuwu
+                  maxLength: 16
+                  description: 业务类型
+                sell_currency:
+                  type: string
+                  x-stoplight:
+                    id: yvajkw8z81bu6
+                  minLength: 3
+                  maxLength: 3
+                  description: 客户卖出币种，ISO 4217三位字母货币代码
+                sell_amount:
+                  type: string
+                  x-stoplight:
+                    id: l8qfpvgd6h2fs
+                  description: 客户卖出金额，不允许和buy_amount同时填写，单位元，支持2位小数
+                buy_currency:
+                  type: string
+                  x-stoplight:
+                    id: d53ocy2o43i02
+                  minLength: 3
+                  maxLength: 3
+                  description: 客户买入币种，ISO 4217三位字母货币代码
+                buy_amount:
+                  type: string
+                  x-stoplight:
+                    id: 2cutrhu690g0k
+                  description: 客户买入金额，不允许和sell_amount同时填写，单位元，支持2位小数
+                settle_type:
+                  type: string
+                  x-stoplight:
+                    id: u8ame0p28beu0
+                  maxLength: 8
+                  description: 交割期限，支持T0/T1/T2，默认`T0`
+              required:
+              - business_type
+              - sell_currency
+              - buy_currency
+      description: 获取conversion交易汇率。
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      tags:
+      - Quotes

@@ -1,0 +1,86 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Ew Oauth2 API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Ew Oauth2
+paths:
+  /ew-oauth2/token:
+    parameters: []
+    get:
+      summary: Get Access Token
+      tags:
+      - Ew Oauth2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Token'
+      operationId: get-access-token
+      description: Request an access token.
+      parameters:
+      - schema:
+          type: string
+          enum:
+          - authorization_code
+          - refresh_token
+        in: query
+        name: grant_type
+        description: Type of grant.
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: client_id
+        description: APP client ID.
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: client_secret
+        description: Client APP secret key.
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: code
+        description: Mandatory if grant_type = `authorization_code`.<br>The authorization_code that Successful response of after user authed.
+      - schema:
+          type: string
+        in: query
+        name: redirect_uri
+        description: Mandatory if grant_type = `authorization_code`. <br> The redirect URI where you want the response to be sent for your app to handle. It must exactly match one of the redirect URIs that you registered in the portal, except that it must be URL-encoded, and it can have additional path segments.
+      - schema:
+          type: string
+        in: query
+        name: refresh_token
+        description: Mandatory if grant_type = `refresh_token`.<br>An OAuth 2.0 refresh token. The app can use this token to acquire other access tokens after the current access token expires. In order to prevent client APP miss the response result, LL Platform will maintain the idempotent successful request for 15 minutes.
+components:
+  schemas:
+    OAuth2Token:
+      type: object
+      x-tags:
+      - Models
+      title: OAuth2Token
+      x-stoplight:
+        id: 30d9df6e32ca2
+      properties:
+        access_token:
+          type: string
+          description: The requested access token. The app can use this token to authenticate to the secured resource, such as a web API.
+        refresh_token:
+          type: string
+          description: An OAuth 2.0 refresh token. The app can use this token to acquire other access tokens after the current access token expires.
+        expires_in:
+          type: integer
+          description: The amount of time that an access token is valid (in seconds).

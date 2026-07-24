@@ -1,0 +1,590 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Receiving Accounts API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Receiving Accounts
+paths:
+  /receiving_accounts:
+    parameters: []
+    post:
+      summary: Open a receiving account
+      operationId: ''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receiving_Accounts_Info'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing.\r\n ILLEGAL_ARGUMENT_EXCEPTION| A parameter value is not valid\r\n CURRENCY_SINGLE_ERR| When the currency type is a single currency, the number of currencyList cannot be greater than 1\r\n KYC_STATUS_FAILED| Abnormal KYC status\r\n QUERY_OPENID_FAIL| Exception when querying authorization id\r\n CREATE_PARTICIPANT_FAIL| Create participant id exception\r\n NO_VIRTUAL_GROUP| No deck available\r\n GROUP_NOT_SUPPORT_CURRENCY| The deck does not support the incoming currency list\r\n REQUEST_CONFLICT| The request cannot be processed as another request is being processed.\r\n VIRTUAL_APPLY_FAILED| Virtual card apply failed.\r\n CORE_ACCOUNT_APPLY_FAILED| Account apply failed.\r\n ACCOUNT_BIND_EXCEPTION| Account binding exception\r\n NOT_SUPPORT_MULI_CURRENCY| not support multi-currency cards"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: uznhh3ir37z65
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                channel_code:
+                  type: string
+                  x-stoplight:
+                    id: 0g0l2603r2x8f
+                  description: 发卡渠道编码,用于指定发卡渠道，如指定了渠道，则`currency_list` `country_code`字段无需关注
+                currency_list:
+                  type: array
+                  x-stoplight:
+                    id: rm7k457da1jgw
+                  description: 全球收款账户币种，支持申卡时指定一个或多个币种，例如`USD`
+                  items: {}
+                country_code:
+                  type: string
+                  x-stoplight:
+                    id: srap9eaqx2vax
+                  description: 全球收款账户开户国家地区,例如：`US`
+                payment_methods:
+                  type: string
+                  x-stoplight:
+                    id: cg0agz686y2uy
+                  description: '`SWIFT`全球收款账户,`LOCAL`本地收款账户,默认`SWIFT`'
+                nickname:
+                  type: string
+                  x-stoplight:
+                    id: gx3l8xs7mwecn
+                  description: 全球收款账户别名
+                metadata:
+                  type: string
+                  x-stoplight:
+                    id: y0g7mpl0t8l2n
+                  description: 业务拓展字段
+            examples:
+              Example 1:
+                value:
+                  request_id: string
+                  channel_code: string
+                  currency_list:
+                  - null
+                  country_code: string
+                  payment_methods: string
+                  nickname: string
+                  metadata: string
+        description: ''
+      description: "申请收款账户。\r\n- request_id相同，业务字段（country_code或channel_code）相同时，幂等返回\r\n- request_id相同，业务字段（country_code或channel_code）不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段（country_code或channel_code）相同时，按全新交易处理，创建新的receiving account\r\n对于接口超时情况，可使用原报文重试或使用request_id调用Get list of receiving accounts接口获取结果。"
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      security:
+      - 客户端凭据授权: []
+      tags:
+      - Receiving Accounts
+    get:
+      summary: Get list of receiving accounts
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: page
+        description: 页码,默认值为1
+      - schema:
+          type: string
+        in: query
+        name: page_size
+        description: 每页查询数量,默认值20
+      - schema:
+          type: string
+        in: query
+        name: id
+        description: 全球收款账户唯一标识
+      - schema:
+          type: string
+        in: query
+        name: nickname
+        description: 全球收款账户别名
+      - schema:
+          type: string
+        in: query
+        name: country_code
+        description: 全球收款账户发卡行所在的国家地区
+      - schema:
+          type: string
+        in: query
+        name: currency
+        description: 全球收款账户支持收款的币种
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: 全球收款账户的状态 `ACTIVE`：正常 `PROCESSING`：处理中     `INACTIVE`：非正常 `CLOSED` ：关闭
+      - schema:
+          type: string
+        in: query
+        name: payment_methods
+        description: '`SWIFT`全球收款账户,`LOCAL`本地收款账户,默认`SWIFT`'
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: ewlr99tngbdzp
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: nv4bwp4b7g0xy
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: tywqucs1ueout
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: f9psuulu1579p
+                    description: 总页数
+                  'page_list ':
+                    $ref: '#/components/schemas/Receiving_Accounts_Info'
+                    x-stoplight:
+                      id: b5n0scxjmq1u3
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing.\r\n ILLEGAL_ARGUMENT_EXCEPTION | page_size must be less than or equal to 1000"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      description: 根据查询条件获取收款账户列表。
+      security:
+      - 客户端凭据授权: []
+      tags:
+      - Receiving Accounts
+  /receiving_accounts/channel:
+    parameters: []
+    get:
+      summary: Get list of channels
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: country_code
+        description: 全球收款账户国家地区
+      - schema:
+          type: string
+        in: query
+        name: payment_methods
+        description: 渠道支付方式， `SWIFT`, `LOCAL`,默认`SWIFT`
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Receiving_Accounts_Channel'
+                  x-stoplight:
+                    id: pkmkhufn5xd4d
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing. "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      description: 获取收款账户支持的渠道信息。
+      security:
+      - 客户端凭据授权: []
+      tags:
+      - Receiving Accounts
+  /receiving_accounts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: global_account的主键
+    post:
+      summary: Update a receiving account
+      operationId: ''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receiving_Accounts_Info'
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing. \r\n STATE_EXCEPTION | The alias cannot be modified in a non-successful state!"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "code | message \r\n---------|----------\r\n RESOURCE_NOT_FOUND | The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nickname:
+                  type: string
+                  x-stoplight:
+                    id: 95mv3w37mgjlr
+                  description: 需要更新的全球收款账户别名，无需保证唯一，成功状态可以修改
+                metadata:
+                  type: string
+                  x-stoplight:
+                    id: swci4sigie50a
+                  description: 用户希望连连存储的扩展信息放入到此字段中,此字段不为空时,会把之前的信息进行覆盖更新(以此次传入的数据为准)
+              required:
+              - nickname
+        description: ''
+      description: "根据收款账户唯一ID更新账户信息。\r\n- 业务字段（id）相同时，可多次调用更新，数据为最后一次更新的内容"
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      security:
+      - 客户端凭据授权: []
+      tags:
+      - Receiving Accounts
+    get:
+      summary: Get receiving account by ID
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content: {}
+        description: ''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receiving_Accounts_Info'
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing. "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: ''
+      description: 根据收款账户唯一ID获取账户详情信息。
+      security:
+      - 客户端凭据授权: []
+      tags:
+      - Receiving Accounts
+  /receiving_accounts/close/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: global_account的主键
+    post:
+      summary: Close a receiving account
+      operationId: ''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receiving_Accounts_Info'
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing.\r\n STATE_EXCEPTION | The alias cannot be modified in a non-successful state!\r\n STATE_EXCEPTION | The global account has been closed, please do not repeat the operation!"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                close_reason:
+                  type: string
+                  x-stoplight:
+                    id: n2jqcesk6lyho
+                  description: 关闭原因
+              required:
+              - close_reason
+          application/xml:
+            schema:
+              type: object
+              properties:
+                close_reason:
+                  type: string
+                  x-stoplight:
+                    id: c8h4lv183f875
+                  description: 关闭原因
+        description: ''
+      description: "关闭指定的收款账户，关闭后对应账户将无法进行收款。\r\n- 业务字段（id）相同时，支持幂等，多次调用关闭，返回相同的结果"
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      security:
+      - 客户端凭据授权: []
+      tags:
+      - Receiving Accounts
+components:
+  schemas:
+    Receiving_Accounts_Info:
+      title: Receiving Accounts Info
+      x-stoplight:
+        id: uj6a2tek9o1ha
+      type: object
+      properties:
+        create_time:
+          type: number
+          x-stoplight:
+            id: bkscigzk292aj
+          description: 全球收款账户的创建时间，13位时间戳毫秒
+        update_time:
+          type: number
+          x-stoplight:
+            id: bw3mv62cqnd2e
+          description: 全球收款账户的更新时间，13位时间戳毫秒
+        id:
+          type: string
+          x-stoplight:
+            id: ux8cv18yu6wa0
+          description: 全球收款账户唯一标识
+        account_number:
+          type: string
+          x-stoplight:
+            id: 8qxhq4s2pdiz2
+          description: 全球收款账户号
+        account_holder_name:
+          type: string
+          x-stoplight:
+            id: cxx9gk21gswxd
+          description: 账户名称。如不是英文，需要转换成字母。
+        nickname:
+          type: string
+          x-stoplight:
+            id: 9wwscyth1a8k3
+          description: 全球收款账户别名
+        account_type:
+          type: string
+          x-stoplight:
+            id: i1m63qc2vkhru
+          description: 全球账户金融机构账户类型,`Checking`,`Saving`,`Current`
+        capabilities:
+          type: object
+          x-stoplight:
+            id: lvt1ggupe4luy
+          description: 支持您的全球帐户的付款和收款功能
+          properties:
+            clearing_systems:
+              type: array
+              x-stoplight:
+                id: u4giv1l5x10x8
+              description: 清算方式`FAST``MEPS``GIRO``SEPA``Faster``payments``CHAPS``Bacs``Zengin``ACH``Fedwire``RTGS``Bank``FPS`
+              items: {}
+            payment_methods:
+              type: string
+              x-stoplight:
+                id: te3iew2xewnoa
+              description: 可以收到资金的付款方式`SWIFT`,`LOCAL`
+            currency_list:
+              type: array
+              x-stoplight:
+                id: 8mkru8pjehu4f
+              description: 全球收款账户支持的币种`USD``CNH``GBP``HKD``EUR`等27个币
+              items: {}
+        country_code:
+          type: string
+          x-stoplight:
+            id: tx8lon7esuncw
+          description: 全球收款账户的账户所在地
+        iban:
+          type: string
+          x-stoplight:
+            id: zpmh0zb6kjmlu
+          description: IBAN number
+        institution:
+          type: object
+          x-stoplight:
+            id: qkpgo0bxz4tbz
+          description: 发卡机构信息
+          properties:
+            bank_name:
+              type: string
+              x-stoplight:
+                id: zmmm94af4w9mp
+              description: 发卡银行名称，花旗银行
+            branch_name:
+              type: string
+              x-stoplight:
+                id: ntago0nkrjdbt
+              description: 发卡银行分支行名称，花旗香港
+            branch_location:
+              type: string
+              x-stoplight:
+                id: h6ph92mq06gps
+              description: '城市地区。
+
+                示例：`London`'
+            branch_address:
+              type: string
+              x-stoplight:
+                id: o9a5tl7p2jx73
+              description: 地址
+        routing_codes:
+          type: array
+          x-stoplight:
+            id: ackiw1qabr694
+          items:
+            x-stoplight:
+              id: 5sgmp68tcwu1n
+            type: object
+            properties:
+              type:
+                type: string
+                x-stoplight:
+                  id: 27d15x326xp97
+                description: 路由代码类型。可能的路由代码类型有:`sort_code`, `bank_code`,` branch_code`,` ach`,` dwire`,` bsb`,`CNAPS`
+              value:
+                type: string
+                x-stoplight:
+                  id: p2eev29y9sqhg
+                description: 路由代码的值
+        status:
+          type: string
+          x-stoplight:
+            id: 6oht9jh455dso
+          description: "全球收款账户的状态\n`ACTIVE`：正常\n`PROCESSING`：处理中    \n`INACTIVE`：非正常\n`CLOSED` ：关闭"
+        swift_code:
+          type: string
+          x-stoplight:
+            id: ckn2ui5exeaeu
+          description: 银行SWIFT code
+        close_reason:
+          type: string
+          x-stoplight:
+            id: bl49pra04o0yl
+          description: 全球收款账户的关闭原因
+        metadata:
+          type: string
+          x-stoplight:
+            id: tpc2ebqf7npbe
+          description: 业务拓展字段
+    Receiving_Accounts_Channel:
+      title: Receiving Accounts Channel
+      x-stoplight:
+        id: nvfnc9jrcuiwv
+      type: object
+      properties:
+        account_type:
+          type: string
+          x-stoplight:
+            id: 8jzjxlczz795h
+          description: 全球账户金融机构账户类型,`Checking`,`Saving`,`Current`
+        capabilities:
+          type: object
+          x-stoplight:
+            id: cu8pwd4qwaagq
+          description: 支持您的全球帐户的付款和收款功能
+          properties:
+            clearing_systems:
+              type: string
+              x-stoplight:
+                id: zjz0umorwf45t
+              description: 清算方式FAST\MEPS\GIRO\SEPA\Faster Payments\CHAPS\Bacs\Zengin\ACH\Fedwire\RTGS\Bank\FPS
+            payment_methods:
+              type: string
+              x-stoplight:
+                id: c3vfeev92xqy9
+              description: 可以收到资金的付款方式`SWIFT`,`LOCAL`
+        country_code:
+          type: string
+          x-stoplight:
+            id: meg2avj2r66ll
+          description: 全球收款账户支持收款的国家地区,`CN``US``HK`等
+        currency_list:
+          type: array
+          x-stoplight:
+            id: ybww9qjsw25y4
+          description: 全球收款账户支持的币种`USD``CNH``GBP``HKD``EUR`等27个币
+          items: {}
+        institution:
+          type: object
+          x-stoplight:
+            id: 6x7khek6peeqm
+          description: 发卡机构信息
+          properties:
+            bank_name:
+              type: string
+              x-stoplight:
+                id: dcbdgltjsz4s4
+              description: 发卡银行名称，花旗银行
+            branch_name:
+              type: string
+              x-stoplight:
+                id: lcw1uf2c6ysza
+              description: 发卡银行分支行名称，花旗香港
+            branch_location:
+              type: string
+              x-stoplight:
+                id: 1z8rjskzvvwtl
+              description: '城市地区。
+
+                示例：`London`'
+            branch_address:
+              type: string
+              x-stoplight:
+                id: bre7d5giwzgkt
+              description: 地址
+        swift_code:
+          type: string
+          x-stoplight:
+            id: kswq10yuqtxoo
+          description: 银行SWIFT code
+        channel_code:
+          type: string
+          x-stoplight:
+            id: e4yj614782kwp
+          description: 发卡渠道银行编码

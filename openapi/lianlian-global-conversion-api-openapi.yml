@@ -1,0 +1,137 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Conversion API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Conversion
+paths:
+  /v1/conversion:
+    post:
+      summary: 发起汇兑
+      tags:
+      - Conversion
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversion'
+        '400':
+          description: Bad Request
+      operationId: get-v1-conversion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conversion_id:
+                  type: string
+                  description: 平台汇兑唯一交易编号
+                  maxLength: 32
+                pricing_currency:
+                  type: string
+                  description: '定价币种，3位，参考：
+
+                    https://www.iso.org/iso-4217-currency-codes.html'
+                source_currency:
+                  type: string
+                  description: '源币种，3位，参考：
+
+                    https://www.iso.org/iso-4217-currency-codes.html'
+                target_currency:
+                  type: string
+                  description: '目的币种，3位，参考：
+
+                    https://www.iso.org/iso-4217-currency-codes.html'
+                target_amount:
+                  type: string
+                  description: 目的金额，如果`pricing_currency`= `target_currency`则必填
+                  maxLength: 16
+                source_amount:
+                  type: string
+                  description: 源金额，如果`pricing_currency`= `source_currency`则必填
+                  maxLength: 16
+              required:
+              - conversion_id
+              - pricing_currency
+              - source_currency
+              - target_currency
+  /v1/conversion/{conversion_id}:
+    parameters:
+    - schema:
+        type: string
+      name: conversion_id
+      in: path
+      required: true
+    get:
+      summary: 查询汇兑信息
+      tags:
+      - Conversion
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversion'
+      operationId: get-v1-conversion-conversion_id
+components:
+  schemas:
+    Conversion:
+      title: Conversion
+      x-stoplight:
+        id: t446s2n3qdy3b
+      type: object
+      properties:
+        conversion_id:
+          type: string
+          description: 平台汇兑唯一交易编号
+          maxLength: 32
+        pricing_currency:
+          type: string
+          description: 定价币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html
+        source_currency:
+          type: string
+          description: 源币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html
+        source_amount:
+          type: string
+          description: 源金额
+          maxLength: 16
+        target_currency:
+          type: string
+          description: 目的币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html
+        target_amount:
+          type: string
+          description: 目的金额
+          maxLength: 16
+        rate:
+          type: string
+          description: 汇率
+          maxLength: 16
+        status:
+          type: string
+          description: 汇兑状态
+          enum:
+          - PROCESSING
+          - FAILED
+          - SUCCESSED
+        failed_reason:
+          type: string
+          description: 汇兑失败原因
+          maxLength: 256
+        create_time:
+          type: string
+          description: 创建时间，10位 秒级时间戳
+        modify_time:
+          type: string
+          description: 更新时间，10位 秒级时间戳

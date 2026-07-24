@@ -1,0 +1,194 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Receipts API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Receipts
+paths:
+  /receipts:
+    post:
+      summary: Create a receipt
+      tags:
+      - Receipts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    x-stoplight:
+                      id: b8q31uds7o1ot
+                    description: 交易订单ID
+                  receipt_type:
+                    type: string
+                    x-stoplight:
+                      id: r7qyinwrcysrx
+                    description: "类型\r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: 4m1k6tvgarpq3
+                    description: 凭证的状态`PROCESSING`或`COMPLETED`
+                  create_time:
+                    type: number
+                    x-stoplight:
+                      id: 2o4ajnl1zpj5k
+                    description: 创建时间，13位时间戳
+        '400':
+          description: "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\nPARAM_ERROR | A parameter value is not valid or is missing.\r\nTRANSACTION_ID_NOT_FOUND | The transaction order is not found. \r\nTRANSACTION_NOT_SUCCEED | The transaction order status is not SUCCEEDED. "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: post-receipts
+      x-stoplight:
+        id: sz4mlktkiad15
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - transaction_id
+              properties:
+                transaction_id:
+                  type: string
+                  x-stoplight:
+                    id: vn9sbi1hhu5ah
+                  description: 连连生成的交易订单ID
+                receipt_type:
+                  type: string
+                  x-stoplight:
+                    id: 3kpwe7ip45aml
+                  description: "类型，默认为VOUCHER \r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+      description: 创建一个凭证申请，凭证生成后通过webhook通知状态`COMPLETED`，此时可以通过凭证下载接口获取交易凭证或外汇汇款申请书文件。
+  /receipts/download:
+    post:
+      summary: Download a receipt by ID
+      tags:
+      - Receipts
+      responses:
+        '200':
+          description: 付款凭证或外汇汇款申请书文件流信息，文件为ZIP压缩文件，解压缩后是PDF格式文件。
+      operationId: post-receipts-download
+      x-stoplight:
+        id: q317xoxbw2ky3
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        required: true
+        description: application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - transaction_id
+              properties:
+                transaction_id:
+                  type: string
+                  x-stoplight:
+                    id: d3xz0b5gwd1mx
+                  description: 交易单号
+                receipt_type:
+                  type: string
+                  x-stoplight:
+                    id: 22yrxousxupky
+                  description: "类型，默认为VOUCHER \r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+      description: 付款凭证或外汇汇款申请书文件下载，获取的凭证文件为ZIP压缩文件，解压缩后是PDF格式文件。
+  /receipts/{transaction_id}/{receipt_type}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_id
+      in: path
+      description: 交易单号
+      required: true
+    - schema:
+        type: string
+      name: receipt_type
+      in: path
+      description: 类型，默认值为：VOUCHER。VOUCHER（付款凭证）或APPLICATION_FOR_FUNDS_TRANSFERS（外汇汇款申请书）
+    get:
+      summary: Get a receipt
+      tags:
+      - Receipts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    x-stoplight:
+                      id: ohkz1visucbij
+                    description: 交易单号
+                  receipt_type:
+                    type: string
+                    x-stoplight:
+                      id: 3dzebkx9dp3h5
+                    description: "类型\r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: oey69hr5c7x36
+                    description: 凭证的状态`PROCESSING`或`COMPLETED`
+                  create_time:
+                    type: number
+                    x-stoplight:
+                      id: p2ju07i5e6pp5
+                    description: 创建时间
+        '400':
+          description: "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-receipts-id
+      x-stoplight:
+        id: m361i6s89glg3
+      security:
+      - 客户端凭据授权: []
+      parameters: []
+      description: 获取凭证或外汇汇款申请书文件的生成状态。

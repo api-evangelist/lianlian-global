@@ -1,0 +1,901 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Verifications API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Verifications
+paths:
+  /verifications/{request_id}:
+    parameters:
+    - schema:
+        type: string
+      name: request_id
+      in: path
+      required: true
+    get - copy:
+      description: ''
+      summary: Get list of verification
+      operationId: ''
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page_num:
+                  type: number
+                  description: 页码,默认值为1
+                page_size:
+                  type: number
+                  description: 每页查询数量,默认值20
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                status:
+                  type: string
+                  description: "状态\r\n\r\n状态|说明\r\n----|----\r\nSUCCEEDED|认证成功\r\nFAILDE|认证失败\r\nREQUIRES_ACTION|待提交确认信息（对公银行账户认证场景中返回）\r\nPROCESSING|受理中（对公银行账户认证场景中返回）"
+                from_created_at:
+                  type: number
+                  description: 查询的开始日期
+                to_created_at:
+                  type: number
+                  description: 查询的截止日期
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_num:
+                    type: string
+                    description: 页码,默认值为1
+                  page_size:
+                    type: string
+                    description: 每页查询数量,默认值20
+                  totalPage:
+                    type: string
+                    description: 总页数
+                  totalCount:
+                    type: string
+                    description: 总条数
+                  page_list:
+                    $ref: '#/components/schemas/Verification'
+                    description: 分页结果集
+    post:
+      summary: Update verification
+      tags:
+      - Verifications
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+        '400':
+          description: "code |message | param\n---------|----------|---------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. | e.g: account_number\n VERIFY_ORDER_PAY_AMOUNT_INVALID | The payment amount is incorrect, please use the correct amount. | \n VERIFY_ORDER_PAY_STATUS_NOT_SUPPORT | The payment status does not support the current operation, please try to initiate verification again later. | \n VERIFY_ORDER_VERIFY_TIMES_LIMIT | Exceeded the maximum number of verifications. | \n REQUEST_CONFLICT | The request cannot be processed as another request is being processed. | "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+              examples: {}
+        '404':
+          description: "code |message\r\n---------|----------\r\nRESOURCE_NOT_FOUND | The specified resource does not exist. "
+      operationId: request_id
+      x-stoplight:
+        id: sk28ztcvtkw2x
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+                  x-stoplight:
+                    id: b3pn4hsox0yui
+                  description: 验证金额，执行验证时需要录入的验证金额，单位：元
+  /verifications:
+    post - copy 7:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  description: 联行号
+                metadata:
+                  type: string
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: 向指定的银行卡创建一次验证。
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+    post - copy 6:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  description: 联行号
+                metadata:
+                  type: string
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: 向指定的银行卡创建一次验证。
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+    post - copy 5:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  description: 联行号
+                metadata:
+                  type: string
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: 向指定的银行卡创建一次验证。
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+    post - copy 4:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  description: 联行号
+                metadata:
+                  type: string
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: 向指定的银行卡创建一次验证。
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+    post - copy 3:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  description: 联行号
+                metadata:
+                  type: string
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: 向指定的银行卡创建一次验证。
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+    post - copy 2:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  description: 联行号
+                metadata:
+                  type: string
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: 向指定的银行卡创建一次验证。
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+    post - copy:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  description: 联行号
+                metadata:
+                  type: string
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: 向指定的银行卡创建一次验证。
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+    parameters: []
+    put - copy:
+      summary: Your PUT endpoint
+      tags: []
+      responses: {}
+      operationId: put-verification
+    post:
+      summary: Create a verification
+      operationId: create_verification
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verification'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: "code |message | param\n---------|----------|---------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. | e.g: account_number\n PARAM_ERROR | A parameter value is not valid. | e.g: type\n VERIFY_ORDER_EXIST | Bank card verification order is exist. | \n CREATE_ENTER_DISTRIBUTE_SINGLE_ERROR | An internal server error has occurred. | "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - account_number
+              - account_name
+              - cnaps_code
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: wkl8z43whvsws
+                  description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+                type:
+                  type: string
+                  x-stoplight:
+                    id: hagh97sa55357
+                  description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+                account_number:
+                  type: string
+                  x-stoplight:
+                    id: 5irhlsc1wzn4w
+                  description: 收款银行账户号
+                account_name:
+                  type: string
+                  x-stoplight:
+                    id: 8alycf4c9ivr4
+                  description: 收款银行账户名称
+                cnaps_code:
+                  type: string
+                  x-stoplight:
+                    id: 3jhlvc38n3cwn
+                  description: 联行号
+                metadata:
+                  type: string
+                  x-stoplight:
+                    id: 1mvybkt8ecmyn
+                  description: 业务拓展字段
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: ''
+      description: "向指定的银行卡创建一次验证。\r\n- request_id相同，业务字段相同时，会返回VERIFY_ORDER_EXIST\r\n- request_id相同，业务字段不同时，会返回VERIFY_ORDER_EXIST\r\n- request_id不同，业务字段相同时，按全新交易处理\r\n接口调用超时时，可使用request_id调用Get list of verification列表查询接口获取结果。"
+      x-stoplight:
+        id: 5xanqwhov3tb3
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Authorization
+      tags:
+      - Verifications
+    get:
+      summary: Get list of verification
+      tags:
+      - Verifications
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: number
+                    x-stoplight:
+                      id: uuaz0fuwg5onn
+                    description: 页码,默认值为1
+                  page_size:
+                    type: number
+                    x-stoplight:
+                      id: ybqvl1fr6nvxl
+                    description: 每页查询数量,默认值20
+                  total_page:
+                    type: number
+                    x-stoplight:
+                      id: x346ujtndwgox
+                    description: 总页数
+                  total_count:
+                    type: number
+                    x-stoplight:
+                      id: 37wpu7gad86z8
+                    description: 总条数
+                  page_list:
+                    $ref: '#/components/schemas/Verification'
+                    x-stoplight:
+                      id: b82n1pt29f6ht
+                    description: 分页结果集
+        '400':
+          description: "code |message | param\n---------|----------|---------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. | e.g: account_number\n PARAM_ERROR | A parameter value is not valid. | e.g: page_size\n DATE_RANGE_INVALID | The time is too long. | \n TO_CREATED_AT_FROM_CREATED_AT_INVALID | Both the from_created_at and to_created_at must be either both filled in or both empty.| "
+      operationId: get-verifications
+      x-stoplight:
+        id: pwzxx4w49mf2j
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: number
+        in: query
+        name: page
+        description: 页码,默认值为1
+      - schema:
+          type: number
+        in: query
+        name: page_size
+        description: 每页查询数量,默认值20
+      - schema:
+          type: string
+        in: query
+        name: request_id
+        description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: SUCCEEDED：认证成功； FAILDE：认证失败； REQUIRES_ACTION：待提交确认信息（对公银行账户认证场景中返回）；  PROCESSING：受理中（对公银行账户认证场景中返回）
+      - schema:
+          type: number
+        in: query
+        name: start_time
+        description: 查询的开始日期，开始时间和结束时间都为空，默认查询近三个月的数据
+      - schema:
+          type: number
+        in: query
+        name: end_time
+        description: 查询的截止日期，开始时间和结束时间都为空，默认查询近三个月的数据
+      requestBody:
+        content: {}
+components:
+  schemas:
+    Verification:
+      title: Verification
+      type: object
+      examples:
+      - id: 142
+        firstName: Alice
+        lastName: Smith
+        email: alice.smith@gmail.com
+        dateOfBirth: '1997-10-31'
+        emailVerified: true
+        signUpDate: '2019-08-24'
+      x-stoplight:
+        id: in45w6egf459r
+      properties:
+        request_id:
+          type: string
+          description: 客户端唯一请求ID，在交易时作为请求参数进行防重控制
+          x-stoplight:
+            id: 5i2lh7aa7eoyg
+        status:
+          type: string
+          x-stoplight:
+            id: ym6iqnnr92s06
+          description: "状态\r\n\r\n状态|说明\r\n----|----\r\nSUCCEEDED|认证成功\r\nFAILDE|认证失败\r\nREQUIRES_ACTION|待提交确认信息（对公银行账户认证场景中返回）\r\nPROCESSING|受理中（对公银行账户认证场景中返回）"
+        type:
+          type: string
+          x-stoplight:
+            id: n6pwb9wllo1zj
+          description: "验证类型\r\n\r\n类型|说明\r\n----|----\r\nCOMPANY|企业"
+        bank_name:
+          type: string
+          x-stoplight:
+            id: rymzwn26ieb1g
+          description: 收款银行账户名称
+        account_number:
+          type: string
+          x-stoplight:
+            id: 38lsr47ef9mee
+          description: 收款银行账户号
+        cnaps_code:
+          type: string
+          description: 联行号
+          x-stoplight:
+            id: rygw3h4rfszhx
+        account_name:
+          type: string
+          description: 收款银行账户名称
+          x-stoplight:
+            id: 1xj6radlvzk0f
+        metadata:
+          type: string
+          x-stoplight:
+            id: v3vp5fkcclk0t
+          description: 业务拓展字段
+        failure_reason:
+          type: string
+          x-stoplight:
+            id: i5hvhoy82hptz
+          description: 失败原因
+        create_time:
+          type: number
+          x-stoplight:
+            id: oseo4d2kalttq
+          description: '银行卡支付验证创建时间，13位时间戳毫秒
+
+            '

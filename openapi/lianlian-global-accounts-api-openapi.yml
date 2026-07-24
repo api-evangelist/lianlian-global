@@ -1,0 +1,337 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Accounts API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Accounts
+paths:
+  /v1/accounts/apply:
+    parameters: []
+    post:
+      summary: 申请收款账户
+      operationId: post-account
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Missing Required Information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  description: 会员id
+                  maxLength: 32
+                currency_list:
+                  type: array
+                  description: 币种列表 例如：["USD","JPY"]
+                  items:
+                    type: string
+                    maxLength: 128
+              required:
+              - member_id
+              - currency_list
+        description: ''
+      description: 创建币种账户
+      tags:
+      - Accounts
+  /v1/accounts/{member_id}:
+    parameters:
+    - schema:
+        type: string
+      name: member_id
+      in: path
+      required: true
+    get:
+      summary: 会员账户信息查询
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad Request
+      operationId: get-v1-account-get_account_list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  description: 会员id
+                  maxLength: 32
+              required:
+              - member_id
+          application/xml:
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  description: 会员id
+                  maxLength: 32
+                account_id:
+                  type: string
+                  description: 账户号，如果account_id和currency_list同时存在，以account_id为查询条件
+                  maxLength: 32
+                currency_list:
+                  type: string
+                  description: 币种列表 例如：["USD","JPY"]
+                  maxLength: 128
+              required:
+              - member_id
+        description: ''
+      parameters: []
+  /accounts:
+    parameters: []
+    post:
+      summary: Create an account
+      operationId: create-account
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/AccountResponse.yaml
+          headers: {}
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER| A required parameter in the request is missing.\r\nAUTH_CLIENT_NOT_EXIST| The configuration is incorrect. Please contact the account manager or online customer service."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/AccountRequest.yaml
+        description: ''
+      description: "为您的用户、商家、子公司、业务合作伙伴或客户创建一个新的LianLian Global帐户。\r\n- 业务字段相同时，支持幂等，返回当前account的最新状态"
+      x-stoplight:
+        id: soqetl7kkcqfp
+      security:
+      - 客户端凭据授权: []
+      tags:
+      - Accounts
+  /accounts/detail:
+    parameters: []
+    get:
+      summary: Get account detail info
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/AccountResponse.yaml
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER| A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-account
+      x-stoplight:
+        id: tx05pzu77zgse
+      parameters: []
+      security:
+      - 授权码授权: []
+  /accounts/authorize:
+    parameters: []
+    post:
+      summary: Authorize an account
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/AccountsAuthorizeResponse.yaml
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER| A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: accounts-authorize
+      x-stoplight:
+        id: p7flmwd5k7sij
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/AccountsAuthorizeRequest.yaml
+      security:
+      - 授权码授权: []
+        客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: X-On-Behalf-Of-User-Id
+        description: 需要申请授权的user_id
+      description: "请求用户账户授权\r\n- 业务字段相同时，支持幂等，只会创建一条授权记录，每次调用授权码code会刷新"
+  /accounts/submit:
+    parameters: []
+    post:
+      summary: Submit account for activation
+      tags:
+      - Accounts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/KYCResponse.yaml
+        '400':
+          description: "code |message | param\n---------|----------|---------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. |e.g: country_code\n PARAM_ERROR | A parameter value is not valid. |\n ACCOUNT_INFO_NOT_FOUND | Account information does not exist. |\n CLIENT_CONFIG_INVALID | The client is missing configuration. |\n KYC_STATUS_NOT_SUPPORT | KYC status does not support submission. |\n FILE_NOT_EXIST | The file does not exist. |\n LEGAL_TRUST_AUTH_INVALID | Verification failed for the legal representative's phone，full_name, and cert_no. |\n MISSING_LEGALPERSON | Legal Information in the request is missing. |\n LEGAL_INFORMATION_ONLY | Corporate information cannot be multiple. |\n CAPTCHA_NOT_SEND | Please obtain the verification code first. |\n CAPTCHA_NOT_VALID | The verification code has expired, please retrieve it again. |\n CAPTCHA_NOT_MATCH | The verification code is incorrect, please check. |\n CAPTCHA_USED | The verification code has been used, please retrieve a new one. |\n REMOTE_INVOKE_FAIL | A system or application error occurred. |\n MISSING_AUTHORIZER |Authorizer Information in the request is missing.|\n AUTHORIZER_INFORMATION_ONLY | Authorizer information cannot be multiple.|\n MISSING_LETTER_OF_COMMITMENT | Letter of commitment information in the request is missing.|\n MISSING_HOLDING_LETTER_OF_COMMITMENT | Holding letter of commitment information in the request is missing.|\n MISSING_POWER_OF_ATTORNEY | Power of attorney information in the request is missing.|"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: submit-account
+      x-stoplight:
+        id: qobblne9q3bmg
+      description: "提交开通账户所需的实名认证详情信息，进行账户激活。\r\n- 当status为INIT时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\r\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\r\n不同授权类型下，公司成员必填信息特别说明：\r\n\r\n**授权人类型** | **法人** | **代理人**| **法人短信验证**|**法人承诺函** |**法人手持承诺函** | **代理人授权书**\r\n---------|----------|---------|----------|---------|---------|---------\r\n LEGALPERSON | 必填 | 非必填 | 必填 | 非必填 | 非必填| 非必填\r\n AUTHORIZER | 必填 | 必填 | 非必填 | 必填| 必填| 必填"
+      security:
+      - 授权码授权: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/KYCRequest.yaml
+components:
+  schemas:
+    Account:
+      title: Account
+      type: object
+      description: 收款账户（带充值功能）
+      examples: []
+      properties:
+        account_id:
+          type: string
+          description: 账户号
+          maxLength: 32
+        account_type:
+          type: string
+          description: 账户类型
+          maxLength: 8
+          enum:
+          - TOPUP
+          - RECEIVING
+        member_id:
+          type: string
+          description: 会员id
+          maxLength: 32
+        currency:
+          type: string
+          description: 币种，3位，参考：https://www.iso.org/iso-4217-currency-codes.html
+        status:
+          type: string
+          description: 状态
+          maxLength: 8
+          enum:
+          - ENABLED
+          - DISABLED
+        freeze_amount:
+          type: string
+          maxLength: 16
+        available_amount:
+          type: string
+          maxLength: 16
+        bank:
+          $ref: '#/components/schemas/Bank'
+      required:
+      - account_id
+      - account_type
+      - member_id
+      - currency
+      - freeze_amount
+    Bank:
+      title: Bank
+      x-stoplight:
+        id: w1hhf29j491my
+      type: object
+      description: 银行虚拟卡
+      properties:
+        region:
+          type: string
+          description: 地区，定长2位
+        account_name:
+          type: string
+          description: 虚拟卡名称
+          maxLength: 256
+        status:
+          type: string
+          description: 状态
+          maxLength: 10
+          enum:
+          - DISABLED
+          - ENABLED
+        account_number:
+          type: string
+          description: 虚拟卡号
+          maxLength: 32
+        swift_code:
+          type: string
+          description: swift code
+          minLength: 8
+          maxLength: 11
+        bank_name:
+          type: string
+          description: 银行名称
+          maxLength: 256
+        branch_code:
+          type: string
+          description: 开户银行分行代码
+          maxLength: 32
+        bank_address:
+          type: string
+          description: 银行地址
+          maxLength: 256
+        currency:
+          type: string
+          description: 币种，定长3位
+      required:
+      - region
+      - account_name
+      - status
+      - account_number
+      - swift_code
+      - bank_name

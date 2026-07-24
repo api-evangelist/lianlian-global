@@ -1,0 +1,221 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Refund API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Refund
+paths:
+  /accept_payments/refunds/request_id/{request_id}:
+    parameters:
+    - schema:
+        type: string
+      name: request_id
+      in: path
+      required: true
+      description: 商户系统中该笔退款的唯一编码
+    get:
+      summary: Get a refund detail by ID
+      tags:
+      - Refund
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.\r\nMERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\nMERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "code | message \r\n---------|----------\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-accept_payments-refunds-id
+      x-stoplight:
+        id: posx3qerxuxxa
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        description: Bearer <Token>
+        name: Authorization
+  /accept_payments/refunds:
+    post:
+      summary: Create a refund
+      tags:
+      - Refund
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.\r\nAMOUNT_NOT_EQUAL|The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\nMERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\r\nMERCHANT_ACCT_NOT_EXIST|The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\nPAYMENT_NOT_EXIST|Payment does not exist.\r\nPAYMENT_NOT_SUCCEED|Payment has not been successfully paid.\r\nREFUND_EXPIRED|Refund has expired.\r\nREFUND_AMOUNT_EXCEEDED|The refund amount cannot be greater than the paid amount.\r\nREQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID|The merchant account status is invalid.\r\nACCOUNT_BALANCE_INSUFFICIENT|Account balance insufficient.\r\nREFUND_NOT_SUPPORTED|Refunds are not supported.\r\nREQUEST_CONFLICT|The request cannot be processed as another request is being processed.\r\n"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-accept_payments-refunds
+      x-stoplight:
+        id: 9raeaqvqudpab
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - amount
+              - payment_request_id
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: wh4gfklrlwknt
+                  description: 商户系统中该笔退款的唯一编码
+                amount:
+                  type: string
+                  x-stoplight:
+                    id: 85gmhl3v2wovq
+                  description: 退款金额，与原支付订单的币种一致，累计退款金额不能大于原支付订单的金额
+                amount_details:
+                  type: object
+                  x-stoplight:
+                    id: wfpzb5h4qez2u
+                  properties:
+                    product_money_amount:
+                      type: string
+                      x-stoplight:
+                        id: 0ukxoz8vh8jy5
+                      description: 本次退款的商品总金额，与原支付订单的币种一致
+                    fee_money_amount:
+                      type: string
+                      x-stoplight:
+                        id: f0mvzdq6j8rbz
+                      description: 本次退款的费用金额，与原支付订单的币种一致
+                payment_request_id:
+                  type: string
+                  x-stoplight:
+                    id: mjn5xaqf7p0sb
+                  description: 原支付订单的request_id
+                reason:
+                  type: string
+                  x-stoplight:
+                    id: cq0isevfspwd3
+                  description: 退款原因
+                metadata:
+                  type: object
+                  x-stoplight:
+                    id: 0cut7oxoh8ptk
+                  description: 商户自定义的数据，可以key-value pairs 的方式设置值。转换为String长度<= 1024 characters
+      description: "### 功能说明：\r\n对指定的支付订单进行退款，支持多次部分退款。\r\n### 幂等说明：不支持幂等\r\n- request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id不同，业务字段相同时，按全新交易处理，创建新的Refund交易。\r\n### 超时方案：\r\n如果调用Create a refund接口超时，可使用request_id调用Get a refund detail by ID接口获取结果。"
+components:
+  schemas:
+    Refund:
+      title: Refund
+      x-stoplight:
+        id: msuvj07ttcz6a
+      type: object
+      description: 退款单信息
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: vtnahzdx5urds
+          description: LianLian GLobal系统退款的唯一编号
+        request_id:
+          type: string
+          x-stoplight:
+            id: 34ykg4nqx22lp
+          description: 商户系统中该笔退款的唯一编码
+        amount:
+          type: string
+          x-stoplight:
+            id: cotmlbfbsfi80
+          description: 退款金额
+        currency:
+          type: string
+          x-stoplight:
+            id: tc2t8k76gb42w
+          description: 退款币种
+        payment_request_id:
+          type: string
+          x-stoplight:
+            id: ce05w9whwe1as
+          description: 原支付订单的request_id
+        payment_id:
+          type: string
+          x-stoplight:
+            id: va84kapqf13oi
+          description: 原支付订单连连系统唯一ID
+        status:
+          type: string
+          x-stoplight:
+            id: ukpwb9y2zxry2
+          description: "退款状态\r\n枚举值|说明\r\n----|----\r\nCREATED|已创建，等待退款\r\nPROCESSING|退款处理中\r\nSUCCEEDED|退款成功\r\nFAILED|退款失败"
+        failure_code:
+          type: string
+          x-stoplight:
+            id: qlmvreri3m31r
+          description: "退款失败原因错误码\r\n**failure_code** |**failure_reason** |**中文解释**\r\n---------|----------|----------\r\nACCOUNT_BALANCE_INSUFFICIENT|Account balance insufficient. | 账户余额不足\r\nREFUND_ERROR|Refund error, Please contact technical support.| 退款发生其他原因的异常，可联系连连的技术支持人员"
+        failure_reason:
+          type: string
+          x-stoplight:
+            id: 22ktct9k8qcai
+          description: 退款失败原因描述
+        refund_time:
+          type: number
+          x-stoplight:
+            id: kfem9aeiiy94x
+          description: 退款完成时间，13位时间戳
+        accounting_date:
+          type: string
+          x-stoplight:
+            id: 23kf2j3kbg6fn
+          description: 记账日期，格式yyyyMMdd，例如20240308
+        metadata:
+          type: object
+          x-stoplight:
+            id: l417sj0tu5paa
+          description: 商户自定义的数据，可以key-value pairs 的方式设置值。
+        create_time:
+          type: number
+          x-stoplight:
+            id: y7x769pcig7fj
+          description: 创建时间，13位时间戳
+        update_time:
+          type: number
+          x-stoplight:
+            id: anqxak23nc6ma
+          description: 更新时间，13位时间戳

@@ -1,0 +1,462 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Transaction Documents API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Transaction Documents
+paths:
+  /documents:
+    parameters: []
+    post:
+      summary: Create a transaction document
+      operationId: post-transaction_documents-create
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_document_batch_id:
+                    type: string
+                    x-stoplight:
+                      id: hk2obm8h5vnj2
+                  status:
+                    x-stoplight:
+                      id: bcuz5nkku22a9
+                    enum:
+                    - PROCESSING
+                    - COMPLETED
+                    description: "状态。\r\n\r\n如果您的材料涉及审核流程，返回结果中status为PROCESSING，此时我们将由异步消息结果通知您（可通过webhook监听材料相关结果）\r\n【注】材料是否涉及审核请咨询对应客户经理。\r\n\r\n枚举|说明\r\n---|---\r\nPROCESSING|处理中\r\nCOMPLETED|处理完成"
+                  create_time:
+                    type: number
+                    x-stoplight:
+                      id: d3bclwwaq2296
+                    description: 材料批次创建时间，13位时间戳
+      description: 创建贸易材料信息。
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/TransactionDocumentsRequest.yaml
+        description: ''
+      tags:
+      - Transaction Documents
+    get:
+      summary: Get list of transaction documents
+      tags:
+      - Transaction Documents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: 1i95sgx09xb5b
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: 8w777z5x2n5ej
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: 3rg7q95qwu1k6
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: r8m192241278b
+                    description: 总页数
+                  page_list:
+                    $ref: ../models/TransactionDocumentQueryResponseV3.yaml
+                    x-stoplight:
+                      id: 6jh84h2gq97eu
+        '400':
+          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nDATE_RANGE_TOO_BIG | The time interval exceeds 3 months"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-documents
+      x-stoplight:
+        id: 3sti0h6i02nmf
+      description: 查询贸易材料列表信息
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: business_type
+        description: 业务类型
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: purpose
+        description: 用途
+      - schema:
+          type: string
+        in: query
+        name: owner_id
+        description: 贸易材料所属方ID
+      - schema:
+          type: string
+        in: query
+        name: owner_type
+        description: 贸易材料所属方
+      - schema:
+          type: string
+        in: query
+        name: original_order_id
+        description: 客户侧订单号
+      - schema:
+          type: string
+        in: query
+        name: transaction_document_batch_id
+        description: 批次号
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: 贸易材料审核状态
+      - schema:
+          type: string
+        in: query
+        name: 'start_time '
+        description: 材料创建开始时间(含)，时间间隔不大于3个月
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: end_time
+        description: 材料创建结束时间(含)，时间间隔不大于3个月
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: page
+        description: 页码,默认值为1
+      - schema:
+          type: string
+        in: query
+        name: page_size
+        description: 每页查询数量,默认值20，不大于1000
+      - schema:
+          type: string
+        in: query
+        name: transaction_document_id
+        description: 连连生成的贸易材料唯一编号
+      requestBody:
+        content: {}
+  /documents/{transaction_document_batch_id}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_document_batch_id
+      in: path
+      required: true
+      description: 材料批次ID，长度64
+    get:
+      summary: Get transaction document by ID
+      tags:
+      - Transaction Documents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/TransactionDocumentsResponse - copy.yaml
+      operationId: get-transaction_documents
+      security:
+      - 客户端凭据授权: []
+      requestBody:
+        content: {}
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      description: '此接口将返回批次内所有明细的处理结果。
+
+        如明细总条数、处理成功条数、处理失败条数。
+
+        需要注意的是，当批次内明细数据小于等于500条时，可通过此接口查看详情。
+
+        如果批次明细大于500条，建议您使用Get list of transaction document接口分页查询详细信息。'
+  /documents/quotas:
+    get:
+      summary: Get list of transaction quotas
+      tags:
+      - Transaction Documents
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: wv4rbnm7yj4nd
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: 2oyaht5c8iea5
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: 0h1jcoew4ovxc
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: gad4pgs8slcw6
+                    description: 总页数
+                  page_list:
+                    type: array
+                    x-stoplight:
+                      id: edvs481xut6do
+                    items:
+                      x-stoplight:
+                        id: yowvzyzfjm7g7
+                      type: object
+                      properties:
+                        transaction_document_batch_id:
+                          type: string
+                          x-stoplight:
+                            id: 5ja2jthqbzb89
+                          description: 批次号
+                        owner_type:
+                          type: string
+                          x-stoplight:
+                            id: pm7ll2owly17j
+                          description: "贸易材料所属方。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）\r\n\r\n枚举|说明\r\n---|---\r\nBENEFICIARY|收款方收款币种为货币管制国家的管制货币时\r\nPAYER|付款方付款币种为货币管制国家的管制货币时"
+                        owner_id:
+                          type: string
+                          x-stoplight:
+                            id: dcky6l38u63nw
+                          description: "贸易材料所属方ID。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）\r\n\r\n- owner_type=`BENEFICIARY`时，owner_id为Beneficiary资源对象的ID即beneficiary_id\r\n- owner_type=`PAYER`时，owner_id为Payer资源对象的ID即payer_id"
+                        currency:
+                          type: string
+                          x-stoplight:
+                            id: itgllfadct1s6
+                          description: 币种，[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)三位字母货币代码
+                        total_quota:
+                          type: string
+                          x-stoplight:
+                            id: biydxvuzibpfd
+                          description: 材料总额度，单位元
+                        available_quota:
+                          type: string
+                          x-stoplight:
+                            id: qfsq0mc073kp5
+                          description: 材料的剩余可用额度，单位元
+                        frozen_quota:
+                          type: string
+                          x-stoplight:
+                            id: ysv4ex54p2ml1
+                          description: 材料的冻结额度，单位元
+                        business_type:
+                          type: string
+                          x-stoplight:
+                            id: 3crlre5jwz24w
+                          description: 业务类型
+                        purpose:
+                          type: string
+                          x-stoplight:
+                            id: pth0vzinsoswg
+                          description: 提供材料的用途。
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_NOT_EXIST|payer is not exist\r\nBENEFICIARY_NOT_EXIST|beneficiary is not exist"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-documents-quotas
+      x-stoplight:
+        id: escmui7or43t3
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: query
+        name: owner_type
+        description: 贸易材料所属方，BENEFICIARY或PAYER
+      - schema:
+          type: string
+        in: query
+        name: owner_id
+        description: 贸易材料所属方ID，beneficiary_id或payer_id
+      - schema:
+          type: array
+        in: query
+        name: transaction_document_batch_ids
+        description: 批次号列表
+      - schema:
+          type: string
+        in: query
+        name: page
+        description: 页码,默认值为1
+      - schema:
+          type: string
+        in: query
+        name: page_size
+        description: 每页查询数量,默认值20
+      - schema:
+          type: string
+        in: query
+        name: business_type
+        description: 业务类型 TRAVEL 酒旅
+      - schema:
+          type: string
+        in: query
+        name: purpose
+        description: 提供材料的用途 PAYOUT 付款
+  /documents/update:
+    post:
+      summary: Update transaction documents
+      tags:
+      - Transaction Documents
+      responses:
+        '200':
+          description: "**failure_code** | **failure_reason** \r\n---------|----------\r\nMATERIAL_UPDATE_REJECT_DUE_TO_EXISTED_BATCH | Reject to update batch due to existed\r\nPURPOSE_NOT_UNIQUE | purpose is not unique\r\nBUSINESS_TYPE_NOT_UNIQUE | business_type is not unique\r\nOWNER_TYPE_NOT_UNIQUE | owner_type is not unique\r\nOWNER_ID_NOT_UNIQUE | owner_id is not unique\r\nRESOURCE_NOT_FOUND | The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  x-stoplight:
+                    id: aepx8v33c12ej
+                  type: object
+                  properties:
+                    original_order_id:
+                      type: string
+                      x-stoplight:
+                        id: m2ffbxs565dal
+                    transaction_document_batch_id:
+                      type: string
+                      x-stoplight:
+                        id: 8toqoz7jafoa1
+                    result:
+                      type: boolean
+                      x-stoplight:
+                        id: bn7np1ga6htog
+                      description: 更新结果
+                    failure_code:
+                      type: string
+                      x-stoplight:
+                        id: 7ilrv0o9qeyd0
+                    failure_reason:
+                      type: string
+                      x-stoplight:
+                        id: 01ubho25t2atj
+        '400':
+          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nMATERIAL_REJECT_DUE_TO_DUPLICATION | Reject to submit due to duplication"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-documents-update
+      x-stoplight:
+        id: terf36s63mqln
+      security:
+      - 客户端凭据授权: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_document_details:
+                  type: array
+                  x-stoplight:
+                    id: sbe0m3wycg4sd
+                  items:
+                    x-stoplight:
+                      id: 9x79j6tk11gkn
+                    type: object
+                    properties:
+                      original_order_id:
+                        type: string
+                        x-stoplight:
+                          id: cauklkajxq1ec
+                        description: 客户侧订单号
+                      transaction_document_batch_id:
+                        type: string
+                        x-stoplight:
+                          id: xti7c3z1uqgb2
+                        description: 批次号
+      description: 更新批次号
+  /documents/{original_order_id}:
+    parameters:
+    - schema:
+        type: string
+      name: original_order_id
+      in: path
+      required: true
+      description: 客户侧订单号
+    get:
+      summary: Get transaction document by ID
+      tags:
+      - Transaction Documents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/TransactionDocumentQueryResponseV3.yaml
+        '400':
+          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code** | **message** \r\n---------|----------\r\nRESOURCE_NOT_FOUND | The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-documents-id
+      x-stoplight:
+        id: elgncce6c1n8j
+      description: 查询单条订单材料
+      security:
+      - 客户端凭据授权: []

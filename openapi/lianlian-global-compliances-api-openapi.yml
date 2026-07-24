@@ -1,0 +1,214 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Compliances API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Compliances
+paths:
+  /compliances:
+    post:
+      summary: Create a compliance material
+      tags:
+      - Compliances
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request_id:
+                    type: string
+                    x-stoplight:
+                      id: q0c10bn6mn3wy
+                    description: 客户端请求ID
+                  entity_id:
+                    type: string
+                    x-stoplight:
+                      id: gpqzmnm4b2l40
+                    description: 合规材料对象id
+                  type:
+                    type: string
+                    x-stoplight:
+                      id: w8luq47uz0osu
+                    description: 上传合规材料类型
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: y897gcpjdd1ud
+                    description: "审核状态\r\n枚举|说明\r\n----|----\r\nPROCESSING |审核中\r\nSUCCEEDED |正常\r\nFAILED |审核拒绝"
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nFILE_NOT_EXIST|fileId not found\r\nBENEFICIARY_NOT_EXISTS|beneficiary is not exist\r\nREQUEST_ID_IS_NOT_UNIQUE|request_id is not unique\r\nREVIEW_EXIST_ERROR|material review apply exist\r\nCHANNEL_ID_NOT_FOUND|channelId not found"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-compliances
+      x-stoplight:
+        id: 8b5bf4fto116q
+      security:
+      - 客户端凭据授权: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - type
+              - entity_id
+              - attachments
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: 21cbxlbyxozxg
+                  description: 客户端唯一请求ID
+                  maxLength: 64
+                type:
+                  x-stoplight:
+                    id: y2lnuimzwj0to
+                  description: "上传的合规材料类型\r\n枚举|说明\r\n----|----\r\nbeneficiary|收款人材料\r\npayer|付款人材料\r\npayment|payout付款材料\r\ndeposit|加款材料"
+                  enum:
+                  - beneficiary
+                  - payer
+                  - payment
+                  - deposit
+                entity_id:
+                  type: string
+                  x-stoplight:
+                    id: p5mtyaaw30tow
+                  maxLength: 32
+                  description: 合规材料对象的id，beneficiary_id\payer_id\transaction_id\deposit_id
+                memo:
+                  type: string
+                  x-stoplight:
+                    id: jpdiq62wfy517
+                  description: 备注
+                  maxLength: 125
+                attachments:
+                  type: array
+                  x-stoplight:
+                    id: 02k57svdbvqed
+                  items:
+                    x-stoplight:
+                      id: sdb93nqntrrgl
+                    type: object
+                    maxProperties: 5
+                    required:
+                    - attachment_type
+                    - file_id
+                    properties:
+                      attachment_type:
+                        type: string
+                        x-stoplight:
+                          id: vvn3lod43uzaz
+                        description: "附件类型\r\n枚举|说明\r\n----|----\r\nCOMMERCIAL_DOCUMENTS | 商业单据\r\nLOGISTICS_DOCUMENTS |物流单据\r\nLOGISTICS_COMMUNICATION_DOCUMENTS |物流沟通凭证\r\nCONTRACT_DOCUMENTS |合同\r\nORDER_DOCUMENTS |交易单据\r\nCUSTOMS_DECLARATION |报关单\r\nOTHER_ATTACH |其它附件 "
+                      file_id:
+                        type: string
+                        x-stoplight:
+                          id: 9vltr28j8j9a7
+                        description: 附件的file id
+  /compliances/{request_id}:
+    parameters:
+    - schema:
+        type: string
+      name: request_id
+      in: path
+      description: 客户端唯一请求ID
+      required: true
+    get:
+      summary: Get a compliance material by request_id
+      tags:
+      - Compliances
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComplianceMaterial'
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-compliances-requestId
+      x-stoplight:
+        id: fbroxgthkywlj
+      security:
+      - 客户端凭据授权: []
+components:
+  schemas:
+    ComplianceMaterial:
+      title: ComplianceMaterial
+      x-stoplight:
+        id: wwzr4risezf1f
+      type: object
+      description: 合规审核材料
+      properties:
+        request_id:
+          type: string
+          x-stoplight:
+            id: 8f53u4qph2aj1
+          description: 客户端唯一请求ID
+        type:
+          type: string
+          x-stoplight:
+            id: 5oyfevzyi50vv
+          description: "上传的合规材料类型\r\n枚举|说明\r\n----|----\r\nbeneficiary|收款人材料\r\npayer|付款人材料\r\npayment|payout付款材料\r\ndeposit|加款材料"
+        entity_id:
+          type: string
+          x-stoplight:
+            id: gb9qj65iww1p9
+          description: 合规材料对象的id，beneficiary_id\payer_id\transaction_id\deposit_id
+        memo:
+          type: string
+          x-stoplight:
+            id: 5vx6gs2c1hbsq
+          description: 备注
+        attachments:
+          type: array
+          x-stoplight:
+            id: 7h0gvrc96ob2h
+          items:
+            x-stoplight:
+              id: p38yer0nqbjj1
+            type: object
+            maxProperties: 5
+            properties:
+              attachment_type:
+                type: string
+                x-stoplight:
+                  id: d3ojztfg66yex
+                description: "附件类型\r\n枚举|说明\r\n----|----\r\nCOMMERCIAL_DOCUMENTS | 商业单据\r\nLOGISTICS_DOCUMENTS |物流单据\r\nLOGISTICS_COMMUNICATION_DOCUMENTS |物流沟通凭证\r\nCONTRACT_DOCUMENTS |合同\r\nORDER_DOCUMENTS |交易单据\r\nCUSTOMS_DECLARATION |报关单\r\nOTHER_ATTACH |其它附件 "
+              file_id:
+                type: string
+                x-stoplight:
+                  id: l84w8is4njksv
+                description: 附件的file id
+        status:
+          type: string
+          x-stoplight:
+            id: or77w915o9w29
+          description: "审核状态\r\n枚举|说明\r\n----|----\r\nPROCESSING |审核中\r\nSUCCEEDED |正常\r\nFAILED |审核拒绝"
+        failure_code:
+          type: string
+          x-stoplight:
+            id: b4c5tot4fpoym
+          description: 审核失败编码
+        failure_reason:
+          type: string
+          x-stoplight:
+            id: 6s2i427xp8fvh
+          description: 审核失败原因描述

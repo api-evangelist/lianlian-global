@@ -1,0 +1,237 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Balance API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Balance
+paths:
+  /balance:
+    parameters: []
+    get:
+      summary: Get current balances
+      tags:
+      - Balance
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    currency:
+                      type: string
+                      x-stoplight:
+                        id: 3eqd3kyodcd23
+                      description: 账户币种
+                    status:
+                      type: string
+                      x-stoplight:
+                        id: buieo0sni1l6k
+                      description: "当前币种账户的状态\r\n`APPLYING`开户中\r\n`SUCCEEDED`正常\r\n`FAILED`非正常"
+                    available_amount:
+                      type: string
+                      x-stoplight:
+                        id: zwrdzk2j7rbvr
+                      description: 账户可用余额
+                    pending_amount:
+                      type: string
+                      x-stoplight:
+                        id: 0idcdbbv53uq1
+                      description: 账户在途余额
+                    reserved_amount:
+                      type: string
+                      x-stoplight:
+                        id: gtt8ywei3y7go
+                      description: 账户冻结余额
+                    total_amount:
+                      type: string
+                      x-stoplight:
+                        id: o0d8n881a2m5o
+                      description: "账户总余额：\r\nTotal account balance (available_amount + pending_amount + reserved_amount)"
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or missing. "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: ''
+      description: 获取账户当前余额信息。
+      requestBody:
+        content: {}
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      - schema:
+          type: string
+        in: query
+        name: currency
+        description: 币种
+      x-stoplight:
+        id: kwl372sgx0efp
+  /balance/history:
+    get:
+      summary: Get history balances
+      tags:
+      - Balance
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  x-stoplight:
+                    id: ykifr4l09bb4i
+                  type: object
+                  properties:
+                    account_no:
+                      type: string
+                      x-stoplight:
+                        id: jxrahyigaa5iv
+                      description: 账户号
+                      example: '0204265234111'
+                    date:
+                      type: string
+                      x-stoplight:
+                        id: b4vov18paeu8r
+                      description: 日期
+                      example: '20250407'
+                    currency:
+                      type: string
+                      x-stoplight:
+                        id: q6a69zjvzfq22
+                      description: 币种
+                      example: USD
+                    available_amount:
+                      type: string
+                      x-stoplight:
+                        id: qhy32uzgfswsh
+                      description: 账户可用余额
+                      example: '6589.56'
+                    pending_amount:
+                      type: string
+                      x-stoplight:
+                        id: armdsjg3vf7wp
+                      description: 账户在途余额
+                      example: '0.00'
+                    reserved_amount:
+                      type: string
+                      x-stoplight:
+                        id: anajj3u9myvqx
+                      description: 账户冻结余额
+                      example: '1.00'
+                    total_amount:
+                      type: string
+                      x-stoplight:
+                        id: 6ikhb8fubnks7
+                      description: 账户总余额： Total account balance (available_amount + pending_amount + reserved_amount)
+                      example: '6590.56'
+          headers: {}
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or missing. "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-balance-history
+      x-stoplight:
+        id: ztzi31qhx3ea3
+      description: "### 功能说明：\r\n获取账户历史日终余额\r\n### 日期date传参说明：\r\n- 每天10:00 AM（UTC+8）生成前一天的日终余额信息。\r\n### 日期date传参举例：\r\n- 在2025-04-07 10:00 AM查询date=20250407的内容，查无记录；\r\n- 在2025-04-08 8:00 AM查询date=20250407的内容，查无记录；\r\n- 在2025-04-08 10:00 AM查询date=20250407的内容，可正常查询20250407的日终余额内容。"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: query
+        name: currency
+        description: 币种
+      - schema:
+          type: string
+        in: query
+        name: date
+        description: 格式yyyyMMdd，东八区时区
+        required: true
+  /balance/{currency}:
+    parameters:
+    - schema:
+        type: string
+      name: currency
+      in: path
+      required: true
+    get:
+      summary: Get Currency Account Balance
+      operationId: get-balance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    x-stoplight:
+                      id: ds1oqhlw38tzi
+                    description: "Account currency\r\n\r\n"
+                    maxLength: 3
+                  balance:
+                    type: string
+                    x-stoplight:
+                      id: jn5gfg7ta6nkp
+                    description: "Account balance\r\n\r\n"
+                    maxLength: 15
+                required:
+                - currency
+                - balance
+              examples:
+                Example 1:
+                  value:
+                    currency: USD
+                    balance: '5004320.33'
+        '400':
+          description: 'Bad Request
+
+
+            Possible error codes:
+
+
+            | Code | Description |
+
+            |------|-------------|
+
+            | 999995 |Parameter is error. |'
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content: {}
+        description: ''
+      description: Query currency account balance<br>查询币种账户余额
+      x-stoplight:
+        id: 3wg9pivf3rjgm
+      tags:
+      - Balance

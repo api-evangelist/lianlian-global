@@ -1,0 +1,637 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Payouts API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Payouts
+paths:
+  /payouts/{transaction_id}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_id
+      in: path
+      required: true
+    get:
+      summary: Get a payout by ID
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/PaymentResponse.yaml
+              examples: {}
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get_payout
+      description: 通过交易唯一ID获取付款详情信息。
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      tags:
+      - Payouts
+  /payouts:
+    parameters: []
+    post:
+      summary: Create a payout
+      operationId: create_payout
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/PaymentResponse.yaml
+              examples: {}
+          headers: {}
+        '400':
+          description: "**code** |**message**\r\n---------|----------\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nPARAM_ERROR | A parameter value is not valid or is missing.\r\nSOURCE_AMOUNT_BELOW_LIMIT|source amount below limit.\r\nSOURCE_AMOUNT_ABOVE_LIMIT|source amount above limit.\r\nTARGET_AMOUNT_BELOW_LIMIT|target amount below limit.\r\nTARGET_AMOUNT_ABOVE_LIMIT|target amount above limit.\r\nFEE_CONFIG_ERROR|Fee config error, please contact your client manager.\r\nKYC_FAILED|Failed to retrieve KYC information.\r\nACCOUNT_STATUS_INVALID|The account status is invalid.\r\nDOCUMENT_EXPECTED_DECLARATION_TIME_INVALID|The expected declaration time exceeds the payout transaction created time."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '500':
+          description: "**code** |**message**\r\n---------|----------\r\nINTERNAL_SERVER_ERROR | An internal server error has occurred."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/PaymentRequest.yaml
+            examples: {}
+        description: ''
+      description: "### 功能说明：\r\n向指定收款对象创建一笔付款。\r\n### 幂等说明：不支持幂等\r\n- request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id不同，业务字段相同时，按全新交易处理，创建新的payout交易。\r\n### 超时方案：\r\n如果调用Create a payout接口超时，可使用request_id调用Get list of payouts接口获取结果。"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      tags:
+      - Payouts
+    get:
+      summary: Get list of payouts
+      operationId: get-payouts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: 6m6nri6ag1l4r
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: 0ascthzllbogi
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: 4bp4kzqiia482
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: wy47k6bj6hvg3
+                    description: 总页数
+                  page_list:
+                    type: array
+                    x-stoplight:
+                      id: vjtueeb9fipt7
+                    items:
+                      $ref: ../models/PaymentDetailsResponse.yaml
+                      x-stoplight:
+                        id: 90efu4xv2tq3f
+      x-stoplight:
+        id: p42ddilq9hlbo
+      requestBody:
+        content: {}
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: transaction_id
+        description: 交易订单ID
+      - schema:
+          type: string
+        in: query
+        name: purpose
+        description: 用途，枚举：PAYOUT、WITHDRAW
+      - schema:
+          type: string
+        in: query
+        name: source_currency
+        description: 源币种
+      - schema:
+          type: string
+        in: query
+        name: target_currency
+        description: 目的币种
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: 订单状态
+      - schema:
+          type: string
+        in: query
+        name: request_id
+        description: 客户端请求ID
+      - schema:
+          type: number
+        in: query
+        name: start_time
+        description: 开始时间，13位时间戳毫秒
+      - schema:
+          type: number
+        in: query
+        description: 结束时间，13位时间戳毫秒
+        name: end_time
+      - schema:
+          type: string
+        in: query
+        name: page
+        description: 页码，默认值为1
+      - schema:
+          type: string
+        in: query
+        name: page_size
+        description: 每页查询数量，默认值为20
+      tags:
+      - Payouts
+      description: 获取付款列表信息
+  /payouts/cancel/{transaction_id}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_id
+      in: path
+      required: true
+    post:
+      summary: Cancel a payout
+      operationId: cancel_payout
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    description: 连连返回的订单ID
+                    maxLength: 64
+                  status:
+                    type: string
+                    description: "订单状态\r\n\r\n状态|说明\r\n----|----\r\nCREATED|已创建\r\nPENDING|挂起，此时可取消付款\r\nPROCESSING|付款处理中\r\nSUCCEEDED|付款成功\r\nFAILED|付款失败\r\nRETURNED|付款退回，付款成功后银行退回资金\r\nCANCELD|付款取消"
+                    maxLength: 32
+                    enum:
+                    - CREATEED
+                    - PENDING
+                    - PROCESSING
+                    - SUCCEEDED
+                    - FAILED
+                    - RETURNED
+                    - CANCELD
+              examples: {}
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nORDER_STATUS_CAN_NOT_CANCEL|order status does not support cancellation operation"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                memo:
+                  type: string
+                  description: 取消原因
+                  maxLength: 64
+              required:
+              - memo
+            examples: {}
+        description: ''
+      description: "取消付款。\r\n- 业务字段（transaction_id）相同时，不支持幂等"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      tags:
+      - Payouts
+  /payouts/captchas/{transaction_id}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_id
+      in: path
+      required: true
+      description: 交易ID
+    post:
+      summary: Send captcha on a payout
+      tags:
+      - Payouts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    x-stoplight:
+                      id: 3l2yhe574eqca
+                    description: 交易单号
+                  send_time:
+                    type: number
+                    x-stoplight:
+                      id: lo8r9ygrkh89z
+                    description: 发送时间，13位时间戳
+                  send_type:
+                    x-stoplight:
+                      id: vw9clcrqcvaa3
+                    description: 发送方式
+                    enum:
+                    - PHONE
+                    - EMAIL
+                  country_code:
+                    type: string
+                    x-stoplight:
+                      id: rvkg4ktl8h0ta
+                    description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码
+                  phone_tail:
+                    type: string
+                    x-stoplight:
+                      id: 4ip8zv612oxk6
+                    description: 移动手机号码后四位
+                  email:
+                    type: string
+                    x-stoplight:
+                      id: chtgrgj2mrq0f
+                    description: 邮箱，脱敏返回：显示第一个字符和'@'之后的字符。例如：脱敏前：123456@qq.com，脱敏后：1****@qq.com
+      operationId: post-payouts-captchas-transaction_id
+      x-stoplight:
+        id: 9efhotkvcc0k6
+      description: 当付款交易需要进行验证时，通过该接口发送付款验证码。
+      security:
+      - 客户端凭据授权: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                send_type:
+                  x-stoplight:
+                    id: k08n7h95qcukk
+                  enum:
+                  - PHONE
+                  - EMAIL
+                  description: 发送方式
+      parameters:
+      - schema:
+          type: string
+        in: header
+        description: Bearer <Token>
+        name: Authorization
+      - schema:
+          type: string
+        in: header
+        description: application/json
+        name: Content-Type
+  /payouts/captchas/verify/{transaction_id}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_id
+      in: path
+      required: true
+      description: 交易单号
+    post:
+      summary: Verify captcha on a payout
+      tags:
+      - Payouts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/PaymentResponse.yaml
+        '400':
+          description: "code |message | param\r\n---------|----------|---------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. |e.g: country_code\r\n PARAM_ERROR | A parameter value is not valid. |\r\n CAPTCHA_NOT_SEND | Please obtain the verification code first. |\r\n CAPTCHA_NOT_VALID | The verification code has expired, please retrieve it again. |\r\n CAPTCHA_NOT_MATCH | The verification code is incorrect, please check. |\r\n CAPTCHA_USED | The verification code has been used, please retrieve a new one. |"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-payouts-captchas-verify
+      x-stoplight:
+        id: xw0g4sbswuqqj
+      description: 提交验证码进行验证，推进付款流程。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - captcha
+              properties:
+                captcha:
+                  type: string
+                  x-stoplight:
+                    id: 2d3v6p7u82axw
+                  description: 验证码，6位数字
+                  maxLength: 6
+                  minLength: 6
+                  example: '651938'
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: application/json
+      security:
+      - 客户端凭据授权: []
+  /payouts/documents/supplement/{transaction_id}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_id
+      in: path
+      required: true
+      description: 交易单号
+    post:
+      summary: Supplement transaction  document
+      tags:
+      - Payouts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/SupplementTransactionDocument.yaml
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-payouts-documents-supplement
+      x-stoplight:
+        id: 6hsr04nbvsf66
+      description: "### 功能说明：\r\n补充付款订单的贸易材料，暂只支持`business_type=IMPORT_TRADE_ADVANCE`进口预付场景的付款单。一个进口预付付款单可以补充多笔贸易材料，直到补充的贸易材料总金额等于预付付款单的金额。\r\n### 幂等说明：\r\n- request_id相同，业务字段相同时，幂等返回，并返回最新的审核状态status。\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE。\r\n- request_id不同，业务字段相同时，按全新请求处理。\r\n### 超时方案：\r\n如果调用Supplement transaction  document接口超时，可使用原报文重试。"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - request_id
+              - document_detail
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: 5rbafrtraf2ew
+                  description: 客户端唯一请求ID，进行防重控制
+                document_detail:
+                  type: object
+                  x-stoplight:
+                    id: ckwp1dr8o5e7x
+                  required:
+                  - request_id
+                  - amount
+                  - currency
+                  properties:
+                    request_id:
+                      type: string
+                      x-stoplight:
+                        id: 74amkkyqi0shp
+                      description: 本次使用报关单的贸易材料request_id
+                    amount:
+                      type: string
+                      x-stoplight:
+                        id: tyovk6aivgfw7
+                      description: 本次使用报关单金额
+                    currency:
+                      type: string
+                      x-stoplight:
+                        id: 4mu61294183yn
+                      description: 本次使用报关单币种
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: header
+        description: application/json
+        name: Content-Type
+      security:
+      - 客户端凭据授权: []
+  /fee/budget:
+    get:
+      summary: Calculate payout fees
+      tags:
+      - Payouts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_fee_amount:
+                    type: string
+                    x-stoplight:
+                      id: l259u7vqbpgly
+                    description: 手续费金额
+                  fee_currency:
+                    type: string
+                    x-stoplight:
+                      id: ecs67y7zwaccv
+                    description: 手续费币种
+                  basic_fee_details:
+                    type: object
+                    x-stoplight:
+                      id: dxgqet72iozlw
+                    description: 基础费用详情
+                    properties:
+                      configuration_basic_percent:
+                        type: string
+                        x-stoplight:
+                          id: 12nfstkuxy59j
+                        description: 配置的百分比
+                      basic_percent_fee:
+                        type: string
+                        x-stoplight:
+                          id: miudbh83iaewg
+                        description: 百分比计算出的手续费金额
+                      configuration_basic_flat:
+                        type: string
+                        x-stoplight:
+                          id: 465rq165iqv52
+                        description: 配置的固定费用
+                      basic_fee_amount:
+                        type: string
+                        x-stoplight:
+                          id: 3jq88zo72ousm
+                        description: 基础手续费金额
+                      basic_min_fee_amount:
+                        type: string
+                        x-stoplight:
+                          id: enrodp0b717t3
+                        description: 手续费最小金额
+                      basic_max_fee_amount:
+                        type: string
+                        x-stoplight:
+                          id: 0a7gq4j72emwx
+                        description: 手续费最大金额
+                  field_fee_details:
+                    type: array
+                    x-stoplight:
+                      id: a3l60n6mt2cop
+                    description: 条件手续费详情
+                    items:
+                      x-stoplight:
+                        id: 3uakjf2qc50m5
+                      type: object
+                      properties:
+                        field_name:
+                          type: string
+                          x-stoplight:
+                            id: 1m48bc99tevnb
+                          description: 计费条件类型
+                        field_value:
+                          type: string
+                          x-stoplight:
+                            id: fmtae2g2hoza9
+                          description: 计费条件值
+                        fee_amount:
+                          type: string
+                          x-stoplight:
+                            id: c01qescgk2jk5
+                          description: 手续费金额
+                        percent:
+                          type: string
+                          x-stoplight:
+                            id: 0efy5zq6qjwra
+                          description: 配置的百分比
+                        percent_fee:
+                          type: string
+                          x-stoplight:
+                            id: zgq6yp925701f
+                          description: 百分比计算出的手续费金额
+                        condition_flat:
+                          type: string
+                          x-stoplight:
+                            id: 2k6brivj5ch0q
+                          description: 配置的固定费用
+                        field_type:
+                          type: string
+                          x-stoplight:
+                            id: 05hdw2y4m4hqa
+                          description: 计费条件枚举
+                  total_min_fee_amount:
+                    type: string
+                    x-stoplight:
+                      id: j4muz69znntar
+                    description: 总计最小手续费金额
+                  total_max_fee_amount:
+                    type: string
+                    x-stoplight:
+                      id: ee36969pr37vs
+                    description: 总计最大手续费金额
+      operationId: get-fee-budget
+      x-stoplight:
+        id: 5hxi6648ny68v
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer <Token>
+      - schema:
+          type: string
+        in: query
+        name: purpose
+        required: true
+        description: 用途，枚举：PAYOUT、WITHDRAW
+      - schema:
+          type: string
+        in: query
+        name: source_currency
+        required: true
+        description: 源币种
+      - schema:
+          type: string
+        in: query
+        name: target_currency
+        required: true
+        description: 目的币种
+      - schema:
+          type: string
+        in: query
+        name: source_amount
+        required: true
+        description: 源币种金额
+      - schema:
+          type: string
+        in: query
+        name: swift_charge_option
+        required: true
+        description: SWIFT中间行费用承担方，枚举： OUR（付款人承担） 、SHA（共同承担） 、BEN (收款人承担手续费)
+      - schema:
+          type: string
+        in: query
+        name: pobo_option
+        required: true
+        description: 是否使用POBO，枚举：TRUE、FALSE
+      - schema:
+          type: string
+        in: query
+        name: charge_type
+        description: 计费类型，枚举值： 1：内扣-从付款金额中收取服务费 2：外收-从付款金额基础上额外收取服务费
+      security:
+      - 客户端凭据授权: []
+      description: payout手续费试算

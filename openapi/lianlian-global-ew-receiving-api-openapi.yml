@@ -1,0 +1,78 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Ew Receiving API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Ew Receiving
+paths:
+  /ew-receiving/accounts:
+    parameters: []
+    get:
+      summary: Get Receiving Account list
+      tags:
+      - Ew Receiving
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReceivingAccount'
+      operationId: get-receivings-accounts
+      description: 'Get list of receiving accounts created by your LianLian Global account.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+  /ew-receiving/accounts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Receiving Account Info by ID
+      tags:
+      - Ew Receiving
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReceivingAccount'
+      operationId: get-receivings-accounts-id
+      description: Retrieve the information of the Receiving Account with the matching ID.
+components:
+  schemas:
+    ReceivingAccount:
+      type: object
+      x-tags:
+      - Models
+      properties:
+        id:
+          type: string
+          description: Unique ID created by the LianLian Global.
+        nickname:
+          type: string
+          description: Nickname of `ReceivingAccount`
+        receiving_account_info:
+          $ref: ./CommonModel.json#/components/schemas/VbaBankInfo
+        shops:
+          type: array
+          items:
+            $ref: ./CommonModel.json#/components/schemas/UserShop

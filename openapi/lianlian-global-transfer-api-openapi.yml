@@ -1,0 +1,190 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Transfer API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Transfer
+paths:
+  /v1/transfer:
+    post:
+      summary: 发起转账
+      operationId: post-v1-transfer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transfer'
+        '400':
+          description: Bad Request
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_id:
+                  type: string
+                  description: 交易单号
+                  maxLength: 32
+                transaction_type:
+                  type: string
+                  description: 交易类型
+                  maxLength: 32
+                  enum:
+                  - TRANSFER
+                  - CHARGE
+                source_member_id:
+                  type: string
+                  description: 出账会员id
+                  maxLength: 12
+                target_member_id:
+                  type: string
+                  description: 入账会员id
+                  maxLength: 32
+                pricing_currency:
+                  type: string
+                  description: '定价币种，3位，参考：
+
+                    https://www.iso.org/iso-4217-currency-codes.html
+
+                    '
+                source_currency:
+                  type: string
+                  description: '出账币种，3位，参考：
+
+                    https://www.iso.org/iso-4217-currency-codes.html'
+                source_amount:
+                  type: string
+                  description: 出账金额，如果pricing_currency= source_currency则必填
+                  maxLength: 16
+                target_currency:
+                  type: string
+                  description: '入账币种，3位，参考：
+
+                    https://www.iso.org/iso-4217-currency-codes.html'
+                target_amount:
+                  type: string
+                  description: 入账金额，如果pricing_currency= target_currency则必填
+                  maxLength: 16
+                commission_undertaker:
+                  type: string
+                  description: 手续费承担方
+                  enum:
+                  - PAYER
+                  - PAYEE
+                  maxLength: 6
+                trade_file_id:
+                  type: string
+                  description: 贸易材料id
+                  maxLength: 64
+              required:
+              - transaction_id
+              - transaction_type
+              - source_member_id
+              - target_member_id
+              - pricing_currency
+              - source_currency
+              - target_currency
+              - commission_undertaker
+      tags:
+      - Transfer
+  /v1/transfer/{transaction_id}:
+    parameters:
+    - schema:
+        type: string
+      name: transaction_id
+      in: path
+      required: true
+    get:
+      summary: 查询转账详情
+      tags:
+      - Transfer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transfer'
+        '400':
+          description: Bad Request
+      operationId: get-v1-transfer-transaction_id
+      parameters: []
+components:
+  schemas:
+    Transfer:
+      title: Transfer
+      x-stoplight:
+        id: ig0lnssu0b9p1
+      type: object
+      description: 转账
+      properties:
+        transaction_id:
+          type: string
+          description: 交易单号
+          maxLength: 32
+        transaction_type:
+          type: string
+          description: 交易类型
+          enum:
+          - TRANSFER
+          - CHARGE
+          maxLength: 12
+        source_member_id:
+          type: string
+          description: 出账会员id
+          maxLength: 32
+        target_member_id:
+          type: string
+          description: 入账会员id
+          maxLength: 32
+        pricing_currency:
+          type: string
+          description: 定价币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html
+        source_currency:
+          type: string
+          description: 出账币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html
+        source_amount:
+          type: string
+          description: 出账金额
+          maxLength: 16
+        target_currency:
+          type: string
+          description: 入账币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html
+        target_amount:
+          type: string
+          description: 入账金额
+          maxLength: 16
+        commission_undertaker:
+          type: string
+          description: 手续费承担方
+          maxLength: 6
+        trade_file_id:
+          type: string
+          description: 贸易材料id
+          maxLength: 64
+        status:
+          type: string
+          description: 状态
+          maxLength: 16
+        failed_reason:
+          type: string
+          description: 失败原因
+          maxLength: 128
+        create_time:
+          type: string
+          description: 创建时间，10位 秒级时间戳
+        modify_time:
+          type: string
+          description: 修改时间，10位 秒级时间戳

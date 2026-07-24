@@ -1,0 +1,152 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Transaction API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Transaction
+paths:
+  /transactions/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      description: 交易ID
+      required: true
+    get:
+      summary: Get a transaction by ID
+      tags:
+      - Transaction
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: ../models/TransactionDetail.yaml
+        '400':
+          description: '**CODE**|**MESSAGE**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.'
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-a-financial-transaction
+      description: 通过唯一交易ID获取交易明细详情信息。
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+  /transactions:
+    parameters: []
+    get:
+      summary: Get list of transactions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    description: 每页条数
+                  page:
+                    type: string
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    description: 总条数
+                  total_page:
+                    type: string
+                    description: 总页数
+                  page_list:
+                    description: 分页数据
+                    type: array
+                    items:
+                      $ref: ../models/Transactions.yaml
+                      x-stoplight:
+                        id: 3735buav2xh6h
+        '400':
+          description: '**CODE**|**MESSAGE**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            DATE_RANGE_TOO_BIG|The time span can be up to 3 months.'
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: list-of-financial-transactions
+      description: 通过分页方式获取交易明细列表信息。
+      parameters:
+      - $ref: '#/components/parameters/page_size'
+      - $ref: '#/components/parameters/page'
+      - schema:
+          type: string
+        in: query
+        name: request_id
+        description: 客户请求ID
+      - schema:
+          type: string
+        in: query
+        name: currency
+        description: 交易币种
+      - schema:
+          type: string
+        in: query
+        name: status
+        description: 交易状态
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      - schema:
+          type: string
+        in: query
+        name: id
+        description: 交易明细ID
+      - schema:
+          type: number
+        in: query
+        name: start_time
+        description: create_time起始时间，13位时间戳毫秒
+        required: true
+      - schema:
+          type: number
+        in: query
+        name: end_time
+        description: create_time结束时间，13位时间戳毫秒
+        required: true
+      tags:
+      - Transaction
+      security:
+      - 客户端凭据授权: []
+components:
+  parameters:
+    page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: string
+      description: 页码
+    page_size:
+      name: page_size
+      in: query
+      required: false
+      schema:
+        type: integer
+      description: 每页条数

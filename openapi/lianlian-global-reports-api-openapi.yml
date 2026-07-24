@@ -1,0 +1,309 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Reports API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Reports
+paths:
+  /reports/download:
+    parameters: []
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: 41x95h1lf1aeq
+                  description: 报表ID
+          application/xml:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: 2j8tdgq15x2n5
+                  description: 报表ID
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: kcdbxt7tlfy6j
+                  description: 报表ID
+        description: ''
+      summary: Download a report by ID
+      x-stoplight:
+        id: 5i4gn0flov8it
+      tags:
+      - Reports
+      responses:
+        '200':
+          description: 返回报告文件流信息
+        '400':
+          description: '**CODE**|**MESSAGE**
+
+            ---|---
+
+            MISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.
+
+            FILE_SERVER_REMOTE_ERROR|A system or application error occurred.
+
+            REPORT_STATUS_UNAVAILABLE|The report status is unavailable.
+
+            REPORT_FILE_EXPIRED|The report file is expired.'
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '401':
+          description: '**CODE**|**MESSAGE**
+
+            ---|---
+
+            NOT_AUTHORIZED|Lacks valid authentication credentials or insufficient permissions.'
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+        '404':
+          description: '**CODE**|**MESSAGE**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      description: "根据唯一ID获取交易报告文件，以下载的方式返回报告文件流信息。\r\n- 业务字段相同时，支持幂等，多次调用返回结果一致"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+  /reports:
+    parameters: []
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/ReportRequest.yaml
+          application/xml:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: 报表ID
+        description: ''
+      summary: Create a report
+      x-stoplight:
+        id: m4tlwogyg236z
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report - copy'
+        '400':
+          description: "code | message \r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n PARAM_ERROR | A parameter value is not valid.\r\n DATE_RANGE_TOO_BIG | The time interval exceeds 3 months.\r\n REPORT_TIME_FORBIDDEN | Report creation is prohibited at the current time.\r\n REPORT_TIME_TOO_EARLY | The report time is too early.\r\n MERCHANT_ACCT_NOT_EXIST | The merchant currency account doesn't exist.\r\n STATEMENT_REPORT_MUST_BEFORE_TODAY | The end time of statement report must be earlier than today."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      tags:
+      - Reports
+      description: "## 功能说明\r\n调用`Create a report`接口创建一个生成报告的任务，报告文件生成完成后会发送webhook通知，可以通过`Download a report by ID`接口下载报告文件。\r\n## 接口幂等说明\r\n- 业务字段相同时，不支持幂等，会创建多个report\r\n## 报表说明\r\n- 支持获取2年内的交易明细和资金明细数据。\r\n- 查询条件时间from到to时间范围不能超过3个月。\r\n- TRANSACTION_REPORT：交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- TRANSACTION_PLATFORM_REPORT：账户体系产品平台维度获取交易明细，交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- STATEMENT_REPORT：资金明细包含交易后余额，不包含账户期初期末余额，支持查询D日最新的资金明细。\r\n- STATEMENT_BALANCE_REPORT：包含期初和期末余额的资金对账单，仅支持获取D-1日数据，请在D日凌晨3点钟以后发起请求。\r\n- ACCEPT_PAYMENT_TRANSACTION_BILL：支付收单（Accept Payments）交易明细，仅支持获取D-1日数据，支持transaction_type:ACCEPT_PAYMENT和ACCEPT_PAYMENT_REFUND\r\n- ACCEPT_PAYMENT_BALANCE_BILL：支付收单（Accept Payments）资金明细，仅支持获取D-1日数据，支持transaction_type:ACCEPT_PAYMENT和ACCEPT_PAYMENT_REFUND\r\n- ACCEPT_PAYMENT_SETTLEMENT_REPORT：支付收单（Accept Payments）结算单。"
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+    get:
+      summary: Get list of reports
+      operationId: get-reports
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    description: 每页条数
+                  page:
+                    type: string
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    description: 总条数
+                  total_page:
+                    type: string
+                    description: 总页数
+                  page_list:
+                    description: 分页数据
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Report - copy'
+                      x-stoplight:
+                        id: h2h7aytqsrmbj
+        '400':
+          description: "code | message \r\n---------|----------\r\n START_AND_END_DATE_INVALID | Both the start time and end time must be either both filled in or both empty.\r\n PARAM_ERROR| A parameter value is not valid.\r\n MISSING_REQUIRED_PARAMETER|A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      x-stoplight:
+        id: 1k91j48bvqmr4
+      tags:
+      - Reports
+      requestBody:
+        content: {}
+      parameters:
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/page_size'
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      - schema:
+          type: string
+        in: query
+        name: type
+        description: 报告类型
+      - schema:
+          type: number
+        in: query
+        name: start_time
+        description: 创建开始时间， 时间戳，毫秒
+      - schema:
+          type: number
+        in: query
+        name: end_time
+        description: 创建结束时间，时间戳，毫秒
+      security:
+      - 客户端凭据授权: []
+      description: 获取报告文件详情列表信息。
+  /reports/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      description: 报表ID
+      required: true
+    get:
+      summary: Get a report by ID
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report - copy'
+        '400':
+          description: "code | message \r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER| A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "code | message \r\n---------|----------\r\n RESOURCE_NOT_FOUND| The specified resource does not exist.\r\n"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-a-financial-report
+      description: 根据唯一ID获取报告文件详情信息。
+      x-stoplight:
+        id: fhy2ms5peco44
+      requestBody:
+        content: {}
+      tags:
+      - Reports
+      security:
+      - 客户端凭据授权: []
+      parameters:
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+      - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+components:
+  schemas:
+    Report - copy:
+      title: Report
+      type: object
+      properties:
+        file_format:
+          type: string
+          description: 报表下载的文件格式，`CSV` `EXCEL`
+        file_name:
+          type: string
+          description: "文件名称，如果未在请求参数中自定义文件名称，将会使用默认的文件名称。\r\n默认名称：报表类型_查询开始时间_查询截止时间，日期时间格式yyyyMMdd（使用传入的13位时间戳转换）。默认名称例子：file_name=TRANSACTION_REPORT_20230914_20230922"
+        id:
+          type: string
+          description: 报表的ID
+        expires:
+          type: number
+          description: 报表下载的截止时间,13位时间戳。如果报表处于PENDING状态或报表永久有效，此字段值为空字符串
+        report_parameters:
+          type: object
+          description: 用于生成报表的参数
+          properties:
+            from:
+              type: number
+              description: 资源创建的起始时间，13位时间戳毫秒，时间范围最多3个月
+            to:
+              type: number
+              description: 资源创建的结束时间，13位时间戳毫秒，时间范围最多3个月
+            transaction_types:
+              type: array
+              description: "交易类型，枚举值为：`RECEIVING` `PAYOUT` `WITHDRAW` `CONVERSION` \n- `RECEIVING`：收款\n- `PAYOUT`：付款\n- `WITHDRAW`：提现\n- `CONVERSION`：换汇"
+              items:
+                type: string
+            currencies:
+              type: array
+              description: 报表中包含的货币(每个货币为3位编码，符合[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)规范)
+              items:
+                type: string
+        type:
+          type: string
+          description: "报告类型\r\n- `TRANSACTION_REPORT`：交易明细\r\n- `TRANSACTION_PLATFORM_REPORT`：平台交易明细\r\n- `STATEMENT_REPORT`：资金对账单\r\n- `STATEMENT_BALANCE_REPORT`：资金对账单（包含期初和期末余额）"
+        status:
+          type: string
+          description: 报表中包含的状态，`PROCESSING`或`COMPLETED`
+        create_time:
+          type: number
+          x-stoplight:
+            id: eq1m7anti3z77
+          description: 报表创建时间，毫秒
+  parameters:
+    page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: string
+      description: 页码
+    page_size:
+      name: page_size
+      in: query
+      required: false
+      schema:
+        type: integer
+      description: 每页条数

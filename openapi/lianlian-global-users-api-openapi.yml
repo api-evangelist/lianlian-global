@@ -1,0 +1,194 @@
+swagger: '2.0'
+info:
+  title: Distribution Account Users API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+basePath: /b2b-import/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Users
+paths:
+  /users/{userId}:
+    parameters:
+    - type: integer
+      name: userId
+      in: path
+      required: true
+      description: Id of an existing user.
+    get:
+      summary: 账户余额查询
+      tags:
+      - Users
+      responses:
+        '200':
+          description: User Found
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        onwayBalance:
+                          type: string
+                        totalBalance:
+                          type: string
+                        availableBalance:
+                          type: string
+                        accountNo:
+                          type: string
+                        currency:
+                          type: string
+              success:
+                type: boolean
+              message:
+                type: string
+            x-examples:
+              Example 1:
+                code: '000000'
+                data:
+                  count: 2
+                  list:
+                  - onwayBalance: '0.00'
+                    totalBalance: '4.00'
+                    availableBalance: '4.00'
+                    accountNo: 0202004762458
+                    currency: USD
+                  - onwayBalance: '0.00'
+                    totalBalance: '12344981.04'
+                    availableBalance: '12344981.04'
+                    accountNo: '0202004762425'
+                    currency: CNY
+                success: true
+                message: success
+          examples:
+            Get User Alice Smith:
+              id: 142
+              firstName: Alice
+              lastName: Smith
+              email: alice.smith@gmail.com
+              dateOfBirth: '1997-10-31'
+              emailVerified: true
+              signUpDate: '2019-08-24'
+          headers:
+            onwayBalance:
+              type: string
+            totalBalance:
+              type: string
+            availableBalance:
+              type: string
+            accountNo:
+              type: string
+        '404':
+          description: User Not Found
+          schema:
+            type: 'null'
+          examples: {}
+      operationId: get-users-userId
+      description: 通过该接口获取用户在连连的账户余额，查询无须传参，连连会全量账户返回
+      parameters: []
+    patch:
+      summary: Update User Information
+      operationId: patch-users-userId
+      responses:
+        '200':
+          description: User Updated
+          schema:
+            $ref: '#/definitions/User'
+          examples:
+            Update User Rebecca Baker:
+              id: 13
+              firstName: Rebecca
+              lastName: Baker
+              email: rebecca@gmail.com
+              dateOfBirth: '1985-10-02'
+              emailVerified: false
+              createDate: '2019-08-24'
+        '404':
+          description: User Not Found
+          schema:
+            type: 'null'
+        '409':
+          description: Email Already Taken
+          schema:
+            type: 'null'
+      description: Update the information of an existing user.
+      parameters:
+      - in: body
+        name: body
+        schema:
+          type: object
+          properties:
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: string
+              description: If a new email is given, the user's email verified property will be set to false.
+            dateOfBirth:
+              type: string
+        description: Patch user properties to update.
+        x-examples:
+          Update First Name:
+            firstName: Rebecca
+          Update Email:
+            email: rebecca@gmail.com
+          Update Last Name & Date of Birth:
+            lastName: Baker
+            dateOfBirth: '1985-10-02'
+      tags:
+      - Users
+    post:
+      summary: ''
+      operationId: post-users-userId
+      responses:
+        '200':
+          description: OK
+      tags:
+      - Users
+definitions:
+  User:
+    title: User
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Unique identifier for the given user.
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+        format: email
+      dateOfBirth:
+        type: string
+        format: date
+        example: '1997-10-31'
+      emailVerified:
+        type: boolean
+        description: Set to true if the user's email has been verified.
+      createDate:
+        type: string
+        format: date
+        description: The date that the user was created.
+    required:
+    - id
+    - firstName
+    - lastName
+    - email
+    - emailVerified
