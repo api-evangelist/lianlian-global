@@ -1,0 +1,727 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "333bb18ad0c5a"
+    },
+    "info": {
+        "title": "Payee",
+        "version": "1.0",
+        "description": "A payee needs to be created before a payout can be made, the payee notes the individual or corporate being paid along with the bank details. "
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-contacts/bank/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true
+                }
+            ],
+            "get": {
+                "summary": "Get a Bank Account Contact",
+                "tags": [
+                    "Operations"
+                ],
+                "operationId": "get-beneficiary-info",
+                "description": "Get a specific bank account contact by the `contact _id`.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Payee"
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BankAccountContact"
+                                },
+                                "examples": {
+                                    "BankAccount Payee": {
+                                        "value": {
+                                            "address": {
+                                                "country_code": "NL",
+                                                "city": "gerg",
+                                                "postcode": "32432",
+                                                "state": "e",
+                                                "line2": "asda",
+                                                "line1": "add"
+                                            },
+                                            "entity_type": "CORPORATE",
+                                            "type": "BANK_ACCOUNT",
+                                            "bank_info": {
+                                                "account_number": "DE75512108001245126199",
+                                                "account_currency": "EUR",
+                                                "bank_country_code": "NL",
+                                                "swift_code": "45346364363",
+                                                "routing_info": [
+                                                    {}
+                                                ],
+                                                "iban": "DE75512108001245126199",
+                                                "bank_address": "NL",
+                                                "holder_type": "CORPORATE",
+                                                "holder_name": "dsdfgdfg"
+                                            },
+                                            "user_id": "2022042512674869",
+                                            "base_info": {
+                                                "country_code": "NL",
+                                                "corporate_name": "dsgdgdsgf",
+                                                "email": "idra@foxmail.com"
+                                            },
+                                            "id": "910036527140438742016",
+                                            "status": "ACCEPTED"
+                                        }
+                                    },
+                                    "Network Payee": {
+                                        "value": {
+                                            "type": "NETWORK",
+                                            "entity_type": "INDIVIDUAL",
+                                            "user_id": "2022042512674869",
+                                            "base_info": {
+                                                "country_code": "US",
+                                                "last_name": "Last",
+                                                "middle_name": "Middle",
+                                                "first_name": "First"
+                                            },
+                                            "id": "910037275098575475712",
+                                            "status": "ACCEPTED"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a Bank Account Contact",
+                "operationId": "delete-payees-payee_id",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "description": "Delete a specific bank account contact by the `contact_id`.",
+                "tags": [
+                    "Operations"
+                ],
+                "parameters": []
+            }
+        },
+        "/ew-contacts/bank": {
+            "post": {
+                "summary": "Create a New Bank Account Contact",
+                "operationId": "post-payee",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Payee"
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BankAccountContact"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "value": {
+                                            "address": {
+                                                "country_code": "NL",
+                                                "city": "gerg",
+                                                "postcode": "32432",
+                                                "state": "e",
+                                                "line2": "asda",
+                                                "line1": "add"
+                                            },
+                                            "entity_type": "CORPORATE",
+                                            "bank_info": {
+                                                "account_number": "DE75512108001245126199",
+                                                "account_currency": "EUR",
+                                                "bank_country_code": "NL",
+                                                "swift_code": "45346364363",
+                                                "routing_info": [
+                                                    {}
+                                                ],
+                                                "iban": "DE75512108001245126199",
+                                                "bank_address": "NL",
+                                                "holder_type": "CORPORATE",
+                                                "holder_name": "dsdfgdfg"
+                                            },
+                                            "user_id": "2022042512674869",
+                                            "base_info": {
+                                                "country_code": "NL",
+                                                "corporate_name": "dsgdgdsgf",
+                                                "email": "idra@foxmail.com"
+                                            },
+                                            "id": "910036527140438742016",
+                                            "status": "ACCEPTED"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing Required Information",
+                        "schema": {
+                            "type": "null"
+                        }
+                    },
+                    "": {
+                        "schema": {
+                            "$ref": "#/definitions/Payee"
+                        }
+                    }
+                },
+                "description": "Create a new bank account `Contact` which will be audited by LianLian Global before that can be used in payout transaction.\nA notification of the audit result will be sent by Webhook after subscribing the payee related event `Contact`.",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "0": {
+                                "allOf": [],
+                                "type": "string"
+                            },
+                            "description": "",
+                            "type": "object",
+                            "x-examples": {
+                                "example-1": {
+                                    "payee_id": "string",
+                                    "payee_type": "CORPORATE",
+                                    "payee_info": {
+                                        "corporate_name": "string",
+                                        "corporate_registration_number": "string",
+                                        "corporate_contact_number": "string",
+                                        "individual_first_name": "string",
+                                        "individual_last_name": "string",
+                                        "individual_id_number": "string",
+                                        "date_of_birth": "string",
+                                        "email_address": "string"
+                                    },
+                                    "address": {
+                                        "country_code": "string",
+                                        "city": "string",
+                                        "state": "string",
+                                        "street_address": "string",
+                                        "post_code": "string"
+                                    },
+                                    "bank_account_info": {
+                                        "account_currency": "string",
+                                        "account_name": "string",
+                                        "account_number": "string",
+                                        "bank_country_code": "string",
+                                        "bank_name": "string",
+                                        "bank_branch_name": "string",
+                                        "bank_address": "string",
+                                        "swift_code": "string",
+                                        "bank_routing_type": "SORT",
+                                        "bank_routing_number": "string"
+                                    },
+                                    "payout_method": "LOCAL",
+                                    "file_id": "string",
+                                    "status": "REJECTED"
+                                }
+                            },
+                            "properties": {
+                                "payee_id": {
+                                    "type": "string",
+                                    "description": "Unique identifier for the payee"
+                                },
+                                "payee_type": {
+                                    "type": "string",
+                                    "description": "Payee type, one of `INDIVIDUAL` and `CORPORATE`",
+                                    "enum": [
+                                        "CORPORATE",
+                                        "INDIVIDUAL"
+                                    ]
+                                },
+                                "payee_info": {
+                                    "type": "object",
+                                    "description": "Payee type, one of INDIVIDUAL and",
+                                    "properties": {
+                                        "corporate_name": {
+                                            "type": "string",
+                                            "description": "Corporate name, mandatory if `payee_type` = `CORPORATE`"
+                                        },
+                                        "corporate_registration_number": {
+                                            "type": "string",
+                                            "description": "Corporate registratioin number"
+                                        },
+                                        "corporate_contact_number": {
+                                            "type": "string",
+                                            "description": "Contact number for corporate"
+                                        },
+                                        "individual_first_name": {
+                                            "type": "string",
+                                            "description": "Individual first name, mandatory if `payee_type` = `INDIVIDUAL`"
+                                        },
+                                        "individual_last_name": {
+                                            "type": "string",
+                                            "description": "Individual last name, mandatory if `payee_type` = `INDIVIDUAL`"
+                                        },
+                                        "individual_id_number": {
+                                            "type": "string",
+                                            "description": "Personal ID number of Payee"
+                                        },
+                                        "date_of_birth": {
+                                            "type": "string",
+                                            "description": "Payee's date of birth"
+                                        },
+                                        "email_address": {
+                                            "type": "string",
+                                            "description": "Payee email"
+                                        }
+                                    }
+                                },
+                                "address": {
+                                    "type": "object",
+                                    "description": "Payee's address detail",
+                                    "properties": {
+                                        "country_code": {
+                                            "type": "string",
+                                            "description": "Payee's country code, two-letter [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code."
+                                        },
+                                        "city": {
+                                            "type": "string",
+                                            "description": "Payee's city"
+                                        },
+                                        "state": {
+                                            "type": "string",
+                                            "description": "Payee's state"
+                                        },
+                                        "street_address": {
+                                            "type": "string",
+                                            "description": "Payee's street address"
+                                        },
+                                        "post_code": {
+                                            "type": "string",
+                                            "description": "Payee's post code"
+                                        }
+                                    }
+                                },
+                                "bank_account_info": {
+                                    "type": "object",
+                                    "properties": {
+                                        "account_currency": {
+                                            "type": "string",
+                                            "description": "Account currency(in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)"
+                                        },
+                                        "account_name": {
+                                            "type": "string",
+                                            "description": "Account name"
+                                        },
+                                        "account_number": {
+                                            "type": "string",
+                                            "description": "Account number"
+                                        },
+                                        "bank_country_code": {
+                                            "type": "string",
+                                            "description": "Bank country code, two-letter [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code."
+                                        },
+                                        "bank_name": {
+                                            "type": "string",
+                                            "description": "Bank name"
+                                        },
+                                        "bank_branch_name": {
+                                            "type": "string",
+                                            "description": "Bank branch name"
+                                        },
+                                        "bank_address": {
+                                            "type": "string",
+                                            "description": "Bank detail address"
+                                        },
+                                        "swift_code": {
+                                            "type": "string",
+                                            "description": "Bank SWIFT code"
+                                        },
+                                        "bank_routing_type": {
+                                            "type": "string",
+                                            "description": "Routing number type",
+                                            "enum": [
+                                                "SORT",
+                                                "ABA",
+                                                "ZENGIN",
+                                                "BSB"
+                                            ]
+                                        },
+                                        "bank_routing_number": {
+                                            "type": "string",
+                                            "description": "Routing code"
+                                        },
+                                        "iban": {
+                                            "type": "string",
+                                            "description": "International bank account number"
+                                        }
+                                    },
+                                    "required": [
+                                        "account_currency",
+                                        "account_name",
+                                        "bank_country_code",
+                                        "bank_name"
+                                    ]
+                                },
+                                "payout_method": {
+                                    "type": "string",
+                                    "minLength": 1
+                                },
+                                "file_id": {
+                                    "type": "string",
+                                    "minLength": 1
+                                }
+                            },
+                            "required": [
+                                "payee_id",
+                                "payee_type"
+                            ]
+                        },
+                        "description": "",
+                        "x-examples": {}
+                    }
+                ],
+                "tags": [
+                    "Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "./CommonModel.json#/components/schemas/PayeeRequest"
+                            },
+                            "examples": {
+                                "example-1": {
+                                    "value": {
+                                        "id": "string",
+                                        "type": "CORPORATE",
+                                        "base_info": {
+                                            "corporate_name": "string",
+                                            "corporate_registration_number": "string",
+                                            "corporate_contact_number": "string",
+                                            "first_name": "string",
+                                            "last_name": "string",
+                                            "id_number": "string",
+                                            "date_of_birth": "string",
+                                            "email": "string"
+                                        },
+                                        "address": {
+                                            "country_code": "st",
+                                            "city": "string",
+                                            "state": "string",
+                                            "line1": "string",
+                                            "line2": "string",
+                                            "postcode": "string",
+                                            "street_address": "string"
+                                        },
+                                        "bank_info": {
+                                            "id": "string",
+                                            "holder_name": "string",
+                                            "holder_type": "string",
+                                            "account_currency": "string",
+                                            "account_number": "string",
+                                            "bank_name": "string",
+                                            "bank_address": "string",
+                                            "bank_country_code": "string",
+                                            "branch_name": "string",
+                                            "bank_phone": "string",
+                                            "swift_code": "string",
+                                            "iban": "string",
+                                            "routing_info": [
+                                                {
+                                                    "bank_routing_type": "ABA",
+                                                    "bank_routing_number": "string"
+                                                }
+                                            ]
+                                        },
+                                        "payout_method": "LOCAL",
+                                        "file_id": [
+                                            "string"
+                                        ],
+                                        "status": "REJECTED"
+                                    }
+                                }
+                            }
+                        },
+                        "application/xml": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PayeeRequest"
+                            }
+                        }
+                    },
+                    "description": ""
+                }
+            },
+            "parameters": []
+        },
+        "/ew-contacts/bank/merchant-client-id/{merchant_client_id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "merchant_client_id",
+                    "in": "path",
+                    "required": true
+                }
+            ],
+            "get": {
+                "summary": "Get a Bank Account Contact by Merchant Client Id",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BankAccountContact"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-ew-network-payees-by-merchant-client-id-merchant_client_id",
+                "description": "Get a specific bank account contact by the `merchant_client_id`."
+            },
+            "delete": {
+                "summary": "Delete a Bank Account Contact by Merchant Client Id",
+                "tags": [
+                    "Operations"
+                ],
+                "operationId": "delete-ew-bank-account-payees-by-merchant-client-id-merchant_client_id",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "description": "Delete a specific bank account contact by the `merchant_client_id`."
+            }
+        },
+        "/ew-contacts/clearing-rules": {
+            "get": {
+                "summary": "Clearing Rules",
+                "tags": [
+                    "Operations"
+                ],
+                "operationId": "query-clearing-type-rules",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "country_code",
+                        "description": "Country code of payee's bank account.",
+                        "required": true
+                    },
+                    {
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "SWIFT",
+                                "CNAPS",
+                                "SEPA",
+                                "RTGS",
+                                "Wire",
+                                "FastPayment"
+                            ]
+                        },
+                        "in": "query",
+                        "name": "code",
+                        "description": "Clearing menthod code.",
+                        "required": true
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "send_currency",
+                        "description": "Currency of payment to payee's bank account (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).",
+                        "required": true
+                    },
+                    {
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "INDIVIDUAL",
+                                "CORPORATE"
+                            ]
+                        },
+                        "in": "query",
+                        "name": "entity_type",
+                        "description": "Payee bank account type, one of `INDIVIDUAL` and `CORPORATE`",
+                        "required": true
+                    }
+                ],
+                "description": "Query Clearing Rules",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Clearing"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": []
+        }
+    },
+    "basePath": "/v1/payment",
+    "components": {
+        "schemas": {
+            "BankAccountContact": {
+                "title": "BankAccountContact",
+                "type": "object",
+                "x-examples": {},
+                "description": "",
+                "x-internal": false,
+                "x-tags": [
+                    "Models"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the payee."
+                    },
+                    "entity_type": {
+                        "type": "string",
+                        "description": "Payee entity type, one of `INDIVIDUAL` and `CORPORATE`",
+                        "enum": [
+                            "CORPORATE",
+                            "INDIVIDUAL"
+                        ]
+                    },
+                    "base_info": {
+                        "$ref": "./CommonModel.json#/components/schemas/BaseInfo"
+                    },
+                    "bank_info": {
+                        "$ref": "./CommonModel.json#/components/schemas/Bank"
+                    },
+                    "address": {
+                        "$ref": "./CommonModel.json#/components/schemas/Address"
+                    },
+                    "file_folder_id": {
+                        "description": "The ID of `File Folder` object.",
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status of this payee in Lianian Global's system.",
+                        "enum": [
+                            "REJECTED",
+                            "ACCEPTED",
+                            "PROCESSING"
+                        ]
+                    },
+                    "additional_info": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "./Items.json#/components/schemas/Item"
+                        }
+                    }
+                }
+            },
+            "ClearingRule": {
+                "title": "ClearingRule",
+                "x-tags": [
+                    "Models"
+                ],
+                "x-stoplight": {
+                    "id": "2iks2egmtgm6p"
+                },
+                "type": "object",
+                "properties": {
+                    "field_name": {
+                        "type": "string",
+                        "description": "Field in which the rule takes effect."
+                    },
+                    "required": {
+                        "type": "boolean",
+                        "description": "Is this filed required."
+                    },
+                    "field_rule": {
+                        "type": "string",
+                        "description": "Rule to follow for the field."
+                    }
+                }
+            },
+            "Clearing": {
+                "title": "Clearing",
+                "x-tags": [
+                    "Models"
+                ],
+                "x-stoplight": {
+                    "id": "fi400brfjb3ku"
+                },
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "description": "Clearing code."
+                    },
+                    "country_code": {
+                        "type": "string",
+                        "description": "Country code of payee's bank account."
+                    },
+                    "entity_type": {
+                        "type": "string",
+                        "description": "Payee bank account type, one of `INDIVIDUAL` and `CORPORATE`"
+                    },
+                    "send_currency": {
+                        "type": "string",
+                        "description": "Currency of payment to payee's bank account (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "rules": {
+                        "type": "array",
+                        "description": "Rules to follow for this `ClearingMethod`.",
+                        "items": {
+                            "$ref": "#/components/schemas/ClearingRule"
+                        }
+                    },
+                    "allowed": {
+                        "type": "boolean",
+                        "description": "Is this `Clearing` allowed."
+                    }
+                }
+            }
+        },
+        "requestBodies": {}
+    }
+}

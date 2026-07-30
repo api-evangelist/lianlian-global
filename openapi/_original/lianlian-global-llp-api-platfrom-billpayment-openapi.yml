@@ -1,0 +1,1039 @@
+swagger: '2.0'
+info:
+  title: Billpayment API
+  version: '1.0'
+  description: "This document is aimed to provide LianLian Pay's partners with a convenient and efficient way to implement global payment solution in your applications. \n\nSandbox:\t`https://global-api-sandbox.lianlianpay-inc.com/api`\n<br>\nProduction:\t`https://global-api.lianlianpay.com/api`\n\n"
+  contact:
+    name: Technical Support
+    email: dev_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /bill/add:
+    post:
+      responses:
+        '200':
+          description: "| \tCode\t|Message|\n|--------|---------|\n|000000\t|success.|"
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  extOrderId:
+                    type: string
+                    description: Unique bill ID from partner system
+                    maxLength: 64
+                  billId:
+                    type: string
+                    description: Unique bill ID in LianLianPay system
+                    maxLength: 64
+                  invoiceUrl:
+                    type: string
+                    description: Invoice url to claim the bill and finish payment for user
+                    maxLength: 1024
+                  transStatus:
+                    type: string
+                required:
+                  - extOrderId
+                  - billId
+                  - invoiceUrl
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                billId: '20210220779766636'
+                extOrderId: '2021022000000001'
+                invoiceUrl: 'https://ste-invoicebuilder.lianlianpay-inc.com/invoice/bill/detail?billId=2sfjz7PhrM7Qn3V6GlAv0bsx5'
+        '400':
+          description: "| \tCode\t|Message|Description|\n|--------|---------|---------|\n|154010 |Merchant id does not exist|goodsType mismatch.|\n|108101 |billId already exists.||\n|400001\t|Missing LLPAY-Signature header.||\n|400003\t|Invalid signature time.||\n|400005 |invalid signature header||\n|400006\t|Signature validation failed.||\n|999995\t||Invalid Parameter. Returned message such as:\"goodsInfo is invalid.\"|\n"
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support |
+      summary: ' CREATE UNASSIGNED BILL'
+      description: "Create a new bill which is waiting for claim from a user in LianLianPay System.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/bill/add**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/bill/add**\n\n"
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - extOrderId
+              - userId
+              - userName
+              - currency
+              - amount
+              - goodsType
+              - goodsInfoList
+            properties:
+              extOrderId:
+                type: string
+                description: Unique bill ID from partner
+                maxLength: 32
+              userId:
+                type: string
+                description: User ID from partner system
+                maxLength: 32
+              userName:
+                type: string
+                description: User name from partner system
+                maxLength: 64
+              currency:
+                type: string
+                description: Currency of bill
+                minLength: 3
+                maxLength: 3
+              amount:
+                type: string
+                description: 'Amount of bill</br>**If currency is JPY or IDR ,amount can not be decimals**'
+                maxLength: 0
+                pattern: '^(([1-9]{1}\d*)|([0]{1}))(\.(\d){0,2})?$'
+              bankAccount:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              swiftCode:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              accountName:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              bankName:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              bankCode:
+                type: string
+                description: "Required if payment directly goes to bank account and bank type is not IBAN.<br>a)\tNo need to enter if bank type is IBAN;<br>b)\tEnter SortCode if bank type is SORT;<br>c)\tEnter bank code if bank type is CIPS, ZENGIN, ABA."
+                maxLength: 128
+              bankType:
+                type: string
+                description: Required if payment directly goes to bank account
+                enum:
+                  - IBAN
+                  - SORT
+                  - CIPS
+                  - ZENGIN
+                  - ABA
+              bankRegion:
+                $ref: '#/definitions/region'
+              rfb:
+                type: string
+                description: Reference for beneficiary
+                maxLength: 105
+              payEndTime:
+                type: string
+                description: ISO 8601 date time format
+                pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                default: 7 days after creation
+                example: '2021-01-01T23:59:59Z'
+              memo:
+                type: string
+                description: Remarks information
+                maxLength: 256
+              payerEmail:
+                type: string
+                description: Payer's email
+                maxLength: 64
+              payerPhone:
+                type: string
+                description: Payer's phone
+                maxLength: 32
+              goodsType:
+                description: Type of the goods/service. Assinged by LianLian when start integration.
+                enum:
+                  - VAT_CHARGE
+                  - LOGISTICS_SERVICE
+                  - DISPLAY_ADS
+              callBackUrl:
+                type: string
+                description: Redirect url after payment
+                maxLength: 1024
+              notifyUrl:
+                type: string
+                description: Receivie notify from LianLian Pay after payment
+                maxLength: 1024
+              goodsInfoList:
+                type: array
+                minItems: 1
+                maxItems: 10
+                items:
+                  type: object
+                  required:
+                    - goodsName
+                    - goodsNumber
+                    - goodsCurrency
+                    - goodsUnitPrice
+                    - goodsAmount
+                    - description
+                  properties:
+                    goodsName:
+                      type: string
+                      description: Name of goods
+                    goodsNumber:
+                      type: string
+                      description: Quantity of goods
+                      pattern: '^[1-9]\d*$'
+                    goodsCurrency:
+                      type: string
+                      description: Currency of goodsUnitPrice
+                      minLength: 3
+                      maxLength: 3
+                    goodsUnitPrice:
+                      type: string
+                      description: Unit price of goods
+                      pattern: '^(([1-9]{1}\d*)|([0]{1}))(\.(\d){0,2})?$'
+                    goodsAmount:
+                      type: string
+                      description: Total amount of goods
+                    description:
+                      type: string
+                      description: Description of goods
+                      maxLength: 128
+          x-examples:
+            application/json:
+              accountName: Test Inc.
+              swiftCode: SCBLHKHHXXX
+              memo: test memo
+              bankName: STANDARD CHARTERED BANK (HONG KONG) LTD
+              currency: USD
+              payerEmail: test@lianlianpay.com
+              bankAccount: '57210155555'
+              bankCode: ''
+              amount: '99.11'
+              callBackUrl: 'http://www.testcallBackUrl.com'
+              notifyUrl: 'http://www.baidu.com'
+              bankRegion: HK
+              bankType: IBAN11111
+              payEndTime: '2021-11-19T00:00:00Z'
+              payerPhone: '11111111111'
+              userName: userName
+              userId: '786476571'
+              rfb: it is rfb for bank
+              goodsType: OTHER_TECH_SERVICE
+              extOrderId: '20211111011101011'
+              goodsInfoList:
+                - goodsUnitPrice: '12.34'
+                  goodsNumber: '1'
+                  goodsAmount: '12.34'
+                  description: DISPLAY_ADS
+                  goodsCurrency: EUR
+                  goodsName: 测试
+                - goodsUnitPrice: '12.34'
+                  goodsNumber: '2'
+                  goodsAmount: '12.34'
+                  description: DISPLAY_ADS
+                  goodsCurrency: EUR
+                  goodsName: 测试2
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+      operationId: unassingedbill-add
+      tags:
+        - OPERATIONS
+  /bill:
+    get:
+      responses:
+        '200':
+          description: "| \tCode\t|Message|\n|--------|---------|\n|000000\t|success.|"
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  billId:
+                    type: string
+                    description: Unique bill ID in LianLianPay system
+                    maxLength: 64
+                  extOrderId:
+                    type: string
+                    description: Unique bill ID from partner system
+                    maxLength: 64
+                  userId:
+                    type: string
+                    description: User ID from partner system
+                    maxLength: 64
+                  userName:
+                    type: string
+                    description: User name in partner system
+                    maxLength: 64
+                  currency:
+                    type: string
+                    description: Currency of bill
+                    minLength: 3
+                    maxLength: 3
+                  amount:
+                    type: string
+                    description: Amount of bill
+                  bankAccount:
+                    type: string
+                    maxLength: 128
+                  swiftCode:
+                    type: string
+                    maxLength: 128
+                  accountName:
+                    type: string
+                    maxLength: 128
+                  bankName:
+                    type: string
+                    maxLength: 128
+                  bankCode:
+                    type: string
+                    maxLength: 128
+                  payEndTime:
+                    type: string
+                    pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                  bankType:
+                    type: string
+                    enum:
+                      - IBAN
+                      - SORT
+                      - CIPS
+                      - ZENGIN
+                      - ABA
+                  bankRegion:
+                    $ref: '#/definitions/region'
+                  taxNumber:
+                    type: string
+                    description: Reference for beneficiary</br>i.e. filed `rfb` from CREATE BILL interface
+                    maxLength: 105
+                  memo:
+                    type: string
+                    description: Remarks information
+                    maxLength: 256
+                  payerEmail:
+                    type: string
+                    maxLength: 64
+                  payerPhone:
+                    type: string
+                    maxLength: 32
+                  invoiceUrl:
+                    type: string
+                    maxLength: 1024
+                    description: Invoice url to claim the bill and finish payment for user
+                  status:
+                    type: string
+                    enum:
+                      - WAIT_FOR_PAYMENT
+                      - SUCCESSFUL_PAID
+                      - OVERDUE
+                      - SUCCESSFUL_REFUND
+                  createTime:
+                    type: string
+                    pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                  modifyTime:
+                    type: string
+                    pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                  llUserId:
+                    type: string
+                    description: User ID in Lianlian system
+                    maxLength: 64
+                  redirectUrL:
+                    type: string
+                    description: Redirect url after successful payment
+                    maxLength: 1024
+                  loginUrl:
+                    type: string
+                    description: Url to finish payment for assigned user
+                    maxLength: 1024
+                  payWay:
+                    type: string
+                    description: Payment method
+                    enum:
+                      - QUICK
+                      - PERSONAL_E_BANK
+                      - COMPANY_E_BANK
+                      - LLI_BALANCE
+                  payAmount:
+                    type: string
+                    description: Amount of payment
+                  payCurrency:
+                    type: string
+                    description: Currency of payment
+                    minLength: 3
+                    maxLength: 3
+                  accountDate:
+                    type: string
+                    description: Billing date
+                    pattern: yyyyMMdd
+                  payTime:
+                    type: string
+                    pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                    description: Payment time
+                  goodsInfoList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        goodsUnitPrice:
+                          type: string
+                        goodsAmount:
+                          type: string
+                        goodsNumber:
+                          type: string
+                        description:
+                          type: string
+                        goodsCurrency:
+                          type: string
+                        goodsName:
+                          type: string
+                        goodsType:
+                          type: string
+                      required:
+                        - goodsUnitPrice
+                        - goodsAmount
+                        - goodsNumber
+                        - description
+                        - goodsCurrency
+                        - goodsName
+                        - goodsType
+                  transStatus:
+                    type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              data:
+                billId: '202010301537034'
+                extOrderId: test-0029
+                userId: '2019071293458498'
+                userName: testusername
+                currency: USD
+                amount: '19.00'
+                payEndTime: '2020-12-12T00:00:00Z'
+                status: SUCCESSFUL_PAID
+                createTime: '2020-10-30T02:06:55Z'
+                modifyTime: '2020-10-30T02:07:24Z'
+                llUserId: '2019071293458498'
+                goodsInfoList:
+                  - goodsUnitPrice: '10.00'
+                    goodsAmount: '10.00'
+                    goodsNumber: '1'
+                    description: demoData
+                    goodsCurrency: USD
+                    goodsName: testgoodsName
+                    goodsType: LOGISTICS_SERVICE
+                redirectUrL: 'https://www.demoData-callBackUrl'
+                loginUrl: 'https://gtest.lianlianpay-inc.com/pay/login?lang=zh&orderId=202010301537034&merchantId=202010231113421&access_token=89278124-a96d-49ed-9630-285e204cc222'
+                payWay: LLI_BALANCE
+                payAmount: '19.00'
+                payCurrency: USD
+                accountDate: '20201030'
+                payTime: '2020-10-30T02:07:24Z'
+                transStatus: SUCCESSFUL
+              code: '000000'
+              message: success.
+        '400':
+          description: "| \tCode\t|Message|Description|\n|--------|---------|---------|\n|006002 |账单不存在.|extOrderId does not exists.|\n|400001\t|Missing LLPAY-Signature header.||\n|400003\t|Invalid signature time.||\n|400005 |invalid signature header||\n|400006\t|Signature validation failed.||\n|999995 |Required String parameter 'extOrderId' is not present|Invalid parameter.|"
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support |
+      summary: QUERY BILL
+      description: "Get bill details by external bill ID.\n\nSandbox:\t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/bill**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/bill**\n\n"
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: query
+          name: extOrderId
+          type: string
+          description: Unique bill ID from partner system
+          required: true
+      tags:
+        - OPERATIONS
+      operationId: bill-query
+  /bill/order:
+    post:
+      responses:
+        '200':
+          description: "| \tCode\t|Message|\n|--------|---------|\n|000000\t|success.|"
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  billId:
+                    type: string
+                    description: Unique bill ID in LianLianPay system
+                    maxLength: 64
+                  extOrderId:
+                    type: string
+                    description: Unique bill ID from partner system
+                    maxLength: 64
+                  invoiceUrl:
+                    type: string
+                    description: Invoice url to claim
+                    maxLength: 1024
+                  redirectUrl:
+                    type: string
+                    description: Redirect url after successful payment
+                    maxLength: 1024
+                  loginUrl:
+                    type: string
+                    description: Url to finish payment for user
+                    maxLength: 1024
+                required:
+                  - billId
+                  - extOrderId
+                  - invoiceUrl
+                  - redirectUrl
+                  - loginUrl
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              data:
+                billId: '202111188555555'
+                extOrderId: '202111180000000001'
+                invoiceUrl: 'https://invoicebuilder.lianlianpay-inc.com/invoice/bill/detail?billId=dfsfN0cQ8I32RddfdfX8ZCdfd'
+                redirectUrl: 'http://www.test.com.cn'
+                loginUrl: 'https://gtest.lianlianpay-inc.com/pay/login?lang=zh&orderId=202111188555555&merchantId=202010231113421&access_token=b1ab94d4-6b02-4816-90f2-586198ef982a'
+              code: '000000'
+              message: success.
+        '400':
+          description: "| \tCode\t|Message|Description|\n|--------|---------|---------|\n|100003 |用户状态异常|User status is abnormal|\n|154010 |Merchant id does not exist|goodsType mismatch.|\n|400001\t|Missing LLPAY-Signature header.||\n|400003\t|Invalid signature time.||\n|400005 |invalid signature header||\n|400006\t|Signature validation failed.||\n|999995\t||Invalid Parameter. Returned message such as:\"[billType] can't be null.\"|"
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              error:
+                type: string
+          examples:
+            application/json:
+              code: '154010'
+              message: Merchant id does not exist
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support |
+      summary: CREATE ASSIGNED BILL
+      operationId: assignedbill-add
+      tags:
+        - OPERATIONS
+      description: "Create a new bill which is directly assigned to one user in LianLianPay System.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/bill/order**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/bill/order**\n"
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - extOrderId
+              - userId
+              - userName
+              - currency
+              - amount
+              - llUserId
+              - goodsType
+              - billType
+              - goodsInfoList
+            properties:
+              extOrderId:
+                type: string
+                description: Unique bill ID from partner
+                maxLength: 64
+              userId:
+                type: string
+                description: User ID from partner system
+                maxLength: 64
+              userName:
+                type: string
+                description: User name from partner system
+                maxLength: 64
+              currency:
+                type: string
+                description: Currency of bill
+                minLength: 3
+                maxLength: 3
+              amount:
+                type: string
+                description: 'Amount of bill</br>**If currency is JPY or IDR ,amount can not be decimals**'
+                pattern: '^(([1-9]{1}\d*)|([0]{1}))(\.(\d){0,2})?$'
+              bankAccount:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              swiftCode:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              accountName:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              bankName:
+                type: string
+                description: Required if payment directly goes to bank account
+                maxLength: 128
+              bankCode:
+                type: string
+                description: "Required if payment directly goes to bank account and bank type is not IBAN.<br>a)\tNo need to enter if bank type is IBAN;<br>b)\tEnter SortCode if bank type is SORT;<br>c)\tEnter bank code if bank type is CIPS, ZENGIN, ABA."
+                maxLength: 128
+              bankType:
+                type: string
+                description: Required if payment directly goes to bank account
+                enum:
+                  - IBAN
+                  - SORT
+                  - CIPS
+                  - ZENGIN
+                  - ABA
+                maxLength: 8
+              bankRegion:
+                $ref: '#/definitions/region'
+              rfb:
+                type: string
+                description: Reference for beneficiary
+                maxLength: 105
+              payEndTime:
+                type: string
+                description: ISO 8601 date time format
+                pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                default: 7 days after creation
+                example: '2021-01-01T23:59:59Z'
+              memo:
+                type: string
+                description: Remarks information
+                maxLength: 256
+              payerEmail:
+                type: string
+                description: Payer's email
+                maxLength: 64
+              payerPhone:
+                type: string
+                description: Payer's phone
+                maxLength: 32
+              llUserId:
+                type: string
+                description: User id in LianLian System
+                maxLength: 64
+              llMerchantId:
+                type: string
+                description: User merchant id in LianLian System
+                maxLength: 64
+              goodsType:
+                description: Type of the goods/service. Assinged by LianLian when start integration.
+                enum:
+                  - DISPLAY_ADS
+                  - VAT_CHARGE
+                  - LOGISTICS_SERVICE
+              callBackUrl:
+                type: string
+                description: Redirect url after payment
+                maxLength: 1024
+              notifyUrl:
+                type: string
+                description: Receivie notify from LianLian Pay after payment
+                maxLength: 1024
+              billType:
+                type: string
+                description: 'Specific bill type enum, should keep the same as configured in LianLian system'
+                maxLength: 1024
+              orderExtInfo:
+                type: string
+                description: 'Json form, extend field'
+                maxLength: 4000
+              goodsInfoList:
+                type: array
+                minItems: 1
+                maxItems: 20
+                items:
+                  type: object
+                  required:
+                    - goodsName
+                    - goodsNumber
+                    - goodsCurrency
+                    - goodsUnitPrice
+                    - goodsAmount
+                    - description
+                  properties:
+                    goodsName:
+                      type: string
+                      description: Name of goods
+                    goodsNumber:
+                      type: string
+                      description: Quantity of goods
+                      pattern: '^[1-9]\d*$'
+                    goodsCurrency:
+                      type: string
+                      description: Currency of goodsUnitPrice
+                      minLength: 3
+                      maxLength: 3
+                    goodsUnitPrice:
+                      type: string
+                      description: Unit price of goods
+                      pattern: '^(([1-9]{1}\d*)|([0]{1}))(\.(\d){0,2})?$'
+                    goodsAmount:
+                      type: string
+                      description: Total amount of goods
+                    description:
+                      type: string
+                      description: Description of goods
+                      maxLength: 128
+          x-examples:
+            application/json:
+              accountName: Test Inc.
+              swiftCode: SCBLHKHHXXX
+              memo: test memo
+              bankName: STANDARD CHARTERED BANK (HONG KONG) LTD
+              llUserId: '2021022763606497'
+              currency: USD
+              payerEmail: test@lianlianpay.com
+              bankAccount: '57210159461'
+              bankCode: ''
+              amount: '99.11'
+              callBackUrl: 'http://www.callBackUrl.com'
+              bankRegion: HK
+              bankType: IBAN
+              billType: TEST_BILL_TYPE
+              payEndTime: null
+              payerPhone: '15555555555'
+              userName: userName
+              userId: '78647657111'
+              rfb: it is rfb for bank
+              goodsType: OTHER_TECH_SERVICE
+              extOrderId: '202111180000000001'
+              llMerchantId: '201911110000032005'
+              notifyUrl: 'http://www.notifyUrl.com'
+              goodsInfoList:
+                - goodsUnitPrice: '12.34'
+                  goodsNumber: '1'
+                  goodsAmount: '12.34'
+                  description: DISPLAY_ADS
+                  goodsCurrency: EUR
+                  goodsName: 测试
+                - goodsUnitPrice: '12.34'
+                  goodsNumber: '2'
+                  goodsAmount: '12.34'
+                  description: DISPLAY_ADS
+                  goodsCurrency: EUR
+                  goodsName: 测试2
+  /refund/order:
+    post:
+      responses:
+        '200':
+          description: "| \tCode\t|Message|\n|--------|---------|\n|000000\t|success.|"
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  refundBillId:
+                    type: string
+                    description: Unique refund bill ID in LianLianPay system
+                    maxLength: 64
+                  refundOrderId:
+                    type: string
+                    description: Unique refund order ID from partner system
+                    maxLength: 64
+                  billId:
+                    type: string
+                    description: Original bill ID in LianLianPay system
+                    maxLength: 64
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              data:
+                refundBillId: '202011162087683'
+                refundOrderId: '202011161001'
+                billId: '202011162085329'
+              code: '000000'
+              message: success.
+        '400':
+          description: "| \tCode\t|Message|Description|\n|--------|---------|---------|\n|1001|当前时间大于退款有效期||\n|310011||Bill doesn't support refund.|\n|910001|外部退款账单金额超过限制||\n|910011|支付配置不存在||\n|910008|未找到外部账单|billId not exists.|\n|910012|外部账单未支付|bill haven't paid.|\n|910030|外部退款账单金额和币种不匹配|Refund amount or currency mismatch。|\n|910041|与历史退款参数不匹配||\n|400001|Missing LLPAY-Signature header.||\n|400003|Invalid signature time.||\n|400005|invalid signature header||\n|400006|Signature validation failed.||\n|999995||Invalid Parameter. Returned message such as:\"[billType] can't be empty.\"|"
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              error:
+                type: string
+          examples:
+            application/json:
+              code: '910008'
+              message: 未找到外部账单
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support |
+          schema: {}
+          examples: {}
+      summary: REFUND PAID BILL
+      operationId: refund-order
+      tags:
+        - OPERATIONS
+      description: "Fully refund paid bill for users.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/refund/order**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/refund/order**"
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              refundOrderId:
+                type: string
+                description: Unique refund order ID from partner system
+                maxLength: 64
+              refundTime:
+                type: string
+                pattern: yyyyMMdd
+              billId:
+                type: string
+                description: Original bill ID in LianLianPay system
+                maxLength: 64
+              billType:
+                type: string
+                maxLength: 1024
+                description: 'Specific bill type enum, should keep the same as configured in LianLian system'
+              notifyUrl:
+                type: string
+                description: Callback URI for back-end after successful refund
+                maxLength: 1024
+              refundCurrency:
+                type: string
+                description: Refund currency which should be the same as original bill
+                minLength: 3
+                maxLength: 3
+              refundAmount:
+                type: string
+                description: Refund amount which should be the same as original bill
+            required:
+              - refundOrderId
+              - billId
+              - billType
+              - notifyUrl
+              - refundCurrency
+              - refundAmount
+          x-examples:
+            application/json:
+              refundOrderId: '202011161001'
+              refundTime: '20201116'
+              billId: '202011162085329'
+              billType: TEST_BILL_TYPE
+              notifyUrl: 'http://www.baidu.com'
+              refundCurrency: USD
+              refundAmount: '51.51'
+    get:
+      responses:
+        '200':
+          description: "| \tCode\t|Message|\n|--------|---------|\n|000000\t|success.|"
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  refundBillId:
+                    type: string
+                    description: Unique refund bill ID in LianLianPay system
+                    maxLength: 64
+                  refundOrderId:
+                    type: string
+                    description: Unique refund order ID from partner system
+                    maxLength: 64
+                  createTime:
+                    type: string
+                    pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                  refundTime:
+                    type: string
+                    pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                  billId:
+                    type: string
+                    description: Original bill id in LianLianPay system
+                    maxLength: 64
+                  refundAmount:
+                    type: string
+                  refundCurrency:
+                    type: string
+                    minLength: 3
+                    maxLength: 3
+                  notifyUrl:
+                    type: string
+                    description: Callback URI for back-end after successful refund
+                    maxLength: 1024
+                  status:
+                    type: string
+                    description: Status of refund order
+                    enum:
+                      - WAIT_REFUND
+                      - SUCCESSFUL
+                      - OVER_DUE
+                  accountDate:
+                    type: string
+                    pattern: yyyyMMdd
+                    description: Billing date
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              data:
+                refundBillId: '202011162087683'
+                refundOrderId: '202011161001'
+                createTime: '2020-11-16T04:38:18.000Z'
+                refundTime: '2020-11-15T20:38:20.000Z'
+                billId: '202011162085329'
+                refundAmount: '51.51'
+                refundCurrency: USD
+                notifyUrl: 'http://www.baidu.com'
+                status: SUCCESSFUL
+                accountDate: '20201116'
+              code: '000000'
+              message: success.
+        '400':
+          description: "| \tCode\t|Message|Description|\n|--------|---------|---------|\n|006002 |账单不存在.|refundOrderId does not exists.|\n|400001\t|Missing LLPAY-Signature header.||\n|400003\t|Invalid signature time.||\n|400005 |invalid signature header||\n|400006\t|Signature validation failed.||\n|999995 |Required String parameter 'refundOrderId' is not present|Invalid parameter.|"
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              error:
+                type: string
+          examples:
+            application/json:
+              code: '006002'
+              message: 账单不存在.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support |
+      summary: QUERY REFUND ORDER
+      operationId: query-refund-order
+      tags:
+        - OPERATIONS
+      description: "Get refund order details by external refund ID.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/refund/order**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/refund/order**"
+      parameters:
+        - in: query
+          name: refundOrderId
+          type: string
+          required: true
+          description: Unique refund order ID from partner system
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          default: application/json
+          required: true
+definitions:
+  region:
+    type: string
+    title: region
+    description: "|Bank Region | \tDescription\t|\n|----------|--------|\n|US\t     |The United States\t|\n|CA\t     |Canada\t|\n|GB\t     |The British\t|\n|JP\t     |Japan\t|\n|AU\t     |Australia\t|\n|DE\t     |Germany\t|\n|FR\t     |France\t|\n|IT\t     |Italy\t|\n|ES\t     |Spain\t|\n|HK\t     |Hong Kong\t|\n|AT\t     |Austria\t|\n|AE\t     |United Arab Emirate|"
+    x-internal: false
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: OPERATIONS
+securityDefinitions: {}
+basePath: /api/v1/gateway

@@ -1,0 +1,166 @@
+swagger: '2.0'
+info:
+  title: Funding API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  '/funding/{fundingId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      summary: 查询加款信息
+      tags:
+        - 接口
+    parameters:
+      - name: fundingId
+        in: path
+        type: string
+        required: true
+    patch:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | 错误码 | 解释 |
+            |------|-------------|
+            | 999995 |参数错误 |
+            |170102|加款类型不允许红冲|
+            |170103|加款单已红冲|
+            |170104|加款单状态不可红冲|
+            |170105|红冲异常|
+            |170106|已分账，不可红冲|
+            |170107|已分发，不可红冲|
+        '500':
+          description: Internal Server Error
+      summary: 发起红冲
+      parameters: []
+      description: 将已加款成功的资金退回
+      tags:
+        - 接口
+  /fundings:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/new-model'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      summary: 批量查询加款信息
+      tags:
+        - 接口
+      parameters:
+        - in: query
+          name: virtualAccountNumber
+          type: string
+          maxLength: 32
+          description: 虚拟卡号
+        - in: query
+          name: pageNum
+          type: integer
+          description: |
+            查询页码
+
+            若返回数据为多条，可以将数据进行分页，将该字段与`pageSize` 配合使用
+          default: 1
+          minimum: 1
+        - in: query
+          name: pagSize
+          type: integer
+          description: |
+            单页展示数据条数
+
+            若返回数据为多条，需要将该字段与`pageNum`联合使用，单页做多数据展示条数为20条
+          default: 20
+          maximum: 20
+definitions:
+  new-model:
+    type: object
+    title: 加款
+    description: 连连侧加款流水对象
+    x-tags:
+      - 对象
+    properties:
+      fundingId:
+        type: string
+        description: 连连侧加款唯一编号
+        maxLength: 64
+      createTime:
+        type: string
+        description: '加款时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+      updateTime:
+        type: string
+        description: '状态更新时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+      currency:
+        type: string
+        description: 加款币种，参考附录币种代码
+        minLength: 3
+        maxLength: 3
+      amount:
+        type: string
+        description: 加款金额
+        maxLength: 10
+      payerName:
+        type: string
+        description: 付款人名称
+        maxLength: 64
+      payerAcctNo:
+        type: string
+        description: 付款人打款账号
+        maxLength: 32
+      virtualAccountNumber:
+        type: string
+        description: 虚拟卡号
+        maxLength: 32
+      remark:
+        type: string
+        description: 付款人备注信息
+        maxLength: 140
+      status:
+        type: string
+        description: |
+          加款状态，状态如下
+
+          |值|解释|
+          |----|-----|
+          |Processing|处理中|
+          |Successed|加款成功|
+          |Refunding|退款中|
+          |Refund Successed|退款成功|
+          |Hedging|红冲中（平台将已加款成功的资金退回，加款的状态会变为红冲中）|
+          |Hedge Successed|红冲成功|
+        enum:
+          - Processing
+          - Successed
+          - Hedging
+          - Refunding
+          - Refund Successed
+          - Hedge Successed
+tags:
+  - name: Operations
+  - name: 接口
+basePath: /connect/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json

@@ -1,0 +1,783 @@
+swagger: '2.0'
+x-stoplight:
+  id: a516170e72d6e
+info:
+  title: Trade File API
+  version: '1.0'
+  description: |-
+    Upon successfully providing payer information, the corresponding materials will be reviewed by LianLian Global. 
+
+    It’s allowed to re-provide the materials with respect to the bill being rejected. 
+
+    Please firstly use Document Api to upload materials. Note: if the document name is replicated, the previous old document will be replaced by the new one.
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /tradeFile:
+    post:
+      summary: Create Trade File
+      operationId: post-tradefile
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Trade-File-Info'
+          examples:
+            Example 1:
+              tradefileId: tf2023010100001
+              payerInfo:
+                payerId: Payer20230101000001
+                payerName: 连连国际
+                payerIdNo: '330101200301010001'
+              relationship: SELF
+              fundingId:
+                - '2023032028146046'
+                - '2023032028145521'
+              institutionName: Harvard University
+              institutionCountry: USA
+              tradeCurrency: CNY
+              tradeAmount: '99.01'
+              beneficiaryName: 连连国际
+              beneficiaryIdNo: '330101200301010001'
+              beneficiaryAddress: 杭州市滨江区越达巷79号
+              attachment: '202110182803316'
+              tradeCode: '223022'
+              tradeBackground: tuition
+              directToBeneficiary: 'Y'
+              payChannel: Flywire
+              status: AUDITING
+              failReason: test
+              createTime: '2019-08-24T14:15:22Z'
+              modifyTime: '2019-08-24T14:15:22Z'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 300001|有效贸易材料已存在|
+            | 300002|贸易材料附件数量超过上限|
+            | 300003|贸易材料未通过审核 |
+            | 300004|付款人不存在|
+            | 300005|KYC审核中 |
+            | 300006|KYC审核失败|
+            | 300007|受益人或机构命中国际反洗钱|
+            | 300008|加款单不存在|
+            | 300009|加款单付款人不一致|
+            | 300010|加款单付款人与payerId付款人不一致|
+            | 300011|加款单已被其他材料使用|
+            | 300012|累积加款金额不足|
+            | 300013|加款单锁定中，请稍后|
+            | 300014|贸易材料不存在|
+            | 300015|贸易材料已存在汇兑指令|
+            | 300016|受益人认证失败|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: nvif2acs5pa0j
+              message:
+                type: string
+                x-stoplight:
+                  id: bmlwrfulzqzmo
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: xaecsdouojg6q
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '300012'
+              message: 累积加款金额不足
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: jcymkak4j568l
+              message:
+                type: string
+                x-stoplight:
+                  id: pq5gcrbfi92ex
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: z3hj1zshjopnf
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: TuitionInfo
+            type: object
+            description: Trade information defined in LianLian Global's system
+            x-tags:
+              - Models
+            required:
+              - tradeFileId
+              - payerInfo
+              - fundingId
+              - tradeCurrency
+              - tradeAmount
+              - institutionName
+              - institutionCountry
+              - tradeBackground
+              - beneficiaryName
+              - beneficiaryIdType
+              - beneficiaryIdNo
+              - relationship
+              - attachment
+              - tradeCode
+              - directToBeneficiary
+            properties:
+              tradeFileId:
+                type: string
+                description: Unique Id for this Trade Information
+                maxLength: 32
+              payerInfo:
+                type: object
+                description: Payer information
+                properties:
+                  payerId:
+                    type: string
+                    maxLength: 32
+                    description: unique payer ID from client
+                  payerName:
+                    type: string
+                    description: 'Payer name in Chinese, mandatory if payerId is empty'
+                    maxLength: 128
+                  payerIdNo:
+                    type: string
+                    description: 'Payer identification number, mandatory if payerId is empty'
+                    maxLength: 64
+              fundingId:
+                type: array
+                description: Unique funding ID in LianLian Global's system
+                items:
+                  type: string
+                  maxLength: 64
+              tradeCurrency:
+                type: string
+                description: 'Trade currency, reference to the appendix [Currency Code](https://developer.lianlianglobal.com/docs/outbound-payout-ka/ZG9jOjI5ODg2ODcw-new-subpage-1)'
+                maxLength: 3
+              tradeAmount:
+                type: string
+                description: Trade amount
+                maxLength: 24
+              institutionName:
+                type: string
+                description: |-
+                  Institution Name,one of 
+                  |trade background|Institution|
+                  |----|-----|
+                  |Medical Related|Hosptial|
+                  |Study Abroad Related|University|
+                maxLength: 128
+              institutionCountry:
+                type: string
+                description: |-
+                  Institution country/country code， see appendix-[Country Code](https://developer.lianlianglobal.com/docs/outbound-payout-ka/ZG9jOjI5ODg2ODcy-country-code)
+                                                                                    
+                maxLength: 3
+              tradeBackground:
+                type: string
+                description: |-
+                  trade background, one of
+
+                  |Code|Description|
+                  |----|----|
+                  |tuition|tuition fee|
+                  |quarterage|quarterage fee|
+                  |insurance|insurance|
+                  |custodyFee|student custody fee|
+                  |guarantee|guarantee fee|
+                  |medical|medical related fee|
+                  |appraisal|appraisal Service Fee|
+                  |LivingExpense|living expense|
+                  |visaFee|visa fee|
+                  |applicationFee|application fee|
+                  |other|other|
+                enum:
+                  - tuition
+                  - quarterage
+                  - insurance
+                  - custodyFee
+                  - guarantee
+                  - appraisal
+                  - LivingExpense
+                  - visaFee
+                  - applicationFee
+                  - other
+                example: tuition
+              beneficiaryName:
+                type: string
+                description: |-
+                  Beneficiary name, multiple separated by `|`, the different trade background are as follows:
+                  |trade background|beneficiary name|
+                  |----|-----|
+                  |Medical Care|Patient's name|
+                  |Study Abroad Related|Student's name|
+                maxLength: 1000
+              beneficiaryIdType:
+                type: string
+                x-stoplight:
+                  id: 0q9yqmzmczeil
+                description: "beneficiary identification type\r\n\r\n| value| description |\r\n|--------|-------------|\r\n|ID_CARD|Chinese ID Card|\r\n|OTHER|Passport or other ID type|"
+              beneficiaryIdNo:
+                type: string
+                maxLength: 64
+              beneficiaryBirth:
+                type: string
+                x-stoplight:
+                  id: cfwhqfcwwy1ro
+                maxLength: 200
+                format: date
+                pattern: yyyy-MM-dd
+                example: '2023-01-31'
+                description: 'Beneficiary''s birthday, multiple separated by `|`, format is `yyyy-MM-dd`'
+              beneficiaryAddress:
+                type: string
+                maxLength: 256
+                description: Beneficiary address
+              relationship:
+                type: string
+                description: |-
+                  Payer and beneficiary relationship, one of:
+
+                  If payer type is "INDIVIDUAL"
+
+                  | value | description |
+                  |--------|-------------|
+                  |SELF| payer is beneficiary |
+                  |FAMILY| Payer is the family member of beneficiary|
+                  |IMMEDIATE FAMILY| Parents, children, spouse|
+                  |OTHER RELATIVES|Any relative other than "Parents, children, spouse"|
+                  |FRIEND|Friends|
+                  |OTHER |other relationship|
+
+                  If payer type is "CORPORATE" 
+
+                  | value | description |
+                  |--------|-------------|
+                  |ORGANIZATION|The company/school to which the student belongs|
+                  |INTERMEDIARY|Student commissioned agency|
+                  |OTHER |other relationship|
+                enum:
+                  - SELF
+                  - IMMEDIATE FAMILY
+                  - OTHER RELATIVES
+                  - FRIEND
+                  - ORGANIZATION
+                  - INTERMEDIARY
+                  - OTHER
+              attachment:
+                type: string
+                description: 'Document id, supported file extensions are PDF, JPG, GIF, TIF, PNG, JPEG, ZIP, RAR. 5 documents at most. Upload through API [Upload Document](https://developer.lianlianglobal.com/docs/outbound-payout-ka/c6e076e722292-upload-document)'
+                maxLength: 256
+              tradeCode:
+                type: string
+                description: |-
+                  Trade Code, one of 
+                  |Code|Description|
+                  |---|----|
+                  |223021|Going Abroad for medical treatment|
+                  |223022|Study Abroad Related|
+                  |228023|Management consulting fee|
+                  |228039|Commodity appraisal service fee|
+                  |229030|Telemedicine|
+                  |321000|Salary distribution|
+              directToBeneficiary:
+                type: string
+                description: |-
+                  Whether the fee is paid directly to the beneficiary, one of 
+
+                  |Code|Description|
+                  |----|-----|
+                  |N|N0|
+                  |Y|YES|
+                enum:
+                  - 'Y'
+                  - 'N'
+              payChannel:
+                type: string
+                description: 'Payment channel, mandatory if `directToBeneficiary = N`'
+              remark:
+                type: string
+                maxLength: 512
+                x-stoplight:
+                  id: xpbe5s8b5qpy3
+          description: ''
+          x-examples:
+            Example 1:
+              tradefileId: tf2023010100001
+              payerInfo:
+                payerId: Payer20230101000001
+                payerName: 连连国际
+                payerIdNo: '330101200301010001'
+              relationship: SELF
+              fundingId:
+                - '2023032028146046'
+                - '2023032028145521'
+              institutionName: Harvard University
+              institutionCountry: USA
+              tradeCurrency: CNY
+              tradeAmount: '99.01'
+              beneficiaryName: 连连国际
+              beneficiaryIdNo: '330101200301010001'
+              beneficiaryAddress: 杭州市滨江区越达巷79号
+              attachment: '202110182803316'
+              tradeCode: '223022'
+              tradeBackground: tuition
+              directToBeneficiary: 'Y'
+              payChannel: Flywire
+      tags:
+        - Operations
+      description: |
+        Submit trading material documents. Before making a request, supporting documents should be uploaded into LianLian Global's file system first. Supporting document reviewing results will be returned via webhook 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  /tradeFile/supplementaryAttachment:
+    post:
+      summary: Add Trade File Attachment
+      operationId: post-tradefile
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Trade-File-Info_Supplementary_Attachment'
+          examples:
+            Example 1:
+              tradefileId: string
+              createTime: '2019-08-24T14:15:22Z'
+          headers: {}
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 300002|贸易材料附件数量超过上限|
+            | 300014|贸易材料不存在|
+            | 300017|贸易材料状态不支持修改 |
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '300012'
+              message: 累积加款金额不足
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: TuitionInfo
+            type: object
+            description: Trade information defined in LianLian Global's system
+            x-tags:
+              - Models
+            required:
+              - tradeFileId
+              - attachment
+            properties:
+              tradeFileId:
+                type: string
+                description: The ID of the trade file needing attachments
+                maxLength: 32
+              attachment:
+                type: string
+                description: 'Document id, supported file extensions are PDF, JPG, GIF, TIF, PNG, JPEG, ZIP, RAR. 5 documents at most. Upload through API [Upload Document](https://developer.lianlianglobal.com/docs/outbound-payout-ka/c6e076e722292-upload-document)'
+                maxLength: 256
+          description: ''
+          x-examples:
+            Example 1:
+              tradefileId: tf2023010100001
+              payerInfo:
+                payerId: Payer20230101000001
+                payerName: 连连国际
+                payerIdNo: '330101200301010001'
+              relationship: SELF
+              fundingId:
+                - '2023032028146046'
+                - '2023032028145521'
+              institutionName: Harvard University
+              institutionCountry: USA
+              tradeCurrency: CNY
+              tradeAmount: '99.01'
+              beneficiaryName: 连连国际
+              beneficiaryIdNo: '330101200301010001'
+              beneficiaryAddress: 杭州市滨江区越达巷79号
+              attachment: '202110182803316'
+              tradeCode: '223022'
+              tradeBackground: tuition
+              directToBeneficiary: 'Y'
+              payChannel: Flywire
+      tags:
+        - Operations
+      description: 'Add attachments to an existing trade file. Before you use this interface, ensure the files are uploaded to LianLian Global’s system. This lets you attach supported files to a specific trade file.'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-stoplight:
+        id: 6q845sp6bhusl
+    parameters: []
+  '/tradeFile/{tradeFileId}':
+    parameters:
+      - name: tradeFileId
+        in: path
+        type: string
+        required: true
+    get:
+      summary: Get Trade File by trade file ID
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Trade-File-Info'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-tradefile-id
+      description: Get Trade File by trade file ID
+      consumes:
+        - application/json
+      produces:
+        - application/json
+definitions:
+  Trade-File-Info:
+    title: Trade-File-Info
+    type: object
+    x-tags:
+      - Models
+    x-stoplight:
+      id: 5uajlqair4d4c
+    required:
+      - payerInfo
+      - fundingId
+      - tradeCurrency
+      - tradeAmount
+      - institutionName
+      - institutionCountry
+      - tradeBackground
+      - beneficiaryName
+      - benificiaryIdType
+      - beneficiaryIdNo
+      - relationship
+      - attachment
+      - tradeCode
+      - directToBeneficiary
+      - status
+      - createTime
+      - modifyTime
+    properties:
+      tradefileId:
+        type: string
+        description: Unique Id for this Trade Information
+        maxLength: 32
+      payerInfo:
+        type: object
+        description: Payer information
+        properties:
+          payerId:
+            type: string
+            maxLength: 32
+            description: unique payer ID from client
+          payerName:
+            type: string
+            description: 'Payer name in Chinese, mandatory if payerId is empty'
+            maxLength: 128
+          payerIdNo:
+            type: string
+            description: 'Payer identification number, mandatory if payerId is empty'
+            maxLength: 64
+      fundingId:
+        type: array
+        description: Unique funding ID in LianLian Global's system
+        items:
+          type: string
+          maxLength: 64
+      tradeCurrency:
+        type: string
+        description: 'Trade currency, reference to the appendix Currency Code'
+        maxLength: 3
+      tradeAmount:
+        type: string
+        description: Trade amount
+        maxLength: 24
+      institutionName:
+        type: string
+        description: |-
+          Institution Name,one of 
+          |trade background|Institution|
+          |----|-----|
+          |Medical Related|Hosptial|
+          |Study Abroad Related|University|
+        maxLength: 128
+      institutionCountry:
+        type: string
+        description: |-
+          Institution country/country code， see Appendix-Country Code
+                                                                            
+        maxLength: 3
+      tradeBackground:
+        type: string
+        description: |-
+          trade background, one of
+
+          |Code|Description|
+          |----|----|
+          |tuition|tuition fee|
+          |quarterage|quarterage fee|
+          |insurance|insurance|
+          |custodyFee|student custody fee|
+          |guarantee|guarantee fee|
+          |medical|medical related fee|
+          |LivingExpense|living expense|
+          |other|other|
+        enum:
+          - tuition
+          - quarterage
+          - insurance
+          - custodyFee
+          - guarantee
+          - other
+          - LivingExpense
+      beneficiaryName:
+        type: string
+        description: |-
+          beneficiary name，one of 
+          |trade background|beneficiary|
+          |----|-----|
+          |Medical Care|Patient|
+          |Study Abroad Related|Student|
+        maxLength: 128
+      benificiaryIdType:
+        type: string
+        x-stoplight:
+          id: xi4pjeav8mw41
+        description: "benificiary identification type\r\n\r\n| value| description |\r\n|--------|-------------|\r\n|ID_CARD|Chinese ID Card|\r\n|OTHER|Passport or other ID type|"
+      beneficiaryIdNo:
+        type: string
+        description: 'Beneficiary identification number,mandatory if `tradeBackground = LivingExpense`'
+        maxLength: 64
+      beneficiaryBirth:
+        type: string
+        x-stoplight:
+          id: nqhs9t4qodwal
+        format: date
+        pattern: yyyy-MM-dd
+        example: '2023-01-31'
+        maxLength: 200
+        description: 'Beneficiary''s birthday, format is `yyyy-MM-dd`'
+      beneficiaryAddress:
+        type: string
+        maxLength: 256
+        description: Beneficiary address
+      relationship:
+        type: string
+        description: |-
+          Payer and beneficiary relationship, one of:
+
+          If payer type is "INDIVIDUAL"
+
+          | value | description |
+          |--------|-------------|
+          |SELF| payer is beneficiary |
+          |FAMILY| Payer is the family member of beneficiary|
+          |IMMEDIATE FAMILY| Parents, children, spouse|
+          |OTHER RELATIVES|Any relative other than "Parents, children, spouse"|
+          |FRIEND|Friends|
+          |OTHER |other relationship|
+
+          If payer type is "CORPORATE" 
+
+          | value | description |
+          |--------|-------------|
+          |ORGANIZATION|The company/school to which the student belongs|
+          |INTERMEDIARY|Student commissioned agency|
+          |OTHER |other relationship|
+        enum:
+          - SELF
+          - IMMEDIATE FAMILY
+          - OTHER RELATIVES
+          - FRIEND
+          - ORGANIZATION
+          - INTERMEDIARY
+          - OTHER
+      attachment:
+        type: string
+        description: 'Document id, supported file extensions are PDF, JPG, GIF, TIF, PNG, JPEG, ZIP, RAR. 5 documents at most.'
+        maxLength: 256
+      tradeCode:
+        type: string
+        description: |-
+          Trade Code, one of 
+          |Code|Description|
+          |---|----|
+          |223022|Study Abroad Related|
+          |223021|Going Abroad for medical treatment|
+          |229030|Telemedicine|
+          |321000|Salary distribution|
+      directToBeneficiary:
+        type: string
+        description: |-
+          Whether the fee is paid directly to the beneficiary, one of 
+
+          |Code|Description|
+          |----|-----|
+          |N|N0|
+          |Y|YES|
+        enum:
+          - 'Y'
+          - 'N'
+      payChannel:
+        type: string
+        description: Payment channel， mandatory if `directToBeneficiary = N`
+      remark:
+        type: string
+        maxLength: 512
+        x-stoplight:
+          id: dedzg7b249gcs
+      status:
+        type: string
+        description: |-
+          Tuition evidence status, one of
+
+          |value|descrption|
+          |------|-------------|
+          |AUDITING|Under review|
+          |APPROVED|Approved|
+          |REJECT|Rejected|
+        enum:
+          - AUDITING
+          - APPROVED
+          - REJECT
+      failReason:
+        type: string
+        description: Failure reason
+        maxLength: 128
+      createTime:
+        type: string
+        format: date-time
+        description: 'create time, UTC+0'
+      modifyTime:
+        type: string
+        format: date-time
+        description: 'Modify time, UTC+0'
+      payableAmount:
+        type: string
+        x-stoplight:
+          id: 3scrf46v0n1kg
+        description: The remaining available payout amount
+      payableCurrency:
+        type: string
+        x-stoplight:
+          id: ccyrczxpjtsvs
+        description: The remaining available payout currency
+  Trade-File-Info_Supplementary_Attachment:
+    title: Trade-File-Info-Supplementary-Attachment
+    x-stoplight:
+      id: y2467svtdpt1s
+    type: object
+    x-tags:
+      - Models
+    properties:
+      tradefileId:
+        type: string
+        description: Unique Id for this Trade Information
+        maxLength: 32
+      createTime:
+        type: string
+        format: date-time
+        description: 'create time, UTC+0'
+basePath: /outbound/card/v1/
+security: []
+securityDefinitions: {}

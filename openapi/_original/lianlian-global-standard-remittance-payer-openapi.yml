@@ -1,0 +1,382 @@
+swagger: '2.0'
+info:
+  title: Payer API
+  description: 'Submit the payer information, and *LianLian Global* will review and verify the payer information. The payer''s review results are notified through webhook or queried through an interface.<br>提交付款人信息，*连连国际*会对付款人信息进行审核校验。 付款人审核结果通过webhook进行通知或通过接口查询'
+  contact:
+    email: fx_support@lianlianpay.com
+  version: '1.0'
+host: gtest-open-api.lianlianpay-inc.com
+basePath: /remittance/outward/payerinfo
+schemes:
+  - https
+paths:
+  /apply:
+    post:
+      tags:
+        - Operations
+      summary: Create a Payer
+      description: |-
+        Submit payer information through this interface and conduct KYC review.<br>
+        通过该接口提交付款人信息并进行kyc审核.
+      operationId: post-payer
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            description: Payer info
+            properties:
+              payerId:
+                type: string
+                description: Unique payer ID from client
+                maxLength: 32
+              payerType:
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+                description: |-
+                  Payer type, one of
+
+                  | value | description |
+                  |--------|-------------|
+                  |INDIVIDUAL|个人|
+                  |CORPORATE |企业|
+              payerName:
+                type: string
+                description: Payer name in Chinese
+                maxLength: 128
+              payerIdType:
+                enum:
+                  - ID_CARD
+                  - UNIFIED_CREDIT_CODE
+                description: |-
+                  Payer identification type
+
+                  | value| description |
+                  |--------|-------------|
+                  |ID_CARD|ID Card|
+                  |UNIFIED_CREDIT_CODE|Uniform social credit code |
+              payerIdNo:
+                type: string
+                description: Payer identification number
+                maxLength: 18
+              payerContactName:
+                type: string
+                description: 'Payer contact name, mandatory for corporate payer'
+                maxLength: 128
+              payerContactNumber:
+                type: string
+                description: 'Payer contact number, mandatory for corporate payer'
+                maxLength: 32
+              payerEmailAddress:
+                type: string
+                description: Payer email address
+                maxLength: 48
+                x-stoplight:
+                  id: k6x5nrnqm6gft
+                format: email
+              payerCountryCode:
+                type: string
+                x-stoplight:
+                  id: 2aw32tpc8dmwj
+                description: 'Payer country code, ISO 3166 Alpha-3, refer to the appendix [Country Code](https://developer.lianlianglobal.com/docs/standard-remittance/5b93cbbe6d4f4-country-code)'
+                example: CHN
+                maxLength: 3
+                minLength: 3
+            required:
+              - payerId
+              - payerType
+              - payerName
+              - payerIdType
+              - payerIdNo
+          description: ''
+          x-examples:
+            Example 1:
+              payerId: Payer0001
+              payerType: CORPORATE
+              payerName: LianLian Global
+              payerIdType: UNIFIED_CREDIT_CODE
+              payerIdNo: '330103432895205'
+              payerContactName: 连连国际
+              payerContactNumber: 400-091-0999
+              payerEmailAddress: user@example.com
+              payerCountryCode: CHN
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            description: Payer information object in LianLian Global's system
+            properties:
+              payerId:
+                type: string
+                x-stoplight:
+                  id: yjfme9mr4ph3d
+                maxLength: 32
+                description: Unique payer id from client
+              status:
+                type: string
+                x-stoplight:
+                  id: wdq8tfx4vqrmt
+                description: "Payer status, one of\r\n\r\n|value|descrption|\r\n|------|-------------|\r\n|PAYER_INFO_APPROVED|付款人信息验证通过|\r\n|PAYER_INFO_PROCESSING|付款人信息处理中|\r\n|PAYER_INFO_FAILED|付款人信息校验失败|"
+              failReason:
+                type: string
+                x-stoplight:
+                  id: 1u5hh66f7opoh
+                description: Payer verify info
+                maxLength: 128
+            required:
+              - payerId
+              - status
+          examples:
+            Example 1:
+              payerId: Payer202301010001
+              status: PAYER_INFO_PROCESSING
+              failReason: 审核中
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 180101|付款人已经存在 |
+            | 180102|付款人被拒绝|
+            | 999995 | 参数校验不通过|
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '180101'
+              message: 付款人已经存在
+              httpCode: '400'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact Lianlian Pay for technical support'
+              httpCode: '500'
+      x-stoplight:
+        id: zx5fqnxrycijh
+    parameters: []
+  /get:
+    post:
+      tags:
+        - Operations
+      summary: Get Payer Info
+      description: Get payer details in LianLian Global's system by `payerId`.<br>通过`payerId`查询连连国际系统中的付款人详细信息。
+      operationId: get-payer
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            description: Payer info
+            properties:
+              payerId:
+                type: string
+                description: Unique payer ID from client
+                maxLength: 32
+            required:
+              - payerId
+          description: ''
+          x-examples:
+            Example 1:
+              payerId: Payer0001
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/payerModel'
+          examples:
+            Example 1:
+              payerId: Payer0001
+              payerName: 连连国际
+              payerType: CORPORATE
+              payerIdType: ID_CARD
+              payerIdNo: '330101200301010001'
+              payerEmailAddress: service@lianlianpay.com
+              payerContactName: 连连国际
+              payerContactNumber: 400-091-0999
+              status: PAYER_INFO_PROCESSING
+              failReason: 审核中
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '020107'
+              message: payerId is already exists
+              httpCode: '400'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact Lianlian Pay for technical support'
+              httpCode: '500'
+      x-stoplight:
+        id: 7ns5qmw8jeijj
+    parameters: []
+tags:
+  - name: Operations
+definitions:
+  payerModel:
+    type: object
+    x-stoplight:
+      id: dqggeswzkdf32
+    title: PayerModel
+    description: Payer information object in LianLian Global's system
+    x-tags:
+      - Models
+    properties:
+      payerId:
+        type: string
+        description: Unique payer id from client
+        maxLength: 32
+      payerType:
+        type: string
+        x-stoplight:
+          id: d219o9dlkzqyq
+        description: "Payer type, one of\r\n\r\n| value | description |\r\n|--------|-------------|\r\n|INDIVIDUAL|个人|\r\n|CORPORATE |企业|"
+      payerName:
+        type: string
+        x-stoplight:
+          id: pgeuzj4hsmow6
+        maxLength: 128
+        description: Payer name in Chinese
+      payerIdType:
+        type: string
+        x-stoplight:
+          id: sfiy9yu1t87em
+        description: "Payer identification type\r\n\r\n| value| description |\r\n|--------|-------------|\r\n|ID_CARD|ID Card|\r\n|UNIFIED_CREDIT_CODE|Uniform social credit code |"
+      payerIdNo:
+        type: string
+        x-stoplight:
+          id: ihtc9d8eo9t5n
+        maxLength: 18
+        description: Payer identification number
+      payerCountryCode:
+        type: string
+        x-stoplight:
+          id: 6i1zlesl46b5x
+        description: 'Payer country code, ISO 3166 Alpha-3, refer to the appendix [Country Code](https://developer.lianlianglobal.com/docs/standard-remittance/5b93cbbe6d4f4-country-code)'
+        minLength: 3
+        maxLength: 3
+        example: CHN
+      payerContactNumber:
+        type: string
+        x-stoplight:
+          id: frnx5yi61x50y
+        description: 'Payer contact number, mandatory for corporate payer'
+        maxLength: 32
+      payerEmailAddress:
+        type: string
+        x-stoplight:
+          id: 5gihfbwn4nnb4
+        format: email
+        description: Payer email address
+        maxLength: 48
+      status:
+        enum:
+          - PAYER_INFO_APPROVED
+          - PAYER_INFO_PROCESSING
+          - PAYER_INFO_FAILED
+        description: |-
+          Payer status, one of
+
+          |value|descrption|
+          |------|-------------|
+          |PAYER_INFO_APPROVED|付款人信息验证通过|
+          |PAYER_INFO_PROCESSING|付款人信息处理中|
+          |PAYER_INFO_FAILED|付款人信息校验失败|
+      failReason:
+        type: string
+        description: Payer verify info
+        maxLength: 128
+    required:
+      - payerId
+      - payerType
+      - payerName
+      - payerIdType
+      - payerIdNo
+      - payerCountryCode
+      - status
+produces:
+  - application/json
+consumes:
+  - application/json

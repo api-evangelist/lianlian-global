@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: searched
+source: https://developer.lianlianglobal.com/docs/lppe/7mfhske213tl9-versioning, /docs/llp-api/b570a3051179f-version,
+  Stoplight project branches
+versioning:
+  scheme: uri-path
+  example: /v1
+  current: v1
+  also_live:
+  - v2
+  - v3
+  docs: https://developer.lianlianglobal.com/docs/lppe/7mfhske213tl9-versioning
+  policy: All APIs are version-controlled by a version number in the URL path to keep upgrades backwards compatible.
+documentation_branches:
+  note: Stoplight projects are branched per released doc version (e.g. the B2C Services API is published on branch
+    v1.2).
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No deprecation policy, Sunset/Deprecation header support (RFC 8594) or end-of-life schedule was found published.
+sla:
+  url: null
+  uptime_target: null
+status_page: null
+status_page_note: No LianLian-operated status page was found. The status widget embedded in the developer portal
+  is Stoplight's own platform status page (kmmfkblgkhnf.statuspage.io), not a LianLian service-status page.
+deprecated_operations: []
+changelog: changelog/lianlian-global-changelog.yml

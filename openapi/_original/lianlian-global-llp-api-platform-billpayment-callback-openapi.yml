@@ -1,0 +1,229 @@
+swagger: '2.0'
+info:
+  title: BILL PAYMENT CALLBACK NOTIFICATION
+  version: '1.0'
+  description: 'This section contains models of Lianlian Pay notification system. Lianlian Pay uses hypermedia to provide additional information for the client to better processing an Lianlian Pay system generated event. '
+  contact:
+    email: dev_support@lianlianpay.com
+host: webhook_url provided by partner
+paths: {}
+tags:
+  - name: Operations
+definitions:
+  OPEN_API_BILL_EVENT:
+    type: object
+    description: |-
+      Notification will be sent out if bill payment status is successful.
+
+      Example:
+
+      ```
+      {
+          "data":{
+              "amount":"0.01",
+              "billId":"202111199364556",
+              "createTime":"2021-11-19T07:59:33Z",
+              "currency":"USD",
+              "extOrderId":"c214d1e2-748b-4b5a-8260-cc18260823a7",
+              "feeAmountYuan":"0.00",
+              "feeCurrency":"USD",
+              "merchantId":"201911110000032005",
+              "modifyTime":"2021-11-19T08:00:31Z",
+              "payAmountYuan":"0.01",
+              "payCurrency":"USD",
+              "status":"SUCCESSFUL_PAID",
+              "type":"PAY",
+              "userId":"2018022763606497"
+          },
+          "eventName":"OPEN_API_BILL_EVENT"
+      }
+      ```
+    properties:
+      eventName:
+        type: string
+        default: OPEN_API_BILL_EVENT
+      data:
+        type: object
+        required:
+          - billId
+          - extOrderId
+          - currency
+          - amount
+          - status
+          - createTime
+          - modifyTime
+        properties:
+          billId:
+            type: string
+            description: Unique bill ID in LianLianPay system
+          extOrderId:
+            type: string
+            description: Unique bill ID from partner system
+          currency:
+            type: string
+            description: Currency of bill
+          amount:
+            type: string
+            description: Amount of bill
+          status:
+            type: string
+            description: SUCCESSFUL_PAID
+            default: SUCCESSFUL_PAID
+          createTime:
+            type: string
+            pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+          modifyTime:
+            type: string
+            pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+          merchantId:
+            type: string
+            description: |-
+              merchant ID of payment user in LIANLIAN system
+              | Value | Description |
+              |--------|------------|
+              | 201706141001822250| CN |
+              | 201911150002686015 | HK |
+              | 202003240002831005 | US |
+              | 202012074183185 | GB |
+          type:
+            type: string
+            description: PAY
+            default: PAY
+          userId:
+            type: string
+            description: payment user in LIANLIAN system
+          feeAmountYuan:
+            type: string
+          feeCurrency:
+            type: string
+          payAmountYuan:
+            type: string
+          payCurrency:
+            type: string
+    required:
+      - eventName
+      - data
+responses: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /
+securityDefinitions:
+  authorization:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |-
+      LianLian Pay API uses an API key to authenticate requests. To request Lianlian Pay developer account, send the following two information to `dev_support@lianlianpay.com`:
+      <!-- theme: info -->
+      >**developer_name**
+      >
+      >**developer_public_key**
+
+      After process, Lianlian Pay will replay with:
+      <!-- theme: info -->
+      >**developer_master_token** - api authentication
+      >
+      >**developer_refresh_token** - refresh developer master token, valid for a year. Can be updated by sending request to `dev_support@lianlianpay.com`
+      >
+      >**LianlianPay_public_key**
+
+      The `Authorization` header must be included in all requests with the following format:
+
+      ```
+      Authorization: Basic {master_token}
+      ```
+  llpay-signature:
+    type: apiKey
+    name: LLPAY-Signature
+    in: header
+    description: |
+      The LLPAY-Signature header contains a timestamp and one signature. The timestamp is prefixed by t=, and each signature is prefixed by a scheme. Schemes start with v, potentially followed by an integer.
+
+      ```
+      LLPAY-Signature: t=1492774577, v=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+      ```
+
+      Note that newlines have been added in the example above for clarity, but a real LLPAY-Signature header will be all one line.
+
+      Lianlian Pay and clients shall exchange each party’s public key.  The LLPAY-Signature will be signed by with the RSA private key.
+
+      **Step 1:** Determine the signature payload
+
+      Create a `payload` string with the following formula:
+
+      **HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD[&QUERY_STRING]**
+
+      * HTTP_METHOD: The actual method defined for specific API endpoint `POST`
+      * URI: The request's URL Path, such as `/profiles/{profileId}`
+      * REQUEST_EPOCH: The seconds elapsed since 1970/1/1 00:00:00 GMT, same as value of `t`
+      * REQUEST_PAYLOAD: The contents of request body in JSON format. 
+      * QUERY_STRING: The query string of the URL, URL Encoded, such as `attr1%3Dvalue1%26attr2%3Dvalue2`
+
+      <!-- theme: info -->
+      >Case 1: QUERY_STRING is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD
+      >
+      >---
+      >Case 2: REQUEST_PAYLOAD is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&&QUERY_STRING
+      >
+      >---
+      >Case 3: REQUEST_PAYLOAD and QUERY_STRING both are empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&
+
+
+      Put typical GET and POST examples here.
+
+      Example POST `payload`:
+      ```
+      POST&/kyc/v1/profiles&19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      Example GET `payload`:
+      ```
+      GET&/events/v1&19879234&&status%3DMAXIMUM_RETRIES_REACHED
+      ```
+
+
+
+      **Step 2:** Prepare the `LLPAY-Signature` string
+
+      Achieve this by concatenating:
+      * The timestamp (Seconds elapsed since 1970/1/1 00:00:00 GMT as a string)
+      * Use your RSA private key and calculate the string `BASE64(RSAwithSHA256(STEP_1_RESULT)))` from Step 1
+
+      ### Result Signature
+
+      LianLian Pay result headers also contain the `LLPAY-Signature` header as described above but signed with Lianlian Pay's private RSA key.  You may verify the signature corresponds to the Result body by calculating the signature and comparing it to the unencrypted version of `LLPAY-Signature` using the Lianlian Pay's public RSA key.  Here are the steps:
+
+      **Step 1:** Determine the signature `payload`
+
+      Create a `payload` string which is the following separated by `&`
+
+      * Response Timestamp: Extract t from LLPay-Signature and use it as timestamp
+      * Response Payload: The contents of response body in JSON format
+
+      Example `payload`:
+      ```
+      19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      **Step 2:** Use RSA Verify to compare signatures
+
+      Compare the LLPay-Signature received with the `payload` calculated in Step 1 using the Lianlian Pay's Public Key using the following algorithm:
+
+      ```
+      RSA.verify( LLPAY-Signature, 
+                  '19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}', 
+                  Lianlian Pay Public Key )
+      ```
+security:
+  - authorization: []
+  - llpay-signature: []

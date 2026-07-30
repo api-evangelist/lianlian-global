@@ -1,0 +1,584 @@
+swagger: '2.0'
+info:
+  title: Currency Exchange API
+  version: '1.0'
+  description: ''
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /exchange:
+    post:
+      summary: Create FX Transcation
+      operationId: post-exchanges
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ExchangeTrans'
+          examples:
+            Example 1:
+              exchangeId: fx202301010001
+              tradeFileId: tf202301010001
+              pricingCurrency: CNY
+              sourceCurrency: CNY
+              sourceAmount: '9988.50'
+              targetCurrency: USD
+              targetAmount: '1499.65'
+              rate: '7.1505'
+              status: PROCESSING
+              failReason: 处理中
+              cancelPricingCurrency: CNY
+              cancelAmount: '120.55'
+              cancelRate: '6.8935'
+              cancelStatus: PROCESSING
+              createTime: '2023-01-01T14:15:22Z'
+              modifyTime: '2023-01-01T14:15:22Z'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 400009|指令id重复|
+            | 400010|已存在汇兑指令|
+            | 400012|金额超过浮动比例|
+            | 400013|此材料存在未成功的指令|
+            | 400018|生活费换汇额度已达上限|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: jaur5nuf81hht
+              message:
+                type: string
+                x-stoplight:
+                  id: 3v6jglk2lww6d
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: k2inawkxy2pid
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '400009'
+              message: 指令id重复
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: vjtcvwwogimt2
+              message:
+                type: string
+                x-stoplight:
+                  id: asvggl5skwh57
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: phtmbbn9zu8wf
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      description: 'Create a single FX request, result will be returned via webhook event. Client can also use `Query Exchange Trans` API to get the corresponding request results.'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              exchangeId:
+                type: string
+                description: unique exchange id from client
+                maxLength: 32
+              tradeFileId:
+                type: string
+                description: Unique trade file ID from client
+                maxLength: 32
+              pricingCurrency:
+                type: string
+                description: 'Pricing currency: if pricing currency is source currency, the `targetAmount` is calculated according to `sourceAmount` and exchange rate'
+                maxLength: 3
+              sourceCurrency:
+                type: string
+                description: Source currency
+                maxLength: 3
+                default: CNY
+              sourceAmount:
+                type: string
+                description: 'Source Amount, mandatory if target currency is pricing currency'
+                maxLength: 24
+              targetCurrency:
+                type: string
+                description: |
+                  FX target currency code, one of
+
+                  | value | description  |
+                  |--------|-------------|
+                  |USD |USD |
+                  |EUR |EUR |
+                  |GBP |GBP|
+                  |AUD|AUD|
+                  |NZD|NZD|
+                  |CAD |CAD|
+                  |JPY |JPY|
+                  |HKD |HKD|
+                  |CNH |CNH|
+                maxLength: 3
+              targetAmount:
+                type: string
+                description: 'FX amount, mandatory if transaction currency is targete currency.'
+                maxLength: 24
+              rateChannel:
+                x-stoplight:
+                  id: u4k3vqmibafg5
+                enum:
+                  - onshore
+                  - offshore
+                description: "Rate channel, one of \r\n\r\nVALUE | DESCRIPTION \r\n---------|---------\r\n onshore | Onshore exchange rate \r\n offshore | Offshore exchange rate\r\n"
+            required:
+              - exchangeId
+              - tradeFileId
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+          description: ''
+          x-examples:
+            Example 1:
+              exchangeId: fx202301010001
+              tradeFileId: tf202301010001
+              pricingCurrency: CNY
+              sourceCurrency: CNY
+              sourceAmount: '9988.50'
+              targetCurrency: USD
+      tags:
+        - Operations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters: []
+  '/exchange/{exchangeId}':
+    parameters:
+      - type: string
+        name: exchangeId
+        in: path
+        required: true
+    get:
+      summary: Get FX Transaction
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ExchangeTrans'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-exchanges-exchangeid
+      description: Get FX transaction record details by `exchangeId`
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  '/exchange/{exchangeId}/cancel':
+    put:
+      summary: Cancel FX Transaction
+      operationId: put-exchangecancel
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ExchangeTrans'
+        '400':
+          schema:
+            type: object
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020606|exchange transaction cannot support FX cancel |
+            | 020607|exchange transaction has been FX reversed|
+            | 999995 |Parameter is error. |
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - type: string
+          in: query
+          name: cancelPricingCurrency
+          description: FX Cancel Pricing Currency. It will be FX target currency if the field is blank.
+      description: |
+        Reverse a previously created FX request. Result will be noticed by webhook event, client can also get corresponding results via `Query Exchange Trans`
+      tags:
+        - Operations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - type: string
+        name: exchangeId
+        in: path
+        required: true
+  /exchangereturn:
+    post:
+      summary: Return FX Transaction
+      operationId: post-exchangereturns
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ExchangeReturn'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020603 | exchange transaction has been cancelled |
+            | 020604| FX reverse currency not fit|
+            | 020605 | FX reverse amount exceed original exchange amount |
+            | 020609 | exchangeReturnId already exist |
+            | 999995 | Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+          headers:
+            header-0:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              exchangeReturnId:
+                type: string
+                description: unique FX reverse id from client
+                maxLength: 32
+              exchangeId:
+                type: string
+                description: Original unique exchange id from client
+                maxLength: 32
+              returnCurrency:
+                type: string
+                description: 'FX reverse currency, should be one of the targetCurrency or sourceCurrency of previous currency exchange'
+                maxLength: 3
+              returnAmount:
+                type: string
+                description: FX reverse amount
+                maxLength: 24
+            required:
+              - exchangeReturnId
+              - exchangeId
+              - returnCurrency
+              - returnAmount
+          description: ''
+      description: |
+        Initiate a partial FX reverse request, Result will be noticed by webhook event, client can also get corresponding results via `Query Exchange Trans`
+
+        FX reverse is only supported from foreign currency into CNY. For the refund in CNY returned to customer’s bank account, please use `Create Refunding Trans` API
+      tags:
+        - Operations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters: []
+  '/exchangereturn/{exchangReturnId}':
+    parameters:
+      - type: string
+        name: exchangReturnId
+        in: path
+        required: true
+    get:
+      summary: Get FX Return Transaction
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ExchangeReturn'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: 'null'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-exchangereturns-exchangReturnId
+      description: Get FX reverse transaction record details by `exchangReturnId`
+      consumes:
+        - application/json
+      produces:
+        - application/json
+definitions:
+  ExchangeTrans:
+    title: ExchangeTrans
+    type: object
+    description: |
+      FX object defined in LianLian Global system.
+    x-tags:
+      - Models
+    x-examples: {}
+    properties:
+      exchangeId:
+        type: string
+        description: FX request id from client
+        maxLength: 32
+      tradeFileId:
+        type: string
+        description: Unique trade file ID from client
+        maxLength: 32
+      pricingCurrency:
+        type: string
+        description: |-
+          Pricing currency:
+          if pricing currency is source currency, the targetAmount is calculated according to sourceAmount and exchange rate
+        maxLength: 3
+      sourceCurrency:
+        type: string
+        description: Source currency
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: 'Source amount, mandatory if target currency is pricing currency'
+        maxLength: 24
+      targetCurrency:
+        type: string
+        description: Target currency
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: 'Target amount, mandatory if target currency is pricing currency'
+        maxLength: 24
+      rateChannel:
+        x-stoplight:
+          id: wv9mmslfbnxf7
+        enum:
+          - onshore
+          - offshore
+        description: "Rate channel, one of \r\n\r\nVALUE | DESCRIPTION \r\n---------|---------\r\n onshore | Onshore exchange rate \r\n offshore | Offshore exchange rate\r\n"
+      rate:
+        type: string
+        description: FX rate
+        maxLength: 12
+      rateId:
+        type: string
+        x-stoplight:
+          id: 3g2nfaw791ntm
+        description: Rate ID
+        maxLength: 24
+      status:
+        type: string
+        description: |
+          Request status, one of:
+
+          | value | description |
+          |--------|-------------|
+          |PROCESSING|Processing|
+          |SUCCESS|Success|
+          |FAILED|Failed|
+          |CANCEL|Canceled|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+          - CANCEL
+      failReason:
+        type: string
+        description: Request failure reason
+        maxLength: 128
+      cancelPricingCurrency:
+        type: string
+        description: FX Cancel Pricing currency
+        maxLength: 3
+      cancelAmount:
+        type: string
+        maxLength: 24
+        description: Cancel Amount in CNY
+      cancelRate:
+        type: string
+        maxLength: 12
+        description: Cancel Rate
+      cancelStatus:
+        type: string
+        description: |
+          Cancel status, one of:
+          | value | description |
+          |--------|-------------|
+          |PROCESSING|Processing|
+          |SUCCESS|Success|
+          |FAILED |Failed|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+      createTime:
+        type: string
+        description: 'Create time, UTC+0'
+        format: date-time
+        maxLength: 24
+      modifyTime:
+        type: string
+        description: 'Modify Time, UTC+0'
+        format: date-time
+        maxLength: 24
+    required:
+      - exchangeId
+      - tradeFileId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - status
+      - createTime
+  ExchangeReturn:
+    title: ExchangeReturn
+    type: object
+    x-tags:
+      - Models
+    properties:
+      exchangeReturnId:
+        type: string
+        description: Unique xechange return id from client
+        maxLength: 32
+      exchangeId:
+        type: string
+        description: Original exhange id from client
+        maxLength: 32
+      returnCurrency:
+        type: string
+        description: 'FX reverse currency, should be one of the targetCurrency or sourceCurrency of previous currency exchange'
+        maxLength: 3
+      returnAmount:
+        type: string
+        description: return amount
+        maxLength: 24
+      sourceCurrency:
+        type: string
+        description: sourcing currency
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: sourcing currency
+        maxLength: 24
+      targetCurrency:
+        type: string
+        description: targeting currency
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: targeting amount
+        maxLength: 24
+      rate:
+        type: string
+        description: FX rate
+        maxLength: 12
+      status:
+        type: string
+        description: |-
+          request status
+
+          |value |description|
+          |------|------------|
+          |PROCESSING|Processing |
+          |SUCCESS|Success|
+          |FAILED|Failed |
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+      failReason:
+        type: string
+        description: Failure reason
+        maxLength: 128
+      createTime:
+        type: string
+        description: 'create time, UTC+0'
+        format: date-time
+        maxLength: 20
+      modifyTime:
+        type: string
+        description: 'Modify time, UTC+0'
+        format: date-time
+        maxLength: 20
+basePath: /outbound/card/v1/

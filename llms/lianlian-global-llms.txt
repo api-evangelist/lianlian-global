@@ -1,0 +1,56 @@
+# LianLian Global
+
+> LianLian Global is the cross-border payments arm of LianLian DigiTech, providing licensed collection, disbursement, foreign exchange and card issuing rails between China and the rest of the world. Its developer platform publishes 18 API products and 173 OpenAPI/Swagger specifications covering more than 550 operations.
+
+## Getting started
+
+- [Developer portal](https://developer.lianlianglobal.com): Stoplight-hosted documentation for every API product
+- [Authentication (OAuth 2.0, LPPE)](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication): client_credentials and authorization_code flows
+- [Authentication (API key + RSA signature, B2C)](https://developer.lianlianglobal.com/docs/llp-api/c712e8e5f4a5c-authentication): Authorization Basic header plus LLPAY-Signature
+- [Errors](https://developer.lianlianglobal.com/docs/lppe/fbedb06f358ad-errors): error envelope and common error codes
+- [Webhooks](https://developer.lianlianglobal.com/docs/lppe/8u4o96gz8w7bq-webhook-overview): event catalogue, signature and retry schedule
+- [Versioning](https://developer.lianlianglobal.com/docs/lppe/7mfhske213tl9-versioning): URL-path versioning
+- [Data types](https://developer.lianlianglobal.com/docs/lppe/5857aa0278496-data-types): ISO 4217, ISO 3166-2, epoch milliseconds
+- [Metadata](https://developer.lianlianglobal.com/docs/lppe/dbba222494009-metadata): key-value annotation limits
+
+## APIs
+
+- [B2B-inflow-payout](https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api): 12 specification(s), 30 operations
+- [b2b-cross-border](https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api): 19 specification(s), 47 operations
+- [cards-open-api](https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction): 6 specification(s), 26 operations
+- [connect-ota](https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api): 9 specification(s), 23 operations
+- [connect](https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api): 10 specification(s), 19 operations
+- [e-wallet-openapi](https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction): 17 specification(s), 39 operations
+- [global-payout-fx](https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange): 3 specification(s), 6 operations
+- [global-payout-tuition](https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction): 8 specification(s), 25 operations
+- [global-payout](https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction): 14 specification(s), 45 operations
+- [llg-payments](https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary): 3 specification(s), 5 operations
+- [llp-api](https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2): 7 specification(s), 47 operations
+- [lppe](https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction): 14 specification(s), 73 operations
+- [outbound-payout-ka](https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction): 14 specification(s), 54 operations
+- [outbound-payout-service](https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction): 11 specification(s), 37 operations
+- [outbound-payout-verification](https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api): 8 specification(s), 24 operations
+- [outbound-payout](https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction): 8 specification(s), 26 operations
+- [standard-remittance](https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction): 9 specification(s), 18 operations
+- [triplink](https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-): 1 specification(s), 4 operations
+
+## SDKs and tools
+
+- [LLGlobal GitHub organization](https://github.com/LLGlobal): first-party SDKs, signing samples and agent skills
+- [Java gateway SDK](https://github.com/LLGlobal/java-sdk): com.lianlianglobal:llosc-gateway-client
+- [e-Wallet OpenAPI Java SDK](https://github.com/LLGlobal/lgas-openapi-sdk): com.lianlianpay.global:lianlian-global-ew-openapi-sdk
+- [llg-sdk-onboarding](https://www.npmjs.com/package/llg-sdk-onboarding): TypeScript onboarding/KYC SDK
+- [llg-sdk-contact](https://www.npmjs.com/package/llg-sdk-contact): TypeScript contact/beneficiary SDK
+- [EW DevTool CLI](https://github.com/LLGlobal/lianlian-devtool): sandbox account registration and developer activation
+- [B2C OpenAPI integration skill](https://github.com/LLGlobal/b2c-openapi-integration): provider-published AI agent skill
+- [VCC OpenAPI integration skill](https://github.com/LLGlobal/vcc-openapi-integration): provider-published AI agent skill
+
+## Company
+
+- [Website](https://www.lianlianglobal.com)
+- [Products](https://www.lianlianglobal.com/products)
+- [In the news](https://www.lianlianglobal.com/in-the-news)
+- [Support](https://support.us.lianlianglobal.com/hc/en-us)
+- [Sign up](https://account.lianlianglobal.com/signupguide)
+- [Terms of service](https://us.lianlianglobal.com/legal/terms)
+- [Privacy policy](https://us.lianlianglobal.com/legal/privacy-policy)

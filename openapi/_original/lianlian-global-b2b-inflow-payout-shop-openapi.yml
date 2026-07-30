@@ -1,0 +1,243 @@
+swagger: '2.0'
+info:
+  title: Shop API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /shop:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+        '400':
+          description: |
+            Bad Request
+
+            Possible error codes:
+
+            | 错误码 | 解释 |
+            |------|-------------|
+            | 999995 |参数错误 |
+            |170001|收款人审核失败|
+            |170002|收款人不存在|
+            |170003|收款人审核中|
+            |170201|shopId已存在|
+        '500':
+          description: Internal Server Error
+      summary: 创建店铺
+      tags:
+        - 接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              shopId:
+                type: string
+                description: 平台侧店铺唯一编号
+                maxLength: 64
+              payeeId:
+                type: string
+                description: 平台侧收款人唯一编号
+                maxLength: 64
+              businessType:
+                type: string
+                description: 店铺经营类别代码，请参考附录经营类别列表传输
+                enum:
+                  - '0001'
+                  - '0002'
+                  - '0003'
+                  - '0004'
+                  - '0005'
+                  - '0006'
+                  - '0007'
+                  - 8
+                  - 9
+                  - '0010'
+                  - '0011'
+                  - '0012'
+                  - '0013'
+                  - '0014'
+                  - '0015'
+                  - '0016'
+                  - '0017'
+                  - 18
+                  - 19
+                  - '0020'
+                  - '0021'
+                minLength: 4
+                maxLength: 4
+              shopUrl:
+                type: string
+                description: 店铺链接
+                maxLength: 128
+            required:
+              - shopId
+              - payeeId
+              - businessType
+              - shopUrl
+  '/shop/{shopId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      tags:
+        - 接口
+      summary: ' 查询店铺信息'
+    parameters:
+      - name: shopId
+        in: path
+        type: string
+        required: true
+    put:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | 错误码 | 解释 |
+            |------|-------------|
+            | 999995 |参数错误 |
+            |170202|店铺状态不允许修改店铺信息|
+        '500':
+          description: Internal Server Error
+      summary: 修改店铺信息
+      description: 在店铺审核失败的情况下，可以修改店铺信息（店铺经营类别、店铺链接）
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              businessType:
+                type: string
+                description: 店铺经营类别代码，请参考附录经营类别列表传输
+                enum:
+                  - '0001'
+                  - '0002'
+                  - '0003'
+                  - '0004'
+                  - '0005'
+                  - '0006'
+                  - '0007'
+                  - 8
+                  - 9
+                  - '0010'
+                  - '0011'
+                  - '0012'
+                  - '0013'
+                  - '0014'
+                  - '0015'
+                  - '0016'
+                  - '0017'
+                  - 18
+                  - 19
+                  - '0020'
+                  - '0021'
+                minLength: 4
+                maxLength: 4
+              shopUrl:
+                type: string
+                description: 店铺链接
+                maxLength: 128
+            required:
+              - businessType
+              - shopUrl
+      tags:
+        - 接口
+basePath: /b2b-export/v1
+tags:
+  - name: 借口而
+  - name: 接口
+definitions:
+  new-model:
+    type: object
+    title: 店铺
+    properties:
+      shopId:
+        type: string
+        description: 平台侧店铺唯一编号
+        maxLength: 64
+      payeeId:
+        type: string
+        description: 平台侧收款人唯一编号
+        maxLength: 64
+      businessType:
+        type: string
+        description: 店铺经营类别代码，请参考附录经营类别列表传输
+        enum:
+          - '0001'
+          - '0002'
+          - '0003'
+          - '0004'
+          - '0005'
+          - '0006'
+          - '0007'
+          - 8
+          - 9
+          - '0010'
+          - '0011'
+          - '0012'
+          - '0013'
+          - '0014'
+          - '0015'
+          - '0016'
+          - '0017'
+          - 18
+          - 19
+          - '0020'
+          - '0021'
+        minLength: 4
+        maxLength: 4
+      shopUrl:
+        type: string
+        description: 店铺链接
+        maxLength: 128
+      status:
+        type: string
+        description: |-
+          店铺审核状态，审核状态如下
+
+          |值|解释|
+          |----|-----|
+          |Processing|审核中|
+          |Successed|审核成功|
+          |Failed|审核失败|
+        enum:
+          - Processing
+          - Failed
+          - Successed
+        maxLength: 10
+      failedReason:
+        type: string
+        description: 审核失败原因，店铺审核失败的情况下会返回失败原因
+        maxLength: 128
+    required:
+      - shopId
+      - payeeId
+      - businessType
+      - shopUrl
+      - status
+    x-tags:
+      - 对象
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json

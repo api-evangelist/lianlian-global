@@ -1,0 +1,886 @@
+definitions:
+  BillPayInfo:
+    title: BillPayInfo
+    type: object
+    description: Bill object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      billId:
+        type: string
+        description: Unique bill id from client
+        maxLength: 32
+      paymentAmount:
+        type: string
+        description: payment amount in CNY
+        maxLength: 24
+      createTime:
+        type: string
+        default: sysdate
+        format: date-time
+        description: 'Bill create time, UTC+0'
+        maxLength: 24
+      recevingAccount:
+        $ref: '#/definitions/RecevingAccount'
+      relationship:
+        type: string
+        description: |-
+          Payer and beneficiary relationship, one of:
+
+          If payer type is "INDIVIDUAL"
+
+          | value | description |
+          |--------|-------------|
+          |SELF| payer is beneficiary |
+          |FAMILY| Payer is the family member of beneficiary|
+          |IMMEDIATE FAMILY| Parents, children, spouse|
+          |OTHER RELATIVES|Any relative other than "Parents, children, spouse"|
+          |FRIEND|Friends|
+          |OTHER |other relationship|
+
+          If payer type is "CORPORATE" 
+
+          | value | description |
+          |--------|-------------|
+          |ORGANIZATION|The company/school to which the student belongs|
+          |INTERMEDIARY|Student commissioned agency|
+          |OTHER |other relationship|
+        enum:
+          - SELF
+          - IMMEDIATE FAMILY
+          - OTHER RELATIVES
+          - FRIEND
+          - ORGANIZATION
+          - INTERMEDIARY
+          - OTHER
+      payerContactName:
+        type: string
+        description: 'payer contact name, mandatory for corporate payer'
+        maxLength: 128
+      payerContactNumber:
+        type: string
+        description: Payer contact number
+        maxLength: 32
+      payerID:
+        type: string
+        description: 'Payer identification number, digitis between first 4 and last 6 in Lianlian Global''s return will be musked.'
+        maxLength: 64
+      payerIDType:
+        type: string
+        description: |-
+          Payer identification type
+
+          | beneficiaryIdType| description |
+          |--------|-------------|
+          |ID_CARD| ID Card|
+          |UNIFIED_CREDIT_CODE|Uniform social credit code|
+        enum:
+          - ID_CARD
+          - UNIFIED_CREDIT_CODE
+      payerIdExpire:
+        type: string
+        description: 'Payer ID Expire Date in format of :YYYYMMdd'
+        minLength: 8
+        maxLength: 8
+      payerType:
+        type: string
+        description: |-
+          payer type
+
+          | value | description |
+          |--------|-------------|
+          |INDIVIDUAL|Individual|
+          |CORPORATE|Corporate |
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+      payerName:
+        type: string
+        description: payer name
+        maxLength: 128
+      payerStatus:
+        type: string
+        description: |-
+          payer status, one of
+
+          |value|descrption|
+          |------|-------------|
+          |AUDITING|Under review|
+          |APPROVED|Approved|
+          |REJECT|Rejected|
+        enum:
+          - AUDITING
+          - APPROVED
+          - REJECT
+      riskStatus:
+        type: string
+        x-stoplight:
+          id: pcyd1z2yrk6cg
+        description: 'Risk status, return `PENDING` when intercepted by risk control.'
+      failReason:
+        type: string
+        description: payer verify info
+        maxLength: 128
+    required:
+      - billId
+      - paymentAmount
+      - recevingAccount
+      - relationship
+      - payerID
+      - payerIDType
+      - payerType
+      - payerName
+      - payerStatus
+  RecevingAccount:
+    title: RecevingAccount
+    type: object
+    description: |-
+      Lianlian Global receiving account information, including payee information.
+
+      Payee information should be included in request and collection account will be return by Lianlian Global to PSP.
+    x-tags:
+      - Models
+    properties:
+      accountName:
+        type: string
+        description: receiving account name
+        maxLength: 72
+      accountNo:
+        type: string
+        description: receiving account number
+        maxLength: 72
+      bankBranchName:
+        type: string
+        description: receiving account bank branch name
+        maxLength: 256
+      bankName:
+        type: string
+        description: 'receiving account bank name, mandatory for corporate payer'
+        maxLength: 128
+      cnapsBranchId:
+        type: string
+        description: CNAPS code
+        maxLength: 12
+      bankDistrict:
+        type: string
+        description: Receiving account bank branch address
+        maxLength: 200
+  BillFundingTrans:
+    title: BillFundingTrans
+    type: object
+    description: Bill funding transication record object in Lianlian Global's system
+    x-tags:
+      - Models
+    properties:
+      billId:
+        type: string
+        description: Unique bill id from client
+        maxLength: 32
+      fundingId:
+        type: string
+        description: Funding transaction id in Lianlian Global's system
+        maxLength: 32
+      payerName:
+        type: string
+        description: Payer name
+        maxLength: 128
+      payerBankAccount:
+        type: string
+        description: payer bank account number
+        maxLength: 72
+      payerBankName:
+        type: string
+        description: payer bank name
+        maxLength: 72
+      amount:
+        type: string
+        description: amount in CNY
+        maxLength: 24
+      createTime:
+        type: string
+        description: |-
+          Funding transication time
+          UTC+0
+        maxLength: 64
+      rfb:
+        type: string
+        description: rfb
+        maxLength: 40
+      isSamePayer:
+        type: string
+        description: Whether the actual payer name is the same as the payer name transmitted by the platform
+        enum:
+          - 'Y'
+          - 'N'
+    required:
+      - billId
+      - fundingId
+      - payerName
+      - payerBankAccount
+      - payerBankName
+      - amount
+      - createTime
+      - isSamePayer
+  ReFundingTrans:
+    title: ReFundingTrans
+    type: object
+    description: Refunding transication record object in Lianlian Global's system
+    x-tags:
+      - Models
+    properties:
+      refundingId:
+        type: string
+        description: Unique refunding request id
+        maxLength: 32
+      billId:
+        type: string
+        description: bill id from client
+        maxLength: 32
+      amount:
+        type: string
+        description: requested refunding amount
+        maxLength: 24
+      bankAccountType:
+        type: string
+        description: |-
+          Beneficiary account type, one of:
+
+          |value|description|
+          |------|------------|
+          |INDIVIDUAL|Individual account|
+          |CORPORATE|Corporate account|
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+      bankName:
+        type: string
+        description: beneficiary bank name
+        maxLength: 128
+      bankBranchName:
+        type: string
+        description: Bank branch name
+        maxLength: 256
+      cnapsBranchId:
+        type: string
+        description: CNAPS code，Mandatory is `bankAccountType = CORPORATE`
+        maxLength: 12
+      bankCode:
+        type: string
+        maxLength: 8
+        minLength: 8
+        description: 'Bank Code defined by Lianlian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List'
+      accountName:
+        type: string
+        description: beneficiary account name
+        maxLength: 72
+      accountNo:
+        type: string
+        description: beneficiary account number
+        maxLength: 72
+      rfb:
+        type: string
+        description: rfb
+        maxLength: 40
+      createTime:
+        type: string
+        format: date-time
+        description: Refunding create time
+      status:
+        type: string
+        description: |
+          refunding status, one of:
+
+          | value |description|
+          |------|------------|
+          |INIT| Init |
+          |SUCCESS|Success|
+          |PROCESSING|Processing |
+          |FAILED|fail|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+      failReason:
+        type: string
+        description: Refund failure reason
+        maxLength: 128
+    required:
+      - refundingId
+      - billId
+      - amount
+      - bankName
+      - accountName
+      - accountNo
+paths:
+  /bill:
+    post:
+      summary: Create a Bill
+      operationId: post-bills
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BillPayInfo'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020101|Payer audit failure |
+            | 020402|billId already exist|
+            |020105|Payer rejectd by blacklist|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      description: |-
+        Currenly bill can only be paid via wire transfer. Payee information such as due amount and payer information shall be included in the API request body.
+
+        Beneficiary account will be returned by Lianlian Global in request respone boday.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              billId:
+                type: string
+                maxLength: 32
+                description: unique billId from client
+              paymentAmount:
+                type: string
+                description: payment amount in CNY
+                maxLength: 20
+              payerName:
+                type: string
+                description: payer name in Chinese
+                maxLength: 128
+              payerType:
+                type: string
+                description: |-
+                  payer type, one of
+
+                  | value | description |
+                  |--------|-------------|
+                  |INDIVIDUAL|Individual|
+                  |CORPORATE |Corporate|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              payerIDType:
+                type: string
+                description: |-
+                  payer identification type
+
+                  | value| description |
+                  |--------|-------------|
+                  |ID_CARD|ID Card|
+                  |UNIFIED_CREDIT_CODE|Uniform social credit code |
+                enum:
+                  - ID_CARD
+                  - UNIFIED_CREDIT_CODE
+              payerID:
+                type: string
+                description: payer identification number
+                maxLength: 64
+              payerIdExpire:
+                type: string
+                description: 'Payer ID Expire Date in format of :YYYYMMdd'
+                minLength: 8
+                maxLength: 8
+              payerContactName:
+                type: string
+                description: 'payer contact name, mandatory for corporate payer'
+                maxLength: 128
+              payerContactNumber:
+                type: string
+                maxLength: 32
+                description: 'payer contact number, mandatory for corporate payer'
+              relationship:
+                type: string
+                description: |-
+                  Payer and beneficiary relationship, one of:
+
+                  If payer type is "INDIVIDUAL"
+
+                  | value | description |
+                  |--------|-------------|
+                  |SELF| payer is beneficiary |
+                  |FAMILY| Payer is the family member of beneficiary|
+                  |IMMEDIATE FAMILY| Parents, children, spouse|
+                  |OTHER RELATIVES|Any relative other than "Parents, children, spouse"|
+                  |FRIEND|Friends|
+                  |OTHER |other relationship|
+
+                  If payer type is "CORPORATE" 
+
+                  | value | description |
+                  |--------|-------------|
+                  |ORGANIZATION|The company/school to which the student belongs|
+                  |INTERMEDIARY|Student commissioned agency|
+                  |OTHER |other relationship|
+                enum:
+                  - SELF
+                  - FAMILY
+                  - IMMEDIATE FAMILY
+                  - OTHER RELATIVES
+                  - FRIEND
+                  - OTHER
+                  - ORGANIZATION
+                  - INTERMEDIARY
+                maxLength: 20
+            required:
+              - billId
+              - paymentAmount
+              - payerName
+              - payerType
+              - payerIDType
+              - payerID
+              - relationship
+          description: ''
+      tags:
+        - Operations
+    parameters: []
+  '/bill/{billId}':
+    parameters:
+      - type: string
+        name: billId
+        in: path
+        required: true
+    get:
+      summary: Query Bill Info by BillID
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BillPayInfo'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-bills-billid
+      description: Get bill details in Lianlian Global's system by `billId`
+      parameters: []
+    put:
+      summary: Edit the Payer Information
+      operationId: put-bill-billId
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BillPayInfo'
+        '400':
+          description: |
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            |020104| New payer audit failure|
+            |020102| Original Payer is auditing|
+            |020701| Payer info has approved and bill has valid funding|
+            |020702| bill has initiated Exchange Transaction|
+            |020105|Payer rejectd by blacklist|
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      description: |-
+        The following conditions need to be met in order to initiate a payer modification request.
+
+          1. The status of original payer should not be 'AUDITING' 
+          2. The actual payer name should not the same as the payer name transmitted by platform
+          3. No FX-related transactions have been initiated on this bill regardless of the status of 
+             the transaction.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              relationship:
+                type: string
+                description: |-
+                  Payer and beneficiary relationship, one of:
+
+                  If payer type is "INDIVIDUAL"
+
+                  | value | description |
+                  |--------|-------------|
+                  |SELF| payer is beneficiary |
+                  |FAMILY| Payer is the family member of beneficiary|
+                  |IMMEDIATE FAMILY| Parents, children, spouse|
+                  |OTHER RELATIVES|Any relative other than "Parents, children, spouse"|
+                  |FRIEND|Friends|
+                  |OTHER |other relationship|
+
+                  If payer type is "CORPORATE" 
+
+                  | value | description |
+                  |--------|-------------|
+                  |ORGANIZATION|The company/school to which the student belongs|
+                  |INTERMEDIARY|Student commissioned agency|
+                  |OTHER |other relationship|
+                enum:
+                  - SELF
+                  - FAMILY
+                  - IMMEDIATE FAMILY
+                  - OTHER RELATIVES
+                  - FRIEND
+                  - OTHER
+                  - ORGANIZATION
+                  - INTERMEDIARY
+              payerType:
+                type: string
+                description: |-
+                  payer type, one of
+
+                  | value | description |
+                  |--------|-------------|
+                  |INDIVIDUAL|Individual|
+                  |CORPORATE |Corporate|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              payerName:
+                type: string
+                description: payer name in Chinese
+                maxLength: 128
+              payerContactName:
+                type: string
+                description: 'payer contact name, mandatory for corporate payer'
+                maxLength: 128
+              payerContactNumber:
+                type: string
+                maxLength: 32
+                description: 'payer contact number, mandatory for corporate payer'
+              payerIDType:
+                type: string
+                description: |-
+                  payer identification type
+
+                  | value| description |
+                  |--------|-------------|
+                  |ID_CARD|ID Card|
+                  |UNIFIED_CREDIT_CODE|Uniform social credit code |
+                enum:
+                  - ID_CARD
+                  - UNIFIED_CREDIT_CODE
+              payerID:
+                type: string
+                description: payer identification number
+                maxLength: 64
+            required:
+              - relationship
+              - payerType
+              - payerName
+              - payerIDType
+              - payerID
+          description: ''
+      tags:
+        - Operations
+  '/fundingtrans/{billId}':
+    parameters:
+      - type: string
+        name: billId
+        in: path
+        required: true
+    get:
+      summary: Query Funding Trans of  Bill
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BillFundingTrans'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-bills-billid-fundingtrans
+      description: Get bill transication records by `billId`
+      parameters: []
+  '/refundingtrans/{refundingId}':
+    parameters:
+      - type: string
+        name: refundingId
+        in: path
+        required: true
+    get:
+      summary: Query Refunding Trans
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReFundingTrans'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+        '':
+          schema:
+            $ref: '#/definitions/ReFundingTrans'
+      operationId: get-refundingtrans
+      description: Get refund request details by `refundingId`
+  /refundingtrans:
+    parameters: []
+    post:
+      summary: Create Refunding Trans
+      operationId: post-bills-billId-refundingtrans
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReFundingTrans'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020608| CNY refunding amount exceed total funding amount |
+            | 020609 | refundingId already exist |
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              refundingId:
+                type: string
+                description: unique refunding request id from client
+                maxLength: 32
+              billId:
+                type: string
+                description: bill id from client
+                maxLength: 32
+              amount:
+                type: string
+                description: refunding amount
+                maxLength: 20
+              bankAccountType:
+                type: string
+                description: |-
+                  refunding beneficiary bank account type, one of:
+
+                  |value | description |
+                  |------|------------|
+                  |INDIVIDUAL|Individual account|
+                  |CORPORATE|Corporate account |
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              bankName:
+                type: string
+                description: Bank name
+                maxLength: 128
+              bankBranchName:
+                type: string
+                description: Bank branch name
+                maxLength: 256
+              bankCode:
+                type: string
+                maxLength: 8
+                minLength: 8
+                description: 'Bank Code defined by Lianlian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List'
+              cnapsBranchId:
+                type: string
+                description: |-
+                  CNAPS code
+                  Mandatory is `bankAccountType = CORPORATE`
+                maxLength: 12
+              accountName:
+                type: string
+                description: Account name
+                maxLength: 72
+              accountNo:
+                type: string
+                description: account number
+                maxLength: 72
+              rfb:
+                type: string
+                description: rfb
+                maxLength: 40
+            required:
+              - refundingId
+              - billId
+              - amount
+              - bankAccountType
+              - accountName
+              - accountNo
+          description: ''
+      description: |-
+        Create a single refund request, results will be noticed via webhook event. Client can also use `Query Refunding Trans` API to retrieve coresponding request results.
+
+        Requested total refudning amount shall no larger than total funding amount.
+      tags:
+        - Operations
+  /fundingtrans:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              fundingTrans:
+                type: array
+                description: Funding Records
+                items:
+                  $ref: '#/definitions/BillFundingTrans'
+              totalCount:
+                type: string
+                description: Total count of funding records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+        '500':
+          description: ''
+      summary: Get List of Funding Trans
+      tags:
+        - Operations
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              beginTime:
+                type: string
+                description: |
+                  beginning time of funding created, in format of timestamp and units are seconds
+              endTime:
+                type: string
+                description: 'ending time of funding created, in format of timestamp and units are seconds'
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+            required:
+              - beginTime
+              - endTime
+      description: The scale of the search cannot exceed 7 days
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - https
+host: global-api.lianlianpay.com
+info:
+  title: BillPay API
+  version: '1.0'
+  description: ''
+swagger: '2.0'
+tags:
+  - name: Operations
+basePath: /outbound/bill/v1

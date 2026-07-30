@@ -1,0 +1,116 @@
+swagger: '2.0'
+info:
+  title: FX RATE API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: This section contains the operations and models of Lianlian Pay fx rate service.
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /marketrate:
+    get:
+      summary: Get indicative market rate
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/rate'
+      operationId: get-marketRate
+      parameters:
+        - type: string
+          in: query
+          name: sourceCurrency
+          required: true
+          description: Source Currency
+          maxLength: 3
+          minLength: 3
+        - type: string
+          in: query
+          name: targetCurrency
+          required: true
+          description: Target Currency
+          maxLength: 3
+          minLength: 3
+      description: Get an indicative market quote for the buy/sell currency
+    parameters: []
+  /lockrate:
+    get:
+      summary: Create LockFX Rate
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/rate'
+      operationId: get-lockrate
+      parameters:
+        - type: string
+          in: query
+          name: sourceCurrency
+          required: true
+          maxLength: 3
+          minLength: 3
+          description: Source Currency
+        - type: string
+          in: query
+          name: targetCurrency
+          required: true
+          maxLength: 3
+          minLength: 3
+          description: Target Currency
+      description: The Create LockFX Rate gives the user a guaranteed rate for an agreed period of time.
+definitions:
+  rate:
+    title: Fx-Rate
+    type: object
+    description: fx-rate object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      rate:
+        type: string
+        description: Rate
+        maxLength: 10
+      rateId:
+        type: string
+        description: Rate ID
+        maxLength: 24
+      sourceCurrency:
+        type: string
+        description: 'Source Currency, currency deduct from your account'
+        maxLength: 3
+      targetCurrency:
+        type: string
+        maxLength: 3
+        description: 'Target Currency, currency credit to your account after FX complete'
+      baseCurrency:
+        type: string
+        maxLength: 3
+        description: |-
+          Base Currency
+          Sample: USD is the Base Currency for USD/CNY
+      startTime:
+        type: string
+        description: FX rate validity start time
+      endTime:
+        type: string
+        description: FX rate validity end time
+    required:
+      - rate
+      - sourceCurrency
+      - targetCurrency
+      - baseCurrency
+securityDefinitions: {}
+security:
+  - authorization: []
+  - llpay-signature: []
+basePath: /global/v1

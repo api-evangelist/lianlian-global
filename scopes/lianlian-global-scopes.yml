@@ -1,0 +1,121 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/lianlian-global-lppe-acceptpayment-openapi.yml, openapi/lianlian-global-lppe-accounts-openapi.yml,
+  openapi/lianlian-global-lppe-conversion-2-openapi.yml, openapi/lianlian-global-lppe-coreaccount-openapi.yml, openapi/lianlian-global-lppe-deposit-openapi.yml,
+  openapi/lianlian-global-lppe-files-openapi.yml, openapi/lianlian-global-lppe-finance1-openapi.yml, openapi/lianlian-global-lppe-payouts-openapi.yml,
+  openapi/lianlian-global-lppe-receiving-accounts-openapi.yml, openapi/lianlian-global-lppe-reference-openapi.yml,
+  openapi/lianlian-global-lppe-reference2-openapi.yml, openapi/lianlian-global-lppe-reference3-openapi.yml
+schemes:
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-acceptpayment-openapi.yml
+  flows:
+  - flow: clientCredentials
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-accounts-openapi.yml
+  flows:
+  - flow: clientCredentials
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 授权码授权
+  source: openapi/lianlian-global-lppe-accounts-openapi.yml
+  flows:
+  - flow: authorizationCode
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 授权码授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-conversion-2-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-coreaccount-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-deposit-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-files-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-finance1-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 授权码授权
+  source: openapi/lianlian-global-lppe-finance1-openapi.yml
+  flows:
+  - flow: authorizationCode
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 授权码授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-payouts-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 授权码授权
+  source: openapi/lianlian-global-lppe-payouts-openapi.yml
+  flows:
+  - flow: authorizationCode
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 授权码授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-receiving-accounts-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-reference-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-reference2-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+- name: 客户端凭据授权
+  source: openapi/lianlian-global-lppe-reference3-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /oauth2/token
+  description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+    > 客户端凭据授权
+scopes:
+- scope: r:lppe:query_oauth_user
+  description: Read access to the authorizing user on the LPPE platform surface.
+  flows:
+  - clientCredentials
+  - authorizationCode
+  sources:
+  - https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication
+docs: https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication
+notes: The published OpenAPI declares oauth2 schemes with empty scope maps. LianLian does not publish a scope/permission
+  reference page; the only scope value documented anywhere is the one shown in the Authentication guide token response.
+  Scope is passed on the authorization URL and returned as a JSON array on the token response.
+scope_format: <access>:<product>:<permission>, e.g. r:lppe:query_oauth_user (r = read)
+token_endpoint: /api/v1/oauth2/token
+authorization_endpoint: https://global.lianlian.com/account/#/application-center/auth

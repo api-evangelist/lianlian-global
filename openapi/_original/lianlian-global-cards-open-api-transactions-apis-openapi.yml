@@ -1,0 +1,1263 @@
+openapi: 3.1.0
+info:
+  version: '1.0'
+  title: Transactions APIS
+  summary: VCC -APIS
+  description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+  contact:
+    name: ''
+servers:
+  - url: 'https://test-global-api.lianlianpay-inc.com'
+  - url: 'https://global-api.lianlian.com'
+    description: ''
+paths:
+  /gateway/vcc-api/transactions/topup:
+    get:
+      summary: 查询充值交易
+      description: "\r\n"
+      operationId: get-vcc-transactions-topup
+      parameters:
+        - name: 'Authorization:'
+          in: header
+          description: 'Basic {token}'
+          schema:
+            type: string
+        - name: 'LLPAY-Signature:'
+          in: header
+          description: 't={REQUEST_EPOCH},v={payload}'
+          schema:
+            type: string
+        - schema:
+            type: string
+          in: query
+          name: currency
+          description: 基础币种，默认USD
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: timeStart
+          description: '起始时间，格式yyyy-MM-dd HH:mm:ss'
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: timeEnd
+          description: '结束时间，格式yyyy-MM-dd HH:mm:ss'
+          required: true
+        - schema:
+            type: number
+          in: query
+          name: pageNo
+          description: 页码
+          required: true
+        - schema:
+            type: number
+          in: query
+          name: pageSize
+          description: 分页大小，至多200
+          required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      total: 56
+                      list:
+                        - prefundAmount: '4.00'
+                          rechargeAmount: '4.00'
+                          createTime: '2021-08-12 17:32:39'
+                          updateTime: '2021-08-12 17:32:39'
+                          currency: GBP
+                          transactionTime: '2021-08-12 17:32:39'
+                          type: REFUND
+                          transactionId: '2021081216617242'
+                          status: SUCCESS
+                        - prefundAmount: '5.00'
+                          bizType: COLLECTION_BALANCE
+                          feeCurrency: USD
+                          updateTime: '2022-08-29 15:27:44'
+                          transactionTime: '2021-08-12 17:04:18'
+                          type: TOPUP
+                          transactionId: '2021081216145933'
+                          feeAmount: '1.00'
+                          rechargeAmount: '5.00'
+                          balance: '911.00'
+                          createTime: '2021-08-12 17:04:07'
+                          currency: GBP
+                          afterBalance: '911.00'
+                          status: SUCCESS
+                        - prefundAmount: '1.00'
+                          rechargeAmount: '1.00'
+                          createTime: '2021-08-12 16:55:07'
+                          updateTime: '2021-08-12 16:55:07'
+                          currency: GBP
+                          transactionTime: '2021-08-12 16:55:07'
+                          type: REFUND
+                          transactionId: '2021081215569426'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+                required:
+                  - code
+                  - success
+                  - message
+                properties:
+                  code:
+                    type: integer
+                    description: 响应码
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: 总条数
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            prefundAmount:
+                              type: string
+                              description: 充值金额，单位：元
+                            rechargeAmount:
+                              type: string
+                              description: 充值金额，单位：元
+                            createTime:
+                              type: string
+                              description: '充值创建时间，格式yyyy-MM-dd HH:mm:ss'
+                            currency:
+                              type: string
+                              description: 充值币种，参考ISO currency code
+                            transactionTime:
+                              type: string
+                              description: '交易发生时间，格式yyyy-MM-dd HH:mm:ss'
+                            type:
+                              type: string
+                              description: "- 充值（TOPUP）\r\n- 退款（REFUND）"
+                            transactionId:
+                              type: string
+                              description: 充值交易单号
+                            status:
+                              type: string
+                              description: "状态枚举：\r\n- 待充值（INIT）\r\n- 充值中（PROCESSED）\r\n- 充值成功（SUCCESS）"
+                            bizType:
+                              type: string
+                              description: "类型枚举：\r\n- 收款余额转入（COLLECTION_BALANCE）\r\n- 收款余额自动转入（AUTO_COLLECTION_BALANCE）\r\n- 银行转入（BANK_TRANSFER）\r\n- 币种账户转入（CURRENCY_ACCOUNT_BALANCE）\r\n- 返现（CASHBACK）"
+                            feeCurrency:
+                              type: string
+                              description: 手续费币种，参考ISO currency code
+                            feeAmount:
+                              type: string
+                              description: 手续费金额
+                            balance:
+                              type: string
+                              description: 充值后可用额度
+                  success:
+                    type: boolean
+                    description: 成功标识
+                  message:
+                    type: string
+                    description: 响应描述
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      total: 56
+                      list:
+                        - prefundAmount: '4.00'
+                          rechargeAmount: '4.00'
+                          createTime: '2021-08-12 17:32:39'
+                          updateTime: '2021-08-12 17:32:39'
+                          currency: GBP
+                          transactionTime: '2021-08-12 17:32:39'
+                          type: REFUND
+                          transactionId: '2021081216617242'
+                          status: SUCCESS
+                        - prefundAmount: '5.00'
+                          bizType: COLLECTION_BALANCE
+                          feeCurrency: USD
+                          updateTime: '2022-08-29 15:27:44'
+                          transactionTime: '2021-08-12 17:04:18'
+                          type: TOPUP
+                          transactionId: '2021081216145933'
+                          feeAmount: '1.00'
+                          rechargeAmount: '5.00'
+                          balance: '911.00'
+                          createTime: '2021-08-12 17:04:07'
+                          currency: GBP
+                          afterBalance: '911.00'
+                          status: SUCCESS
+                        - prefundAmount: '1.00'
+                          rechargeAmount: '1.00'
+                          createTime: '2021-08-12 16:55:07'
+                          updateTime: '2021-08-12 16:55:07'
+                          currency: GBP
+                          transactionTime: '2021-08-12 16:55:07'
+                          type: REFUND
+                          transactionId: '2021081215569426'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+        '404':
+          description: User Not Found
+      servers:
+        - url: 'https://global-api-sandbox.lianlianpay-inc.com'
+        - url: 'https://global-api.lianlianpay.com'
+          description: ''
+      x-stoplight:
+        id: 80ui6iwrd3ojr
+    parameters: []
+  /gateway/vcc-api/transactions/auth:
+    get:
+      summary: 查询授权交易
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      operationId: get-gateway-vcc-api-transactions-auth
+      parameters:
+        - name: 'Authorization:'
+          in: header
+          description: 'Basic {token}'
+          schema:
+            type: string
+        - name: 'LLPAY-Signature:'
+          in: header
+          description: 't={REQUEST_EPOCH},v={payload}'
+          schema:
+            type: string
+        - schema:
+            type: string
+            example: '2025-07-18'
+          in: query
+          name: timeStart
+          description: 起始时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传时，timeStart为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04
+          required: true
+        - schema:
+            type: string
+          in: query
+          required: true
+          name: timeEnd
+          description: 结束时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传，timeEnd必须为近三天内（包含今天）
+        - schema:
+            type: number
+          in: query
+          required: true
+          name: pageNo
+          description: 页码
+        - schema:
+            type: number
+          in: query
+          required: true
+          name: pageSize
+          description: 分页大小，至多200
+        - schema:
+            type: string
+          in: query
+          name: cardId
+          description: 卡唯一识别号
+        - schema:
+            type: string
+          in: query
+          name: transactionId
+          description: 交易单号
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: 类型枚举： </br>- 授权（AUTH） </br>- 授权撤销（AUTH_REVERSAL） </br>- 验卡（CARD_VERIFY）</br>**如需要通过API查询验卡交易，请联系客户经理申请配置**
+        - schema:
+            type: string
+          in: query
+          name: bizType
+          description: 类型枚举： </br>- 授权（1） </br>- 授权撤销（2） </br>- 验卡（12）</br>**如需要通过API查询验卡交易，请联系客户经理申请配置**
+        - schema:
+            type: string
+          in: query
+          name: status
+          description: 状态枚举： </br>- 成功（SUCCESS） </br>- 失败（FAIL）
+        - schema:
+            type: string
+          in: query
+          name: subAccountId
+          description: 子账户id</br>开通了子账户模式的用户传
+        - schema:
+            type: string
+          in: query
+          name: queryMode
+          description: 查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)<br>不传默认RECENT
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      total: 3
+                      list:
+                        - transactionCurrency: EUR
+                          billingAmount: '10.00'
+                          bizType: 1
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          transactionTime: '2023-01-16 10:25:00'
+                          type: AUTH
+                          transactionId: '2023011665472319'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          billingCurrency: EUR
+                          cardId: '2023010565065966'
+                          transactionAmount: '10.00'
+                          afterBalance: '9933.99'
+                          status: SUCCESS
+                        - transactionCurrency: GBP
+                          billingAmount: '10.00'
+                          bizType: 1
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          transactionTime: '2023-01-16 10:13:35'
+                          type: AUTH
+                          transactionId: '2023011665472142'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          billingCurrency: GBP
+                          cardId: '2023010565065966'
+                          transactionAmount: '10.00'
+                          afterBalance: '996761.45'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+                required:
+                  - code
+                  - success
+                  - message
+                properties:
+                  code:
+                    type: integer
+                    description: 响应码
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: 总条数
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            transactionCurrency:
+                              type: string
+                              description: 交易币种，参考ISO currency code
+                            billingAmount:
+                              type: string
+                              description: 账单金额，单位：元
+                            bizType:
+                              type: integer
+                              description: "类型枚举：\r\n- 授权（1）\r\n- 授权撤销（2）\r\n- 验卡（12）\r\n**如需要通过API查询验卡交易，请联系客户经理申请配置**"
+                            cardName:
+                              type: string
+                              description: 卡片名称
+                            last4CardNum:
+                              type: string
+                              description: 卡片尾号后4位
+                            merchantTerminalId:
+                              type: string
+                              description: 卡网络商户唯一识别号
+                            mcc:
+                              type: string
+                              description: '商户类别编码（Merchant Category Code），参考：https://www.citibank.com/tts/solutions/commercial-cards/assets/docs/govt/Merchant-Category-Codes.pdf'
+                            transactionTime:
+                              type: string
+                              description: '授权交易时间，格式yyyy-MM-dd HH:mm:ss'
+                            type:
+                              type: string
+                              description: "类型枚举：\r\n- 授权（AUTH）\r\n- 授权撤销（REVERSAL）\r\n- 验卡（CARD_VERIFY）\r\n**如需要通过API查询验卡交易，请联系客户经理申请配置**"
+                            transactionId:
+                              type: string
+                              description: 交易单号
+                            merchantName:
+                              type: string
+                              description: 商户名称
+                            billingCurrency:
+                              type: string
+                              description: 账单币种，参考ISO currency code
+                            cardId:
+                              type: string
+                              description: 卡唯一识别号
+                            transactionAmount:
+                              type: string
+                              description: 交易金额，单位：元
+                            afterBalance:
+                              type: string
+                              description: 变动后余额（账单币种），单位：元
+                            status:
+                              type: string
+                              description: "状态枚举：\r\n- 成功（SUCCESS）\r\n- 失败（FAIL）"
+                            originalTransactionId:
+                              type: string
+                              x-stoplight:
+                                id: uq3q48du75xeo
+                              description: "原预授权交易单单号。代表同一笔交易\r\n如果是预授权，则为空"
+                            reversalType:
+                              type: string
+                              x-stoplight:
+                                id: 2fn1o50hiwajv
+                              description: '授权撤销类型</br>OVER_TIME:额度释放</br>NORMAL:正常，其他'
+                            accountType:
+                              type: string
+                              x-stoplight:
+                                id: hlvziz9pta2it
+                              description: "账户类型枚举:</br>\r\n主资金账户(VCC_ACCOUNT)</br>\r\n子资金账户(SUB_ACCOUNT)"
+                            subAccountId:
+                              type: string
+                              x-stoplight:
+                                id: n29ofgfu9260m
+                              description: 子账户id
+                            errorMsgCode:
+                              type: string
+                              x-stoplight:
+                                id: 07xd13fmcekl2
+                              description: 见授权交易错误码列表
+                            errorMsg:
+                              type: string
+                              x-stoplight:
+                                id: 26pk2bfmao0i9
+                              description: 见授权交易错误码列表
+                  success:
+                    type: boolean
+                    description: 成功标识
+                  message:
+                    type: string
+                    description: 响应描述
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      total: 3
+                      list:
+                        - transactionCurrency: EUR
+                          billingAmount: '10.00'
+                          bizType: 1
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          transactionTime: '2023-01-16 10:25:00'
+                          type: AUTH
+                          transactionId: '2023011665472319'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          billingCurrency: EUR
+                          cardId: '2023010565065966'
+                          transactionAmount: '10.00'
+                          afterBalance: '9933.99'
+                          status: SUCCESS
+                        - transactionCurrency: GBP
+                          billingAmount: '10.00'
+                          bizType: 1
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          transactionTime: '2023-01-16 10:13:35'
+                          type: AUTH
+                          transactionId: '2023011665472142'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          billingCurrency: GBP
+                          cardId: '2023010565065966'
+                          transactionAmount: '10.00'
+                          afterBalance: '996761.45'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+        '404':
+          description: User Not Found
+      servers:
+        - url: 'https://global-api-sandbox.lianlianpay-inc.com'
+        - url: 'https://global-api.lianlianpay.com'
+          description: ''
+      x-stoplight:
+        id: eadcedhjcc0c7
+    parameters: []
+  /gateway/vcc-api/transactions/settle:
+    get:
+      summary: 查询账单明细
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n按需定时查询该接口获取账单明细"
+      operationId: gateway-vcc-api-transactions-settle
+      parameters:
+        - name: 'Authorization:'
+          in: header
+          description: 'Basic {token}'
+          schema:
+            type: string
+        - name: 'LLPAY-Signature:'
+          in: header
+          description: 't={REQUEST_EPOCH},v={payload}'
+          schema:
+            type: string
+        - schema:
+            type: string
+          in: query
+          name: timeStart
+          description: 起始时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传时，timeStart为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04
+          required: true
+        - schema:
+            type: string
+          in: query
+          required: true
+          name: timeEnd
+          description: 结束时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传，timeEnd必须为近三天内（包含今天）
+        - schema:
+            type: number
+          in: query
+          required: true
+          name: pageNo
+          description: 页码
+        - schema:
+            type: number
+          in: query
+          required: true
+          name: pageSize
+          description: 分页大小，至多200
+        - schema:
+            type: string
+          in: query
+          name: cardId
+          description: 卡唯一识别号
+        - schema:
+            type: string
+          in: query
+          name: transactionId
+          description: 交易单号(这里不是授权单号，是内部流水号)
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: 类型枚举： </br>- 消费（SETTLE） </br>- 退款（SETTLE_REVERSE） </br>- 提现（WITHDRAWAL） </br>- 卡充值扣款（CARD_RECHARGE） </br>- 卡充值退款（CARD_RECHARGE_REVERSE）</br>- 争议退款（DISPUTE_REFUND）
+        - schema:
+            type: string
+          in: query
+          name: subAccountId
+          description: 子账户id</br>开通了子账户模式的用户传
+        - schema:
+            type: string
+          in: query
+          name: queryMode
+          description: 查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)<br>不传默认RECENT
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      total: 2
+                      list:
+                        - transactionCurrency: GBP
+                          billingAmount: '10.00'
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          type: SETTLE_REVERSE
+                          transactionId: '2023011365338297'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          transactionType: '4'
+                          oriTransactionId: '2023011365338129'
+                          last4digits: '1713'
+                          settlementTime: '2023-01-13 10:16:00'
+                          billingCurrency: GBP
+                          transactionAmount: '10.00'
+                          cardId: '2023010565065966'
+                          afterBalance: '996835.97'
+                        - transactionCurrency: GBP
+                          billingAmount: '10.00'
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          type: SETTLE
+                          transactionId: '2023011365338147'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          transactionType: '3'
+                          oriTransactionId: '2023011365338129'
+                          last4digits: '1713'
+                          settlementTime: '2023-01-13 10:04:00'
+                          billingCurrency: GBP
+                          transactionAmount: '10.00'
+                          cardId: '2023010565065966'
+                          afterBalance: '996825.97'
+                    success: true
+                    message: SUCCESS
+                required:
+                  - code
+                  - success
+                  - message
+                properties:
+                  code:
+                    type: integer
+                    description: 响应码
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: 总条数
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            transactionCurrency:
+                              type: string
+                              description: 交易币种，参考ISO currency code
+                            billingAmount:
+                              type: string
+                              description: 账单金额，单位：元
+                            cardName:
+                              type: string
+                              description: 卡片名称
+                            mcc:
+                              type: string
+                              description: '商户类别编码（Merchant Category Code），参考：https://www.citibank.com/tts/solutions/commercial-cards/assets/docs/govt/Merchant-Category-Codes.pdf'
+                            type:
+                              type: string
+                              description: "类型枚举：\r\n- 消费（SETTLE）\r\n- 退款（SETTLE_REVERSE）\r\n- 提现（WITHDRAWAL）\r\n- 卡充值扣款（CARD_RECHARGE）\r\n- 卡充值退款（CARD_RECHARGE_REVERSE）\r\n- 争议退款（DISPUTE_REFUND）"
+                            transactionId:
+                              type: string
+                              description: 交易单号
+                            merchantName:
+                              type: string
+                              description: 商户名称
+                            originalTransactionId:
+                              type: string
+                              x-stoplight:
+                                id: 08cz7lvgfdbi7
+                              description: 原预授权交易单单号。代表同一笔交易
+                            last4digits:
+                              type: string
+                              description: 卡片尾号
+                            settlementTime:
+                              type: string
+                              description: '结算时间，格式：yyyy-MM-dd HH:mm:ss'
+                            billingCurrency:
+                              type: string
+                              description: 账单币种，参考ISO currency code
+                            transactionAmount:
+                              type: string
+                              description: 交易金额，单位：元
+                            cardId:
+                              type: string
+                              description: 卡唯一识别号
+                            afterBalance:
+                              type: string
+                              description: 变动后余额（账单币种），单位：元
+                            merchantId:
+                              type: string
+                              x-stoplight:
+                                id: f146tbnwfbmp5
+                              description: 卡网络商户唯一识别号
+                            accountType:
+                              type: string
+                              x-stoplight:
+                                id: 62tuso90fqhld
+                              description: "账户类型枚举:</br>\r\n主资金账户(VCC_ACCOUNT)</br>\r\n子资金账户(SUB_ACCOUNT)"
+                            subAccountId:
+                              type: string
+                              x-stoplight:
+                                id: il7owfqastlhe
+                              description: 子账户id
+                  success:
+                    type: boolean
+                    description: 成功标识
+                  message:
+                    type: string
+                    description: 响应描述
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      total: 2
+                      list:
+                        - transactionCurrency: GBP
+                          billingAmount: '10.00'
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          type: SETTLE_REVERSE
+                          transactionId: '2023011365338297'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          transactionType: '4'
+                          last4digits: '1713'
+                          settlementTime: '2023-01-13 10:16:00'
+                          billingCurrency: GBP
+                          transactionAmount: '10.00'
+                          cardId: '2023010565065966'
+                          afterBalance: '996835.97'
+                        - transactionCurrency: GBP
+                          billingAmount: '10.00'
+                          cardName: QQQQ
+                          last4CardNum: '1713'
+                          merchantTerminalId: '080000100003'
+                          mcc: '789'
+                          type: SETTLE
+                          transactionId: '2023011365338147'
+                          merchantName: AMAZON PAY INDIA PRIVA BANGALORE
+                          transactionType: '3'
+                          originalTransactionId: '2023011365338129'
+                          last4digits: '1713'
+                          settlementTime: '2023-01-13 10:04:00'
+                          billingCurrency: GBP
+                          transactionAmount: '10.00'
+                          cardId: '2023010565065966'
+                          afterBalance: '996825.97'
+                    success: true
+                    message: SUCCESS
+        '404':
+          description: User Not Found
+      servers:
+        - url: 'https://global-api-sandbox.lianlianpay-inc.com'
+        - url: 'https://global-api.lianlianpay.com'
+          description: ''
+      x-stoplight:
+        id: x9kxbg0s3ec95
+    parameters: []
+  /gateway/vcc-api/transactions/card/recharge:
+    post:
+      summary: 查询卡充值申请
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      total: 1
+                      list:
+                        - rechargeAmount: '0.00'
+                          createTime: '2025-09-09 16:44:35'
+                          rechargeCurrency: USD
+                          cardId: '2025090903050629'
+                          updateTime: '2025-09-09 16:45:04'
+                          rechargeApplyId: '20250909000001'
+                          userId: '2025041837970206'
+                          transactionId: '2025090903050629'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            createTime:
+                              type: string
+                              description: '充值创建时间，格式yyyy-MM-dd HH:mm:ss'
+                            updateTime:
+                              type: string
+                              description: '充值完成时间，格式yyyy-MM-dd HH:mm:ss'
+                            rechargeAmount:
+                              type: string
+                              description: 卡充值金额，单位：元
+                            rechargeCurrency:
+                              type: string
+                              description: 卡充值币种，参考ISO currency code
+                            cardId:
+                              type: string
+                              description: 卡唯一识别号
+                            rechargeApplyId:
+                              type: string
+                              description: 外部申请单号
+                            transactionId:
+                              type: string
+                              description: 交易单号
+                            status:
+                              type: string
+                              description: "状态枚举：\r\n- 初始化-INIT\r\n- 充值中-PROCESSING\r\n- 充值成功-SUCCESS\r\n- 充值失败-FAIL"
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      total: 1
+                      list:
+                        - rechargeAmount: '10.00'
+                          createTime: '2025-09-09 16:44:35'
+                          rechargeCurrency: USD
+                          cardId: '2025090903050629'
+                          updateTime: '2025-09-09 16:45:04'
+                          rechargeApplyId: '20250909000001'
+                          transactionId: '2025090903050629'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-transactions-card-recharge
+      x-stoplight:
+        id: wu3klly1821z0
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  timeStart: '2025-09-01 00:00:00'
+                  timeEnd: '2025-09-09 16:45:04'
+                  pageNo: 1
+                  pageSize: 100
+              required:
+                - timeStart
+                - timeEnd
+                - pageNo
+                - pageSize
+              properties:
+                timeStart:
+                  type: string
+                  description: '起始时间，格式yyyy-MM-dd HH:mm:ss'
+                timeEnd:
+                  type: string
+                  description: '结束时间，格式yyyy-MM-dd HH:mm:ss'
+                pageNo:
+                  type: integer
+                  description: 页码
+                pageSize:
+                  type: integer
+                  description: '分页大小,至多200'
+                cardId:
+                  type: string
+                  x-stoplight:
+                    id: 11h1s75hrytnd
+                  description: 卡唯一识别号
+                transactionId:
+                  type: string
+                  x-stoplight:
+                    id: sfedodpe24oaq
+                  description: 交易单号
+                rechargeApplyId:
+                  type: string
+                  x-stoplight:
+                    id: c7d55hgc6drqo
+                  description: 外部申请单号
+                status:
+                  type: string
+                  x-stoplight:
+                    id: r83mcf79uy3ar
+                  description: "状态枚举：\r\n- 初始化-INIT\r\n- 待充值-PROCESSED\r\n- 充值成功-SUCCESS\r\n- 充值失败-FAIL"
+                vccUserId:
+                  type: string
+                  x-stoplight:
+                    id: gqmysktgudqy3
+                  description: "vcc用户号</br>\r\n商户模式必传"
+            examples:
+              Example 1:
+                value:
+                  timeStart: '2025-09-01 00:00:00'
+                  timeEnd: '2025-09-09 16:45:04'
+                  pageNo: 1
+                  pageSize: 100
+  /gateway/vcc-api/sub-user/transfer/list:
+    post:
+      summary: 子账户资金划转明细查询
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      total: 2
+                      list:
+                        - amount: '5000.00'
+                          bizType: SUB_ACCOUNT_REFUND
+                          createTime: '2025-11-18 14:51:21'
+                          currency: USD
+                          updateTime: '2025-11-18 14:51:21'
+                          transactionId: '20251118338734421'
+                          status: SUCCESS
+                        - amount: '5000.00'
+                          bizType: VCC_ACCOUNT_TOPUP
+                          createTime: '2025-11-18 14:50:11'
+                          currency: USD
+                          updateTime: '2025-11-18 14:50:11'
+                          transactionId: '20251118338730252'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            amount:
+                              type: string
+                              description: 转账金额，单位：元
+                            bizType:
+                              type: string
+                              description: "转账单类型\r\n- 主账户转入（VCC_ACCOUNT_TOPUP）\r\n- 子账户转回（SUB_ACCOUNT_REFUND）"
+                            createTime:
+                              type: string
+                              description: '创建时间，格式yyyy-MM-dd HH:mm:ss'
+                            currency:
+                              type: string
+                              description: 转账币种，参考ISO currency code
+                            updateTime:
+                              type: string
+                              description: '完成时间，格式yyyy-MM-dd HH:mm:ss'
+                            transactionId:
+                              type: string
+                              description: 交易单号
+                            status:
+                              type: string
+                              description: "单据状态\r\n- PROCESSED 处理中\r\n- SUCCESS 成功\r\n- FAIL 失败"
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      total: 2
+                      list:
+                        - amount: '5000.00'
+                          bizType: SUB_ACCOUNT_REFUND
+                          createTime: '2025-11-18 14:51:21'
+                          currency: USD
+                          updateTime: '2025-11-18 14:51:21'
+                          transactionId: '20251118338734421'
+                          status: SUCCESS
+                        - amount: '5000.00'
+                          bizType: VCC_ACCOUNT_TOPUP
+                          createTime: '2025-11-18 14:50:11'
+                          currency: USD
+                          updateTime: '2025-11-18 14:50:11'
+                          transactionId: '20251118338730252'
+                          status: SUCCESS
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-sub-user-transfer-list
+      x-stoplight:
+        id: pyqe77pnvb3vp
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  timeStart: '2025-11-17'
+                  timeEnd: '2025-11-18'
+                  subAccountId: '2025111833785290'
+              required:
+                - timeStart
+                - timeEnd
+                - subAccountId
+              properties:
+                timeStart:
+                  type: string
+                  description: 起始时间，格式yyyy-MM-dd
+                timeEnd:
+                  type: string
+                  description: 结束时间，格式yyyy-MM-dd
+                subAccountId:
+                  type: string
+                  description: 子账户</br>开通了子账户模式的用户传
+                bizType:
+                  type: string
+                  x-stoplight:
+                    id: a1gmpwtqeeixk
+                  description: "交易类型\r\n- 主账户转入（VCC_ACCOUNT_TOPUP）\r\n- 子账户转回（SUB_ACCOUNT_REFUND）"
+                transactionId:
+                  type: string
+                  x-stoplight:
+                    id: 5458n1onjtvon
+                  description: 交易单号
+                pageNo:
+                  type: string
+                  x-stoplight:
+                    id: pz5r44f2cl9bw
+                  description: 页码，不传默认1
+                pageSize:
+                  type: string
+                  x-stoplight:
+                    id: fo91unhs5lgw7
+                  description: 分页大小，至多200，不传默认10
+            examples:
+              Example 1:
+                value:
+                  timeStart: '2025-11-17'
+                  timeEnd: '2025-11-18'
+                  subAccountId: '2025111833785290'
+  /gateway/vcc-api/sub-user/transfer/topup:
+    post:
+      summary: 分配额度到子账户
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      rechargeApplyId: '20251118154018'
+                      transactionId: '20251118338927412'
+                      status: PROCESSED
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      rechargeApplyId:
+                        type: string
+                        description: 外部单号
+                      transactionId:
+                        type: string
+                        description: 交易单号</br>status=FAIL 时为空
+                      status:
+                        type: string
+                        description: "单据状态\r\n- PROCESSED 处理中\r\n- SUCCESS 成功\r\n- FAIL 失败"
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      rechargeApplyId: '20251118154018'
+                      transactionId: '20251118338927412'
+                      status: PROCESSED
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-sub-user-transfer-topup
+      x-stoplight:
+        id: 3lwd9l2s9a6vt
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  subAccountId: '2025111833892363'
+                  rechargeApplyId: '20251118154018'
+                  currency: USD
+                  amount: '46000.00'
+              required:
+                - subAccountId
+                - rechargeApplyId
+                - currency
+                - amount
+              properties:
+                subAccountId:
+                  type: string
+                  description: 子账户id
+                rechargeApplyId:
+                  type: string
+                  description: 外部单号，幂等字段，最多64位
+                currency:
+                  type: string
+                  description: 币种
+                amount:
+                  type: string
+                  description: 金额，单位元
+            examples:
+              Example 1:
+                value:
+                  subAccountId: '2025111833892363'
+                  rechargeApplyId: '20251118154018'
+                  currency: USD
+                  amount: '46000.00'
+  /gateway/vcc-api/sub-user/transfer/refund:
+    post:
+      summary: 子账户额度转回主账户
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      rechargeApplyId: '20251118154055'
+                      transactionId: '20251118338928071'
+                      status: PROCESSED
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      rechargeApplyId:
+                        type: string
+                        description: 外部单号
+                      transactionId:
+                        type: string
+                        description: 交易单号，status=FAIL 时为空
+                      status:
+                        type: string
+                        description: "单据状态\r\n- PROCESSED 处理中\r\n- SUCCESS 成功\r\n- FAIL 失败"
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      rechargeApplyId: '20251118154055'
+                      transactionId: '20251118338928071'
+                      status: PROCESSED
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-sub-user-transfer-refund
+      x-stoplight:
+        id: phs0uok81mcwf
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  subAccountId: '2025111833892363'
+                  rechargeApplyId: '20251118154055'
+                  currency: USD
+                  amount: '43000.00'
+              required:
+                - subAccountId
+                - rechargeApplyId
+                - currency
+                - amount
+              properties:
+                subAccountId:
+                  type: string
+                  description: 子账户id
+                rechargeApplyId:
+                  type: string
+                  description: 外部单号，幂等字段，最多64位
+                currency:
+                  type: string
+                  description: 币种
+                amount:
+                  type: string
+                  description: 金额，单位元
+            examples:
+              Example 1:
+                value:
+                  subAccountId: '2025111833892363'
+                  rechargeApplyId: '20251118154055'
+                  currency: USD
+                  amount: '43000.00'

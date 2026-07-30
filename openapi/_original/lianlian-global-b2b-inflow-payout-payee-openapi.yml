@@ -1,0 +1,1097 @@
+swagger: '2.0'
+info:
+  title: Payee API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /payee:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/payee'
+        '400':
+          description: |
+            Bad Request
+
+            Possible error codes:
+
+            | 错误码 | 描述 |
+            |------|-------------|
+            | 999995 |参数错误|
+            |300001|PayeeId 重复|
+            |400213|收款人证件号错误|
+            |300004|收款人UBO证件号错误|
+            |400230|收款人风控拦截|
+            |400231|收款人反洗钱拦截|
+        '500':
+          description: Internal Server Error
+      description: 创建收款人
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: 收款人
+            description: 连连侧收款人对象
+            properties:
+              payeeId:
+                type: string
+                description: 商户侧收款人唯一编号
+                maxLength: 64
+              payeeType:
+                type: string
+                description: |-
+                  收款人类型，填写方式如下
+
+                  |传输值|解释|
+                  |----|-----|
+                  |Individual|个人收款人|
+                  |Corporate|企业收款人|
+                enum:
+                  - Individual
+                  - Corporate
+              payeeNation:
+                type: string
+                description: |-
+                  收款人所在国家或地区
+
+                  |传输值|解释|
+                  |----|-----|
+                  |CHN|大陆收款人|
+                enum:
+                  - CHN
+                maxLength: 3
+              payeeNameCn:
+                type: string
+                description: 收款人中文名称
+                maxLength: 64
+              payeeNameEn:
+                type: string
+                description: 收款人英文名称
+                maxLength: 64
+              payeeDate:
+                type: string
+                description: |-
+                  收款人出生或成立日，
+
+                  若收款人为个人，则为个人出生日期
+                  若收款人为企业，则为企业注册日期
+
+                  格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              payeeIdType:
+                type: string
+                description: |-
+                  收款人证件类型，填写方式如下
+                  |传输值|收款人类型|解释|
+                  |----|-----|----|
+                  |0|Individual|个人身份证|
+                  |1|Corporate|统一社会信用代码|
+                enum:
+                  - 0
+                  - 1
+              payeeIdScanFront:
+                type: string
+                description: 收款人证件照片（正面）
+                maxLength: 64
+              payeeIdScanBack:
+                type: string
+                description: |-
+                  收款人证件照片（反面）
+
+                  若payeeType='Individual'则这个字段为必填
+                maxLength: 64
+              payeeIdNo:
+                type: string
+                description: 收款人证件号
+                maxLength: 32
+              payeeAddress:
+                type: string
+                description: |-
+                  收款人地址，
+                  若收款人为企业，则传输企业注册地址
+                  若收款人为个人，则传输个人居住地址
+                maxLength: 128
+              payeeOperateAddress:
+                type: string
+                description: 企业经营地址，若收款人为企业，则该字段传企业经营地址
+                maxLength: 128
+              payeeIdIsLt:
+                type: string
+                description: |-
+                  收款人证件是否为长期，填写方式如下
+
+                  |传输值|解释|
+                  |-----|-----|
+                  |0|长期|
+                  |1|非长期|
+                enum:
+                  - 0
+                  - 1
+              payeeIdIssue:
+                type: string
+                description: '收款人证件签发日,格式：yyyyMMdd'
+                minLength: 8
+                maxLength: 8
+              payeeIdExpiry:
+                type: string
+                description: 收款人证件有效期，若收款人证件为非长期，则该字段必填，格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              payeeContactNo:
+                type: string
+                description: |
+                  收款人联系方式（个人手机号、企业联系人手机号）
+                minLength: 11
+                maxLength: 11
+              corporateNature:
+                type: string
+                description: |-
+                  公司性质，若payeeType='Corporate'则这个字段为必填，填写方式如下
+
+                  |传输值|解释|
+                  |---|----|
+                  |0|股份公司|
+                  |1|个人经营|
+                  |2|国有企业|
+                  |3|合伙经营|
+                  |4|上市企业|
+                  |5|有限公司|
+                  |6|其他|
+                enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+              legalPersIdType:
+                type: string
+                description: |-
+                  法人证件类型， 传输方式如下：
+
+                  |传输值|解释|
+                  |----|-----|
+                  |0|大陆身份证|
+                  |1|国外护照|
+                  |2|香港永久居民身份证|
+                enum:
+                  - 0
+                  - 1
+                  - 2
+              legalPersIdScanFront:
+                type: string
+                description: |-
+                  法人证件正面，若payeeType='Corporate'则这个字段为必填，传输信息如下：
+
+                  |证件类型|传输信息|
+                  |----|-----|
+                  |大陆身份证|国徽面|
+                  |外国护照|护照头像页|
+                  |香港永久居民身份证|证件页|
+                maxLength: 64
+              legalPersIdScanBack:
+                type: string
+                description: |-
+                  法人证件反面，传输信息如下：
+
+                  |证件类型|传输信息|
+                  |----|-----|
+                  |大陆身份证|人头面|
+                  |外国护照|\|
+                  |香港永久居民身份证|\|
+                maxLength: 64
+              legalPersNameCn:
+                type: string
+                description: 法人名称，若payeeType='Corporate'则这个字段为必填
+                maxLength: 64
+              legalPersNameEn:
+                type: string
+                description: 法人名称（拼音），若payeeType='Corporate'则这个字段为必填
+                maxLength: 64
+              legalPersCountryCode:
+                type: string
+                minLength: 3
+                maxLength: 3
+                description: 法人所在国家或地区代码，
+              legalPersIdNo:
+                type: string
+                description: 法人证件号，若payeeType='Corporate'则这个字段为必填
+                maxLength: 32
+              legalPersIdIsLt:
+                type: string
+                description: |-
+                  法人证件有效期是否为长期，填写方式如下
+
+                  |传输值|解释|
+                  |-----|-----|
+                  |0|长期|
+                  |1|非长期|
+                enum:
+                  - 0
+                  - 1
+              legalPersDob:
+                type: string
+                description: 法人出生日期，若legalPersIdType不为0则该字段必填，格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              legalPersIdIssue:
+                type: string
+                description: 法人证件签发日，若payeeType='Corporate'则这个字段为必填，格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              legalPersIdExpiry:
+                type: string
+                description: 法人证件有效期，若payeeType='Corporate'且证件非长期则这个字段为必填
+                minLength: 8
+                maxLength: 8
+              legalPersIdAddress:
+                type: string
+                description: 法人地址，若payeeType='Corporate'则这个字段为必填
+                maxLength: 128
+              uboInfo:
+                type: array
+                description: 受益人信息，若payeeType='Corporate'则这个字段为必填
+                items:
+                  type: object
+                  properties:
+                    uboId:
+                      type: string
+                      description: 商户侧收益人唯一编号
+                      maxLength: 64
+                    uboPersIdType:
+                      type: string
+                      enum:
+                        - 0
+                        - 1
+                        - 2
+                      description: |-
+                        受益人证件类型， 传输方式如下：
+
+                        |传输值|解释|
+                        |----|-----|
+                        |0|大陆身份证|
+                        |1|国外护照|
+                        |2|香港永久居民身份证|
+                    uboPersIdScanFront:
+                      type: string
+                      description: |-
+                        受益人证件正面，传输信息如下：
+
+                        |证件类型|传输信息|
+                        |----|-----|
+                        |大陆身份证|国徽面|
+                        |外国护照|护照头像页|
+                        |香港永久居民身份证|证件页|
+                      maxLength: 64
+                    uboPersIdScanBack:
+                      type: string
+                      description: |-
+                        受益人证件反面，传输信息如下：
+
+                        |证件类型|传输信息|
+                        |----|-----|
+                        |大陆身份证|人头面|
+                        |外国护照|\|
+                        |香港永久居民身份证|\|
+                      maxLength: 64
+                    uboPersCountryCode:
+                      type: string
+                      description: 受益人所在国家或地区代码，请参考附录
+                      minLength: 3
+                      maxLength: 3
+                    uboNameCn:
+                      type: string
+                      description: 受益人名称
+                      maxLength: 64
+                    uboNameEn:
+                      type: string
+                      description: 受益人名称（拼音）
+                      maxLength: 64
+                    uboPersIdNo:
+                      type: string
+                      description: 受益人证件号
+                      maxLength: 32
+                    uboPersIdIsLt:
+                      type: string
+                      description: |-
+                        受益人证件有效期是否为长期，填写方式如下
+
+                        |传输值|解释|
+                        |-----|-----|
+                        |0|长期|
+                        |1|非长期|
+                      enum:
+                        - 0
+                        - 1
+                    uboPersDob:
+                      type: string
+                      description: 受益人出生日期，若uboPersIdType不为0则该字段必填，格式：yyyyMMdd
+                      minLength: 8
+                      maxLength: 8
+                    uboPersIdIssue:
+                      type: string
+                      description: 受益人证件签发日期，若payeeType='Corporate'则为必填，格式：yyyyMMdd
+                      minLength: 8
+                      maxLength: 8
+                    uboPersIdExpiry:
+                      type: string
+                      description: 受益人身份证有效期，若若payeeType='Corporate'且证件非长期则必填，格式：yyyyMMdd
+                      minLength: 8
+                      maxLength: 8
+                    uboAddress:
+                      type: string
+                      description: 受益人地址
+                      maxLength: 128
+              uboEvidence:
+                type: string
+                description: 受益人证明文件，若payeeType='Corporate'则这个字段为必填
+                maxLength: 64
+            required:
+              - payeeId
+              - payeeType
+              - payeeNameCn
+              - payeeNameEn
+              - payeeDate
+              - payeeIdType
+              - payeeIdScanFront
+              - payeeIdNo
+              - payeeAddress
+              - payeeIdIsLt
+              - payeeIdIssue
+              - payeeIdExpiry
+              - payeeContactNo
+      summary: 创建收款人
+      tags:
+        - 接口
+  '/payee/{payeeId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/payee'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      summary: 查询收款人
+      description: 查询收款人信息
+      tags:
+        - 接口
+    parameters:
+      - name: payeeId
+        in: path
+        type: string
+        required: true
+        description: 商户侧收款人唯一编号
+        maxLength: 64
+    put:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/payee'
+        '400':
+          description: |
+            Bad Request
+
+            Possible error codes:
+
+            | 错误码 | 解释 |
+            |------|-------------|
+            | 999995 |参数错误 |
+            |300005|收款人信息不允许修改|
+            |400213|收款人证件号错误|
+            |300004|UBO证件号错误|
+            |400230|收款人风控拦截|
+            |400231|收款人反洗钱拦截|
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      summary: 修改收款人信息
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: 收款人
+            description: 连连侧收款人对象
+            properties:
+              payeeNameCn:
+                type: string
+                description: 收款人中文名称
+                maxLength: 64
+              payeeNameEn:
+                type: string
+                description: 收款人英文名称
+                maxLength: 64
+              payeeDate:
+                type: string
+                description: |-
+                  收款人出生或成立日，
+
+                  若收款人为个人，则为个人出生日期
+                  若收款人为企业，则为企业注册日期
+
+                  格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              payeeIdType:
+                type: string
+                description: |-
+                  收款人证件类型，填写方式如下
+                  |传输值|收款人类型|解释|
+                  |----|-----|----|
+                  |0|Individual|个人身份证|
+                  |1|Corporate|统一社会信用代码|
+                enum:
+                  - 0
+                  - 1
+              payeeIdScanFront:
+                type: string
+                description: 收款人证件照片（正面）
+                maxLength: 64
+              payeeIdScanBack:
+                type: string
+                description: |-
+                  收款人证件照片（反面）
+
+                  若payeeType='Individual'则这个字段为必填
+                maxLength: 64
+              payeeIdNo:
+                type: string
+                description: 收款人证件号
+                maxLength: 32
+              payeeAddress:
+                type: string
+                description: |-
+                  收款人地址，
+                  若收款人为企业，则传输企业注册地址
+                  若收款人为个人，则传输个人居住地址
+                maxLength: 128
+              payeeOperateAddress:
+                type: string
+                description: 企业经营地址，若收款人为企业，则该字段传企业经营地址
+                maxLength: 128
+              payeeIdIsLt:
+                type: string
+                description: |-
+                  收款人证件是否为长期，填写方式如下
+
+                  |传输值|解释|
+                  |-----|-----|
+                  |0|长期|
+                  |1|非长期|
+                enum:
+                  - 0
+                  - 1
+              payeeIdIssue:
+                type: string
+                description: '收款人证件签发日,格式：yyyyMMdd'
+                minLength: 8
+                maxLength: 8
+              payeeIdExpiry:
+                type: string
+                description: 收款人证件有效期，若收款人证件为非长期，则该字段必填，格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              payeeContactNo:
+                type: string
+                description: |
+                  收款人联系方式（个人手机号、企业联系人手机号）
+                minLength: 11
+                maxLength: 11
+              corporateNature:
+                type: string
+                description: |-
+                  公司性质，若payeeType='Corporate'则这个字段为必填，填写方式如下
+
+                  |传输值|解释|
+                  |---|----|
+                  |0|股份公司|
+                  |1|个人经营|
+                  |2|国有企业|
+                  |3|合伙经营|
+                  |4|上市企业|
+                  |5|有限公司|
+                  |6|其他|
+                enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+              legalPersIdType:
+                type: string
+                description: |-
+                  法人证件类型， 传输方式如下：
+
+                  |传输值|解释|
+                  |----|-----|
+                  |0|大陆身份证|
+                  |1|国外护照|
+                  |2|香港永久居民身份证|
+                enum:
+                  - 0
+                  - 1
+                  - 2
+              legalPersIdScanFront:
+                type: string
+                description: |-
+                  法人证件正面，若payeeType='Corporate'则这个字段为必填，传输信息如下：
+
+                  |证件类型|传输信息|
+                  |----|-----|
+                  |大陆身份证|国徽面|
+                  |外国护照|护照头像页|
+                  |香港永久居民身份证|证件页|
+                maxLength: 64
+              legalPersIdScanBack:
+                type: string
+                description: |-
+                  法人证件反面，传输信息如下：
+
+                  |证件类型|传输信息|
+                  |----|-----|
+                  |大陆身份证|人头面|
+                  |外国护照|\|
+                  |香港永久居民身份证|\|
+                maxLength: 64
+              legalPersNameCn:
+                type: string
+                description: 法人名称，若payeeType='Corporate'则这个字段为必填
+                maxLength: 64
+              legalPersNameEn:
+                type: string
+                description: 法人名称（拼音），若payeeType='Corporate'则这个字段为必填
+                maxLength: 64
+              legalPersCountryCode:
+                type: string
+                minLength: 3
+                maxLength: 3
+                description: 法人所在国家或地区代码，
+              legalPersIdNo:
+                type: string
+                description: 法人证件号，若payeeType='Corporate'则这个字段为必填
+                maxLength: 32
+              legalPersIdIsLt:
+                type: string
+                description: |-
+                  法人证件有效期是否为长期，填写方式如下
+
+                  |传输值|解释|
+                  |-----|-----|
+                  |0|长期|
+                  |1|非长期|
+                enum:
+                  - 0
+                  - 1
+              legalPersDob:
+                type: string
+                description: 法人出生日期，若legalPersIdType不为0则该字段必填，格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              legalPersIdIssue:
+                type: string
+                description: 法人证件签发日，若payeeType='Corporate'则这个字段为必填，格式：yyyyMMdd
+                minLength: 8
+                maxLength: 8
+              legalPersIdExpiry:
+                type: string
+                description: 法人证件有效期，若payeeType='Corporate'且证件非长期则这个字段为必填
+                minLength: 8
+                maxLength: 8
+              legalPersIdAddress:
+                type: string
+                description: 法人地址，若payeeType='Corporate'则这个字段为必填
+                maxLength: 128
+              uboInfo:
+                type: array
+                description: 受益人信息，若payeeType='Corporate'则这个字段为必填
+                items:
+                  type: object
+                  properties:
+                    uboId:
+                      type: string
+                      description: 商户侧收益人唯一编号
+                      maxLength: 64
+                    uboPersIdType:
+                      type: string
+                      enum:
+                        - 0
+                        - 1
+                        - 2
+                      description: |-
+                        受益人证件类型， 传输方式如下：
+
+                        |传输值|解释|
+                        |----|-----|
+                        |0|大陆身份证|
+                        |1|国外护照|
+                        |2|香港永久居民身份证|
+                    uboPersIdScanFront:
+                      type: string
+                      description: |-
+                        受益人证件正面，传输信息如下：
+
+                        |证件类型|传输信息|
+                        |----|-----|
+                        |大陆身份证|国徽面|
+                        |外国护照|护照头像页|
+                        |香港永久居民身份证|证件页|
+                      maxLength: 64
+                    uboPersIdScanBack:
+                      type: string
+                      description: |-
+                        受益人证件反面，传输信息如下：
+
+                        |证件类型|传输信息|
+                        |----|-----|
+                        |大陆身份证|人头面|
+                        |外国护照|\|
+                        |香港永久居民身份证|\|
+                      maxLength: 64
+                    uboNameCn:
+                      type: string
+                      description: 受益人名称
+                      maxLength: 64
+                    uboNameEn:
+                      type: string
+                      description: 受益人名称（拼音）
+                      maxLength: 64
+                    uboPersCountryCode:
+                      type: string
+                      description: 受益人所在国家或地区代码，请参考附录
+                      minLength: 3
+                      maxLength: 3
+                    uboPersIdNo:
+                      type: string
+                      description: 受益人证件号
+                      maxLength: 32
+                    uboPersIdIsLt:
+                      type: string
+                      description: |-
+                        受益人证件有效期是否为长期，填写方式如下
+
+                        |传输值|解释|
+                        |-----|-----|
+                        |0|长期|
+                        |1|非长期|
+                      enum:
+                        - 0
+                        - 1
+                    uboPersDob:
+                      type: string
+                      description: 受益人出生日期，若uboPersIdType不为0则该字段必填，格式：yyyyMMdd
+                      minLength: 8
+                      maxLength: 8
+                    uboPersIdIssue:
+                      type: string
+                      description: 受益人证件签发日期，若payeeType='Corporate'则为必填，格式：yyyyMMdd
+                      minLength: 8
+                      maxLength: 8
+                    uboPersIdExpiry:
+                      type: string
+                      description: 受益人身份证有效期，若若payeeType='Corporate'且证件非长期则必填，格式：yyyyMMdd
+                      minLength: 8
+                      maxLength: 8
+                    uboAddress:
+                      type: string
+                      description: 受益人地址
+                      maxLength: 128
+              uboEvidence:
+                type: string
+                description: 受益人证明文件，若payeeType='Corporate'则这个字段为必填
+                maxLength: 64
+            required:
+              - payeeNameCn
+              - payeeNameEn
+              - payeeDate
+              - payeeIdType
+              - payeeIdScanFront
+              - payeeIdNo
+              - payeeAddress
+              - payeeIdIsLt
+              - payeeIdIssue
+              - payeeIdExpiry
+              - payeeContactNo
+          description: 修改收款人信息
+      tags:
+        - 接口
+definitions:
+  payee:
+    type: object
+    title: 收款人
+    description: 连连侧收款人对象
+    properties:
+      payeeId:
+        type: string
+        description: 商户侧收款人唯一编号
+        maxLength: 64
+      payeeType:
+        type: string
+        description: |-
+          收款人类型，填写方式如下
+
+          |传输值|解释|
+          |----|-----|
+          |Individual|个人收款人|
+          |Corporate|企业收款人|
+        enum:
+          - Individual
+          - Corporate
+      payeeNation:
+        type: string
+        description: |-
+          收款人所在国家或地区
+
+          |传输值|解释|
+          |----|-----|
+          |CHN|大陆收款人|
+        enum:
+          - CHN
+        maxLength: 3
+      payeeNameCn:
+        type: string
+        description: 收款人中文名称
+        maxLength: 64
+      payeeNameEn:
+        type: string
+        description: 收款人英文名称
+        maxLength: 64
+      payeeDate:
+        type: string
+        description: |-
+          收款人出生或成立日，
+
+          若收款人为个人，则为个人出生日期
+          若收款人为企业，则为企业注册日期
+
+          格式：yyyyMMdd
+        minLength: 8
+        maxLength: 8
+      payeeIdType:
+        type: string
+        description: |-
+          收款人证件类型，填写方式如下
+          |传输值|收款人类型|解释|
+          |----|-----|----|
+          |0|Individual|个人身份证|
+          |1|Corporate|统一社会信用代码|
+        enum:
+          - 0
+          - 1
+      payeeIdScanFront:
+        type: string
+        description: 收款人证件照片（正面）
+        maxLength: 64
+      payeeIdScanBack:
+        type: string
+        description: |-
+          收款人证件照片（反面）
+
+          若payeeType='Individual'则这个字段为必填
+        maxLength: 64
+      payeeIdNo:
+        type: string
+        description: 收款人证件号
+        maxLength: 32
+      payeeAddress:
+        type: string
+        description: |-
+          收款人地址，
+          若收款人为企业，则传输企业注册地址
+          若收款人为个人，则传输个人居住地址
+        maxLength: 128
+      payeeOperateAddress:
+        type: string
+        description: 企业经营地址，若收款人为企业，则该字段传企业经营地址
+        maxLength: 128
+      payeeIdIsLt:
+        type: string
+        description: |-
+          收款人证件是否为长期，填写方式如下
+
+          |传输值|解释|
+          |-----|-----|
+          |0|长期|
+          |1|非长期|
+        enum:
+          - 0
+          - 1
+      payeeIdIssue:
+        type: string
+        description: '收款人证件签发日,格式：yyyyMMdd'
+        minLength: 8
+        maxLength: 8
+      payeeIdExpiry:
+        type: string
+        description: 收款人证件有效期，若收款人证件为非长期，则该字段必填，格式：yyyyMMdd
+        minLength: 8
+        maxLength: 8
+      payeeContactNo:
+        type: string
+        description: |
+          收款人联系方式（个人手机号、企业联系人手机号）
+        minLength: 11
+        maxLength: 11
+      corporateNature:
+        type: string
+        description: |-
+          公司性质，若payeeType='Corporate'则这个字段为必填，填写方式如下
+
+          |传输值|解释|
+          |---|----|
+          |0|股份公司|
+          |1|个人经营|
+          |2|国有企业|
+          |3|合伙经营|
+          |4|上市企业|
+          |5|有限公司|
+          |6|其他|
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+      legalPersIdType:
+        type: string
+        description: |-
+          法人证件类型， 传输方式如下：
+
+          |传输值|解释|
+          |----|-----|
+          |0|大陆身份证|
+          |1|国外护照|
+          |2|香港永久居民身份证|
+        enum:
+          - 0
+          - 1
+          - 2
+      legalPersIdScanFront:
+        type: string
+        description: |-
+          法人证件正面，若payeeType='Corporate'则这个字段为必填，传输信息如下：
+
+          |证件类型|传输信息|
+          |----|-----|
+          |大陆身份证|国徽面|
+          |外国护照|护照头像页|
+          |香港永久居民身份证|证件页|
+        maxLength: 64
+      legalPersIdScanBack:
+        type: string
+        description: |-
+          法人证件反面，传输信息如下：
+
+          |证件类型|传输信息|
+          |----|-----|
+          |大陆身份证|人头面|
+          |外国护照|\|
+          |香港永久居民身份证|\|
+        maxLength: 64
+      legalPersNameCn:
+        type: string
+        description: 法人名称，若payeeType='Corporate'则这个字段为必填
+        maxLength: 64
+      legalPersNameEn:
+        type: string
+        description: 法人名称（拼音），若payeeType='Corporate'则这个字段为必填
+        maxLength: 64
+      legalPersCountryCode:
+        type: string
+        minLength: 3
+        maxLength: 3
+        description: 法人所在国家或地区代码，
+      legalPersIdNo:
+        type: string
+        description: 法人证件号，若payeeType='Corporate'则这个字段为必填
+        maxLength: 32
+      legalPersIdIsLt:
+        type: string
+        description: |-
+          法人证件有效期是否为长期，填写方式如下
+
+          |传输值|解释|
+          |-----|-----|
+          |0|长期|
+          |1|非长期|
+        enum:
+          - 0
+          - 1
+      legalPersDob:
+        type: string
+        description: 法人出生日期，若legalPersIdType不为0则该字段必填，格式：yyyyMMdd
+        minLength: 8
+        maxLength: 8
+      legalPersIdIssue:
+        type: string
+        description: 法人证件签发日，若payeeType='Corporate'则这个字段为必填，格式：yyyyMMdd
+        minLength: 8
+        maxLength: 8
+      legalPersIdExpiry:
+        type: string
+        description: 法人证件有效期，若payeeType='Corporate'且证件非长期则这个字段为必填
+        minLength: 8
+        maxLength: 8
+      legalPersIdAddress:
+        type: string
+        description: 法人地址，若payeeType='Corporate'则这个字段为必填
+        maxLength: 128
+      uboInfo:
+        type: array
+        description: 受益人信息，若payeeType='Corporate'则这个字段为必填
+        items:
+          type: object
+          properties:
+            uboId:
+              type: string
+              description: 商户侧收益人唯一编号
+              maxLength: 64
+            uboPersIdType:
+              type: string
+              enum:
+                - 0
+                - 1
+                - 2
+              description: |-
+                受益人证件类型， 传输方式如下：
+
+                |传输值|解释|
+                |----|-----|
+                |0|大陆身份证|
+                |1|国外护照|
+                |2|香港永久居民身份证|
+            uboPersIdScanFront:
+              type: string
+              description: |-
+                受益人证件正面，传输信息如下：
+
+                |证件类型|传输信息|
+                |----|-----|
+                |大陆身份证|国徽面|
+                |外国护照|护照头像页|
+                |香港永久居民身份证|证件页|
+              maxLength: 64
+            uboPersIdScanBack:
+              type: string
+              description: |-
+                受益人证件反面，传输信息如下：
+
+                |证件类型|传输信息|
+                |----|-----|
+                |大陆身份证|人头面|
+                |外国护照|\|
+                |香港永久居民身份证|\|
+              maxLength: 64
+            uboNameCn:
+              type: string
+              description: 受益人名称
+              maxLength: 64
+            uboNameEn:
+              type: string
+              description: 受益人名称（拼音）
+              maxLength: 64
+            uboPersCountryCode:
+              type: string
+              description: 受益人所在国家或地区代码，请参考附录
+              minLength: 3
+              maxLength: 3
+            uboPersIdNo:
+              type: string
+              description: 受益人证件号
+              maxLength: 32
+            uboPersIdIsLt:
+              type: string
+              description: |-
+                受益人证件有效期是否为长期，填写方式如下
+
+                |传输值|解释|
+                |-----|-----|
+                |0|长期|
+                |1|非长期|
+              enum:
+                - 0
+                - 1
+            uboPersDob:
+              type: string
+              description: 受益人出生日期，若uboPersIdType不为0则该字段必填，格式：yyyyMMdd
+              minLength: 8
+              maxLength: 8
+            uboPersIdIssue:
+              type: string
+              description: 受益人证件签发日期，若payeeType='Corporate'则为必填，格式：yyyyMMdd
+              minLength: 8
+              maxLength: 8
+            uboPersIdExpiry:
+              type: string
+              description: 受益人身份证有效期，若若payeeType='Corporate'且证件非长期则必填，格式：yyyyMMdd
+              minLength: 8
+              maxLength: 8
+            uboAddress:
+              type: string
+              description: 受益人地址
+              maxLength: 128
+      uboEvidence:
+        type: string
+        description: 受益人证明文件，若payeeType='Corporate'则这个字段为必填
+        maxLength: 64
+      payeeStatus:
+        type: string
+        description: |-
+          收款人审核状态，审核状态如下
+
+          |值|解释|
+          |----|-----|
+          |Processing|审核中|
+          |Successed|审核成功|
+          |Failed|审核失败|
+          |NeedUpdate|需更新材料|
+          |Prohibit|停止服务|
+        enum:
+          - Processing
+          - Successed
+          - Failed
+          - NeedUpdate
+          - Prohibit
+      failedReason:
+        type: string
+        description: 若收款人审核失败，该显示审核失败原因
+        maxLength: 128
+    required:
+      - payeeId
+      - payeeType
+      - payeeNameCn
+      - payeeNameEn
+      - payeeDate
+      - payeeIdType
+      - payeeIdScanFront
+      - payeeIdNo
+      - payeeAddress
+      - payeeIdIsLt
+      - payeeIdIssue
+      - payeeIdExpiry
+      - payeeContactNo
+    x-tags:
+      - 对象
+tags:
+  - name: Operations
+  - name: 接口
+basePath: /b2b-export/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json

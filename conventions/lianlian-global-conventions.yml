@@ -1,0 +1,90 @@
+generated: '2026-07-19'
+method: searched
+source: https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication, /docs/lppe/fbedb06f358ad-errors,
+  /docs/lppe/5857aa0278496-data-types, /docs/lppe/dbba222494009-metadata, /docs/lppe/f4fd56686132f-request-i-ds,
+  /docs/lppe/7mfhske213tl9-versioning, /docs/lppe/8u4o96gz8w7bq-webhook-overview, /docs/llp-api/c712e8e5f4a5c-authentication
+style: REST over HTTPS, JSON request and response bodies, HTTP status codes for outcome.
+authentication:
+  models:
+  - OAuth 2.0 (client_credentials and authorization_code) on the LPPE platform surface
+  - 'HTTP Basic API key: Authorization: Basic base64(developerId:masterToken) on the signature-based products'
+  request_signing:
+    header: LLPAY-Signature
+    format: t=<epoch_seconds>,v=<base64_signature>
+    algorithm: SHA256WithRSA
+    payload: HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD
+    example_payload: POST&/api/mkt/balance&1533715688&{"currency":"USD"}
+    notes: Both parties exchange RSA public keys; LianLian signs its responses and webhooks with its own key for
+      verification.
+  transport: HTTPS only — plain HTTP calls fail.
+  artifact: authentication/lianlian-global-authentication.yml
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  required: false
+  scope: per request; the server uses the value to recognise subsequent retries of the same request
+  documented_in: OpenAPI header parameter across document, funding, payout and webhook operations
+  retention: null
+  webhook_guidance: Webhook delivery is at-least-once and unordered — consumers must de-duplicate on LLPAY-Delivery-ID
+    and process events idempotently.
+pagination:
+  style: page-number
+  params:
+  - page_num
+  - page_size
+  alternate_params:
+  - pageSize
+  - limit
+  notes: Page-based listing is the dominant convention across products; parameter casing varies between the older
+    Swagger 2.0 products (page_num/page_size) and the newer OpenAPI 3.1 products (pageSize).
+request_tracing:
+  field: request_id
+  location: request body
+  description: Callers send a unique request_id on each API request; quote it to support to locate logs.
+  error_field: trace_id
+  error_field_retention: 15 days
+metadata:
+  supported: true
+  field: metadata
+  shape: key-value map
+  limits:
+    max_keys: 20
+    max_key_length: 40
+    max_value_length: 500
+  applies_to:
+  - Payout
+  - Beneficiary
+  - and most updatable objects
+  warning: Never store sensitive data (bank account numbers, card details) in metadata or description fields.
+versioning:
+  scheme: uri-path
+  example: /v1
+  current:
+  - v1
+  - v2
+  - v3
+  docs: https://developer.lianlianglobal.com/docs/lppe/7mfhske213tl9-versioning
+error_envelope:
+  fields:
+  - code
+  - message
+  - param
+  - trace_id
+  param_notes: Nested parameters are dotted, e.g. beneficiary.address.country_code
+  artifact: errors/lianlian-global-problem-types.yml
+  format: custom-json
+rate_limit_signaling:
+  documented_headers: null
+  error_code: LIMIT_ERROR
+  http_status: 429
+  notes: 429 with a LIMIT_ERROR code is documented; no rate-limit response headers or published quotas were found.
+data_types:
+  timestamp: Unix epoch milliseconds (UTC)
+  currency: ISO 4217 three-letter code
+  country_code: ISO 3166-2 two-letter code
+cross_links:
+  errors: errors/lianlian-global-problem-types.yml
+  lifecycle: lifecycle/lianlian-global-lifecycle.yml
+  authentication: authentication/lianlian-global-authentication.yml
+  webhooks: asyncapi/lianlian-global-webhooks.yml
+  scopes: scopes/lianlian-global-scopes.yml

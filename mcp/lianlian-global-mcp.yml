@@ -1,0 +1,85 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/ (173 specs, 548 classified operations)
+server: null
+notes: No official hosted or remote MCP server was found for LianLian Global (searched the developer portal, the
+  LLGlobal GitHub organization and npm). LianLian instead ships Agent Skills (see skills/). This file records a
+  candidate MCP surface derived from the published OpenAPI, grouped by API product — it is a design starting point,
+  not a provider claim.
+candidate_namespaces:
+- namespace: B2B-inflow-payout
+  openapi_files: 12
+  operations: 30
+  human_url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+- namespace: b2b-cross-border
+  openapi_files: 19
+  operations: 47
+  human_url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+- namespace: cards-open-api
+  openapi_files: 6
+  operations: 26
+  human_url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+- namespace: connect
+  openapi_files: 10
+  operations: 19
+  human_url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+- namespace: connect-ota
+  openapi_files: 9
+  operations: 23
+  human_url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+- namespace: e-wallet-openapi
+  openapi_files: 17
+  operations: 39
+  human_url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- namespace: global-payout
+  openapi_files: 14
+  operations: 45
+  human_url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+- namespace: global-payout-fx
+  openapi_files: 3
+  operations: 6
+  human_url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+- namespace: global-payout-tuition
+  openapi_files: 8
+  operations: 25
+  human_url: https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+- namespace: llg-payments
+  openapi_files: 3
+  operations: 5
+  human_url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+- namespace: llp-api
+  openapi_files: 7
+  operations: 47
+  human_url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+- namespace: lppe
+  openapi_files: 14
+  operations: 73
+  human_url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+- namespace: outbound-payout
+  openapi_files: 8
+  operations: 26
+  human_url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+- namespace: outbound-payout-ka
+  openapi_files: 14
+  operations: 54
+  human_url: https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+- namespace: outbound-payout-service
+  openapi_files: 11
+  operations: 37
+  human_url: https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+- namespace: outbound-payout-verification
+  openapi_files: 8
+  operations: 24
+  human_url: https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+- namespace: standard-remittance
+  openapi_files: 9
+  operations: 18
+  human_url: https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+- namespace: triplink
+  openapi_files: 1
+  operations: 4
+  human_url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+related_artifacts:
+  skills: skills/_index.yml
+  agentic_access: agentic-access/lianlian-global-agentic-access.yml

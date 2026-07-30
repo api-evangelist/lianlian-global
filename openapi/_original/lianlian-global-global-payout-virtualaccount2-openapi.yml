@@ -1,0 +1,377 @@
+openapi: 3.1.0
+x-stoplight:
+  id: l2awwpdfjmavx
+info:
+  title: Virtual Account
+  version: '1.0'
+  host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  '/virtualCard/{virtualAcctId}':
+    parameters:
+      - schema:
+          type: string
+        name: virtualAcctId
+        in: path
+        required: true
+    get:
+      summary: Get  Virtual Account Information
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Virtual-Account-Information'
+              examples: {}
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Virtual-Account-Information'
+            multipart/form-data:
+              schema:
+                type: object
+                properties: {}
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Virtual-Account-Information'
+        '':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Virtual-Account-Information'
+          description: ''
+      operationId: virtualAcctId
+      description: ''
+      tags:
+        - Operations
+  /virtualCard/add:
+    post:
+      summary: Create a Virtual Account
+      operationId: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Virtual-Account-Information'
+              examples: {}
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/va-Info'
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/va-Info'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/va-Info'
+            text/plain:
+              schema:
+                type: object
+                properties:
+                  virtual account information:
+                    $ref: '#/components/schemas/va-Info'
+            application/EDI-X12:
+              schema:
+                type: string
+            application/EDIFACT:
+              schema:
+                $ref: '#/components/schemas/va-Info'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995|[PARAMETER] ERROR_MESSAGE|
+            | 168001|virtual card duplicate|
+            | 168002|virtual card is processing|
+            | 168003|virtual card apply failed|
+        '500':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995|[PARAMETER] ERROR_MESSAGE|
+            | 168001|virtual card duplicate|
+            | 168002|virtual card is processing|
+            | 168003|virtual card apply failed|
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - virtualAcctId
+                - virtualAcctType
+                - currency
+                - region
+                - virtualAcctBank
+                - clientInfo
+              properties:
+                virtualAcctId:
+                  type: string
+                  description: unique Virtual Account ID from client
+                  maxLength: 64
+                virtualAcctType:
+                  type: string
+                  description: Virtual Account Type
+                  maxLength: 64
+                  enum:
+                    - LOCAL
+                    - SWIFT
+                currency:
+                  description: Virtual Account currency
+                  type: string
+                region:
+                  description: 'Virtual Account country code,mandatory if `virtualAcctType = LOCAL`'
+                  type: string
+                virtualAcctBank:
+                  type: string
+                  x-stoplight:
+                    id: jktullfrfe9j3
+                  description: "| code | Description |\r\n| --- | ---- |\r\n| DBS| DBS|\r\n| CITIUK|CITI|\r\n| BC| BC|"
+                clientInfo:
+                  type: object
+                  description: 'client  information '
+                  required:
+                    - clientIdNo
+                    - clientName
+                    - clientAddress
+                  properties:
+                    clientIdNo:
+                      type: string
+                      description: client identification number
+                      maxLength: 18
+                    clientName:
+                      type: string
+                      description: client name
+                      maxLength: 128
+                    clientAddress:
+                      type: string
+                      description: client address
+                      maxLength: 128
+                    clientAlias:
+                      type: string
+                      maxLength: 255
+                      x-stoplight:
+                        id: rzpu1znj8vu35
+                      description: Can be input client's Chinese name
+                    clientCountry:
+                      type: string
+                      x-stoplight:
+                        id: 22dzk4jtrj5fy
+                      description: "client country, mandatory if channel is DBS,\r\ntansmit 2-digit country code,eg: HK"
+                    certCountry:
+                      type: string
+                      x-stoplight:
+                        id: swqjoxfs0nrkk
+                      description: "the country of the ID number,mandatory if channel is DBS,\r\ntansmit 2-digit country code,eg:HK"
+                    clientType:
+                      type: string
+                      x-stoplight:
+                        id: 5m00sb1guwkox
+                      description: "client Type, mandatory if channel is DBS or BC\r\n\r\n| code | Description |\r\n| --- | ---- |\r\n| INDIVIDUAL| individual client|\r\n| CORPORATE|corporate client|"
+                    certType:
+                      type: string
+                      x-stoplight:
+                        id: t9ylybyq60o57
+                      description: "client id no type, mandatory if channel is DBS\r\n\r\n|code|Description|\r\n|---|----|\r\n|ID_CARD| for individual client|\r\n|BUSINESS_REGISTRATION_CERT|for corporate client|"
+                    clientGender:
+                      type: string
+                      x-stoplight:
+                        id: 4439y6dr3gdrq
+                      description: "client gender,mandatory if channel is DBS and clientType is individual \r\n\r\n|code|Description|\r\n|--|---|\r\n|FEMALE|female|\r\n|MALE|male|"
+                    clientBirthDate:
+                      type: string
+                      x-stoplight:
+                        id: xpdlfk1wlfdas
+                      description: 'client date of birth, format:yyyy-MM-dd,mandatory if channel is DBS'
+                    clientFirstName:
+                      type: string
+                      x-stoplight:
+                        id: wa7trta511u2b
+                      description: 'client firstname, mandatory if channel is BC'
+                    clientLastName:
+                      type: string
+                      x-stoplight:
+                        id: joqq2d6jva5ti
+                      description: 'client lastname, mandatory if channel is BC'
+            examples: {}
+        description: ''
+      description: ''
+      x-internal: false
+      tags:
+        - Operations
+    parameters: []
+components:
+  schemas:
+    Virtual-Account-Information:
+      type: object
+      title: Virtual Account Information
+      description: virtual account information
+      examples:
+        - virtualAcctId: string
+          currency: string
+          backgroundInfo:
+            clientIdNo: string
+            clientName: string
+            clientAddress: string
+          virtualAccountInfo:
+            accountNo: string
+            accountName: string
+            swiftCode: string
+            bankName: string
+            branchCode: string
+            bankAddress: string
+            bankCountryCode: st
+      x-tags:
+        - Models
+      required:
+        - virtualAcctId
+        - virtualAcctType
+        - currency
+        - region
+        - virtualAcctBank
+        - clientInfo
+        - status
+      properties:
+        virtualAcctId:
+          type: string
+          maxLength: 64
+          description: unique Virtual Account ID from client
+        virtualAcctType:
+          type: string
+          description: Virtual Account Type
+          enum:
+            - LOCAL
+            - SWIFT
+        currency:
+          type: string
+          description: Virtual Account currency
+        region:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: 'Virtual Account country code,mandatory if `virtualAcctType = LOCAL`'
+        virtualAcctBank:
+          type: string
+          x-stoplight:
+            id: vzh5geoyex1zn
+        clientInfo:
+          type: object
+          description: client  information
+          required:
+            - clientIdNo
+            - clientName
+            - clientAddress
+          properties:
+            clientIdNo:
+              type: string
+              maxLength: 18
+              description: client identification number
+            clientName:
+              type: string
+              maxLength: 128
+              description: client name
+            clientAddress:
+              type: string
+              maxLength: 128
+              description: client address
+            clientBirthDate:
+              type: string
+              x-stoplight:
+                id: rjr02mhoeiao9
+              description: client birth
+            clientCountry:
+              type: string
+              x-stoplight:
+                id: m84e88xhdmjhw
+              description: client country
+            clientGender:
+              type: string
+              x-stoplight:
+                id: g29kq5ioblbex
+              description: client gender
+            clientType:
+              type: string
+              x-stoplight:
+                id: aggakq1oz2ssf
+              description: client type
+            certCountry:
+              type: string
+              x-stoplight:
+                id: 6mrj382tqrlox
+              description: cert country
+            certType:
+              type: string
+              x-stoplight:
+                id: uhfduogkp0zdq
+              description: cert type
+        virtualAccountInfo:
+          type: object
+          description: Virtual Account information
+          properties:
+            accountNo:
+              type: string
+              description: receiving account number
+              maxLength: 50
+            accountName:
+              type: string
+              maxLength: 200
+              description: receiving account name
+            swiftCode:
+              type: string
+              description: receiving account bank SWIFT code
+              maxLength: 64
+            bankCode:
+              type: string
+              description: receiving account bank code
+              maxLength: 64
+            bankName:
+              type: string
+              description: receiving account bank name
+              maxLength: 150
+            branchCode:
+              type: string
+              description: receiving account bank branch number
+              maxLength: 100
+            bankAddress:
+              type: string
+              description: receiving account bank address
+              maxLength: 256
+            bankCountryCode:
+              type: string
+              description: receiving account bank Country code
+              minLength: 2
+              maxLength: 2
+            routingList:
+              type: array
+              description: receiving bank Local information
+              items:
+                type: object
+                properties:
+                  routingType:
+                    type: string
+                    description: routing number type
+                    maxLength: 32
+                  routingNumber:
+                    type: string
+                    maxLength: 32
+                    description: routing number
+            bizVirtualAccountNo:
+              type: string
+              x-stoplight:
+                id: sgg4ef12dbdzv
+              description: local account number
+        status:
+          type: string
+          x-stoplight:
+            id: 9vcaahzay76mz
+          description: "status of create virtual card\r\n\r\n|code|description|\r\n|---|----|\r\n|PROCESSING|processing|\r\n|SUCCESS|success|\r\n|FAILED|failed|"
+servers:
+  - url: 'https://global-api-sandbox.lianlianpay-inc.com/global/payout/v1'

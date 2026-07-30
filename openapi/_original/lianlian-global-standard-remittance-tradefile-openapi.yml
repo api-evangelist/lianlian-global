@@ -1,0 +1,474 @@
+swagger: '2.0'
+x-stoplight:
+  id: lrvnjpdaxx45x
+info:
+  title: Trade File API
+  description: 'By submitting trade materials, the interface can accumulate trade quotas for the counterparty, and within the quota range, exchange and remittance transactions can be initiated.<br>通过提交贸易材料接口可为对接方累计贸易额度，在额度范围内可发起汇兑汇出交易。'
+  contact:
+    email: fx_support@lianlianpay.com
+  version: '1.0'
+host: gtest-open-api.lianlianpay-inc.com
+basePath: /remittance/outward/v2/trade
+schemes:
+  - https
+paths:
+  '':
+    post:
+      tags:
+        - Operations
+      summary: Submit Trade File
+      description: |-
+        By submitting trade materials, the interface can accumulate trade quotas for the counterparty, and within the quota range, exchange and remittance transactions can be initiated.<br>
+        通过提交贸易材料接口可为对接方累计贸易额度，在额度范围内可发起汇兑汇出交易。
+      operationId: submit-tradefile
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            description: Trade file request params
+            properties:
+              tradeFileId:
+                type: string
+                description: Unique trade file ID from client
+                maxLength: 32
+                x-stoplight:
+                  id: ahaja44n0u4n7
+              tradeOrderId:
+                type: string
+                description: "Trade order id, order number/bill serial number/contract number.\r\nFor offline trade, the bill serial number takes precedence over the contract number."
+                maxLength: 32
+                x-stoplight:
+                  id: fupztua9hukwq
+              payerId:
+                type: string
+                description: Payer id
+                maxLength: 32
+                x-stoplight:
+                  id: g9dx7nw1aktkm
+              payeeName:
+                type: string
+                description: Individual  name or corporate name
+                maxLength: 128
+                x-stoplight:
+                  id: z45o7y2mfofhg
+              payeeCountryCode:
+                type: string
+                description: 'Payee country code, ISO 3166 Alpha-3, refer to the appendix [Country Code](https://developer.lianlianglobal.com/docs/standard-remittance/5b93cbbe6d4f4-country-code)'
+                maxLength: 3
+                x-stoplight:
+                  id: ju1xa5bh0dxg0
+                example: USA
+              tradeType:
+                description: Trade type
+                x-stoplight:
+                  id: lw9cij2d5mv2m
+                enum:
+                  - GOODS
+                  - SERVICE
+              tradeTime:
+                type: string
+                x-stoplight:
+                  id: plaknx4c5sd7l
+                maxLength: 8
+                description: 'Trade time , format `yyyyMMdd`'
+              tradeCurrency:
+                type: string
+                x-stoplight:
+                  id: zyrkdthlpyo7n
+                maxLength: 3
+                description: Trade currency
+              tradeAmount:
+                type: string
+                x-stoplight:
+                  id: hftxohorhtdvb
+                maxLength: 15
+                description: 'Trade amount, unit: yuan'
+              tradeName:
+                type: string
+                x-stoplight:
+                  id: px8uyutieq432
+                maxLength: 256
+                description: 'Trade name, if `tradeType = GOODS`, fill in the item name, multiple items are allowed, and the format is not required. If `tradeType = SERVICE`, fill in trade category'
+              tradeCount:
+                type: number
+                x-stoplight:
+                  id: p9s5unhta24vz
+                exclusiveMaximum: false
+                description: 'Trade count, if `tradeType = GOODS`, fill in the item number. If `tradeType = SERVICE`, fill in service times'
+              goodsCarrier:
+                type: string
+                x-stoplight:
+                  id: qx75x4ftnaz19
+                maxLength: 64
+                description: 'Goods carrier, mandatory if `tradeType = GOODS`'
+              serviceDetail:
+                type: string
+                x-stoplight:
+                  id: rew5cnbot2zuf
+                maxLength: 128
+                description: 'Service detail, mandatory if `tradeType = SERVICE`'
+              serviceTime:
+                type: string
+                x-stoplight:
+                  id: sesxz7iticw0a
+                maxLength: 16
+                description: 'Service time, mandatory if `tradeType = SERVICE`'
+            required:
+              - tradeFileId
+              - tradeOrderId
+              - payerId
+              - payeeName
+              - payeeCountryCode
+              - tradeType
+              - tradeTime
+              - tradeCurrency
+              - tradeAmount
+              - tradeName
+              - tradeCount
+          description: ''
+          x-examples:
+            Example 1:
+              tradeFileId: tf20230001
+              tradeOrderId: order0001
+              payerId: payer0001
+              payeeName: LianLian Global
+              payeeCountryCode: USA
+              tradeType: GOODS
+              tradeTime: '20230101'
+              tradeCurrency: HKD
+              tradeAmount: '4888.00'
+              tradeName: 跨境交易
+              tradeCount: 0
+              goodsCarrier: 顺丰SF453543582305
+              serviceDetail: 跨境
+              serviceTime: '2023-1-1 10:00:00'
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            description: Trade file response object in LianLian Global's system
+            properties:
+              tradeFileId:
+                type: string
+                x-stoplight:
+                  id: ozl1s6t19qzqs
+                maxLength: 32
+                description: Trade file id
+              tradeCurrency:
+                type: string
+                x-stoplight:
+                  id: j83666ph50uoo
+                maxLength: 3
+                description: "Trade currency\r\n\r\n"
+              tradeAmount:
+                type: string
+                x-stoplight:
+                  id: mwyouc15orldc
+                maxLength: 15
+                description: "Trade amount, unit: yuan\r\n\r\n"
+              payerId:
+                type: string
+                x-stoplight:
+                  id: nzairrlb7e5bq
+                maxLength: 32
+                description: "Payer id\r\n\r\n"
+              status:
+                x-stoplight:
+                  id: nntwi5kaazrt0
+                description: "Audit status, one of\r\n\r\ncode | describtion \r\n---------|----------\r\n TRADE_FILE_APPROVED | 审核通过 \r\n TRADE_FILE_PROCESSING | 审核中 \r\n TRADE_FILE_FAILED | 审核失败 \r\n"
+                enum:
+                  - TRADE_FILE_APPROVED
+                  - TRADE_FILE_PROCESSING
+                  - TRADE_FILE_FAILED
+            required:
+              - tradeFileId
+              - tradeCurrency
+              - tradeAmount
+              - payerId
+              - status
+          examples:
+            Example 1:
+              tradeFileId: tf20230001
+              tradeCurrency: USD
+              tradeAmount: '2500.00'
+              payerId: p2023010100001
+              status: TRADE_FILE_APPROVED
+        '402':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 180300|贸易材料已存在 |
+            | 180107|付款人信息未审核通过|
+            |180108|付款人不存在|
+            |200003|付款人处理中，请稍后|
+            | 999995 |参数校验不通过 |
+          schema:
+            type: object
+            description: Failed object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '180300'
+              message: 贸易材料已存在
+              httpCode: '402'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact Lianlian Pay for technical support'
+              httpCode: '500'
+      x-stoplight:
+        id: dsor5oaer40yi
+    parameters: []
+  /get:
+    post:
+      tags:
+        - Operations
+      summary: Get Trade File Info
+      description: Get payer details in Lianlian Global's system by `payerId`.<br>通过`payerId`查询连连国际系统中的付款人详细信息。
+      operationId: get-tradefile
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tradeFileId:
+                type: string
+                maxLength: 32
+                x-stoplight:
+                  id: zk7n1ejwcffh8
+                description: Trade file id from client
+            required:
+              - tradeFileId
+          description: ''
+          x-examples:
+            Example 1:
+              tradeFileId: tf202301010001
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/payerInfo'
+          examples:
+            Example 1:
+              tradeFileId: tf20230001
+              tradeOrderId: order0001
+              payerId: payer0001
+              payeeName: LianLian Global
+              payeeCountryCode: USA
+              tradeType: GOODS
+              tradeTime: '20230101'
+              tradeCurrency: HKD
+              tradeAmount: '4888.00'
+              tradeName: 跨境交易
+              tradeCount: 0
+              goodsCarrier: 顺丰SF453543582305
+              serviceDetail: 跨境
+              serviceTime: '2023-1-1 10:00:00'
+              status: TRADE_FILE_APPROVED
+              failReason: string
+        '402':
+          description: |-
+            Payment Required
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 180301|贸易材料不存在|
+            | 999995 |参数校验不通过 |
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: rorxin336l78h
+              message:
+                type: string
+                x-stoplight:
+                  id: yrfaiaq5gumnt
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: a59h6b85ttkyj
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '180301'
+              message: 贸易材料不存在
+              httpCode: 402
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      x-stoplight:
+        id: g5y6l4nl6xjpt
+    parameters: []
+tags:
+  - name: Operations
+definitions:
+  payerInfo:
+    type: object
+    title: Trade File Info
+    description: Trade file information object in LianLian Global's system
+    x-tags:
+      - Models
+    x-stoplight:
+      id: yaku78opwkbtc
+    properties:
+      tradeFileId:
+        type: string
+        description: Unique trade file ID from client
+        maxLength: 32
+      tradeOrderId:
+        type: string
+        description: "Trade order id, order number/bill serial number/contract number.\r\nFor offline trade, the bill serial number takes precedence over the contract number."
+        maxLength: 32
+      payerId:
+        type: string
+        description: Payer id
+        maxLength: 32
+      payeeName:
+        type: string
+        description: Individual  name or corporate name
+        maxLength: 128
+      payeeCountryCode:
+        type: string
+        description: 'Payee country code, ISO 3166 Alpha-3, refer to the appendix [Country Code](https://developer.lianlianglobal.com/docs/standard-remittance/5b93cbbe6d4f4-country-code)'
+        maxLength: 3
+        example: USA
+      tradeType:
+        description: Trade type
+        enum:
+          - GOODS
+          - SERVICE
+      tradeTime:
+        type: string
+        maxLength: 8
+        description: 'Trade time , format `yyyyMMdd`'
+      tradeCurrency:
+        type: string
+        maxLength: 3
+        description: Trade currency
+      tradeAmount:
+        type: string
+        maxLength: 15
+        description: 'Trade amount, unit: yuan'
+      tradeName:
+        type: string
+        maxLength: 256
+        description: 'Trade name, if `tradeType=GOODS`, fill in the item name, multiple items are allowed, and the format is not required. If `tradeType=SERVICE`, fill in trade category'
+      tradeCount:
+        type: number
+        exclusiveMaximum: false
+        description: 'Trade count, if `tradeType=GOODS`, fill in the item number. If `tradeType=SERVICE`, fill in service times'
+      goodsCarrier:
+        type: string
+        maxLength: 64
+        description: 'Goods carrier, mandatory if `tradeType=GOODS`'
+      serviceDetail:
+        type: string
+        maxLength: 128
+        description: 'Service detail, mandatory if `tradeType=SERVICE`'
+      serviceTime:
+        type: string
+        maxLength: 16
+        description: 'Service time, mandatory if `tradeType=SERVICE`'
+      status:
+        enum:
+          - TRADE_FILE_APPROVED
+          - TRADE_FILE_PROCESSING
+          - TRADE_FILE_FAILED
+        description: |
+          Audit status, one of
+
+          code | describtion 
+          ---------|----------
+           TRADE_FILE_APPROVED | 审核通过 
+           TRADE_FILE_PROCESSING | 审核中 
+           TRADE_FILE_FAILED | 审核失败 
+      failReason:
+        type: string
+        description: Trade file verify info
+        maxLength: 128
+    required:
+      - tradeFileId
+      - tradeOrderId
+      - payerId
+      - payeeName
+      - payeeCountryCode
+      - tradeType
+      - tradeTime
+      - tradeCurrency
+      - tradeAmount
+      - tradeName
+      - tradeCount
+      - status
+produces:
+  - application/json
+consumes:
+  - application/json

@@ -1,0 +1,299 @@
+swagger: '2.0'
+info:
+  title: Payment API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: |-
+    Production Endpoint - global-api.lianlianpay.com/payments/v2  <br>
+    Sandbox Endpoint - global-api-sandbox.lianlianpay-inc.com/payments/v2
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /payments:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/payment-model'
+        '400':
+          description: |-
+            Error - payment not processed
+
+            | Code | Message | Client Action | LianLian Action |
+            |------|---------|-------|---------|
+            |154008 | Client has insufficient balance to pay merchant| Client to wire more funds to LianLian account | Waits for funds |
+            |154011 | Currency not supported| Client validates Currency used in request. |
+            |154014 | merchant_client_id does not exist. |Client may call the 'Start New Merchant Registration' interface in the Merchant Modeling.  ||
+            |154016 | Merchant is blocked from receiving payments| Suggest merchant to contact LianLian for details |Is typically having offline discussion with merchant|
+            |999995 | Invalid Parameter|Client updates request body values according to error code returned by LianLian.|Waits for a new request|
+          schema:
+            $ref: ./error.oas2.yml#/definitions/error-model
+      summary: Send Payment to Merchant
+      description: |
+        Initiates a payment to specific merchant. 
+
+        This call is Idempotent if sent with the same payment_client_id and last payment request was successfull.  In this case the additional HTTP Response Header `Request-Repeated: true` will be returned.  If the original request failed, a new payment request will retry the payment.
+
+        Steps within API:
+
+        * **Money Debited** from client's account  
+         can fail from insufficient funds  
+        * **Verify Merchant Registration** information is valid  
+          If Merchant is unknown, call fails  
+          If Merchant status is `blocked`, call fails  
+        * **Send Money** to merchant  
+          If any issues arise, LianLian customer support helps fix issues and finalize transfer
+
+        This call returns HTTP Status 200 on success and returns the payment object including Lianlian internal payment status. **Success** guarantees the money has been debited from the client account.
+
+        On failure the API returns HTTP Status 400 with an Error object specifying the error code why the payment failed.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - merchant_client_id
+              - payment_client_id
+              - currency
+              - amount
+            properties:
+              merchant_client_id:
+                type: string
+                description: Client's Merchant ID to make payment to.
+              payment_client_id:
+                type: string
+                description: Client's Payment ID for this payment request.  **Must be unique and is usually a UUID**
+              currency:
+                type: string
+                description: 3 letter code of payment currency
+                enum:
+                  - CNY
+                  - USD
+              amount:
+                type: string
+                description: Amount to pay merchant
+              note:
+                type: string
+                description: Additional information to help track payment
+              trade_type:
+                type: string
+                x-stoplight:
+                  id: 3z8qp95j08n5c
+                description: |-
+                  Please don't put this attribute into request body, if we have not reqeusted.<br>
+                  the trade type of the payment <br>
+                  allow value:0,1,2
+                  0: defaul value. GOODS payment 
+                  1: SURETY payment
+                  2: COMMISSION payment
+          description: ''
+      operationId: create-payment
+      tags:
+        - Operations
+  '/payments/payment_client_id/{payment_client_id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/payment-model'
+        '404':
+          description: ''
+      summary: Get Payment
+      operationId: get-payment
+      description: |-
+        Get a Merchant's Payment Object including internal Lianlian payment status.
+
+        The API returns HTTP Status 200 with the related payment object if the payment was successful.  
+
+        The API returns HTTP Status 404 if the `POST /payments` call returned an error as the **payment_client_id** is not in the system and not recognized.
+      tags:
+        - Operations
+    parameters:
+      - name: payment_client_id
+        in: path
+        type: string
+        required: true
+definitions:
+  payment-model:
+    type: object
+    title: Payment Object
+    description: Payment object containing payment status
+    required:
+      - id
+      - payment_client_id
+      - merchant_id
+      - merchant_client_id
+      - currency
+      - amount
+    properties:
+      id:
+        type: string
+        description: Id Lianlian Pay system
+      payment_client_id:
+        type: string
+        description: Client's Payment ID for this payment request.  **Must be unique and is usually a UUID**
+      merchant_id:
+        type: string
+        description: Lianlian's Merchant ID receiving payment
+      merchant_client_id:
+        type: string
+        description: Client's Merchant ID receiving payment
+      status:
+        type: string
+        description: |-
+          This status indicates the stage payment is at within Lianlian systems.  One of:
+
+          | Value | Description |
+          |--------|------------|
+          | ongoing | Payment ongoing normally |
+          | return | The fund has been returned |
+          | success | Payment complete |
+        enum:
+          - success
+          - ongoing
+          - return
+      currency:
+        type: string
+        description: 3 letter code of currency used
+      amount:
+        type: string
+        description: Amount of payment in `currency`
+      note:
+        type: string
+        description: Human readable note passed into POST /payments
+      trade_type:
+        type: string
+        x-stoplight:
+          id: b8f18eyck2uz7
+        description: |-
+          the trade type of the payment
+          allow value:0,1,2
+          0: defaul value. GOODS payment 
+          1: SURETY payment
+          2: COMMISSION payment
+securityDefinitions:
+  authorization:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |-
+      LianLian Pay API uses an API key to authenticate requests. To request Lianlian Pay developer account, send the following two information to `fx_support@lianlianpay.com`:
+      <!-- theme: info -->
+      >**developer_name**
+      >
+      >**developer_public_key**
+
+      After process, Lianlian Pay will replay with:
+      <!-- theme: info -->
+      >**developer_master_token** - api authentication
+      >
+      >**LianlianPay_public_key**
+
+      The `Authorization` header must be included in all requests with the following format:
+
+      ```
+      Authorization: Basic {master_token}
+      ```
+  llp-signature:
+    type: apiKey
+    name: LLPAY-Signature
+    in: header
+    description: |
+      The LLPAY-Signature header contains a timestamp and one signature. The timestamp is prefixed by t=, and each signature is prefixed by a scheme. Schemes start with v, potentially followed by an integer.
+
+      ```
+      LLPAY-Signature: t=1492774577, v=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+      ```
+
+      Note that newlines have been added in the example above for clarity, but a real LLPAY-Signature header will be all one line.
+
+      Lianlian Pay and clients shall exchange each party’s public key.  The LLPAY-Signature will be signed by with the RSA private key.
+
+      **Step 1:** Determine the signature payload
+
+      Create a `payload` string with the following formula:
+
+      **HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD[&QUERY_STRING]**
+
+      * HTTP_METHOD: The actual method defined for specific API endpoint `POST`
+      * URI: The request's URL Path, such as `/profiles/{profileId}`
+      * REQUEST_EPOCH: The seconds elapsed since 1970/1/1 00:00:00 GMT, same as value of `t`
+      * REQUEST_PAYLOAD: The contents of request body in JSON format. 
+      * QUERY_STRING: The query string of the URL, URL Encoded, such as `attr1%3Dvalue1%26attr2%3Dvalue2`
+
+      <!-- theme: info -->
+      >Case 1: QUERY_STRING is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD
+      >
+      >---
+      >Case 2: REQUEST_PAYLOAD is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&&QUERY_STRING
+      >
+      >---
+      >Case 3: REQUEST_PAYLOAD and QUERY_STRING both are empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&
+
+
+      Put typical GET and POST examples here.
+
+      Example POST `payload`:
+      ```
+      POST&/kyc/v1/profiles&19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      Example GET `payload`:
+      ```
+      GET&/events/v1&19879234&&status%3DMAXIMUM_RETRIES_REACHED
+      ```
+
+
+
+      **Step 2:** Prepare the `LLPAY-Signature` string
+
+      Achieve this by concatenating:
+      * The timestamp (Seconds elapsed since 1970/1/1 00:00:00 GMT as a string)
+      * Use your RSA private key and calculate the string `BASE64(RSAwithSHA256(STEP_1_RESULT)))` from Step 1
+
+      ### Result Signature
+
+      LianLian Pay result headers also contain the `LLPAY-Signature` header as described above but signed with Lianlian Pay's private RSA key.  You may verify the signature corresponds to the Result body by calculating the signature and comparing it to the unencrypted version of `LLPAY-Signature` using the Lianlian Pay's public RSA key.  Here are the steps:
+
+      **Step 1:** Determine the signature `payload`
+
+      Create a `payload` string which is the following separated by `&`
+
+      * Response Timestamp: Extract t from LLPay-Signature and use it as timestamp
+      * Response Payload: The contents of response body in JSON format
+
+      Example `payload`:
+      ```
+      19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      **Step 2:** Use RSA Verify to compare signatures
+
+      Compare the LLPay-Signature received with the `payload` calculated in Step 1 using the Lianlian Pay's Public Key using the following algorithm:
+
+      ```
+      RSA.verify( LLPAY-Signature, 
+                  '19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}', 
+                  Lianlian Pay Public Key )
+      ```
+tags:
+  - name: Operations
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - authorization: []
+  - llp-signature: []
+basePath: /payments/v2

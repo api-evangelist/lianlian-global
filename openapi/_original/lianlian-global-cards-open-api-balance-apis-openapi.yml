@@ -1,0 +1,779 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 7tsjg6s62ineo
+info:
+  version: '1.0'
+  title: Balance APIS
+  summary: VCC -APIS
+  description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+  contact:
+    name: ''
+servers:
+  - url: 'https://test-global-api.lianlianpay-inc.com'
+  - url: 'https://global-api.lianlian.com'
+    description: ''
+paths:
+  /gateway/vcc-api/account:
+    get:
+      summary: 查询账户余额
+      tags: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      merchantId: vcc_merchant_001
+                      accountList:
+                        - amount: '1082.00'
+                          currency: USD
+                          frozenAmount: '0.00'
+                      userId: '2023012966287896'
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                    description: 响应码
+                  data:
+                    type: object
+                    properties:
+                      merchantId:
+                        type: string
+                      accountList:
+                        type: array
+                        description: 账单币种账户列表
+                        items:
+                          type: object
+                          properties:
+                            amount:
+                              type: string
+                              description: 可用金额
+                            currency:
+                              type: string
+                              description: 账单币种，参考ISO currency code
+                            frozenAmount:
+                              type: string
+                              description: 待出账金额：已发生授权但尚未出账的金额
+                      userId:
+                        type: string
+                        description: VCC用户号
+                  success:
+                    type: boolean
+                    description: 成功标识
+                  message:
+                    type: string
+                    description: 响应描述
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      accountList:
+                        - amount: '99800.00'
+                          currency: GBP
+                          frozenAmount: '4414.52'
+                        - amount: '0.00'
+                          currency: SGD
+                          frozenAmount: '0.00'
+                        - amount: '999980.00'
+                          currency: EUR
+                          frozenAmount: '20.00'
+                      userId: '2023020766827854'
+                    success: true
+                    message: SUCCESS
+        '404':
+          description: User Not Found
+      operationId: get-vcc-account-balance
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n账户余额指的是单用户的各币种余额情况，包含以下几种类型：\r\n- Pending：授权但尚未被结算的交易总金额，余额处于冻结状态\r\n- Available：实际可用金额\r\n"
+      x-stoplight:
+        id: ixww4yiwjv4m4
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+    parameters: []
+  /gateway/vcc-api/account/flow:
+    parameters: []
+    post:
+      summary: 查询资金明细
+      tags: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      total: 3
+                      list:
+                        - amount: '10.00'
+                          cardName: '305879222977541'
+                          accountType: VCC_ACCOUNT
+                          debitOrCredit: DEBIT
+                          transactionId: '2025012092930317'
+                          serialNo: '20250120190501978130'
+                          remainAcctBalance: '9980.00'
+                          transactionType: SETTLE
+                          acctDateTime: '2025-01-20 19:05:01'
+                          last4digits: '4047'
+                          acctNo: '20241107000012'
+                          cardId: '2025012092871304'
+                          currency: USD
+                        - amount: '10.00'
+                          cardName: '305879222977541'
+                          accountType: VCC_ACCOUNT
+                          debitOrCredit: DEBIT
+                          transactionId: '2025012092930398'
+                          serialNo: '20250120190501768303'
+                          remainAcctBalance: '9990.00'
+                          transactionType: SETTLE
+                          acctDateTime: '2025-01-20 19:05:01'
+                          last4digits: '4047'
+                          acctNo: '20241107000012'
+                          cardId: '2025012092871304'
+                          currency: USD
+                        - amount: '10.50'
+                          cardName: '282924061885445'
+                          accountType: VCC_ACCOUNT
+                          debitOrCredit: DEBIT
+                          transactionId: '2025011686664964'
+                          serialNo: '20250116193005846236'
+                          remainAcctBalance: '-0.50'
+                          transactionType: 3DS_OTP_FEE
+                          acctDateTime: '2025-01-16 19:30:05'
+                          last4digits: '8902'
+                          acctNo: '20241107000012'
+                          cardId: '2025011686540614'
+                          currency: USD
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            amount:
+                              type: string
+                              description: 金额，单位：元
+                            cardName:
+                              type: string
+                              description: 卡片名称
+                            accountType:
+                              type: string
+                              description: 资金账户类型
+                            debitOrCredit:
+                              type: string
+                              description: 金额正负号（CREDIT为正，DEBIT为负）
+                            transactionId:
+                              type: string
+                              description: 关联交易单号
+                            serialNo:
+                              type: string
+                              description: 资金流水号
+                            remainAcctBalance:
+                              type: string
+                              description: 变动后总额度，单位：元
+                            transactionType:
+                              type: string
+                              description: 交易类型（见入参枚举类型）
+                            acctDateTime:
+                              type: string
+                              description: '动账时间，格式yyyy-MM-dd HH:mm:ss'
+                            last4digits:
+                              type: string
+                              description: 卡片尾号
+                            acctNo:
+                              type: string
+                              description: 余额账户号
+                            cardId:
+                              type: string
+                              description: 卡片唯一识别号
+                            currency:
+                              type: string
+                              description: 币种，参考ISO currency code
+                            subAccountName:
+                              type: string
+                              x-stoplight:
+                                id: 5xpnfd40abq63
+                              description: 子资金账户名称
+                            subAccountId:
+                              type: string
+                              x-stoplight:
+                                id: syukr18tdunec
+                              description: 子资金账户id
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      total: 3
+                      list:
+                        - amount: '10.00'
+                          cardName: '305879222977541'
+                          accountType: VCC_ACCOUNT
+                          debitOrCredit: DEBIT
+                          transactionId: '2025012092930317'
+                          serialNo: '20250120190501978130'
+                          remainAcctBalance: '9980.00'
+                          transactionType: SETTLE
+                          acctDateTime: '2025-01-20 19:05:01'
+                          last4digits: '4047'
+                          acctNo: '20241107000012'
+                          cardId: '2025012092871304'
+                          currency: USD
+                        - amount: '10.00'
+                          cardName: '305879222977541'
+                          accountType: VCC_ACCOUNT
+                          debitOrCredit: DEBIT
+                          transactionId: '2025012092930398'
+                          serialNo: '20250120190501768303'
+                          remainAcctBalance: '9990.00'
+                          transactionType: SETTLE
+                          acctDateTime: '2025-01-20 19:05:01'
+                          last4digits: '4047'
+                          acctNo: '20241107000012'
+                          cardId: '2025012092871304'
+                          currency: USD
+                        - amount: '10.50'
+                          cardName: '282924061885445'
+                          accountType: VCC_ACCOUNT
+                          debitOrCredit: DEBIT
+                          transactionId: '2025011686664964'
+                          serialNo: '20250116193005846236'
+                          remainAcctBalance: '-0.50'
+                          transactionType: 3DS_OTP_FEE
+                          acctDateTime: '2025-01-16 19:30:05'
+                          last4digits: '8902'
+                          acctNo: '20241107000012'
+                          cardId: '2025011686540614'
+                          currency: USD
+                    success: true
+                    message: SUCCESS
+        '404':
+          description: User Not Found
+      operationId: post-gateway-vcc-api-account-flow
+      x-stoplight:
+        id: yjt8dyc0ezcpj
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  pageNo: 1
+                  pageSize: 10
+                  acctDateTimeStart: '2025-01-01'
+                  acctDateTimeEnd: '2025-02-27'
+              required:
+                - pageNo
+                - pageSize
+                - acctDateTimeStart
+                - acctDateTimeEnd
+              properties:
+                vccUserId:
+                  type: string
+                  x-stoplight:
+                    id: nqqzs3mksdpbk
+                  description: "用户ID(联系项目经理获取)\r\n\r\n商户模式必传"
+                pageNo:
+                  type: integer
+                  description: "页码\r\n\r\n不传默认1"
+                pageSize:
+                  type: integer
+                  description: "分页大小\r\n\r\n至多200, 不传默认10"
+                acctDateTimeStart:
+                  type: string
+                  description: 账期起始时间yyyy-MM-dd
+                acctDateTimeEnd:
+                  type: string
+                  description: 账期结束时间yyyy-MM-dd
+                serialNo:
+                  type: string
+                  x-stoplight:
+                    id: x0k8sg16lszzj
+                  description: 资金流水号
+                currency:
+                  type: string
+                  x-stoplight:
+                    id: ng0m4tulsyie1
+                  description: 币种
+                cardId:
+                  type: string
+                  x-stoplight:
+                    id: 1zbnj4xm8kh7d
+                  description: 卡唯一识别号
+                transactionId:
+                  type: string
+                  x-stoplight:
+                    id: ao5bxqbczi4m1
+                  description: 关联交易单号
+                transactionType:
+                  $ref: '#/components/schemas/transactionType'
+                  x-stoplight:
+                    id: lz0w6hqep5aq1
+                accountType:
+                  $ref: '#/components/schemas/accountType'
+                  x-stoplight:
+                    id: nr3mp7dsej663
+                subAccountName:
+                  type: string
+                  x-stoplight:
+                    id: 6tpxazi2uvk5e
+                  description: '子账户名称, 精确匹配'
+                subAccountId:
+                  type: string
+                  x-stoplight:
+                    id: jrc889xgv9lhr
+                  description: 子账户唯一识别号
+            examples:
+              Example 1:
+                value:
+                  pageNo: 1
+                  pageSize: 10
+                  acctDateTimeStart: '2025-01-01'
+                  acctDateTimeEnd: '2025-02-27'
+  /gateway/vcc-api/subaccount/add:
+    post:
+      summary: 新建子账户
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    value:
+                      code: 100001
+                      data:
+                        subAccountName: zwytest_subaccount_1
+                        subAccountId: '2025111833865777'
+                        status: VALID
+                      success: true
+                      message: SUCCESS
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      data:
+                        type: object
+                        properties:
+                          subAccountName:
+                            type: string
+                            description: 子资金账户名称
+                          subAccountId:
+                            type: string
+                            description: 子资金账户id
+                          status:
+                            type: string
+                            description: "子账户状态\r\n- VALID 有效\r\n- CANCEL 注销"
+                      success:
+                        type: boolean
+                      message:
+                        type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      subAccountName: test
+                      subAccountId: '2025111833865777'
+                      status: VALID
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-subaccount-add
+      x-stoplight:
+        id: xn4luyi6ur9bf
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n如需开通子用户模式，请联系客户经理申请配置"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  subAccountName: zwytest_subaccount_1
+              required:
+                - subAccountName
+              properties:
+                subAccountName:
+                  type: string
+                  description: 子账户名称</br>幂等返回
+            examples:
+              Example 1:
+                value:
+                  subAccountName: test
+  /gateway/vcc-api/subaccount/update:
+    post:
+      summary: 编辑子账户
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data: true
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-subaccount-update
+      x-stoplight:
+        id: bzpac7qxepxk3
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  subAccountId: '2025111833785290'
+                  subAccountName: zwytest_subaccount_0
+              required:
+                - subAccountId
+                - subAccountName
+              properties:
+                subAccountId:
+                  type: string
+                  description: 子账户id
+                subAccountName:
+                  type: string
+                  description: "子账户名称</br>\r\n长度不超过128位"
+            examples:
+              Example 1:
+                value:
+                  subAccountId: '2025111833785290'
+                  subAccountName: test
+  /gateway/vcc-api/subaccount/list:
+    post:
+      summary: 查询子账户列表
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers:
+            header-0:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data:
+                      total: 1
+                      list:
+                        - subAccountName: zwytest_subaccount_0
+                          subAccountId: '2025111833785290'
+                          accountList:
+                            - amount: '0.00'
+                              acctNo: '2025111833786136'
+                              currency: USD
+                              frozenAmount: '0.00'
+                          status: VALID
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  data:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      list:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            subAccountName:
+                              type: string
+                              description: 子资金账户名称
+                            subAccountId:
+                              type: string
+                              description: 子资金账户id
+                            accountList:
+                              type: array
+                              description: 账单币种账户列表
+                              items:
+                                type: object
+                                properties:
+                                  amount:
+                                    type: string
+                                    description: 可用金额，单位：元
+                                  currency:
+                                    type: string
+                                    description: 账单币种，参考ISO currency code
+                                  frozenAmount:
+                                    type: string
+                                    description: 待出账金额：已发生授权但尚未出账的金额，单位：元
+                            status:
+                              type: string
+                              description: "子账户状态\r\n- VALID 有效\r\n- CANCEL 注销"
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    data:
+                      total: 1
+                      list:
+                        - subAccountName: test
+                          subAccountId: '2025111833785290'
+                          accountList:
+                            - amount: '0.00'
+                              currency: USD
+                              frozenAmount: '0.00'
+                          status: VALID
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-subaccount-list
+      x-stoplight:
+        id: rgiy0sc0kcfn3
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  subAccountId: '2025111833785290'
+              required:
+                - subAccountId
+              properties:
+                subAccountId:
+                  type: string
+                  description: 子账户id
+                subAccountName:
+                  type: string
+                  x-stoplight:
+                    id: j0oesl1aj0hkw
+                  description: 子账户名称
+                pageNo:
+                  type: string
+                  x-stoplight:
+                    id: tfdejpsyvbltd
+                  description: 页码
+                pageSize:
+                  type: string
+                  x-stoplight:
+                    id: 5smtecgfbd35x
+                  description: 分页大小
+            examples:
+              Example 1:
+                value:
+                  subAccountId: '2025111833785290'
+  /gateway/vcc-api/subaccount/cancel:
+    post:
+      summary: 注销子账户
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data: true
+                    success: true
+                    message: SUCCESS
+                properties:
+                  code:
+                    type: integer
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    success: true
+                    message: SUCCESS
+      operationId: post-gateway-vcc-api-subaccount-cancel
+      x-stoplight:
+        id: gjxdonjftk0yo
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  subAccountId: '2025111833785290'
+              required:
+                - subAccountId
+              properties:
+                subAccountId:
+                  type: string
+                  description: 子账户id
+            examples:
+              Example 1:
+                value:
+                  subAccountId: '2025111833785290'
+components:
+  schemas:
+    transactionType:
+      title: transactionType
+      x-stoplight:
+        id: l7n83wotlyvll
+      type: string
+      description: |
+        交易类型-类型枚举：
+        - B2C收款账户转入（B2C_BALANCE_TOPUP）
+        - B2C币种账户转入（B2C_CURRENCY_ ACCOUNT_TOPUP）
+        - 银行转入（VIRTUAL_BANK_TOPUP）
+        - 活动返现（CASH_BACK）
+        - 奖励金（REBATE）
+        - 奖励金扣回（REBATE_REFUND）
+        - 外贸余额转入（B2B_BALANCE_TOPUP）
+        - 服贸余额转入（SERVICE_COMMERCE_TOPUP）
+        - 留学缴费转账充值（EDUCATION_MERCHANT_TOPUP）
+        - 充值退款（REFUND）
+        - 钱包充值（WALLET_MERCHANT_TOPUP）
+        - 钱包退款（WALLET_MERCHANT_REFUND）
+        - 提现（WITHDRAW）
+        - 转出到卡账户（TOPUP_TO_CARD）
+        - 注销后卡账户余额转入（CARD_CANCEL_REFUND）
+        - 转出到卡账户(结算补扣)（TOPUP_TO_CARD_SETTLE_DEBIT）
+        - 结算退款卡账户余额转入（CARD_REFUND_SETTLE_CREDIT）
+        - 转出到子账户（TOPUP_TO_SUB_ACCOUNT）
+        - 子账户转回（SUB_ACCOUNT_REFUND）
+        - 主账户转入（VCC_ACCOUNT_TOPUP）
+        - 转回主账户（REFUND_TO_VCC_ACCOUNT）
+        - 消费（SETTLE）
+        - 退款（SETTLE_REVERSAL）
+        - 申卡手续费（CARD_APPLY_FEE）
+        - 验卡手续费（CARD_VERIFY_FEE）
+        - 授权交易手续费（AUTH_TRANSACTION_FEE）
+        - 授权撤销交易手续费（AUTH_REVERSAL_TRANSACTION_FEE）
+        - 结算手续费（SETTLE_TRANSACTION_FEE）
+        - 结算退款手续费（SETTLE_REVERSAL_TRANSACTION_FEE）
+        - 3DS OTP验证手续费（3DS_OTP_FEE）
+        - 争议退款（DISPUTE_REFUND）
+    accountType:
+      title: accountType
+      x-stoplight:
+        id: q84ii4tzor2yr
+      type: string
+      description: |-
+        账户类型枚举（不传则查询主资金账户）：
+        - 主资金账户（VCC_ACCOUNT）
+        - 子资金账户（SUB_ACCOUNT）

@@ -1,0 +1,123 @@
+swagger: '2.0'
+info:
+  title: Distribution API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /distribute:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      summary: 提交分账指令
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: 分账
+            description: 连连侧分账指令对象
+            properties:
+              distributeId:
+                type: string
+                description: |
+                  商户侧分账指令唯一编号
+                maxLength: 64
+              tradeFileId:
+                type: string
+                description: 平台侧订单唯一编号
+                maxLength: 64
+              distributeCurrency:
+                type: string
+                description: 分账币种，参考附录币种代码
+                minLength: 3
+                maxLength: 3
+              distributeAmount:
+                type: string
+                description: 分账金额
+                maxLength: 10
+      tags:
+        - 接口
+  '/distribute/{distributeId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      summary: 查询分账指令信息
+      tags:
+        - 接口
+    parameters:
+      - name: distributeId
+        in: path
+        type: string
+        required: true
+        description: 商户侧分账指令唯一编号
+        maxLength: 64
+definitions:
+  new-model:
+    type: object
+    title: 分账
+    description: 连连侧分账指令对象
+    properties:
+      distributeId:
+        type: string
+        description: |
+          商户侧分账指令唯一编号
+        maxLength: 64
+      tradeFileId:
+        type: string
+        description: 平台侧订单唯一编号
+        maxLength: 64
+      distributeCurrency:
+        type: string
+        description: 分账币种，参考附录币种代码，默认为CNY
+        minLength: 3
+        maxLength: 3
+      distributeAmount:
+        type: string
+        description: 分账金额
+        maxLength: 10
+      createTime:
+        type: string
+        description: '创建时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+      updateTime:
+        type: string
+        description: '状态更新时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+      status:
+        type: string
+        description: |-
+          分账状态，状态如下
+
+          |值|解释|
+          |---|---|
+          |Processing|处理中|
+          |Successed|处理成功|
+          |Failed|处理失败|
+        enum:
+          - Processing
+          - Successed
+          - Failed
+    required:
+      - distributeId
+      - tradeFileId
+      - distributeCurrency
+      - distributeAmount
+      - createTime
+      - updateTime
+      - status
+tags:
+  - name: Operations
+  - name: 对象
+  - name: 操作
+  - name: 接口
+basePath: /b2b-import/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json

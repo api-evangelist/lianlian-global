@@ -1,0 +1,404 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "kn2qwiuyzlf7p"
+    },
+    "info": {
+        "title": "Agreement",
+        "version": "1.0",
+        "description": "Starts asynchronous process of signing a new contract with a user of LianLian Global.\n\nOn successful return, if `signing_complete` is false, platform shall use `signing_url` to redirect the merchant to in order to begin the LianLian Global `Registration` and `Signing Contract` Experience.\n\nWhen signing is successfully completed the user will be redirected to the passed in `redirect_url`."
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-agreements/signing": {
+            "post": {
+                "summary": "Start a New Agreement Signing",
+                "operationId": "post-ew-payees-registrationation",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "x-examples": {
+                                        "example-1": {
+                                            "id": "string",
+                                            "merchant_client_id": "string",
+                                            "status": "need_info",
+                                            "registration_url": "string",
+                                            "shop_url": "string",
+                                            "note": "string",
+                                            "registration_complete": true
+                                        }
+                                    },
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "LianLian `Network Contact` Object ID. Merchant shall use this ID to contact LianLian for any payment issues.\n\nNon-existant if `signing_complete` is false."
+                                        },
+                                        "merchant_client_id": {
+                                            "type": "string",
+                                            "description": "Client's ID for this Merchant."
+                                        },
+                                        "merchant_client_name": {
+                                            "type": "string",
+                                            "description": "Merchant name as known by the client platform."
+                                        },
+                                        "signing_url": {
+                                            "type": "string",
+                                            "description": "URL to redirect merchant to in order to start agreement signing on LianLian platform.\n\nNon-existent if `signing_complete` is true."
+                                        },
+                                        "additional_info": {
+                                            "type": "array",
+                                            "description": "Additional info to be used by customer support if needed.",
+                                            "items": {
+                                                "$ref": "./Items.json#/components/schemas/Item"
+                                            }
+                                        },
+                                        "signing_complete": {
+                                            "type": "boolean",
+                                            "description": "State of merchant signing process."
+                                        },
+                                        "agreement_no": {
+                                            "type": "string",
+                                            "description": "Unique identifier for the `Agreement` created by the LianLian Global."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "LianLian `Network Contact` Object ID. Merchant shall use this ID to contact LianLian for any payment issues.\n\nNon-existant if `signing_complete` is false."
+                                        },
+                                        "merchant_client_id": {
+                                            "type": "string",
+                                            "description": "Client's ID for this Merchant."
+                                        },
+                                        "signing_url": {
+                                            "type": "string",
+                                            "description": "URL to redirect merchant to in order to start agreement signing on LianLian platform.\n\nNon-existent if `signing_complete` is true."
+                                        },
+                                        "additional_info": {
+                                            "type": "array",
+                                            "description": "Additional info to be used by customer support if needed.",
+                                            "items": {
+                                                "$ref": "./Items.json#/components/schemas/Item"
+                                            }
+                                        },
+                                        "signing_complete": {
+                                            "type": "boolean",
+                                            "description": "State of merchant registration process."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "x-examples": {
+                                    "example-1": {
+                                        "store_name": "string",
+                                        "redirect_url": "string",
+                                        "shop_url": "string",
+                                        "merchant_client_id": "string",
+                                        "note": "string"
+                                    }
+                                },
+                                "properties": {
+                                    "merchant_client_id": {
+                                        "type": "string",
+                                        "description": "Merchant ID as known by the client platform."
+                                    },
+                                    "merchant_client_name": {
+                                        "type": "string",
+                                        "description": "Merchant name as known by the client platform."
+                                    },
+                                    "country_code": {
+                                        "type": "string",
+                                        "description": "Two-letter [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code of counterparty.",
+                                        "enum": [
+                                            "US",
+                                            "VN",
+                                            "SG",
+                                            "ID",
+                                            "PH",
+                                            "KH",
+                                            "MY",
+                                            "KR",
+                                            "AU",
+                                            "AE",
+                                            "DE",
+                                            "FR",
+                                            "IT",
+                                            "NL",
+                                            "BE",
+                                            "LU",
+                                            "IE",
+                                            "ES",
+                                            "PT",
+                                            "AT",
+                                            "FI",
+                                            "LT",
+                                            "LV",
+                                            "EE",
+                                            "SK",
+                                            "SI",
+                                            "GR",
+                                            "MT",
+                                            "CY",
+                                            "PL",
+                                            "TH",
+                                            "GB",
+                                            "CN",
+                                            "HK"
+                                        ]
+                                    },
+                                    "agreement_type": {
+                                        "type": "string",
+                                        "description": "Signing agreement type.",
+                                        "enum": [
+                                            "ECOMMERCE-SEND-PAYMENT",
+                                            "BILL-DIRECT-DEBIT"
+                                        ]
+                                    },
+                                    "redirect_url": {
+                                        "type": "string",
+                                        "description": "URL Lianlian will redirect to at the end of a successful signing process."
+                                    },
+                                    "additional_info": {
+                                        "type": "array",
+                                        "description": "Additional info to be used by customer support if needed.<br>\nWhen `agreement_type` is `ECOMMERCE-SEND-PAYMENT`, 3 name keys are established.<br>\n1. cert_no:The Cert number of counterparty on client side. <br>\n2. store_name:Store name as known by the calling platform. <br>\n3. shop_url:URL of merchant store if URL can’t be algorithmically produced from merchant_id.",
+                                        "items": {
+                                            "$ref": "#/components/schemas/SigningInfo"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "merchant_client_id",
+                                    "country_code",
+                                    "agreement_type",
+                                    "redirect_url"
+                                ]
+                            }
+                        }
+                    },
+                    "description": ""
+                }
+            },
+            "parameters": []
+        },
+        "/ew-agreements/merchant-client-id": {
+            "get": {
+                "summary": "Get Agreement By Merchant Client ID",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SigningInfo"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SigningInfo"
+                                }
+                            },
+                            "multipart/form-data": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "": {
+                                            "$ref": "#/components/schemas/SigningInfo"
+                                        },
+                                        "app_auth_info": {
+                                            "$ref": "#/components/schemas/AppAuthInfo"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-ew-contracts-merchant_client_id",
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "merchant_client_id",
+                        "description": "Merchant ID as known by the client platform.",
+                        "required": true
+                    },
+                    {
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "ECOMMERCE-SEND-PAYMENT",
+                                "BILL-DIRECT-DEBIT"
+                            ]
+                        },
+                        "in": "query",
+                        "name": "agreement_type",
+                        "description": "Signing agreement type.",
+                        "required": true
+                    }
+                ],
+                "description": "Get `Agreement` by merchant_client_id"
+            },
+            "parameters": []
+        }
+    },
+    "basePath": "/v1/payment",
+    "components": {
+        "schemas": {
+            "SigningInfo": {
+                "title": "AgreementInfo",
+                "x-stoplight": {
+                    "id": "a6lrat75ocyut"
+                },
+                "type": "object",
+                "x-tags": [
+                    "Models"
+                ],
+                "examples": [],
+                "properties": {
+                    "agreement_no": {
+                        "type": "string",
+                        "description": "Unique identifier for the `Agreement` created by the LianLian Global."
+                    },
+                    "merchant_client_id": {
+                        "type": "string",
+                        "description": "Merchant ID as known by the client platform."
+                    },
+                    "contant_id": {
+                        "type": "string",
+                        "description": "Unique identifier for the `Contact` Object."
+                    },
+                    "signer_name": {
+                        "type": "string",
+                        "description": "Name of signer."
+                    },
+                    "counterparty_name": {
+                        "type": "string",
+                        "description": "Name of counterparty."
+                    },
+                    "agreement_type": {
+                        "type": "string",
+                        "description": "Agreement type.",
+                        "enum": [
+                            "ECOMMERCE-SEND-PAYMENT",
+                            "BILL-DIRECT-DEBIT"
+                        ]
+                    },
+                    "copy": {
+                        "type": "string",
+                        "enum": [
+                            "DUPLICATE",
+                            "ORIGINAL"
+                        ],
+                        "description": "copy type of `Agreement`."
+                    },
+                    "create_time": {
+                        "type": "string",
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch."
+                    },
+                    "file_floder_id": {
+                        "type": "string",
+                        "description": "The ID of File Folder object."
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "INIT",
+                            "PROCESSING",
+                            "APPROVED",
+                            "DECLINED",
+                            "RESCINDED"
+                        ],
+                        "description": "status of `Agreement`."
+                    },
+                    "additional_info": {
+                        "type": "array",
+                        "description": "Additional info to be used by customer support if needed.",
+                        "items": {
+                            "$ref": "./Items.json#/components/schemas/Item"
+                        }
+                    }
+                }
+            },
+            "AppAuthInfo": {
+                "title": "AppAuthInfo",
+                "x-stoplight": {
+                    "id": "oresisigu1z5m"
+                },
+                "x-tags": [
+                    "Models"
+                ],
+                "type": "object",
+                "properties": {
+                    "app_client_id": {
+                        "type": "string",
+                        "description": "App client ID."
+                    },
+                    "app_name": {
+                        "type": "string",
+                        "description": "App name."
+                    },
+                    "access_token": {
+                        "type": "string",
+                        "description": "Token be used to access user's auth API."
+                    },
+                    "refresh_token": {
+                        "type": "string",
+                        "description": "Token be used to refresh access token."
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the `User`."
+                    },
+                    "api_base_url": {
+                        "type": "string",
+                        "description": "Base url for API server."
+                    }
+                }
+            }
+        },
+        "requestBodies": {}
+    }
+}

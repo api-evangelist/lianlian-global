@@ -1,0 +1,825 @@
+definitions:
+  RecevingAccount:
+    title: CNY Virtual Account
+    type: object
+    description: LianLian Global CNY virtual account information
+    x-tags:
+      - Models
+    properties:
+      virtualAcctId:
+        type: string
+        description: unique Virtual Account ID from client
+        maxLength: 64
+      accountName:
+        type: string
+        description: receiving account name
+        maxLength: 72
+      accountNo:
+        type: string
+        description: receiving account number
+        maxLength: 72
+      bankBranchName:
+        type: string
+        description: receiving account bank branch name
+        maxLength: 256
+      bankName:
+        type: string
+        description: 'receiving account bank name, mandatory for corporate payer'
+        maxLength: 128
+      cnapsBranchId:
+        type: string
+        description: CNAPS code
+        maxLength: 12
+      bankDistrict:
+        type: string
+        description: Receiving account bank branch address
+        maxLength: 200
+  FundingTrans:
+    title: FundingTrans
+    type: object
+    description: Funding transication record object in LianLian Global's system
+    x-tags:
+      - Models
+    properties:
+      fundingId:
+        type: string
+        description: Funding transaction id in LianLian Global's system
+        maxLength: 32
+      fundingType:
+        type: string
+        maxLength: 32
+        x-stoplight:
+          id: 3nh9lldklnyh5
+        description: Online payment type
+        enum:
+          - ALIPAY
+          - WECHATPAY
+      virtualAcctId:
+        type: string
+        maxLength: 64
+        description: Unique Virtual Account ID from client
+      accountNo:
+        type: string
+        description: Receiving account number
+        maxLength: 72
+      payerName:
+        type: string
+        description: Payer name
+        maxLength: 128
+      payerBankAccount:
+        type: string
+        description: Payer bank account number
+        maxLength: 72
+      payerBankName:
+        type: string
+        description: Payer bank name
+        maxLength: 72
+      amount:
+        type: string
+        description: Amount in CNY
+        maxLength: 24
+      createTime:
+        type: string
+        description: |-
+          Funding transication time
+          UTC+0
+        maxLength: 64
+      rfb:
+        type: string
+        description: Reference for benificiary
+        maxLength: 40
+    required:
+      - fundingId
+      - payerName
+      - payerBankAccount
+      - payerBankName
+      - amount
+      - createTime
+  CNYReFundTrans:
+    title: CNYReFundTrans
+    type: object
+    description: CNY Refunding transication record object in LianLian Global's system
+    x-tags:
+      - Models
+    properties:
+      refundingId:
+        type: string
+        description: Unique refunding request id
+        maxLength: 32
+      virtualAcctId:
+        type: string
+        description: unique Virtual Account ID from client
+        maxLength: 64
+      amount:
+        type: string
+        description: requested refunding amount
+        maxLength: 24
+      bankAccountType:
+        type: string
+        description: |-
+          Beneficiary account type, one of:
+
+          |value|description|
+          |------|------------|
+          |INDIVIDUAL|Individual account|
+          |CORPORATE|Corporate account|
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+      bankName:
+        type: string
+        description: beneficiary bank name
+        maxLength: 128
+      bankBranchName:
+        type: string
+        description: Bank branch name
+        maxLength: 256
+      cnapsBranchId:
+        type: string
+        description: |-
+          CNAPS code
+          Mandatory is `bankAccountType = CORPORATE`
+        maxLength: 12
+      bankCode:
+        type: string
+        description: 'Bank Code defined by LianLian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List'
+        maxLength: 8
+        minLength: 8
+      payeeName:
+        type: string
+        description: beneficiary account name
+        maxLength: 72
+      payeeBankAccount:
+        type: string
+        description: beneficiary account number
+        maxLength: 72
+      rfb:
+        type: string
+        description: rfb
+        maxLength: 40
+      createTime:
+        type: string
+        format: date-time
+        description: Refunding create time
+      modifyTime:
+        type: string
+        description: Refund modify time
+        format: date-time
+      status:
+        type: string
+        description: |-
+          refunding status, one of:
+
+          | value |description|
+          |------|------------|
+          |INIT| Init |
+          |SUCCESS|Success|
+          |PROCESSING|Processing |
+          |FAILED|failed|
+          |HEDGED|refund failed after success|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+          - HEDGED
+      failReason:
+        type: string
+        description: Refund failure reason
+        maxLength: 128
+    required:
+      - refundingId
+      - amount
+      - payeeName
+      - payeeBankAccount
+      - createTime
+      - status
+  CNYPaymentTrans:
+    title: CNYPaymentTrans
+    type: object
+    description: CNY Payment transication record object in LianLian Global's system
+    x-tags:
+      - Models
+    properties:
+      paymentId:
+        type: string
+        description: Unique refunding request id
+        maxLength: 32
+      virtualAcctId:
+        type: string
+        description: unique Virtual Account ID from client
+        maxLength: 64
+      amount:
+        type: string
+        description: requested refunding amount
+        maxLength: 24
+      bankAccountType:
+        type: string
+        description: |-
+          Beneficiary account type, one of:
+
+          |value|description|
+          |------|------------|
+          |INDIVIDUAL|Individual account|
+          |CORPORATE|Corporate account|
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+      bankName:
+        type: string
+        description: beneficiary bank name
+        maxLength: 128
+      bankBranchName:
+        type: string
+        description: Bank branch name
+        maxLength: 256
+      cnapsBranchId:
+        type: string
+        description: |-
+          CNAPS code
+          Mandatory is `bankAccountType = CORPORATE`
+        maxLength: 12
+      bankCode:
+        type: string
+        description: 'Bank Code defined by LianLian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List'
+        maxLength: 8
+        minLength: 8
+      payeeName:
+        type: string
+        description: beneficiary account name
+        maxLength: 72
+      payeeBankAccount:
+        type: string
+        description: beneficiary account number
+        maxLength: 72
+      rfb:
+        type: string
+        description: rfb
+        maxLength: 40
+      createTime:
+        type: string
+        format: date-time
+        description: Refunding create time
+      modifyTime:
+        type: string
+        description: Refund modify time
+        format: date-time
+      status:
+        type: string
+        description: |-
+          refunding status, one of:
+
+          | value |description|
+          |------|------------|
+          |INIT| Init |
+          |SUCCESS|Success|
+          |PROCESSING|Processing |
+          |FAILED|failed|
+          |HEDGED|refund failed after success|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+          - HEDGED
+      failReason:
+        type: string
+        description: Refund failure reason
+        maxLength: 128
+    required:
+      - paymentId
+      - amount
+      - bankAccountType
+      - payeeName
+      - payeeBankAccount
+      - createTime
+      - modifyTime
+paths:
+  /cnyva:
+    post:
+      summary: Create a CNY Virtual Account
+      operationId: post-cny-va
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RecevingAccount'
+          examples:
+            Example 1:
+              virtualAcctId: va2023010100001
+              accountName: 连连银通电子支付有限公司客户备付金
+              accountNo: '30106162007300'
+              bankBranchName: 招商银行杭州之江支行
+              bankName: 招商银行
+              cnapsBranchId: '308331012126'
+              bankDistrict: 浙江杭州
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 100001|虚拟卡申请处理中，请稍后 |
+            | 100002|虚拟卡暂不可申请，请稍后再试|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: rnjbonbko8pk9
+              message:
+                type: string
+                x-stoplight:
+                  id: aofqjfurq46p2
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: 3oz77ffs33y6x
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '100002'
+              message: 虚拟卡暂不可申请，请稍后再试
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: xwhsp7g7vfmel
+              message:
+                type: string
+                x-stoplight:
+                  id: dd4s3986ezblq
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: xajmdh8wdkviq
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      description: ''
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              virtualAcctId:
+                type: string
+                description: Unique Virtual Account ID from client
+                maxLength: 64
+            required:
+              - virtualAcctId
+          description: ''
+          x-examples:
+            Example 1:
+              virtualAcctId: va20230101000001
+      tags:
+        - Operations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  '/cnyva/{virtualAcctId}':
+    parameters:
+      - name: virtualAcctId
+        in: path
+        type: string
+        required: true
+    get:
+      summary: Get CNY VA Information
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RecevingAccount'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-bills-billid
+      description: ''
+      parameters: []
+      produces:
+        - application/json
+      consumes:
+        - application/json
+  '/fundingtrans/{fundingId}':
+    parameters:
+      - name: fundingId
+        in: path
+        type: string
+        required: true
+    get:
+      summary: Get Funding Trans by ID
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/FundingTrans'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-fundingid-fundingtrans
+      description: Get Funding record by funding ID
+      parameters: []
+      produces:
+        - application/json
+      consumes:
+        - application/json
+  '/refundingtrans/{refundingId}':
+    parameters:
+      - type: string
+        name: refundingId
+        in: path
+        required: true
+    get:
+      summary: Get CNY Refund Transaction
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CNYReFundTrans'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+        '':
+          schema:
+            $ref: '#/definitions/CNYReFundTrans'
+      operationId: get-refundingtrans
+      description: Get refund request details by `refundingId`
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  /refundingtrans:
+    parameters: []
+    post:
+      summary: Create CNY Refund Transaction
+      operationId: post-bills-billId-refundingtrans
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CNYReFundTrans'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020608| CNY refunding amount exceed total funding amount |
+            | 020609 | refundingId already exist |
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: CNYReFundTrans
+            type: object
+            description: CNY Refunding transication record object in LianLian Global's system
+            x-tags:
+              - Models
+            properties:
+              refundingId:
+                type: string
+                description: Unique refunding request id
+                maxLength: 32
+              virtualAcctId:
+                type: string
+                description: unique Virtual Account ID from client
+                maxLength: 64
+              amount:
+                type: string
+                description: requested refunding amount
+                maxLength: 24
+              bankAccountType:
+                type: string
+                description: |-
+                  Beneficiary account type, one of:
+
+                  |value|description|
+                  |------|------------|
+                  |INDIVIDUAL|Individual account|
+                  |CORPORATE|Corporate account|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              bankName:
+                type: string
+                description: beneficiary bank name
+                maxLength: 128
+              bankBranchName:
+                type: string
+                description: Bank branch name
+                maxLength: 256
+              bankCode:
+                type: string
+                description: 'Bank Code defined by LianLian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List'
+                maxLength: 8
+                minLength: 8
+              cnapsBranchId:
+                type: string
+                description: 'CNAPS code, mandatory if `bankAccountType = CORPORATE`'
+                maxLength: 12
+              payeeName:
+                type: string
+                description: beneficiary account name
+                maxLength: 72
+              payeeBankAccount:
+                type: string
+                description: beneficiary account number
+                maxLength: 72
+              rfb:
+                type: string
+                description: rfb
+                maxLength: 40
+            required:
+              - refundingId
+              - virtualAcctId
+              - amount
+              - bankAccountType
+              - payeeName
+              - payeeBankAccount
+          description: ''
+      description: |-
+        Create a single refund request, results will be noticed via webhook event. Client can also use `Query Refunding Trans` API to retrieve coresponding request results.
+
+        Requested total refudning amount shall no larger than total funding amount.
+      tags:
+        - Operations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  /fundingtrans:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              fundingTrans:
+                type: array
+                description: Funding Records
+                items:
+                  $ref: '#/definitions/FundingTrans'
+              totalCount:
+                type: string
+                description: Total count of funding records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+        '500':
+          description: ''
+      summary: Get List of Funding Trans
+      tags:
+        - Operations
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: beginTime
+          required: true
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          name: endTime
+          required: true
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+        - type: string
+          in: query
+          name: virtualAcctId
+          maxLength: 64
+          description: unique Virtual Account ID from client
+      description: The scale of the search cannot exceed 7 days
+  /paymenttrans:
+    post:
+      summary: Create CNY Payment Transaction
+      operationId: post-paymenttrans
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CNYPaymentTrans'
+      description: |-
+        Create a single CNY Payment request, results will be noticed via webhook event. Client can also use `Query Refunding Trans` API to retrieve coresponding request results.
+
+        Requested total refudning amount shall no larger than total funding amount.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              paymentId:
+                type: string
+                description: Unique payment request id
+                maxLength: 32
+              virtualAcctId:
+                type: string
+                description: unique Virtual Account ID from client
+                maxLength: 64
+              amount:
+                type: string
+                description: requested refunding amount
+                maxLength: 24
+              bankAccountType:
+                type: string
+                description: |-
+                  Beneficiary account type, one of:
+
+                  |value|description|
+                  |------|------------|
+                  |INDIVIDUAL|Individual account|
+                  |CORPORATE|Corporate account|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              bankName:
+                type: string
+                description: beneficiary bank name
+                maxLength: 128
+              bankBranchName:
+                type: string
+                description: Bank branch name
+                maxLength: 256
+              bankCode:
+                type: string
+                description: 'Bank Code defined by LianLian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List'
+                maxLength: 8
+                minLength: 8
+              cnapsBranchId:
+                type: string
+                description: |-
+                  CNAPS code
+                  Mandatory is `bankAccountType = CORPORATE`
+                maxLength: 12
+              payeeName:
+                type: string
+                description: beneficiary account name
+                maxLength: 72
+              payeeBankAccount:
+                type: string
+                description: beneficiary account number
+                maxLength: 72
+              rfb:
+                type: string
+                description: rfb
+                maxLength: 40
+            required:
+              - paymentId
+              - virtualAcctId
+              - amount
+              - bankAccountType
+              - payeeName
+              - payeeBankAccount
+          description: ''
+      tags:
+        - Operations
+  '/paymenttrans/{paymentId}':
+    parameters:
+      - type: string
+        name: paymentId
+        in: path
+        required: true
+    get:
+      summary: Get CNY Payment Information
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CNYPaymentTrans'
+      operationId: get-paymenttrans-paymentId
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - https
+host: global-api-sandbox.lianlianpay-inc.com
+info:
+  title: CNY VA API
+  version: '1.0'
+  description: ''
+  contact:
+    email: fx_support@lianlianpay.com
+swagger: '2.0'
+tags:
+  - name: Operations
+basePath: /outbound/card/v1/

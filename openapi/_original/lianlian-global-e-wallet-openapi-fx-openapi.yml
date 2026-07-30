@@ -1,0 +1,158 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Quote",
+        "version": "1.0",
+        "description": "The Quote API used to create a quote that can be used in a subsequent Exchange request during the requested validity period.\n\n\n"
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-conversions/lockfx": {
+            "post": {
+                "summary": "Create a LockFX Quote",
+                "operationId": "post-lockfx",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExchangeRate"
+                                },
+                                "examples": {
+                                    "example": {
+                                        "value": {
+                                            "rate_id": "string",
+                                            "rate": "string",
+                                            "base_currency": "string",
+                                            "sell_currency": "string",
+                                            "buy_currency": "string",
+                                            "validity": "T_0",
+                                            "valid_strarting_after": "string",
+                                            "valid_ending_before": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "./CommonModel.json#/components/schemas/LockFXRequest"
+                            },
+                            "examples": {}
+                        },
+                        "application/xml": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        },
+                        "text/plain": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        }
+                    },
+                    "description": ""
+                },
+                "parameters": [],
+                "description": "Lock quote."
+            },
+            "parameters": []
+        }
+    },
+    "components": {
+        "schemas": {
+            "ExchangeRate": {
+                "title": "ExchangeRate",
+                "type": "object",
+                "x-tags": [
+                    "Models"
+                ],
+                "examples": [
+                    {
+                        "rate_id": "string",
+                        "rate": "string",
+                        "base_currency": "string",
+                        "sell_currency": "string",
+                        "buy_currency": "string",
+                        "validity": "T_0",
+                        "valid_strarting_after": "string",
+                        "valid_ending_before": "string"
+                    }
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique ID for this quote wich will be used by `Conversion`."
+                    },
+                    "rate": {
+                        "type": "string",
+                        "description": "The FX Quote represents how much of the quote currency is needed for you to get one unit of the base currency."
+                    },
+                    "base_currency": {
+                        "type": "string",
+                        "description": "It will be either `sell_currency` or `buy_currency`."
+                    },
+                    "sell_currency": {
+                        "type": "string",
+                        "description": "Sell currency, the currency that the client sells (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "buy_currency": {
+                        "type": "string",
+                        "description": "Buy currency, the currency that the client buys (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "validity": {
+                        "type": "string",
+                        "description": "Quote validity period.",
+                        "enum": [
+                            "T_0"
+                        ]
+                    },
+                    "valid_strarting_after": {
+                        "description": "The valid time of the exchange rate.",
+                        "type": "integer"
+                    },
+                    "valid_ending_before": {
+                        "description": "The valid end time of the exchange rate.",
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "requestBodies": {}
+    }
+}

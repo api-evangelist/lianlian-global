@@ -1,0 +1,1051 @@
+swagger: '2.0'
+info:
+  title: transaction
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /transaction:
+    post:
+      summary: Create a transaction
+      operationId: post-transaction
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/transaction'
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties: {}
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 156005| The payeeId does not exist |
+            | 156006| Payee verification failed |
+            | 156007| Payee verification processing |
+            | 159001| Duplicate transactionId |
+            | 159002| payeeBankAccount is not supported |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Transaction
+            type: object
+            description: Transaction info record object in Lianlian Pay's system
+            x-tags:
+              - Models
+            required:
+              - transactionId
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+              - payeeId
+              - bankAccountNumber
+              - bankCountryCode
+            properties:
+              transactionId:
+                type: string
+                description: Unique Transaction ID From Merchant's System
+                maxLength: 32
+              pricingCurrency:
+                type: string
+                description: Pricing Currency
+                minLength: 3
+                maxLength: 3
+              sourceCurrency:
+                type: string
+                description: Orginal Currency
+                minLength: 3
+                maxLength: 3
+              sourceAmount:
+                type: string
+                description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+                maxLength: 10
+              targetCurrency:
+                type: string
+                description: Distribute Currency
+                minLength: 3
+                maxLength: 3
+              targetAmount:
+                type: string
+                description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+                maxLength: 10
+              payeeId:
+                type: string
+                description: Unique Payee ID in Merchant's Syetem
+                maxLength: 64
+              declarantId:
+                type: string
+                description: 'Unique Payee ID in Merchant''s Syetem,The actual applicant.'
+                maxLength: 64
+              bankAccountNumber:
+                type: string
+                maxLength: 64
+                description: Payee Bank Account Number. Please use IBAN if `accountRoutingType` = `BC`
+              bankCountryCode:
+                type: string
+                description: 'Bank Country Code, referring to column “code” in Appendix Country Code'
+                enum:
+                  - CHN
+                  - HKG
+                  - NZL
+                  - JPN
+                  - USA
+                  - FRA
+                  - GBR
+                  - AUS
+                  - KOR
+                  - THA
+                  - DEU
+                  - ESP
+                minLength: 3
+              paymentMethod:
+                type: string
+                description: |-
+                  Payment methods, mandatory if `targetCurrency` ≠ `CNY` , one of 
+
+                  |Code|Description|
+                  |----|----|
+                  |SWIFT|payment through swift|
+                  |LOCAL|payment through local method|
+                enum:
+                  - SWIFT
+                  - LOCAL
+              paymentChannel:
+                type: string
+                description: 'Payment channel, mandatory if you want to designated channel'
+                enum: []
+                x-stoplight:
+                  id: zydedhr4nwq22
+              accountRoutingType:
+                type: string
+                description: |-
+                  Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of 
+                  |Code|Description|
+                  |---|---|
+                  |ABA|USA local payment routing number|
+                  |BC|Banking Circle|
+                enum:
+                  - ABA
+                  - BC
+                maxLength: 16
+              routingNumber:
+                type: string
+                description: 'Routing number, mandatory if `paymentMethod` = `LOCAL`and `accountRoutingType` ≠ `BC`'
+                maxLength: 32
+              poboPayerId:
+                type: string
+                description: 'Payer unique ID, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 34
+              poboPayerName:
+                type: string
+                description: 'Payer Name, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 128
+              poboPayerAddress:
+                type: string
+                description: 'Payer Address, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 105
+              poboPayerRegion:
+                type: string
+                description: 'Payer Country Code, referring to column “code” in Appendix Country Code, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 3
+                x-stoplight:
+                  id: lm2ymuj426yx0
+                minLength: 3
+              poboPayerCity:
+                type: string
+                description: 'Payer City, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 35
+                x-stoplight:
+                  id: qeeqwv2i2bnnc
+              swiftCode:
+                type: string
+                description: 'Bank swift code, mandatory if `targetCurrency` ≠ `CNY`'
+                maxLength: 11
+              bankCode:
+                type: string
+                maxLength: 8
+                description: 'Bank Code, mandatory if ` targetCurrency`  = ` CNY` , Referring to Appendix Bank List'
+              bankCnapsCode:
+                type: string
+                maxLength: 16
+                description: 'Payee Bank Cnaps Code, mandatory if ` payeeType`  = ` CORPORATE` and` targetCurrency`  = ` CNY`and Payee Bank are not on the Appendix Bank List'
+              bankName:
+                type: string
+                description: Bank name of payee's bank account
+                maxLength: 64
+              bankAddress:
+                type: string
+                x-stoplight:
+                  id: qluoo7bwbbw8u
+                description: Bank address of payee's bank account
+                maxLength: 256
+              tradeCode:
+                type: string
+                description: 'Trade Code, mandatory if ` tragetCurrency`  = ` CNY` ,referring to Appendix Trade Code'
+                maxLength: 8
+              payeeAcctCategory:
+                x-stoplight:
+                  id: py6w7cqcyjcu5
+                enum:
+                  - checking
+                  - savings
+                description: mandatory if go through `Thunes` channel and `targetCurrency` = `BRL`
+              transPurpose:
+                type: string
+                x-stoplight:
+                  id: mal7dal35pd6x
+                description: Thunes channel transaction type
+              additionInfo:
+                type: object
+                x-stoplight:
+                  id: sxvrrkkhyy50w
+                description: mandatory if you distribute BC channel
+                properties:
+                  custType:
+                    type: string
+                    x-stoplight:
+                      id: emfnzcwnq3a06
+                    description: "Cust type,mandatory if you distribute BC channel\r\n| CODE | DESCRIPTION|\r\n|-----------|-----------|\r\n|INDIVIDUAL|individual cust|\r\n|CORPORATE|corporate cust|"
+                  custName:
+                    type: string
+                    x-stoplight:
+                      id: 6f5c9qag09ht0
+                    description: 'Cust name,mandatory if you distribute BC channel'
+                    maxLength: 35
+                  custFirstName:
+                    type: string
+                    x-stoplight:
+                      id: 1kw44gpqls25l
+                    description: 'Cust first name,mandatory if you distribute BC channel'
+                    maxLength: 35
+                  custLastName:
+                    type: string
+                    x-stoplight:
+                      id: q9ehp24ado835
+                    description: 'Cust last name,mandatory if you distribute BC channel'
+                    maxLength: 35
+                  custAddress:
+                    type: object
+                    x-stoplight:
+                      id: y3jhgq2m8qvdy
+                    description: 'Cust detail,mandatory if you distribute BC channel'
+                    properties:
+                      street:
+                        type: string
+                        x-stoplight:
+                          id: qxcw9vjmkgy3g
+                        description: 'Cust street,mandatory if you distribute BC channel'
+                        maxLength: 35
+                        pattern: '^[A-Za-z0-9 ]+$'
+                      city:
+                        type: string
+                        x-stoplight:
+                          id: uhaxmo6gyjgoh
+                        description: 'Cust city,mandatory if you distribute BC channel'
+                        pattern: '^[A-Za-z0-9 ]+$'
+                        maxLength: 35
+                      countryCode:
+                        type: string
+                        x-stoplight:
+                          id: 93km5q9ejez37
+                        description: 'Cust countryCode,mandatory if you distribute BC channel'
+                        maxLength: 3
+                        minLength: 3
+              rfb:
+                type: string
+                description: Reference for Beneficiary
+                maxLength: 200
+          description: ''
+      description: |-
+        Create transaction request, result will be return via webhook. Merchant can also use `Get Transaction Info` API to retrieve coresponding request results.
+
+        Interface Maximum Concurrency：300
+      tags:
+        - Operations
+  /directransaction:
+    post:
+      summary: Create a transation for the provided payee info
+      operationId: post-transaction
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/directransaction'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 159001| Duplicate transactionId |
+            | 159002| payeeBankAccount is not supported |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Transaction
+            type: object
+            description: Transaction info record object in Lianlian Pay's system
+            x-tags:
+              - Models
+            required:
+              - transactionId
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+              - payeeType
+              - payeeName
+              - payeeCountryCode
+              - payeeAddress
+              - bankAccountNumber
+              - bankCountryCode
+              - paymentMethod
+            properties:
+              transactionId:
+                type: string
+                description: Unique Transaction ID From Merchant's System
+                maxLength: 32
+              pricingCurrency:
+                type: string
+                description: Pricing Currency
+                minLength: 3
+                maxLength: 3
+              sourceCurrency:
+                type: string
+                description: Orginal Currency
+                minLength: 3
+                maxLength: 3
+              sourceAmount:
+                type: string
+                description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+                maxLength: 10
+              targetCurrency:
+                type: string
+                description: Distribute Currency
+                minLength: 3
+                maxLength: 3
+              targetAmount:
+                type: string
+                description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+                maxLength: 10
+              payeeType:
+                type: string
+                maxLength: 16
+                x-stoplight:
+                  id: 6aad3pfeukkc4
+                description: "Payee Type, one of\r\n\r\n|Code|Description|\r\n|----|-----|\r\n|INDIVIDUAL|individual payee|\r\n|CORPORATE|corporate payee|"
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              payeeName:
+                type: string
+                maxLength: 128
+                x-stoplight:
+                  id: 0qmvlzpkl4or0
+                description: Payee's name
+              payeeCountryCode:
+                type: string
+                description: 'Payee''s country code,referring to column “code” in Appendix Country Code'
+                enum:
+                  - CHN
+                  - HKG
+                  - NZL
+                  - JPN
+                  - USA
+                  - FRA
+                  - GBR
+                  - AUS
+                  - KOR
+                  - THA
+                  - DEU
+                  - ESP
+                minLength: 3
+                maxLength: 3
+              payeeAddress:
+                type: object
+                description: payee's address detail
+                required:
+                  - streetAddress
+                properties:
+                  city:
+                    type: string
+                    description: Payee's city
+                    maxLength: 32
+                  streetAddress:
+                    type: string
+                    description: Payee's street address
+                    maxLength: 256
+              bankAccountNumber:
+                type: string
+                maxLength: 64
+                description: Payee Bank Account Number
+              bankCountryCode:
+                type: string
+                description: 'Bank Country Code, referring to column “code” in Appendix Country Code'
+                enum:
+                  - CHN
+                  - HKG
+                  - NZL
+                  - JPN
+                  - USA
+                  - FRA
+                  - GBR
+                  - AUS
+                  - KOR
+                  - THA
+                  - DEU
+                  - ESP
+                minLength: 3
+                maxLength: 3
+              bankName:
+                type: string
+                x-stoplight:
+                  id: 0er858naag4vo
+                maxLength: 64
+                description: Bank name of payee's bank account
+              bankAddress:
+                type: string
+                x-stoplight:
+                  id: tz6axooks9bha
+                description: Bank address of payee's bank account
+                maxLength: 256
+              paymentMethod:
+                type: string
+                description: |-
+                  Payment methods
+                  |Code|Description|
+                  |----|----|
+                  |SWIFT|payment through swift|
+                  |LOCAL|payment through local method|
+                enum:
+                  - SWIFT
+                  - LOCAL
+              accountRoutingType:
+                type: string
+                description: |-
+                  Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of 
+                  |Code|Description|
+                  |---|---|
+                  |ABA|USA local payment routing number|
+                enum:
+                  - ABA
+                maxLength: 16
+              routingNumber:
+                type: string
+                description: 'Routing number, mandatory if `paymentMethod` = `LOCAL`'
+                maxLength: 32
+              poboPayerId:
+                type: string
+                description: 'Payer unique ID, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 34
+              poboPayerName:
+                type: string
+                description: 'Payer Name, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 128
+              poboPayerAddress:
+                type: string
+                description: 'Payer Address, mandatory if you want to pay on behalf of another entity (POBO)'
+                maxLength: 105
+              poboPayerRegion:
+                type: string
+                maxLength: 3
+                x-stoplight:
+                  id: 3y947mfix7p78
+                description: 'Payer Country Code, referring to column “code” in Appendix Country Code, mandatory if you want to pay on behalf of another entity (POBO)'
+                minLength: 3
+              poboPayerCity:
+                type: string
+                maxLength: 35
+                x-stoplight:
+                  id: 9uvonqtmh95bv
+                description: 'Payer City, mandatory if you want to pay on behalf of another entity (POBO)'
+              swiftCode:
+                type: string
+                description: Bank swift code
+                maxLength: 11
+              rfb:
+                type: string
+                description: Reference for Beneficiary
+                maxLength: 200
+          description: ''
+      description: |-
+        When making a payment to a non-currency controlled country, you can create a payment transaction directly with this API, without having to create a payee.
+        Create transaction request, result will be return via webhook. Merchant can also use `Get Direc Transaction Info` API to retrieve coresponding request results.
+
+        Interface Maximum Concurrency：300
+      tags:
+        - Operations
+    parameters: []
+  '/transaction/{transactionId}':
+    parameters:
+      - type: string
+        name: transactionId
+        in: path
+        required: true
+        description: Unique Transaction ID From Merchant's System
+        maxLength: 32
+    get:
+      summary: Get Transaction Info
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/transaction'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-transaction-transactionId
+      description: |-
+        Get Transaction Info Request, `transaction` object will be returned
+
+        Interface Maximum Concurrency：300
+  '/directransaction/{transactionId}':
+    parameters:
+      - type: string
+        name: transactionId
+        in: path
+        required: true
+        description: Unique Transaction ID From Merchant's System
+        maxLength: 32
+    get:
+      summary: Get Direc Transaction Info
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/directransaction'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-transaction-transactionId
+      description: |-
+        Get Transaction Info Request, `directransaction` object will be returned
+
+        Interface Maximum Concurrency：300
+definitions:
+  transaction:
+    title: Transaction
+    type: object
+    description: Transaction info record object in Lianlian Pay's system
+    x-tags:
+      - Models
+    required:
+      - transactionId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - payeeId
+      - bankAccountNumber
+      - bankCountryCode
+      - status
+    properties:
+      transactionId:
+        type: string
+        description: Unique Transaction ID From Merchant's System
+        maxLength: 32
+      pricingCurrency:
+        type: string
+        description: Pricing Currency
+        minLength: 3
+        maxLength: 3
+      sourceCurrency:
+        type: string
+        description: Orginal Currency
+        minLength: 3
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+        maxLength: 10
+      targetCurrency:
+        type: string
+        description: Distribute Currency
+        minLength: 3
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+        maxLength: 10
+      rateId:
+        type: string
+        description: 'Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Create LockFX Rate` API.'
+      rate:
+        type: string
+        description: FX rate
+        maxLength: 16
+      refundCurrency:
+        type: string
+        description: Refund Currency
+        minLength: 3
+        maxLength: 3
+      refundAmount:
+        type: string
+        description: Refund Amount
+        maxLength: 10
+      payeeId:
+        type: string
+        description: Unique Payee ID in Merchant's Syetem
+        maxLength: 32
+      declarantId:
+        type: string
+        description: 'Unique Payee ID in Merchant''s Syetem ,Actual declaration'
+        maxLength: 32
+      bankAccountNumber:
+        type: string
+        maxLength: 64
+        description: Payee Bank Account Number
+      bankCountryCode:
+        type: string
+        description: 'Bank Country Code, referring to column “code” in Appendix Country Code'
+        enum:
+          - CHN
+          - HKG
+          - NZL
+          - JPN
+          - USA
+          - FRA
+          - GBR
+          - AUS
+          - KOR
+          - THA
+          - DEU
+          - ESP
+        minLength: 3
+      paymentMethod:
+        type: string
+        description: |-
+          Payment methods, mandatory if `targetCurrency` ≠ `CNY` , one of 
+
+          |Code|Description|
+          |----|----|
+          |SWIFT|payment through swift|
+          |LOCAL|payment through local method|
+        enum:
+          - SWIFT
+          - LOCAL
+      paymentChannel:
+        type: string
+        description: Payment channel
+        enum: []
+        x-stoplight:
+          id: 2s4gp23fwsufv
+      accountRoutingType:
+        type: string
+        description: |-
+          Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of 
+          |Code|Description|
+          |---|---|
+          |ABA|USA local payment routing number|
+        enum:
+          - ABA
+        maxLength: 16
+      routingNumber:
+        type: string
+        description: 'Routing number, mandatory if `paymentMethod` = `LOCAL`'
+        maxLength: 32
+      poboPayerId:
+        type: string
+        description: 'Payer unique ID, mandatory if you want to pay on behalf of another entity (POBO)'
+        maxLength: 34
+      poboPayerName:
+        type: string
+        description: 'Payer Name, mandatory if you want to pay on behalf of another entity (POBO)'
+        maxLength: 128
+      poboPayerAddress:
+        type: string
+        description: 'Payer Address, mandatory if you want to pay on behalf of another entity (POBO)'
+        maxLength: 105
+      poboPayerRegion:
+        type: string
+        maxLength: 3
+        description: 'Payer Country Code, referring to column “code” in Appendix Country Code, mandatory if you want to pay on behalf of another entity (POBO)'
+        x-stoplight:
+          id: r122114viaco5
+        minLength: 3
+      swiftCode:
+        type: string
+        description: 'Bank swift code, mandatory if `targetCurrency` ≠ `CNY`'
+        maxLength: 11
+      bankCode:
+        type: string
+        maxLength: 8
+        description: 'Bank Code, mandatory if ` targetCurrency`  = ` CNY` , Referring to Appendix Bank List'
+      bankCnapsCode:
+        type: string
+        maxLength: 16
+        description: 'Payee Bank Cnaps Code, mandatory if ` payeeType`  = ` CORPORATE` and` targetCurrency`  = ` CNY`and Payee Bank are not on the Appendix Bank List'
+      bankName:
+        type: string
+        description: Bank name of payee's bank account
+        maxLength: 64
+      bankAddress:
+        type: string
+        x-stoplight:
+          id: uquryq2xufezc
+        description: Bank address of payee's bank account
+        maxLength: 256
+      tradeCode:
+        type: string
+        description: 'Trade Code, mandatory if ` tragetCurrency`  = ` CNY` ,referring to Appendix Trade Code'
+        maxLength: 8
+      rfb:
+        type: string
+        description: Reference for Beneficiary
+        maxLength: 200
+      payeeAcctCategory:
+        x-stoplight:
+          id: ftw5mceus2mj2
+        enum:
+          - checking
+          - savings
+        description: mandatory if go through `Thunes` channel and `targetCurrency` = `BRL`
+      transPurpose:
+        type: string
+        x-stoplight:
+          id: g9ulxsz9wcad8
+        description: Thunes channel transaction type
+      status:
+        type: string
+        description: |
+          Transaction Status, one of
+          |Code|Description|
+          |---|---|
+          |Processing|Transaction Under Processing|
+          |Failed|Transaction Failed|
+          |Successed|Transaction Success|
+          |Hedged|Transaction failed after Success|
+        enum:
+          - Processing
+          - Failed
+          - Successed
+          - Hedged
+        maxLength: 64
+      additionInfo:
+        type: object
+        x-stoplight:
+          id: aw35jqy3ipgjz
+        description: mandatory if distribute BC channel
+        properties:
+          custType:
+            type: string
+            x-stoplight:
+              id: 9jjz39cjaiw0z
+            description: Cust type
+          custName:
+            type: string
+            x-stoplight:
+              id: rlpk69ufix71y
+            description: cust name
+          custFirstName:
+            type: string
+            x-stoplight:
+              id: n9hod22slhrmv
+            description: cust first name
+          custLastName:
+            type: string
+            x-stoplight:
+              id: q00p714ecx8a1
+            description: cust last name
+          custAddress:
+            type: object
+            x-stoplight:
+              id: gbfhz5vkrnvy8
+            description: cust detail
+            properties:
+              street:
+                type: string
+                x-stoplight:
+                  id: jcfjnxrvopfe0
+              city:
+                type: string
+                x-stoplight:
+                  id: g05w3bj2t4hqx
+              countryCode:
+                type: string
+                x-stoplight:
+                  id: h8qwn4l5fngc9
+      failedReason:
+        type: string
+        maxLength: 256
+        description: Failed Reason
+  directransaction:
+    title: Direc transaction
+    x-stoplight:
+      id: s1ggyyi7ina4g
+    type: object
+    description: Direc transaction info record object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      transactionId:
+        type: string
+        description: Unique Transaction ID From Merchant's System
+        maxLength: 32
+      pricingCurrency:
+        type: string
+        description: Pricing Currency
+        minLength: 3
+        maxLength: 3
+      sourceCurrency:
+        type: string
+        description: Orginal Currency
+        minLength: 3
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+        maxLength: 10
+      targetCurrency:
+        type: string
+        description: Distribute Currency
+        minLength: 3
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+        maxLength: 10
+      payeeType:
+        type: string
+        maxLength: 16
+        x-stoplight:
+          id: gu5a41bxp3hm2
+        description: "Payee Type, one of\r\n\r\n|Code|Description|\r\n|----|-----|\r\n|INDIVIDUAL|individual payee|\r\n|CORPORATE|corporate payee|"
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+      payeeName:
+        type: string
+        maxLength: 128
+        x-stoplight:
+          id: 0qmvlzpkl4or0
+        description: Payee's name
+      payeeCountryCode:
+        type: string
+        description: 'Payee''s country code,referring to column “code” in Appendix Country Code'
+        enum:
+          - CHN
+          - HKG
+          - NZL
+          - JPN
+          - USA
+          - FRA
+          - GBR
+          - AUS
+          - KOR
+          - THA
+          - DEU
+          - ESP
+        minLength: 3
+        maxLength: 3
+      payeeAddress:
+        type: object
+        description: payee's address detail
+        required:
+          - streetAddress
+        properties:
+          city:
+            type: string
+            description: Payee's city
+            maxLength: 32
+          streetAddress:
+            type: string
+            description: Payee's street address
+            maxLength: 256
+      bankAccountNumber:
+        type: string
+        maxLength: 64
+        description: Payee Bank Account Number
+      bankCountryCode:
+        type: string
+        description: 'Bank Country Code, referring to column “code” in Appendix Country Code'
+        enum:
+          - CHN
+          - HKG
+          - NZL
+          - JPN
+          - USA
+          - FRA
+          - GBR
+          - AUS
+          - KOR
+          - THA
+          - DEU
+          - ESP
+        minLength: 3
+        maxLength: 3
+      bankName:
+        type: string
+        x-stoplight:
+          id: 0er858naag4vo
+        maxLength: 64
+        description: Bank name of payee's bank account
+      bankAddress:
+        type: string
+        x-stoplight:
+          id: 16p4c9ecme2s2
+        description: Bank address of payee's bank account
+        maxLength: 256
+      paymentMethod:
+        type: string
+        description: |-
+          Payment methods
+          |Code|Description|
+          |----|----|
+          |SWIFT|payment through swift|
+          |LOCAL|payment through local method|
+        enum:
+          - SWIFT
+          - LOCAL
+      accountRoutingType:
+        type: string
+        description: |-
+          Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of 
+          |Code|Description|
+          |---|---|
+          |ABA|USA local payment routing number|
+        enum:
+          - ABA
+        maxLength: 16
+      routingNumber:
+        type: string
+        description: 'Routing number, mandatory if `paymentMethod` = `LOCAL`'
+        maxLength: 32
+      poboPayerId:
+        type: string
+        description: 'Payer unique ID, mandatory if you want to pay on behalf of another entity (POBO)'
+        maxLength: 34
+      poboPayerName:
+        type: string
+        description: 'Payer Name, mandatory if you want to pay on behalf of another entity (POBO)'
+        maxLength: 128
+      poboPayerAddress:
+        type: string
+        description: 'Payer Address, mandatory if you want to pay on behalf of another entity (POBO)'
+        maxLength: 105
+      poboPayerRegion:
+        type: string
+        maxLength: 3
+        x-stoplight:
+          id: 3y947mfix7p78
+        description: 'Payer Country Code, referring to column “code” in Appendix Country Code, mandatory if you want to pay on behalf of another entity (POBO)'
+        minLength: 3
+      swiftCode:
+        type: string
+        description: Bank swift code
+        maxLength: 11
+      rfb:
+        type: string
+        description: Reference for Beneficiary
+        maxLength: 200
+      rateId:
+        type: string
+        description: 'Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Create LockFX Rate` API.'
+      rate:
+        type: string
+        description: FX rate
+        maxLength: 16
+      refundCurrency:
+        type: string
+        description: Refund Currency
+        minLength: 3
+        maxLength: 3
+      refundAmount:
+        type: string
+        description: Refund Amount
+        maxLength: 10
+      status:
+        type: string
+        description: |
+          Transaction Status, one of
+          |Code|Description|
+          |---|---|
+          |Processing|Transaction Under Processing|
+          |Failed|Transaction Failed|
+          |Successed|Transaction Success|
+          |Hedged|Transaction failed after Success|
+        enum:
+          - Processing
+          - Failed
+          - Successed
+          - Hedged
+        maxLength: 64
+      failedReason:
+        type: string
+        maxLength: 256
+        description: Failed Reason
+    required:
+      - transactionId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - payeeType
+      - payeeName
+      - payeeCountryCode
+      - payeeAddress
+      - bankAccountNumber
+      - bankCountryCode
+      - paymentMethod
+      - status
+basePath: /global/payout/v1

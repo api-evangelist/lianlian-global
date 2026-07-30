@@ -1,0 +1,255 @@
+definitions:
+  payerInfo:
+    title: PayerInfo
+    type: object
+    description: Payer Information object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      payerId:
+        type: string
+        description: Unique bill id from client
+        maxLength: 32
+      payerType:
+        type: string
+        description: |-
+          payer type
+
+          | value | description |
+          |--------|-------------|
+          |INDIVIDUAL|Individual|
+          |CORPORATE|Corporate |
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+      payerName:
+        type: string
+        description: payer name
+        maxLength: 128
+      payerIdType:
+        type: string
+        description: |-
+          payer identification type
+
+          | value| description |
+          |--------|-------------|
+          |ID_CARD|ID Card|
+          |UNIFIED_CREDIT_CODE|Uniform social credit code |
+        enum:
+          - ID_CARD
+          - UNIFIED_CREDIT_CODE
+      payerIdNo:
+        type: string
+        description: payer identification number
+        maxLength: 64
+      payerIdExpire:
+        type: string
+        description: 'Payer ID Expire Date in format of :YYYYMMdd'
+        minLength: 8
+        maxLength: 8
+      payerContactName:
+        type: string
+        description: 'payer contact name, mandatory for corporate payer'
+        maxLength: 128
+      payerContactNumber:
+        type: string
+        description: Payer contact number
+        maxLength: 32
+      status:
+        type: string
+        description: |-
+          payer status, one of
+
+          |value|descrption|
+          |------|-------------|
+          |AUDITING|Under review|
+          |APPROVED|Approved|
+          |REJECT|Rejected|
+        enum:
+          - AUDITING
+          - APPROVED
+          - REJECT
+      failReason:
+        type: string
+        description: payer verify info
+        maxLength: 128
+      createTime:
+        type: string
+        default: sysdate
+        format: date-time
+        description: 'Payer create time, UTC+0'
+        maxLength: 24
+      modifyTime:
+        type: string
+        default: sysdate
+        format: date-time
+        description: 'Payer modify time, UTC+0'
+        maxLength: 24
+    required:
+      - payerId
+      - payerType
+      - payerName
+      - payerIdType
+      - payerIdNo
+      - status
+paths:
+  /payer:
+    post:
+      summary: Create a Payer
+      operationId: post-payers
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/payerInfo'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020101|Payer audit failure |
+            | 020402|billId already exist|
+            |020105|Payer rejectd by blacklist|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      description: |-
+        Currenly bill can only be paid via wire transfer. Payee information such as due amount and payer information shall be included in the API request body.
+
+        Beneficiary account will be returned by Lianlian Pay in request respone body.
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              payerId:
+                type: string
+                maxLength: 32
+                description: unique payer ID from client
+              payerName:
+                type: string
+                description: payer name in Chinese
+                maxLength: 128
+              payerType:
+                type: string
+                description: |-
+                  payer type, one of
+
+                  | value | description |
+                  |--------|-------------|
+                  |INDIVIDUAL|Individual|
+                  |CORPORATE |Corporate|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              payerIdType:
+                type: string
+                description: |-
+                  payer identification type
+
+                  | value| description |
+                  |--------|-------------|
+                  |ID_CARD|ID Card|
+                  |UNIFIED_CREDIT_CODE|Uniform social credit code |
+                enum:
+                  - ID_CARD
+                  - UNIFIED_CREDIT_CODE
+              payerIdNo:
+                type: string
+                description: payer identification number
+                maxLength: 64
+              payerIdExpire:
+                type: string
+                description: 'Payer ID Expire Date in format of :YYYYMMdd'
+                minLength: 8
+                maxLength: 8
+              payerContactName:
+                type: string
+                description: 'payer contact name, mandatory for corporate payer'
+                maxLength: 128
+              payerContactNumber:
+                type: string
+                maxLength: 32
+                description: 'payer contact number, mandatory for corporate payer'
+            required:
+              - payerId
+              - payerName
+              - payerType
+              - payerIdType
+              - payerIdNo
+          description: ''
+      tags:
+        - Operations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  '/payer/{payerId}':
+    parameters:
+      - name: payerId
+        in: path
+        type: string
+        required: true
+    get:
+      summary: Get Payer Info by PayerId
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/payerInfo'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-bills-billid
+      description: Get bill details in Lianlian Pay's system by `payerId`
+      parameters: []
+      produces:
+        - application/json
+      consumes:
+        - application/json
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - https
+host: global-api.lianlianpay.com/
+info:
+  title: Payer API
+  version: '1.0'
+  description: ''
+swagger: '2.0'
+tags:
+  - name: Operations
+basePath: outbound/card/v1/

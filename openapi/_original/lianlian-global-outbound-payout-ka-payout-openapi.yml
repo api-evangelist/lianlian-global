@@ -1,0 +1,1314 @@
+swagger: '2.0'
+info:
+  title: Payout API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /payout:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Payout'
+          examples:
+            Example 1:
+              payoutId: PAY202301010001
+              tradeFileId:
+                - tf202301010001
+              payoutCurrency: EUR
+              payoutAmount: '130.98'
+              swiftChargeOption: SHARED
+              paymentMethod: LOCAL
+              payeeBankAccount:
+                payeeCountryCode: DEU
+                payeeName: UNIVERSITY OF SYDNEY
+                payeeAddress: 2589 Musgrave Street
+                payeeBankDistrict: DEU
+                payeeAccountNo: '2003300125'
+                payeeBankName: 'Citibank N.A., Hong Kong Branch'
+                payeeBankAddress: 'Citibank Tower, Citibank Plaza, 3 Garden Road, Central, Hong Kong'
+                payeeBankSwiftCode: CITIHKHX
+                payeeBankType: IBAN
+                payeeBankCode: DE28700500003201190315
+              rfb: Leo test
+              poboPayerInfo:
+                payerId: LianLian Global
+                payerName: LL
+                payerAddress: hangzhou
+                payerRegion: CHN
+              additionInfo:
+                custType: INDIVIDUAL
+                custName: LianLian Global
+                custFirstName: Leo
+                custLastName: Big
+                custAddress:
+                  street: Citibank Tower
+                  city: Hong Kong
+                  countryCode: CHN
+              status: PROCESSING
+              failReason: 处理中
+              createTime: '2023-01-01T10:15:22Z'
+              modifyTime: '2023-01-01T10:15:22Z'
+        '400':
+          description: |-
+            Bad Request
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 400009|指令id重复|
+            | 400011|未找到成功汇兑指令|
+            | 400012|金额超过浮动比例|
+            | 400013|此材料存在未成功的指令|
+            | 400014|此材料已有支付方式，不支持再次支付|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: kkwd25nf7fbgy
+              message:
+                type: string
+                x-stoplight:
+                  id: oeyhcuk5lsg8k
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: tf9uf7gu0yn84
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '400009'
+              message: 指令id重复
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: ckbkd0z3xsxjw
+              message:
+                type: string
+                x-stoplight:
+                  id: 8t2ve12umgy23
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: y1hce5n0solsf
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      summary: Create Payout
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Payout
+            type: object
+            x-tags:
+              - Models
+            x-examples: {}
+            required:
+              - payoutId
+              - tradeFileId
+              - payoutCurrency
+              - payoutAmount
+              - payeeBankAccount
+            properties:
+              payoutId:
+                type: string
+                description: Payout request id from client
+                maxLength: 32
+              tradeFileId:
+                type: array
+                description: Unique trade file ID from client
+                maxItems: 10
+                items:
+                  type: string
+                  maxLength: 32
+              payoutCurrency:
+                type: string
+                description: Payout currency
+                maxLength: 3
+              payoutAmount:
+                type: string
+                description: Payout amount
+                maxLength: 24
+              paymentMethod:
+                type: string
+                enum:
+                  - LOCAL
+                  - SWIFT
+                description: 'Payment method, one of SWIFT, LOCAL'
+              paymentChannel:
+                type: string
+                x-stoplight:
+                  id: i3oqeui4qa00c
+                enum:
+                  - CURRENCYCLOUD
+                  - LATIPAY
+                description: 'Payment channel, one of CURRENCYCLOUD, LATIPAY'
+              payeeBankAccount:
+                type: object
+                description: Receiving account information
+                required:
+                  - payeeName
+                  - payeeAccountNo
+                  - payeeCountryCode
+                  - payeeBankDistrict
+                  - payeeBankType
+                properties:
+                  payeeName:
+                    type: string
+                    description: Beneficiary name
+                    maxLength: 128
+                  payeeAccountNo:
+                    type: string
+                    description: Beneficiary account number
+                    maxLength: 72
+                  payeeCountryCode:
+                    type: string
+                    description: 'Beneficiary account country, ISO 3166 code'
+                    maxLength: 3
+                  payeeAddress:
+                    type: string
+                    description: Beneficiary address; Conditionally required
+                    maxLength: 256
+                  payeeBankName:
+                    type: string
+                    description: Beneficiary bank name; Conditionally required
+                    maxLength: 128
+                  payeeBankSwiftCode:
+                    type: string
+                    description: 'Beneficiary bank SWIFT code, mandatory if `paymentChannel` = `LATIPAY` and `payoutCurrency` = `NZD`'
+                    maxLength: 128
+                  payeeBankDistrict:
+                    type: string
+                    description: Beneficiary bank account region
+                    maxLength: 3
+                  payeeBankType:
+                    description: "Beneficiary bank account type, please refer to appendix [Local Payout Rules](https://developer.lianlianglobal.com/docs/outbound-payout-ka/qagz9bmisqz1n-local-payout-rule).\nOne of:\n|PAYEE BANK TYPE|DESCRIPTION|\n|---|---|\n|IBAN|IBAN|\n|SORT|SORT|\n|ABA|ABA|\n|CC|CC|\n|BSB|BSB|\n|ZENGIN|ZENGIN|\n|BILLERCODE|BILLERCODE|\n|BC|BC|\n|BILLPAY|BILLPAY|\n\t"
+                    enum:
+                      - IBAN
+                      - SORT
+                      - ABA
+                      - CC
+                      - BSB
+                      - ZENGIN
+                      - BILLERCODE
+                      - BC
+                      - BILLPAY
+                  payeeBankCode:
+                    type: string
+                    description: 'Beneficiary bank code, please refer to appendix [Local Payout Rules](https://developer.lianlianglobal.com/docs/outbound-payout-ka/qagz9bmisqz1n-local-payout-rule)'
+                    maxLength: 128
+                  payeeBankAddress:
+                    type: string
+                    description: Beneficiary bank address
+                    maxLength: 256
+              swiftChargeOption:
+                type: string
+                description: |-
+                  (For SWIFT payments only), specify who should bear SWIFT charges， one of
+                  |Code|Description|
+                  |----|---|
+                  |PAYER|Payer bear the charges|
+                  |SHARED|Share the charges|
+                  |PAYEE|Payee bear the charges|
+              rfb:
+                type: string
+                description: Reference for benificiary
+                maxLength: 140
+              poboPayerInfo:
+                type: object
+                description: '(For SWIFT payments only), payer Info, mandatory if you want to pay on behalf of another entity (POBO)'
+                required:
+                  - payerId
+                  - payerName
+                  - payerAddress
+                  - payerRegion
+                  - payerCity
+                properties:
+                  payerId:
+                    type: string
+                    maxLength: 64
+                    description: Payer unique ID
+                  payerName:
+                    type: string
+                    maxLength: 64
+                    description: Payer Name
+                  payerAddress:
+                    type: string
+                    maxLength: 256
+                    description: Payer Address
+                  payerRegion:
+                    type: string
+                    x-stoplight:
+                      id: rkj1cebgkdw4a
+                    minLength: 3
+                    maxLength: 3
+                    description: 'Payer country, ISO 3166 code'
+                    example: CHN
+                  payerCity:
+                    type: string
+                    x-stoplight:
+                      id: ed4zerdgw7ew0
+                    maxLength: 35
+                    description: Payer city
+              additionInfo:
+                type: object
+                x-stoplight:
+                  id: 05ru2hqjiayx4
+                description: 'Addition info, special parameters under different channels.'
+                required:
+                  - custType
+                  - payeeType
+                  - payeeCity
+                properties:
+                  custType:
+                    x-stoplight:
+                      id: c2fx5u73qexvg
+                    enum:
+                      - CORPORATE
+                      - INDIVIDUAL
+                    description: "Customer type, mandatory if `payeeBankType` = `BC` or `BILLPAY` or `BSB`, or `paymentChannel ` = `BC`, one of\r\n|TYPE|DESCRIPTION|\r\n|---|---|\r\n|CORPORATE|Corporate|\r\n|INDIVIDUAL|Individual|"
+                  custName:
+                    type: string
+                    x-stoplight:
+                      id: 80c4yytgtyi1k
+                    maxLength: 35
+                    description: 'Customer name, mandatory if `payeeBankType` = `BC` or `BILLPAY` or `BSB` or `BILLERCODE`, or `paymentChannel` = `LATIPAY`, set Beneficiary''s full name when `payeeBankType` = `BILLPAY`, set company name when `custType` = `CORPORATE` and `paymentChannel` = `LATIPAY`'
+                  custFirstName:
+                    type: string
+                    x-stoplight:
+                      id: zhfuaxx7o7cta
+                    maxLength: 35
+                    description: 'Customer first name, mandatory if `payeeBankType` = `BC` or `BILLPAY`, set UBO''s first name when type = CORPORATE, set Beneficiary''s first name when `payeeBankType` = `BILLPAY`'
+                  custLastName:
+                    type: string
+                    x-stoplight:
+                      id: kl097hkrykezv
+                    maxLength: 35
+                    description: 'Customer last name, manatory if `payeeBankType` = `BC` or `BILLPAY`, set UBO''s last name when type = CORPORATE, set Beneficiary''s last name when `payeeBankType` = `BILLPAY`'
+                  custIdNo:
+                    type: string
+                    x-stoplight:
+                      id: 8u81sr08i6ez9
+                    description: 'Customer identification number, mandatory if `paymentChannel` = `CURRENCYCLOUD`, or `LATIPAY` and `payeeBankType` = `BSB`, set company identification number when `custType` = `CORPORATE` and `paymentChannel` = `LATIPAY`'
+                  custIdType:
+                    x-stoplight:
+                      id: 6fudk61d3kiys
+                    description: "Customer identification type, mandatory if `paymentChannel` = `CURRENCYCLOUD` or `LATIPAY` and `payeeBankType` = `BSB`, set company certificates type when `custType` = `CORPORATE` and `paymentChannel` = `LATIPAY`\r\n|TYPE|DESCRIPTION|\r\n|---|---|\r\n|ID_CARD|ID Card|\r\n|UNIFIED_CREDIT_CODE|Uniform social credit code|\r\n|PASSPORT|Passport|"
+                    enum:
+                      - ID_CARD
+                      - UNIFIED_CREDIT_CODE
+                      - PASSPORT
+                  custAddress:
+                    type: object
+                    x-stoplight:
+                      id: ckxk4fa1apho4
+                    description: "Customer address, mandatory if `payeeBankType` = `BC`\r\nCustomer address, mandatory if `payeeBankType` = `BC` or `BSB`, or `paymentChannel` = `LATIPAY` , set company address when `custType` = `CORPORATE` and `paymentChannel` = `LATIPAY`"
+                    required:
+                      - street
+                      - city
+                      - countryCode
+                    properties:
+                      street:
+                        type: string
+                        x-stoplight:
+                          id: j7rf27hc9oaha
+                        maxLength: 35
+                        description: Include STREET/HOUSE NUMBER & STREET NAME
+                      city:
+                        type: string
+                        x-stoplight:
+                          id: 1sav4iv53ed72
+                        maxLength: 35
+                        description: Include CITY NAME AND POSTCODE
+                      countryCode:
+                        type: string
+                        x-stoplight:
+                          id: 9fdwc352ynh63
+                        maxLength: 35
+                        description: 'Customer country, ISO 3166 code'
+                      completeAddress:
+                        type: string
+                        x-stoplight:
+                          id: lkqotctzdkszo
+                        description: 'Complete address, can be Chinese characters.'
+                        maxLength: 150
+                  custBirthDt:
+                    type: string
+                    x-stoplight:
+                      id: s90uf2oadvr0u
+                    description: 'Customer''s date of birth, formatted as `yyyy-MM-dd`, mandatory if `paymentChannel` = `CURRENCYCLOUD` and `custType` = `INDIVIDUAL`, or `paymentChannel` = `LATIPAY` and `payeeBankType` = `BSB`, set company registration date when `custType` = `CORPORATE` and `paymentChannel = LATIPAY` '
+                  custNation:
+                    type: string
+                    x-stoplight:
+                      id: 15qkoygu8opgy
+                    description: 'Customer nationality, ISO 3166 code, mandatory if `paymentChannel` = `LATIPAY` and `payeeBankType` = `BSB`, set country of incorporation when `custType` = `CORPORATE` and `paymentChannel` = `LATIPAY`'
+                    maxLength: 35
+                  custPhone:
+                    type: string
+                    x-stoplight:
+                      id: tl7hkrwes4j7j
+                    description: 'Customer phone, mandatory if `paymentChannel` = `LATIPAY` and `payeeBankType` = `BILLERCODE` '
+                  custEmail:
+                    type: string
+                    x-stoplight:
+                      id: ehrashvrhq9gt
+                    description: 'Customer email, mandatory if `paymentChannel` = `LATIPAY` and `payeeBankType` = `BILLERCODE` '
+                  custReferNo:
+                    type: string
+                    x-stoplight:
+                      id: ysoy74l0tby1l
+                    description: 'Customer reference number, mandatory if `paymentChannel` = `LATIPAY` and `payeeBankType` = `BILLERCODE`'
+                  beneficiaryInfo:
+                    type: object
+                    x-stoplight:
+                      id: sz9lqfskiyuyj
+                    description: 'Company associated persons information, mandatory if `paymentChannel` = `LATIPAY` and `payeeBankType` = `BSB`, set legal person or director Info and one of UBO Info if `custType` = `CORPORATE`'
+                    properties:
+                      beneficiaryType:
+                        x-stoplight:
+                          id: n90kqammpm0rs
+                        description: "Company associated person type\r\n|TYPE|DESCRIPTION|\r\n|---|---|\r\n|UBO|Ultimate Beneficial Ownership|\r\n|LEGAL_PERSON|Company Legal Person|\r\n|DIRECTOR|Company Director|"
+                        enum:
+                          - UBO
+                          - LEGAL_PERSON
+                          - DIRECTOR
+                      beneficiaryName:
+                        type: string
+                        x-stoplight:
+                          id: kpwn5okruo1tb
+                        description: Company associated person name
+                      beneficiaryBirthDt:
+                        type: string
+                        x-stoplight:
+                          id: usjtbusxfe8do
+                        description: Company associated person's date of birth
+                      beneficiaryNation:
+                        type: string
+                        x-stoplight:
+                          id: uyrnwy81brbml
+                        description: 'Company associated person nationality, ISO 3166 code'
+                        maxLength: 35
+                  payeeType:
+                    x-stoplight:
+                      id: y1nlpu8rdf0ad
+                    enum:
+                      - INDIVIDUAL
+                      - CORPORATE
+                    description: "Payee type, one of\r\n|TYPE|DESCRIPTION|\r\n|---|---|\r\n|CORPORATE|Corporate|\r\n|INDIVIDUAL|Individual|"
+                  payeeIdNo:
+                    type: string
+                    x-stoplight:
+                      id: r8i688436nt4h
+                    description: 'Payee ID Number, mandatory if `payoutCurrency` = `BRL` & `payeeType` = `INDIVIDUAL`'
+                  payeeFirstName:
+                    type: string
+                    x-stoplight:
+                      id: u6js3gpugszsv
+                    description: 'Payee first name, mandatory if `payeeType` = `INDIVIDUAL`'
+                  payeeLastName:
+                    type: string
+                    x-stoplight:
+                      id: 07xbhpn7pxi4w
+                    description: 'Payee last name, mandatory if `payeeType` = `INDIVIDUAL`'
+                  payeePhone:
+                    type: string
+                    x-stoplight:
+                      id: xwsuqbuvbm4ga
+                    description: 'Payee phone, mandatory if `payoutCurrency` = `KRW` or `payoutCurrency` = `JPY`'
+                  payeeBirthDt:
+                    type: string
+                    x-stoplight:
+                      id: 27op9jjw7x6hz
+                    description: 'Payee''s date of birth, formatted as `yyyy-MM-dd`, mandatory if `paymentChannel` = `LATIPAY` and `payeeType` = `INDIVIDUAL`'
+                  payeeAcctCategory:
+                    x-stoplight:
+                      id: f2k24rapov9go
+                    enum:
+                      - checking
+                      - savings
+                    description: "Payee account category, mandatory if `payoutCurrency` = `BRL` or `payeeBankDistrict` = `USA`, one of\r\n|TYPE|DESCRIPTION|\r\n|---|---|\r\n|checking|checking account|\r\n|saving|saving account|"
+                  payeeTaxId:
+                    type: string
+                    x-stoplight:
+                      id: 0fnfh33jo4vul
+                    description: 'Payee tax Id, mandatory if `payoutCurrency` = `BRL` and `payeeType` = `CORPORATE`'
+                  transPurpose:
+                    type: string
+                    x-stoplight:
+                      id: jsal0j39vaact
+                    description: 'Transfer purpose, please refer to appendix [Transfer Purpose](https://developer.lianlianglobal.com/docs/outbound-payout-ka/branches/v1.0/8fpdenviy3jnc-transfer-purpose)'
+                  payeeCity:
+                    type: string
+                    x-stoplight:
+                      id: nbylfqp5memxa
+                    description: Beneficiary city
+                  payeePostalCode:
+                    type: string
+                    x-stoplight:
+                      id: bnankgyu9mxkw
+                    description: 'Beneficiary postal code, mandatory if `paymentChannel` = `CURRENCYCLOUD` or `payeeCountryCode` = `USA/CAN`'
+                  payeeState:
+                    type: string
+                    x-stoplight:
+                      id: kuo2jnh07zrwu
+                    description: 'Beneficiary state or province, mandatory if `paymentChannel` = `CURRENCYCLOUD` or `payeeCountryCode` = `USA/CAN`'
+          x-examples:
+            Example 1:
+              payoutId: PAY202301010001
+              tradeFileId:
+                - tf202301010001
+              payoutCurrency: EUR
+              payoutAmount: '130.98'
+              swiftChargeOption: SHARED
+              paymentMethod: LOCAL
+              payeeBankAccount:
+                payeeCountryCode: DEU
+                payeeName: UNIVERSITY OF SYDNEY
+                payeeAddress: 2589 Musgrave Street
+                payeeBankDistrict: DEU
+                payeeAccountNo: '2003300125'
+                payeeBankName: 'Citibank N.A., Hong Kong Branch'
+                payeeBankAddress: 'Citibank Tower, Citibank Plaza, 3 Garden Road, Central, Hong Kong'
+                payeeBankSwiftCode: CITIHKHX
+                payeeBankType: IABN
+                payeeBankCode: DE28700500003201190315
+              rfb: Leo test
+              poboPayerInfo:
+                payerId: LianLian Global
+                payerName: LL
+                payerAddress: hangzhou
+                payerRegion: CHN
+              additionInfo:
+                custType: INDIVIDUAL
+                custName: LianLian Global
+                custFirstName: Leo
+                custLastName: Big
+                custAddress:
+                  street: Citibank Tower
+                  city: Hong Kong
+                  countryCode: CHN
+          description: ''
+      operationId: post-payout
+  '/payout/{payoutId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Payout'
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      summary: Get Payout Detail
+    parameters:
+      - name: payoutId
+        in: path
+        type: string
+        required: true
+        description: Payout request id from client
+  /exchangepayout:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Exchangepayout'
+      summary: Create Exchangepayout
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Payout
+            type: object
+            x-tags:
+              - Models
+            x-examples: {}
+            properties:
+              payoutId:
+                type: string
+                description: Payout request id from client
+                maxLength: 32
+              tradeFileId:
+                type: string
+                description: Unique trade file ID from client
+                maxLength: 32
+              pricingCurrency:
+                type: string
+                description: Pricing Currency
+                maxLength: 3
+                x-stoplight:
+                  id: ie0q0zuj371oo
+                minLength: 3
+              sourceCurrency:
+                type: string
+                description: Original currency
+                maxLength: 3
+                x-stoplight:
+                  id: p8ho8pc33k65h
+              sourceAmount:
+                type: string
+                description: |
+                  Original Currency Amount, mandatory if 
+                  `pricingCurrency `= `sourceCurrency`
+                maxLength: 10
+                x-stoplight:
+                  id: ihy2mmprks2m9
+              targetCurrency:
+                type: string
+                description: Payout currency
+                maxLength: 3
+                x-stoplight:
+                  id: wgni9qe8b0duf
+                minLength: 3
+              targetAmount:
+                type: string
+                maxLength: 10
+                x-stoplight:
+                  id: u9w4g3xxqh89e
+                description: |
+                  Payout amount, mandatory if `pricingCurrency` = ` targetCurrency`
+              poboPayerInfo:
+                type: object
+                description: 'Payer Info, mandatory if you want to pay on behalf of another entity (POBO)'
+                properties:
+                  payerId:
+                    type: string
+                    maxLength: 64
+                    description: Payer unique ID
+                  payerName:
+                    type: string
+                    maxLength: 64
+                    description: Payer Name
+                  payerAddress:
+                    type: string
+                    maxLength: 256
+                    description: Payer Address
+              payeeBankAccount:
+                type: object
+                required:
+                  - payeeCountryCode
+                  - payeeName
+                  - payeeBankDistrict
+                  - payeeAccountNo
+                properties:
+                  payeeCountryCode:
+                    type: string
+                    description: 'Beneficiary account country, ISO 3166 code'
+                    maxLength: 3
+                  payeeName:
+                    type: string
+                    description: beneficiary name
+                    maxLength: 128
+                  payeeAddress:
+                    type: string
+                    description: beneficiary address
+                    maxLength: 256
+                  payeeBankDistrict:
+                    type: string
+                    description: beneficiary bank account region
+                    maxLength: 3
+                  payeeBankName:
+                    type: string
+                    description: Beneficiary bank name
+                    maxLength: 128
+                  payeeBankType:
+                    type: string
+                    enum:
+                      - IBAN
+                      - SORT
+                      - ABA
+                      - CC
+                      - BSB
+                      - ZENGIN
+                      - BILLERCODE
+                      - BC
+                    description: "beneficiary bank account type, one of:\n|PAYEEBANKTYPE|DESCRIPTION|\n|---|---|\n|IBAN|IBAN|\n|SORT|SORT|\n|ABA|ABA|\n|CC|CC|\n|BSB|BSB|\n|ZENGIN|ZENGIN|\n|BILLERCODE|BILLERCODE|\n\t"
+                  payeeBankCode:
+                    type: string
+                    description: Beneficiary bank code
+                    maxLength: 128
+                  payeeBankAddress:
+                    type: string
+                    description: beneficiary bank address
+                    maxLength: 256
+                  payeeBankSwiftCode:
+                    type: string
+                    description: Beneficiary bank SWIFT code
+                    maxLength: 128
+                  payeeAccountNo:
+                    type: string
+                    description: Beneficiary account number
+                    maxLength: 72
+              paymentMethod:
+                type: string
+                enum:
+                  - LOCAL
+                  - SWIFT
+                description: 'Payment method, one of SWIFT, LOCAL'
+              swiftChargeOption:
+                type: string
+                description: |-
+                  (For SWIFT payments only), specify who should bear SWIFT charges， one of
+                  |Code|Description|
+                  |----|---|
+                  |PAYER|Payer bear the charges|
+                  |SHARED|Share the charges|
+                  |PAYEE|Payee bear the charges|
+              rfb:
+                type: string
+                description: rfb
+                maxLength: 140
+            required:
+              - payoutId
+              - tradeFileId
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+              - payeeBankAccount
+    parameters: []
+  '/exchangepayout/{payoutId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Exchangepayout'
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      summary: Get Exchangepayout Detail
+    parameters:
+      - name: payoutId
+        in: path
+        type: string
+        required: true
+        description: Payout request id from client
+basePath: /outbound/card/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  Payout:
+    title: Payout
+    type: object
+    description: |
+      Payout object defined in LianLian Global system.
+    x-tags:
+      - Models
+    x-examples: {}
+    required:
+      - payoutId
+      - tradeFileId
+      - payoutCurrency
+      - status
+    properties:
+      payoutId:
+        type: string
+        description: Payout request id from client
+        maxLength: 32
+      tradeFileId:
+        type: array
+        description: Unique trade file ID from client
+        maxItems: 10
+        items:
+          type: string
+          maxLength: 32
+      payoutCurrency:
+        type: string
+        description: Payout currency
+        maxLength: 3
+      payoutAmount:
+        type: string
+        description: Payout amount
+        maxLength: 24
+      paymentMethod:
+        type: string
+        description: 'Payment method, one of SWIFT, LOCAL'
+        enum:
+          - LOCAL
+          - SWIFT
+      paymentChannel:
+        type: string
+        x-stoplight:
+          id: 3i6nfjuhufqjg
+        description: 'Payment channel, one of CURRENCYCLOUD'
+        enum:
+          - CURRENCYCLOUD
+      payeeBankAccount:
+        type: object
+        description: Beneficiary bank account information
+        required:
+          - payeeName
+          - payeeAccountNo
+          - payeeAddress
+          - payeeCountryCode
+          - payeeBankName
+          - payeeBankSwiftCode
+          - payeeBankAddress
+          - payeeBankDistrict
+        properties:
+          payeeName:
+            type: string
+            description: Beneficiary name
+            maxLength: 128
+          payeeAccountNo:
+            type: string
+            description: Beneficiary account number
+            maxLength: 72
+          payeeAddress:
+            type: string
+            description: beneficiary address
+            maxLength: 256
+          payeeCountryCode:
+            type: string
+            description: 'Beneficiary account country, ISO 3166 code'
+            maxLength: 3
+          payeeBankType:
+            type: string
+            description: |-
+              beneficiary bank account type, one of:
+              |PAYEEBANKTYPE|DESCRIPTION|
+              |---|---|
+              |IBAN|IBAN|
+              |SORT|SORT|
+              |ABA|ABA|
+              |CC|CC|
+              |BSB|BSB|
+              |ZENGIN|ZENGIN|
+              |BILLERCODE|BILLERCODE|
+              |BC|BC|
+              |BILLPAY|BILLPAY|
+            enum:
+              - IBAN
+              - SORT
+              - ABA
+              - CC
+              - BSB
+              - ZENGIN
+              - BILLERCODE
+              - BC
+              - BILLPAY
+          payeeBankName:
+            type: string
+            description: Beneficiary bank name
+            maxLength: 128
+          payeeBankCode:
+            type: string
+            description: Beneficiary bank code
+            maxLength: 128
+          payeeBankSwiftCode:
+            type: string
+            description: Beneficiary bank SWIFT code
+            maxLength: 128
+          payeeBankAddress:
+            type: string
+            description: beneficiary bank address
+            maxLength: 256
+          payeeBankDistrict:
+            type: string
+            description: beneficiary bank account region
+            maxLength: 3
+      swiftChargeOption:
+        type: string
+        description: |-
+          (For SWIFT payments only), specify who should bear SWIFT charges， one of
+          |Code|Description|
+          |----|---|
+          |PAYER|Payer bear the charges|
+          |SHARED|Share the charges|
+          |PAYEE|Payee bear the charges|
+      rfb:
+        type: string
+        description: Reference for benificiary
+        maxLength: 140
+      poboPayerInfo:
+        type: object
+        description: 'Payer Info, mandatory if you want to pay on behalf of another entity (POBO)'
+        properties:
+          payerId:
+            type: string
+            maxLength: 64
+            description: Payer unique ID
+          payerName:
+            type: string
+            maxLength: 64
+            description: Payer Name
+          payerAddress:
+            type: string
+            maxLength: 256
+            description: Payer Address
+          payerRegion:
+            type: string
+            x-stoplight:
+              id: 8d5h0atwetyj2
+            minLength: 3
+            maxLength: 3
+            description: 'Payer country, ISO 3166 code'
+            example: CHN
+          payerCity:
+            type: string
+            x-stoplight:
+              id: ralikwzpa6a4s
+            maxLength: 35
+            description: Payer city
+      additionInfo:
+        type: object
+        x-stoplight:
+          id: bgapn7mhq3chi
+        properties:
+          custType:
+            type: string
+            x-stoplight:
+              id: 1gjuwvl5q269z
+          custName:
+            type: string
+            x-stoplight:
+              id: qb9dlp26tto5z
+          custFirstName:
+            type: string
+            x-stoplight:
+              id: wf7s95ontpllq
+          custLastName:
+            type: string
+            x-stoplight:
+              id: 5gfvqtob0vk7a
+          custIdType:
+            type: string
+            x-stoplight:
+              id: 07r3i5ih09c5b
+          custIdNo:
+            type: string
+            x-stoplight:
+              id: kqc76vyqzfgbm
+          custBirthDt:
+            type: string
+            x-stoplight:
+              id: jiieg0onchtf6
+          custAddress:
+            type: object
+            x-stoplight:
+              id: id718e8hr76cj
+            properties:
+              street:
+                type: string
+                x-stoplight:
+                  id: hkvm26skm6vfu
+              city:
+                type: string
+                x-stoplight:
+                  id: 0vf7gv83ilrz3
+              countryCode:
+                type: string
+                x-stoplight:
+                  id: u8jcb47i8dngb
+          payeeType:
+            type: string
+            x-stoplight:
+              id: ejhxdj3rgzvz4
+          payeeIdNo:
+            type: string
+            x-stoplight:
+              id: b7z8d1zx1lu38
+          payeeFirstName:
+            type: string
+            x-stoplight:
+              id: 4j7zmqde7oyoz
+          payeeLastName:
+            type: string
+            x-stoplight:
+              id: 7m7nd3fs6sopv
+          payeePhone:
+            type: string
+            x-stoplight:
+              id: vf4m7n9cq7bxi
+          payeeAcctCategory:
+            type: string
+            x-stoplight:
+              id: tl3hd57ba54kf
+          payeeTaxId:
+            type: string
+            x-stoplight:
+              id: mybqdyw3ne4cp
+          transPurpose:
+            type: string
+            x-stoplight:
+              id: 2ur17hvm0ccho
+          payeeCity:
+            type: string
+            x-stoplight:
+              id: u04ewq9o1ve0l
+          payeePostalCode:
+            type: string
+            x-stoplight:
+              id: l5qv1qy2gcb9i
+          payeestate:
+            type: string
+            x-stoplight:
+              id: djb08ml8jkeif
+      status:
+        type: string
+        description: |
+          request status, one of:
+
+          | value | description |
+          |--------|-------------|
+          |PROCESSING|Processing|
+          |SUCCESS|Success|
+          |FAILED|Failed|
+          |HEDGED|hedged|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+          - HEDGED
+      failReason:
+        type: string
+        description: request failure reason
+        maxLength: 128
+      createTime:
+        type: string
+        description: 'create time, UTC+0'
+        maxLength: 24
+        format: date-time
+      modifyTime:
+        type: string
+        description: 'Modify Time, UTC+0'
+        maxLength: 24
+        format: date-time
+  Exchangepayout:
+    title: Payout
+    x-stoplight:
+      id: yb9hz6airkmii
+    type: object
+    description: |
+      Payout object defined in LianLian Global's system.
+    x-tags:
+      - Models
+    x-examples: {}
+    properties:
+      payoutId:
+        type: string
+        description: Payout request id from client
+        maxLength: 32
+      tradeFileId:
+        type: string
+        description: Unique trade file ID from client
+        maxLength: 32
+      pricingCurrency:
+        type: string
+        maxLength: 3
+        x-stoplight:
+          id: mc3drydwsx17b
+        description: Pricing Currency
+        minLength: 3
+      sourceCurrency:
+        type: string
+        maxLength: 3
+        x-stoplight:
+          id: jl3nfy9tqjrhu
+        description: Original currency
+      sourceAmount:
+        type: string
+        maxLength: 10
+        x-stoplight:
+          id: cj18adztpyhjt
+        description: |-
+          Original Currency Amount, mandatory if 
+          `pricingCurrency `= `sourceCurrency`
+      targetCurrency:
+        type: string
+        maxLength: 3
+        x-stoplight:
+          id: sx8maaxrdglgi
+        description: Payout currency
+        minLength: 3
+      targetAmount:
+        type: string
+        maxLength: 10
+        x-stoplight:
+          id: t4afc2prfmdul
+        description: 'Payout amount, mandatory if `pricingCurrency` = ` targetCurrency`'
+      poboPayerInfo:
+        type: object
+        description: 'Payer Info, mandatory if you want to pay on behalf of another entity (POBO)'
+        properties:
+          payerId:
+            type: string
+            maxLength: 64
+            description: Payer unique ID
+          payerName:
+            type: string
+            maxLength: 64
+            description: Payer Name
+          payerAddress:
+            type: string
+            maxLength: 256
+            description: Payer Address
+          payerRegion:
+            type: string
+            x-stoplight:
+              id: tbqabpht176k4
+            description: 'Payer country, ISO 3166 code'
+      payeeBankAccount:
+        type: object
+        description: Beneficiary bank account information
+        properties:
+          payeeCountryCode:
+            type: string
+            description: 'Beneficiary account country, ISO 3166 code'
+            maxLength: 3
+          payeeName:
+            type: string
+            description: beneficiary name
+            maxLength: 128
+          payeeAddress:
+            type: string
+            description: beneficiary address
+            maxLength: 256
+          payeeBankDistrict:
+            type: string
+            description: beneficiary bank account region
+            maxLength: 3
+          payeeBankName:
+            type: string
+            description: Beneficiary bank name
+            maxLength: 128
+          payeeBankType:
+            type: string
+            description: |-
+              beneficiary bank account type, one of:
+              |PAYEEBANKTYPE|DESCRIPTION|
+              |---|---|
+              |IBAN|IBAN|
+              |SORT|SORT|
+              |ABA|ABA|
+              |CC|CC|
+              |BSB|BSB|
+              |ZENGIN|ZENGIN|
+              |BILLERCODE|BILLERCODE|
+            enum:
+              - IBAN
+              - SORT
+              - ABA
+              - CC
+              - BSB
+              - ZENGIN
+              - BILLERCODE
+          payeeBankCode:
+            type: string
+            description: Beneficiary bank code
+            maxLength: 128
+          payeeBankAddress:
+            type: string
+            description: beneficiary bank address
+            maxLength: 256
+          payeeBankSwiftCode:
+            type: string
+            description: Beneficiary bank SWIFT code
+            maxLength: 128
+          payeeAccountNo:
+            type: string
+            description: Beneficiary account number
+            maxLength: 72
+        required:
+          - payeeCountryCode
+          - payeeName
+          - payeeAddress
+          - payeeBankDistrict
+          - payeeBankName
+          - payeeBankAddress
+          - payeeBankSwiftCode
+          - payeeAccountNo
+      paymentMethod:
+        type: string
+        description: 'Payment method, one of SWIFT, LOCAL'
+        enum:
+          - LOCAL
+          - SWIFT
+      swiftChargeOption:
+        type: string
+        description: |-
+          (For SWIFT payments only), specify who should bear SWIFT charges， one of
+          |Code|Description|
+          |----|---|
+          |PAYER|Payer bear the charges|
+          |SHARED|Share the charges|
+          |PAYEE|Payee bear the charges|
+      rfb:
+        type: string
+        description: rfb
+        maxLength: 140
+      status:
+        type: string
+        description: |
+          request status, one of:
+
+          | value | description |
+          |--------|-------------|
+          |PROCESSING|Processing|
+          |SUCCESS|Success|
+          |FAILED|Failed|
+          |HEDGED|hedged|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+          - HEDGED
+      failReason:
+        type: string
+        description: request failure reason
+        maxLength: 128
+      fxRefundCurrency:
+        type: string
+        x-stoplight:
+          id: 0cv5r7zpvm2jt
+        description: 'Payout failed or hedged, currency of exchange'
+        maxLength: 3
+        minLength: 3
+      fxRefundAmount:
+        type: string
+        maxLength: 10
+        x-stoplight:
+          id: 68i7vm3xoe0b9
+        description: 'Payout failed or hedged, the amount of the exchange'
+      fxRefundRate:
+        type: string
+        maxLength: 10
+        x-stoplight:
+          id: yfy9yx4zeay56
+        description: 'Payout failed or hedged, exchange rate used'
+      refundCurrency:
+        type: string
+        maxLength: 3
+        x-stoplight:
+          id: fgogcufsaog9i
+        description: |
+          Payout failed or hedged, the currency returned to the   client
+        minLength: 3
+      refundAmount:
+        type: string
+        maxLength: 10
+        x-stoplight:
+          id: ndoskajnxcmwy
+        description: 'Payout failed or hedged, the amount returned to the   client'
+      createTime:
+        type: string
+        description: 'create time, UTC+0'
+        maxLength: 24
+      modifyTime:
+        type: string
+        description: 'Modify Time, UTC+0'
+        maxLength: 24
+    required:
+      - payoutId
+      - tradeFileId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - status
+  Payee Bank Account:
+    title: Payee Bank Account
+    type: object
+    description: Beneficiary bank account information
+    x-tags:
+      - Models
+    properties:
+      payeeCountryCode:
+        type: string
+        description: 'Beneficiary account country, ISO 3166 code'
+        maxLength: 3
+      payeeName:
+        type: string
+        description: beneficiary name
+        maxLength: 128
+      payeeAddress:
+        type: string
+        description: beneficiary address
+        maxLength: 256
+      payeeBankDistrict:
+        type: string
+        description: beneficiary bank account region
+        maxLength: 3
+      payeeBankName:
+        type: string
+        description: Beneficiary bank name
+        maxLength: 128
+      payeeBankType:
+        type: string
+        description: |-
+          beneficiary bank account type, one of:
+          |payeeBankType| description |
+          |--------|-------------|
+          |IBAN|IBAN |
+          |SORT|SORT |
+        enum:
+          - IBAN
+          - SORT
+      payeeBankCode:
+        type: string
+        description: Beneficiary bank code
+        maxLength: 128
+      payeeBankAddress:
+        type: string
+        description: beneficiary bank address
+        maxLength: 256
+      payeeBankSwiftCode:
+        type: string
+        description: Beneficiary bank SWIFT code
+        maxLength: 128
+      payeeAccountNo:
+        type: string
+        description: Beneficiary account number
+        maxLength: 72
+    required:
+      - payeeCountryCode
+      - payeeName
+      - payeeBankDistrict
+      - payeeAccountNo
+tags:
+  - name: OPERATIONS

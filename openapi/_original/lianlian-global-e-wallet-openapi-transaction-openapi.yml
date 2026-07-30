@@ -1,0 +1,224 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "z7yijrgqaxlbo"
+    },
+    "info": {
+        "title": "Transaction",
+        "version": "1.0",
+        "description": "Transactions include Payout, Receipt, Receiving, Conversion, Add Funds, Withdrawal, and Card Payout.\n\n<br><br>\n# Transaction Data Types\nTYPE | ENTITY MODEL | DETAIL API \n---------|----------|---------\nPayout | [Payout MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/8c7c694a53896-payout) | [Get Payout by Request ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/64442df6273c2-get-payout-by-request-id) \nConversion | [Conversion MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/70dc418ffcecf-conversion) | [Get Conversion by Request ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/9e210a804e41d-get-conversion-by-request-id) \nReceiving | [Receiving MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/cc5631c490dd2-receiving) | [Get Receiving Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/c5e80b7885458-get-receiving-info-by-id) \nReceipt | [Receipt MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/6e57655a78545-receipt) | [Get Receipt Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/84febadf470f9-get-receipt-info-by-id) \nAddFunds | [AddFunds MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/83af2f985cb5f-recharge) | [Get Recharge by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/88c237ccc7f1f-get-recharge-by-id) \nWithdrawal | [Withdrawal MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/fd04c9c6053b5-withdrawal) | [Get Withdrawal Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/1667bfe91f74e-get-withdrawal-info-by-id) \nCardPayout | [CardPayout MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/7e68218f81790-card-payout) | [Get Card Payout Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/c4fc08af99af6-get-card-payout-info-by-id) "
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-transactions": {
+            "parameters": [],
+            "get": {
+                "summary": "Get list of Transactions",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "Data list is ordered by create_time desc.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "./CommonModel.json#/components/schemas/get-transaction-list"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "value": {
+                                            "data": [
+                                                {
+                                                    "id": "string",
+                                                    "request_id": "string",
+                                                    "amount": "string",
+                                                    "currency": "string",
+                                                    "name": "string",
+                                                    "type": "PAYOUT",
+                                                    "user_id": "string",
+                                                    "status": "PROCESSING",
+                                                    "create_time": "string"
+                                                }
+                                            ],
+                                            "total_count": 1
+                                        }
+                                    }
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": ""
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Transaction Not Found"
+                    }
+                },
+                "operationId": "get-transactions-list",
+                "description": "Get list of Transactions.\n",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "page": {
+                                        "description": "The query page number.",
+                                        "type": "integer"
+                                    },
+                                    "page_size": {
+                                        "description": "The default value is 20. A maximum of 100 data items can be displayed on a page.",
+                                        "type": "integer"
+                                    },
+                                    "search": {
+                                        "type": "string",
+                                        "description": "Search by name, Transaction ID or Business Order ID."
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "description": "Transaction object creation period start time. Measured in seconds since the Unix epoch."
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Status of transaction.",
+                                        "enum": [
+                                            "PENDING",
+                                            "PROCESSING",
+                                            "COMPLETED",
+                                            "CANCELED",
+                                            "REFUNDING",
+                                            "REFUNDED",
+                                            "FAILED"
+                                        ]
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "PAYOUT",
+                                            "RECEIPT",
+                                            "CONVERSION",
+                                            "WITHDRAWAL",
+                                            "CARD_PAYMENT",
+                                            "ADD_FUNDS",
+                                            "RECEIVING",
+                                            "REFUND"
+                                        ],
+                                        "description": "Type of transaction."
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "description": "Three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code. "
+                                    }
+                                },
+                                "required": [
+                                    "page",
+                                    "page_size"
+                                ]
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "description": ""
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Transaction": {
+                "type": "object",
+                "x-tags": [
+                    "Models"
+                ],
+                "examples": [
+                    {
+                        "id": "string",
+                        "request_id": "string",
+                        "amount": "string",
+                        "currency": "string",
+                        "name": "string",
+                        "type": "PAYOUT",
+                        "user_id": "string",
+                        "status": "PROCESSING",
+                        "create_time": "string"
+                    }
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique Transaction ID created by the LianLian Global."
+                    },
+                    "request_id": {
+                        "type": "string",
+                        "description": "The idempotent value generated by the client must be unique on each request."
+                    },
+                    "business_order_id": {
+                        "type": "string",
+                        "description": "Business Order ID."
+                    },
+                    "amount": {
+                        "type": "string",
+                        "description": "Transaction amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "currency": {
+                        "type": "string",
+                        "description": "Three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code. "
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the counterparty."
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "PAYOUT",
+                            "RECEIPT",
+                            "CONVERSION",
+                            "WITHDRAWAL",
+                            "ADD_FUNDS",
+                            "RECEIVING",
+                            "REFUND",
+                            "CARD_PAYOUT"
+                        ],
+                        "description": "Transaction type."
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the user."
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PROCESSING",
+                            "COMPLETED",
+                            "CANCELED",
+                            "REFUNDING",
+                            "REFUNDED",
+                            "FAILED"
+                        ],
+                        "description": "The transaction status."
+                    },
+                    "create_time": {
+                        "type": "integer",
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch. It's a `long` type number. "
+                    }
+                }
+            }
+        },
+        "responses": {}
+    }
+}

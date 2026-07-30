@@ -1,0 +1,3159 @@
+swagger: '2.0'
+info:
+  title: 常规用户功能API
+  version: '1.0'
+  termsOfService: ''
+  description: |-
+    联调域名 - **https://gtest-open-api.lianlianpay-inc.com** </br>
+    生产域名 - **https://global-open-api.lianlianpay.com**
+  contact:
+    email: dev_support@lianlianpay.com
+host: gtest-open-api.lianlianpay-inc.com
+paths:
+  /vcard/apply:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  region:
+                    type: string
+                    description: 地区
+                    enum:
+                      - US
+                      - CA
+                      - EU
+                      - UK
+                      - JP
+                      - AU
+                      - SG
+                      - AE
+                      - ID
+                      - IN
+                    minLength: 2
+                    maxLength: 2
+                  currency:
+                    type: string
+                    description: 参照`MODELS-币种`
+                    enum:
+                      - USD
+                      - AUD
+                      - JPY
+                      - EUR
+                      - GBP
+                      - CAD
+                      - CNY
+                      - HKD
+                      - AED
+                      - IDR
+                      - SGD
+                    minLength: 3
+                    maxLength: 3
+                  virtualCardNo:
+                    type: string
+                    description: 境外收款账户
+                    maxLength: 50
+                  accountName:
+                    type: string
+                    description: 持有人名称
+                    maxLength: 200
+                  appendInfo:
+                    type: string
+                    description: 银行卡附加信息
+                    maxLength: 1024
+                  platform:
+                    type: string
+                    description: 平台
+                    enum:
+                      - Amazon
+                      - CDiscount
+                      - Rakuten
+                    maxLength: 50
+                required:
+                  - region
+                  - currency
+                  - virtualCardNo
+                  - accountName
+                  - appendInfo
+                  - platform
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                region: EU
+                currency: EUR
+                virtualCardNo: FR7611689007000700000000001
+                accountName: ceshigongsi
+                appendInfo: '{"银行所在地区(Bank Location Country)":"France 法国","银行识别码(BIC)":"CITIFRPP","国际银行账户号码(IBAN)":"FR7611689007000700000000001","账号持有人姓名(Bank Account Holder Name)":"测试公司"}'
+                platform: Amazon
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |999999|System is busy, please retry later.|系统未知异常|
+            |999995|参数校验不通过|请求参数不合法|
+            |142001|用户kyc信息查询异常|用户kyc信息查询异常|
+            |142002|用户kyc信息查询参数校验失败|用户kyc信息查询参数校验失败|
+            |142003|用户kyc信息不存在|用户kyc信息不存在|
+            |142004|持有人kyc信息不存在|持有人kyc信息不存在|
+            |142005|用户kyc风控拒绝|用户kyc风控拒绝|
+            |143001|没有找到相应币种的电商平台||
+            |144001|该平台可申请虚拟卡上限||
+            |144002|虚拟卡申请失败，没有提现银行卡||
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: '[platform=AAA] 输入不支持，比版本支持的平台为''Amazon、CDiscount、Rakuten'''
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 申请境外收款账户
+      operationId: vcard-apply
+      tags:
+        - 接口
+      description: |-
+        申请境外收款账户
+
+        目前API接口仅支持以下平台地区申卡
+        |平台|地区|对应币种
+        |-|-|-|
+        |Amazon|AE|AED|
+        |Amazon|AU|AUD|
+        |Amazon|CA|CAD|
+        |Amazon|EU|EUR|
+        |Amazon|IN|USD|
+        |Amazon|JP|JPY|
+        |Amazon|SG|SGD|
+        |Amazon|UK|GBP|
+        |Amazon|US|USD|
+        |CDiscount|EU|EUR|
+        |Rakuten|EU|EUR|
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/vcard/apply** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/vcard/apply**
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              region:
+                type: string
+                description: 地区
+                enum:
+                  - US
+                  - CA
+                  - EU
+                  - UK
+                  - JP
+                  - AU
+                  - SG
+                  - AE
+                  - ID
+                  - IN
+                minLength: 2
+                maxLength: 2
+              currency:
+                type: string
+                description: 币种
+                enum:
+                  - USD
+                  - AUD
+                  - JPY
+                  - EUR
+                  - GBP
+                  - CAD
+                  - CNY
+                  - HKD
+                  - AED
+                  - IDR
+                  - SGD
+                minLength: 3
+                maxLength: 3
+              platform:
+                type: string
+                description: 平台
+                enum:
+                  - Amazon
+                  - CDiscount
+                  - Rakuten
+                maxLength: 50
+              shopName:
+                type: string
+                maxLength: 32
+                description: 店铺名称
+              holderId:
+                type: string
+                description: 持有人编号，可在持有人查询中获取
+                maxLength: 20
+            required:
+              - region
+              - currency
+              - platform
+              - holderId
+          x-examples:
+            application/json:
+              region: EU
+              currency: EUR
+              platform: Amazon
+              shopName: testshopName
+              holderId: '2021052800000000'
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          default: application/json
+          required: true
+      security:
+        - Authorization: []
+        - LLPAY-Signature: []
+  /holder/query/list:
+    post:
+      responses:
+        '200':
+          description: |+
+
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                required:
+                  - totalSize
+                properties:
+                  totalSize:
+                    type: integer
+                  resultList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        holderId:
+                          type: string
+                          description: 持有人编号
+                          maxLength: 20
+                        holdType:
+                          type: integer
+                          description: |-
+                            持有人类型
+                            0-个人，1-企业
+                          enum:
+                            - 0
+                            - 1
+                        holderName:
+                          type: string
+                          description: 持有人名称
+                          maxLength: 100
+                        holderNameEn:
+                          type: string
+                          description: 持有人英文名称
+                          maxLength: 200
+                      required:
+                        - holderId
+                        - holdType
+                        - holderName
+                        - holderNameEn
+            required:
+              - code
+              - data
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                totalSize: 2
+                resultList:
+                  - holderId: '2020051404160959'
+                    holdType: 1
+                    holderName: 香港企业测试用
+                    holderNameEn: oijog
+                  - holderId: '2021050682238034'
+                    holdType: 1
+                    holderName: 企业测试
+                    holderNameEn: TEST CORP
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: "|code\t  |message\t    |说明|\n|-------|-------------|-------|\n|999995\t|参数校验不通过  |请求参数不合法|\n|999999\t|System is busy, please retry later.\t      |系统未知异常|"
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: '[holderType=2] 输入不合法，范围为0-1'
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 持有人查询
+      tags:
+        - 接口
+      description: |-
+        返回有效持有人列表
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/holder/query/list** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/holder/query/list**
+      operationId: holder-query-list
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              holderType:
+                type: integer
+                description: |-
+                  持有人类型
+                  0-个人，1-企业
+                enum:
+                  - 0
+                  - 1
+          x-examples:
+            application/json:
+              holderType: 1
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+      x-internal: false
+  /collection/v1/shop/accounts:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                  list:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        currency:
+                          type: string
+                          description: 参照`MODELS-币种`
+                          enum:
+                            - AED
+                            - AUD
+                            - CAD
+                            - CNH
+                            - EUR
+                            - GBP
+                            - HKD
+                            - IDR
+                            - JPY
+                            - PLN
+                            - SGD
+                            - USD
+                          minLength: 3
+                          maxLength: 3
+                        platform:
+                          type: string
+                          description: 参照`MODELS-平台`
+                          maxLength: 50
+                        region:
+                          type: string
+                          description: 参照`MODELS-地区`
+                          maxLength: 10
+                        accountId:
+                          type: string
+                          description: 连连账户编号
+                          maxLength: 20
+                        holderName:
+                          type: string
+                          description: 持有人名称
+                          maxLength: 100
+                        createTime:
+                          type: string
+                          description: 账户创建时间
+                          pattern: 'yyyy-MM-dd HH:mm:ss'
+                        balance:
+                          type: string
+                          description: 账户余额(单位：元)
+                        balanceUpdateTime:
+                          type: string
+                          description: 余额更新时间
+                          pattern: 'yyyy-MM-dd HH:mm:ss'
+                        shopName:
+                          type: string
+                          description: 店铺名称
+                          maxLength: 256
+                        shopStatus:
+                          $ref: '#/definitions/shopStatus'
+                        virtualCardNo:
+                          type: string
+                          description: 境外银行卡号
+                          maxLength: 50
+                        appendInfo:
+                          type: string
+                          description: 银行卡附加信息
+                          maxLength: 512
+                        feeRate:
+                          description: 提现手续费率
+                          type: number
+                        sellerId:
+                          type: string
+                          description: 卖家编号
+                          maxLength: 3500
+                        authStatus:
+                          $ref: '#/definitions/authStatus'
+                      required:
+                        - currency
+                        - platform
+                        - accountId
+                        - holderName
+                        - createTime
+                        - balance
+                        - balanceUpdateTime
+                        - shopName
+                        - shopStatus
+                        - virtualCardNo
+                        - appendInfo
+                        - feeRate
+          examples:
+            application/json:
+              data:
+                list:
+                  - currency: EUR
+                    platform: Amazon
+                    accountId: '202207071035415'
+                    holderName: 张国太勿动
+                    createTime: '2022-07-07T05:53:06.000Z'
+                    balance: '1918018.10'
+                    balanceUpdateTime: '2022-07-06T16:00:00.000Z'
+                    shopName: 亚马逊欧洲测试
+                    shopStatus: 0
+                    virtualCardNo: '748329930687'
+                    appendInfo: '{"银行所在地区(Bank Location Country)":"France 法国","银行识别码(BIC)":"CITIFRPP","国际银行账户号码(IBAN)":"748329930687","账号持有人姓名(Bank Account Holder Name)":"张国太勿动"}'
+                    feeRate: 0.001
+                    region: EU
+                  - currency: USD
+                    platform: Amazon
+                    accountId: '202202100788026'
+                    holderName: 张国太勿动
+                    createTime: '2022-02-10T03:45:30.000Z'
+                    balance: '0.00'
+                    balanceUpdateTime: '2022-02-09T16:00:00.000Z'
+                    shopName: ceshi
+                    shopStatus: 1
+                    virtualCardNo: '0037447570416'
+                    appendInfo: '{"9位收款路线号码(9-Digit Routing Number)":"021001033","银行账号(Bank Account Number)":"0037447570416","账户持有人姓名(Account Holder Name)":"张国太"}'
+                    feeRate: 0.007
+                    sellerId: FSDF202202101309207
+                    region: US
+                total: 23
+              code: '000000'
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|------------| ------------ |
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995| 例：{"code":"999995","message":"platform is error"} | 传入参数有误 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '999995'
+              message: '[pageSize] pageSize can''t be null.'
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      tags:
+        - 接口
+      description: |-
+        查询收款账户详情
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/shop/accounts**  </br>
+        生产域名 - **https://global-api.lianlianpay.com/collection/v1/shop/accounts**
+      operationId: get-shop-accounts
+      parameters:
+        - in: query
+          name: platform
+          type: string
+          description: 平台类型</br>参照`MODELS-店铺平台`
+        - in: query
+          name: region
+          type: string
+          description: 站点</br>参照`MODELS-店铺地区（站点）`
+        - in: query
+          name: pageNum
+          type: string
+          required: true
+          description: 页码
+        - in: query
+          name: pageSize
+          type: string
+          required: true
+          description: 分页大小
+          minLength: 1
+          maxLength: 100
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - type: string
+          in: query
+          name: currency
+          description: '`Allower value`USD,CAD,EUR,GBP,JPY,AUD,IDR,SGD,AED,CNY,CNH,HKD,PLN,MXN,THB,PHP'
+        - type: string
+          in: query
+          name: shopStatus
+          description: 店铺状态</br>参照`MODEL-店铺状态`
+        - type: string
+          in: query
+          name: holderId
+          description: 持有人ID
+      summary: 查询店铺列表
+    parameters: []
+  /account/balance/query:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    currency:
+                      type: string
+                      description: 参照`MODELS-币种`
+                      minLength: 3
+                      maxLength: 3
+                    balance:
+                      type: string
+                      description: 用户账户余额
+                    accountNum:
+                      type: integer
+                      description: 账户数量
+                  required:
+                    - currency
+                    - balance
+                    - accountNum
+            required:
+              - code
+              - data
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                - currency: JPY
+                  balance: '0'
+                  accountNum: 24
+                - currency: EUR
+                  balance: '4999980.00'
+                  accountNum: 6
+                - currency: GBP
+                  balance: '900000000.00'
+                  accountNum: 5
+                - currency: USD
+                  balance: '900000000.00'
+                  accountNum: 21
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: "|code\t  |message\t    |说明|\n|-------|-------------|-------|\n|999999\t|System is busy, please retry later.\t      |系统未知异常|"
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 用户收款账户余额查询
+      tags:
+        - 接口
+      description: |-
+        查询用户收款账户余额
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/balance/query** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/account/balance/query**
+      operationId: account-balance-query
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              currency:
+                type: string
+                description: 参照`MODELS-币种`
+                enum:
+                  - AED
+                  - AUD
+                  - CAD
+                  - CNH
+                  - EUR
+                  - GBP
+                  - HKD
+                  - IDR
+                  - JPY
+                  - PLN
+                  - SGD
+                  - USD
+                minLength: 3
+                maxLength: 3
+          x-examples:
+            application/json:
+              currency: USD
+  /account/query:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  totalSize:
+                    type: integer
+                  resultList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        currency:
+                          type: string
+                          description: 参照`MODELS-币种`
+                          enum:
+                            - AED
+                            - AUD
+                            - CAD
+                            - CNH
+                            - EUR
+                            - GBP
+                            - HKD
+                            - IDR
+                            - JPY
+                            - PLN
+                            - SGD
+                            - USD
+                          minLength: 3
+                          maxLength: 3
+                        platform:
+                          type: string
+                          description: 参照`MODELS-平台`
+                          maxLength: 50
+                        region:
+                          type: string
+                          description: 参照`MODELS-地区`
+                          maxLength: 10
+                        accountId:
+                          type: string
+                          description: 连连账户编号
+                          maxLength: 20
+                        holderName:
+                          type: string
+                          description: 持有人名称
+                          maxLength: 100
+                        createTime:
+                          type: string
+                          description: 账户创建时间
+                          example: '2021-06-21 17:38:00'
+                        balance:
+                          type: string
+                          description: 账户余额
+                        balanceUpdateTime:
+                          type: string
+                          description: 余额更新时间
+                          example: '2021-06-22 00:00:00'
+                        shopName:
+                          type: string
+                          description: 店铺名称
+                          maxLength: 256
+                        shopStatus:
+                          $ref: '#/definitions/shopStatus'
+                        virtualCardNo:
+                          type: string
+                          description: 境外银行卡号
+                          maxLength: 50
+                        appendInfo:
+                          type: string
+                          description: 银行卡附加信息
+                          maxLength: 512
+                        feeRate:
+                          description: 提现手续费率
+                          type: number
+                        sellerId:
+                          type: string
+                          description: 卖家编号
+                          maxLength: 3500
+                        authStatus:
+                          $ref: '#/definitions/authStatus'
+                      required:
+                        - currency
+                        - platform
+                        - accountId
+                        - holderName
+                        - createTime
+                        - balance
+                        - balanceUpdateTime
+                        - shopName
+                        - shopStatus
+                        - virtualCardNo
+                        - appendInfo
+                        - feeRate
+                        - authStatus
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                totalSize: 2
+                resultList:
+                  - currency: EUR
+                    platform: ALIEXPRESS
+                    accountId: '202201100707048'
+                    holderName: 郑一
+                    createTime: '2022-01-10 11:00:36'
+                    balance: '1521378966.40'
+                    balanceUpdateTime: '2022-01-10 00:00:00'
+                    shopName: 测试速卖通店铺
+                    shopStatus: 2
+                    virtualCardNo: '7000531584'
+                    appendInfo: '{"银行所在地(Bank Location)":"France 法国","银行名称(Bank Name)":"CITIBANK EUROPE PLC","银行识别码(BIC/SWIFT)":"CITIFRPP","国际银行账户号码(IBAN)":"7000531584","账户持有人(Account Holder''s Name)":"与您在电商平台的注册名称保持一致"}'
+                    feeRate: 0.0001
+                    sellerId: cnt23463426zwy
+                    region: EU
+                  - currency: EUR
+                    platform: ALIEXPRESS
+                    accountId: '202201100707045'
+                    holderName: 连连银通电子支付有限公司
+                    createTime: '2022-01-10 11:00:36'
+                    balance: '0.00'
+                    balanceUpdateTime: '2022-01-10 00:00:00'
+                    shopName: ceshiEURaliexpress
+                    shopStatus: 2
+                    virtualCardNo: '1450000003102'
+                    appendInfo: '{"银行所在地(Bank Location)":"France 法国","银行名称(Bank Name)":"CITIBANK EUROPE PLC","银行识别码(BIC/SWIFT)":"CITIFRPP","国际银行账户号码(IBAN)":"1450000003102","账户持有人(Account Holder''s Name)":"与您在电商平台的注册名称保持一致"}'
+                    feeRate: 0.0001
+                    sellerId: cna3463246zwy
+                    region: EU
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: "|code\t  |message\t    |说明|\n|-------|-------------|-------|\n|999995\t|参数校验不通过  |请求参数不合法|\n|999999\t|System is busy, please retry later.\t      |系统未知异常|\n|144002\t|虚拟卡查询失败，没有提现银行卡|没有绑定提现银行卡不允许查询虚拟收款账户信息|"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '144002'
+              message: 虚拟卡查询失败，没有提现银行卡
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 用户账户详情查询
+      tags:
+        - 接口
+      description: |-
+        查询收款账户详情
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/query** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/account/query**
+      operationId: account-query
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              pageNum:
+                type: integer
+                description: 页码
+                minimum: 1
+                maximum: 9999
+              pageSize:
+                type: integer
+                description: 分页大小
+                minimum: 1
+                maximum: 100
+              currency:
+                $ref: '#/definitions/currency'
+              platform:
+                type: string
+                description: 参照`MODELS-平台`
+              region:
+                type: string
+                description: 参照`MODELS-地区`
+              shopStatus:
+                $ref: '#/definitions/shopStatus'
+              holderId:
+                type: string
+                description: 持有人编号，可在持有人查询中获取
+            required:
+              - pageNum
+              - pageSize
+          x-examples:
+            application/json:
+              pageSize: 5
+              pageNum: 1
+  /myshop/transaction:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  totalSize:
+                    type: integer
+                  resultList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        transId:
+                          type: string
+                          description: 交易流水号</br>对应入账接口返回的fundsId</br>对应提现接口返回的detailtransId
+                          maxLength: 20
+                        transType:
+                          type: string
+                          enum:
+                            - 入账
+                            - 出账
+                          description: 交易类型
+                        platform:
+                          type: string
+                          description: 参照`MODELS-平台`
+                          maxLength: 50
+                        currency:
+                          type: string
+                          description: 参照`MODELS-币种`
+                          minLength: 3
+                          maxLength: 3
+                        accountId:
+                          type: string
+                          description: 连连账户编号
+                          maxLength: 20
+                        virtualCardNo:
+                          type: string
+                          description: 境外银行卡号
+                          maxLength: 50
+                          x-nullable: true
+                        amount:
+                          type: string
+                          description: 交易金额
+                          example: '146.76'
+                        balance:
+                          type: string
+                          description: 账户余额
+                          example: '146.76'
+                        busiType:
+                          $ref: '#/definitions/busiType'
+                        transTime:
+                          type: string
+                          description: 交易时间
+                          example: '2022-03-25 11:20:29'
+                        remark:
+                          type: string
+                          description: 交易备注
+                          maxLength: 200
+                          x-nullable: true
+                        region:
+                          type: string
+                          description: 平台站点</br>参照`MODELS-地区`
+                          maxLength: 10
+                        marketplaceName:
+                          $ref: '#/definitions/marketplaceName'
+                        originCurrency:
+                          type: string
+                          description: 亚马逊结算单原始币种
+                        originAmount:
+                          type: string
+                          description: 亚马逊结算单原始金额
+                      required:
+                        - transId
+                        - transType
+                        - platform
+                        - currency
+                        - accountId
+                        - virtualCardNo
+                        - amount
+                        - balance
+                        - busiType
+                        - transTime
+                        - remark
+                        - region
+                required:
+                  - totalSize
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                totalSize: 8
+                resultList:
+                  - transId: '202207192382712'
+                    transType: 出账
+                    platform: Amazon
+                    region: EU
+                    currency: EUR
+                    accountId: '202108270336122'
+                    virtualCardNo: '1450000004937'
+                    amount: '300.00'
+                    balance: '1277905.70'
+                    busiType: 提现
+                    transTime: '2022-07-19 15:35:58'
+                    remark: null
+                    marketplaceName: null
+                  - transId: '202207196055468'
+                    transType: 入账
+                    platform: Amazon
+                    region: EU
+                    currency: EUR
+                    accountId: '202108270336122'
+                    virtualCardNo: '1450000004937'
+                    amount: '36299.10'
+                    balance: '1278205.70'
+                    busiType: 入账
+                    transTime: '2022-07-19 15:34:29'
+                    remark: null
+                    marketplaceName: Amazon.it
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |999995|参数校验不通过|请求参数不正确|
+            |999999|System is busy, please retry later.|系统未知异常|
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: '[accountId] 账户编号不能为空'
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 资金流水查询
+      tags:
+        - 接口
+      description: |-
+        查询用户境外收款账户资金流水
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/myshop/transaction** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/myshop/transaction**
+      operationId: myshop-transaction
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+        - in: header
+          name: LLPAY-Signature
+          type: string
+        - in: header
+          name: Content-Type
+          type: string
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              startTime:
+                type: string
+                description: 开始时间
+                pattern: ' yyyy-MM-dd HH:mm:ss'
+              endTime:
+                type: string
+                description: 结束时间
+                pattern: ' yyyy-MM-dd HH:mm:ss'
+              accountId:
+                type: string
+                description: 连连账户编号</br>通过`用户账户详情查询`接口获取
+              currency:
+                type: string
+                description: 参照`MODELS-币种`
+                minLength: 3
+                maxLength: 3
+              virtualCardNo:
+                type: string
+                description: 境外银行卡号
+              transType:
+                type: string
+                description: |-
+                  交易类型
+                  0-入账，1-出账
+                enum:
+                  - 0
+                  - 1
+              pageNum:
+                type: integer
+                minimum: 1
+                maximum: 9999
+              pageSize:
+                type: integer
+                minimum: 1
+                maximum: 100
+              platform:
+                type: string
+                description: 参照`MODELS-平台`
+            required:
+              - startTime
+              - endTime
+              - accountId
+              - pageNum
+              - pageSize
+          x-examples:
+            application/json:
+              accountId: '202012210016689'
+              pageSize: 100
+              startTime: '2020-07-10 00:00:00'
+              endTime: '2020-12-28 00:00:00'
+              pageNum: 1
+  /exchangeRate/query:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    rate:
+                      type: string
+                      description: 汇率
+                      example: '1.31560000'
+                    sourceCurrency:
+                      type: string
+                      description: 参照`MODELS-币种`
+                      minLength: 3
+                      maxLength: 3
+                    targetCurrency:
+                      type: string
+                      description: 参照`MODELS-币种`
+                      minLength: 3
+                      maxLength: 3
+                    rateTime:
+                      type: string
+                      description: 汇率时间
+                      example: '2021-06-03 09:45:01'
+                    baseCurrency:
+                      type: string
+                      description: 参照`MODELS-币种`
+                      minLength: 3
+                      maxLength: 3
+                  required:
+                    - rate
+                    - sourceCurrency
+                    - targetCurrency
+                    - rateTime
+                    - baseCurrency
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                - rate: '4.94430000'
+                  sourceCurrency: AUD
+                  targetCurrency: CNY
+                  rateTime: '2021-06-03 09:45:01'
+                  baseCurrency: AUD
+                - rate: '6.84680000'
+                  sourceCurrency: USD
+                  targetCurrency: CNY
+                  rateTime: '2021-06-03 09:45:01'
+                  baseCurrency: USD
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |147001|渠道不支持该汇率||
+            |999995|参数校验不通过|请求参数不正确|
+            |999999|System is busy, please retry later.|系统未知异常|
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: '[sourceCurrency] 源币种不能为空'
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 实时汇率查询
+      tags:
+        - 接口
+      description: |-
+        查询中国银行的实时牌价， 这里的汇率只是参考费率，实际以成交为准。
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/exchangeRate/query** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/exchangeRate/query**
+      operationId: exchangeRate-query
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              sourceCurrency:
+                type: string
+                description: 参照`MODELS-币种`
+              targetCurrency:
+                type: string
+                description: 参照`MODELS-币种`
+            required:
+              - sourceCurrency
+          x-examples:
+            application/json:
+              sourceCurrency: 'AUD,USD'
+              targetCurrenc: CNY
+          description: '目前支持的币种： USD,EUR,GBP,JPY,AUD,CAD,SGD,AED,IDR,HKD,CNH,CNY,PLN,THB,MXN,PHP'
+  /transaction/entry/list:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  totalSize:
+                    type: integer
+                  resultList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        transId:
+                          type: string
+                          description: 入账单号
+                          maxLength: 20
+                        creditStatus:
+                          $ref: '#/definitions/creditStatus'
+                        platform:
+                          type: string
+                          description: 参照`MODELS-平台`
+                          maxLength: 50
+                        region:
+                          type: string
+                          description: 参照`MODELS-地区`
+                          maxLength: 10
+                        shopName:
+                          type: string
+                          description: 店铺名称
+                          maxLength: 256
+                        virtualCardNo:
+                          type: string
+                          description: 境外银行卡号
+                          maxLength: 50
+                        accountId:
+                          type: string
+                          description: 连连账户编号
+                          maxLength: 20
+                        currency:
+                          type: string
+                          description: 参照`MODELS-币种`
+                          minLength: 3
+                          maxLength: 3
+                        amount:
+                          type: string
+                          description: 入账金额
+                          example: '318470.80'
+                        createTime:
+                          type: string
+                          description: 入账单创建时间
+                          example: '2022-04-22 16:33:50'
+                        acctDate:
+                          type: string
+                          description: 入账日期，即资金实际进入用户虚拟收款账户日期
+                          example: '20220422'
+                        fundsId:
+                          type: string
+                          description: 资金流水ID</br>对应资金流水查询接口返回的transId
+                          maxLength: 20
+                        originCurrency:
+                          type: string
+                          description: 亚马逊结算单原始币种
+                        originAmount:
+                          type: string
+                          description: 亚马逊结算单原始金额
+                      required:
+                        - transId
+                        - creditStatus
+                        - platform
+                        - virtualCardNo
+                        - accountId
+                        - currency
+                        - amount
+                        - createTime
+                        - acctDate
+                        - fundsId
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                totalSize: 2
+                resultList:
+                  - transId: '202207192380630'
+                    creditStatus: '2'
+                    platform: Amazon
+                    shopName: 测试下
+                    virtualCardNo: '1450000004226'
+                    accountId: '202108270336116'
+                    currency: EUR
+                    amount: '477627.10'
+                    createTime: '2022-07-19 15:34:47'
+                    acctDate: '20220719'
+                    fundsId: '202207196054520'
+                    region: EU
+                    originAmount: null
+                    originCurrency: null
+                  - transId: '202207192380531'
+                    creditStatus: '2'
+                    platform: Amazon
+                    shopName: 测试3
+                    virtualCardNo: '1450000004937'
+                    accountId: '202108270336122'
+                    currency: EUR
+                    amount: '36299.10'
+                    createTime: '2022-07-19 15:34:28'
+                    acctDate: '20220719'
+                    fundsId: '202207196055468'
+                    region: EU
+                    originAmount: '36299.10'
+                    originCurrency: EUR
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |999995|参数校验不通过|例如{"error":"request_failed","code":"999995","message":"开始时间和结束时间间隔上限为一自然年"}|
+            |999999|System is busy, please retry later.|系统未知异常|
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: 开始时间和结束时间间隔上限为一自然年
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 入账交易查询
+      tags:
+        - 接口
+      description: |-
+        查询用户加款记录
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/transaction/entry/list** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/transaction/entry/list**
+      operationId: transaction-entry-list
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              startTime:
+                type: string
+                description: 入账单创建开始时间
+                pattern: 'yyyy-MM-dd HH:mm:ss'
+              endTime:
+                type: string
+                description: 入账单创建结束时间
+                pattern: 'yyyy-MM-dd HH:mm:ss'
+              startUpdateTime:
+                type: string
+                description: '入账单最后更新开始时间</br>startTime,endTime为空时必填'
+                pattern: 'yyyy-MM-dd HH:mm:ss'
+              endUpdateTime:
+                type: string
+                description: '入账单最后更新结束时间</br>startTime,endTime为空时必填'
+                pattern: 'yyyy-MM-dd HH:mm:ss'
+              pageNum:
+                type: integer
+                description: 页码
+                minimum: 1
+                maximum: 9999
+              pageSize:
+                type: integer
+                description: 分页大小
+                minimum: 1
+                maximum: 100
+              platform:
+                type: string
+                description: 参照`MODELS-平台`
+              region:
+                type: string
+                description: 参照`MODELS-地区`
+              currency:
+                type: string
+                description: 参照`MODELS-币种`
+                minLength: 3
+                maxLength: 3
+              creditStatus:
+                $ref: '#/definitions/creditStatus'
+              accountId:
+                type: string
+                description: 连连账户编号</br>从用户账户详情查询接口获取
+              virtualCardNo:
+                type: string
+                description: 境外银行卡号</br>从用户账户详情查询接口获取
+              holderId:
+                type: string
+                description: 持有人编号</br>从持有人查询接口获取
+            required:
+              - pageNum
+              - pageSize
+          x-examples:
+            application/json:
+              startUpdateTime: '2020-03-30 00:00:00'
+              pageSize: 10
+              startTime: '2019-05-30 00:00:00'
+              endTime: '2020-05-15 00:00:00'
+              endUpdateTime: '2020-05-15 00:00:00'
+              pageNum: 1
+  /withdraw/record/list:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  totalSize:
+                    type: integer
+                  resultList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        transId:
+                          type: string
+                          description: 交易流水号
+                          maxLength: 20
+                        externalTransId:
+                          type: string
+                          description: 第三方提现订单号
+                          maxLength: 32
+                        withdrawStatus:
+                          $ref: '#/definitions/withdrawStatus'
+                        platform:
+                          type: string
+                          description: 参照`MODELS-平台`
+                          maxLength: 50
+                        region:
+                          type: string
+                          description: 参照`MODELS-地区`
+                          maxLength: 10
+                        withdrawAmount:
+                          type: string
+                          description: 提现金额
+                          pattern: '^[0-9]+\.[0-9]{2}$'
+                        withdrawCurrency:
+                          type: string
+                          description: 参照`MODELS-币种`
+                          minLength: 3
+                          maxLength: 3
+                        arrivalAmount:
+                          type: string
+                          description: 到账金额
+                          x-nullable: true
+                        arrivalCurrency:
+                          type: string
+                          description: 参照`MODELS-币种`
+                          minLength: 3
+                          maxLength: 3
+                        feeAmount:
+                          type: string
+                          description: 应收手续费
+                        actualFeeAmount:
+                          type: string
+                          description: 实收手续费
+                        feeCurrency:
+                          type: string
+                          description: 参照`MODELS-币种`
+                          minLength: 3
+                          maxLength: 3
+                        createTime:
+                          type: string
+                          description: 提现创建时间
+                          example: '2019-11-08 14:07:38'
+                        rate:
+                          type: string
+                          description: 提现汇率
+                        rateTime:
+                          type: string
+                          description: 汇结时间
+                          example: '2019-11-08 14:08:20'
+                          x-nullable: true
+                        bankAccountName:
+                          type: string
+                          description: 提现银行卡户名
+                          maxLength: 150
+                        bankName:
+                          type: string
+                          description: 发卡行银行名称
+                          maxLength: 150
+                        bankCardNo:
+                          type: string
+                          description: 提现银行卡号
+                          maxLength: 32
+                        feeRate:
+                          type: string
+                          description: feeRate
+                        withdrawDetailList:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              detailTransId:
+                                type: string
+                                description: |
+                                  明细流水号</br>对应资金明细返回的transId
+                                maxLength: 20
+                              shopName:
+                                type: string
+                                description: 店铺名称
+                                maxLength: 256
+                              accountId:
+                                type: string
+                                description: 连连账户编号
+                                maxLength: 20
+                              amount:
+                                type: string
+                                description: 金额
+                                example: '146.76'
+                              currency:
+                                type: string
+                                description: |-
+                                  提现币种
+                                  参照`MODELS-币种`
+                                minLength: 3
+                                maxLength: 3
+                              feeRate:
+                                type: string
+                                description: 手续费率
+                                example: '0.007'
+                              feeAmount:
+                                type: string
+                                description: 应收手续费
+                                example: '146.76'
+                              actualFeeAmount:
+                                type: string
+                                description: 实收手续费
+                                example: '146.76'
+                              '':
+                                type: string
+                            required:
+                              - detailTransId
+                              - shopName
+                              - accountId
+                              - amount
+                              - currency
+                              - feeRate
+                              - feeAmount
+                              - actualFeeAmount
+                      required:
+                        - transId
+                        - externalTransId
+                        - withdrawStatus
+                        - platform
+                        - region
+                        - withdrawAmount
+                        - withdrawCurrency
+                        - arrivalAmount
+                        - arrivalCurrency
+                        - feeAmount
+                        - actualFeeAmount
+                        - feeCurrency
+                        - createTime
+                        - rate
+                        - rateTime
+                        - bankAccountName
+                        - bankName
+                        - bankCardNo
+                        - withdrawDetailList
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                totalSize: 2
+                resultList:
+                  - transId: '201911087948555'
+                    externalTransId: '201911087948552'
+                    withdrawStatus: 2
+                    platform: Amazon
+                    region: US
+                    withdrawAmount: '9139.00'
+                    withdrawCurrency: USD
+                    arrivalAmount: '62122.21'
+                    arrivalCurrency: CNY
+                    feeAmount: '63.97'
+                    actualFeeAmount: '63.97'
+                    feeCurrency: USD
+                    createTime: '2019-11-08 14:07:38'
+                    rate: '6.84540000'
+                    rateTime: '2019-11-08 14:08:20'
+                    bankAccountName: 国际收款大陆企业（自动化）
+                    bankName: 中国工商银行
+                    bankCardNo: 2131 **** **** 1535
+                    withdrawDetailList:
+                      - detailTransId: '201911087948561'
+                        shopName: 美元测试店铺
+                        accountId: '201911077917364'
+                        amount: '9139.00'
+                        currency: USD
+                        feeRate: '0.007'
+                        feeAmount: '63.97'
+                        actualFeeAmount: '63.97'
+                    feeRate: '0.007'
+                  - transId: '201911087948537'
+                    externalTransId: '201911087948534'
+                    withdrawStatus: 1
+                    platform: Amazon
+                    region: US
+                    withdrawAmount: '923143.00'
+                    withdrawCurrency: USD
+                    arrivalAmount: null
+                    arrivalCurrency: CNY
+                    feeAmount: '6462.00'
+                    actualFeeAmount: '6431.32'
+                    feeCurrency: USD
+                    createTime: '2019-11-08 14:06:58'
+                    rate: '6.84540000'
+                    rateTime: null
+                    bankAccountName: 国际收款大陆企业（自动化）
+                    bankName: 中国工商银行
+                    bankCardNo: 2131 **** **** 1535
+                    withdrawDetailList:
+                      - detailTransId: '201911087948546'
+                        shopName: 美元测试店铺
+                        accountId: '201911077917364'
+                        amount: '923143.00'
+                        currency: USD
+                        feeRate: '0.007'
+                        feeAmount: '6462.00'
+                        actualFeeAmount: '6431.32'
+                    feeRate: '0.007'
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |999995|参数校验不通过|请求参数不正确|
+            |999999|System is busy, please retry later.|系统未知异常|
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: 开始时间和结束时间间隔上限为一自然年
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 提现交易查询
+      tags:
+        - 接口
+      description: |-
+        查询店铺提现交易记录
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/record/list** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/withdraw/record/list**
+      operationId: withdraw-record-list
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              startTime:
+                type: string
+                description: 开始时间
+                pattern: 'yyyy-MM-dd HH:mm:ss'
+              endTime:
+                type: string
+                description: 结束时间
+                pattern: 'yyyy-MM-dd HH:mm:ss'
+              pageNum:
+                type: integer
+                description: 页码
+                minimum: 1
+                maximum: 9999
+              pageSize:
+                type: integer
+                description: 分页大小
+                minimum: 1
+                maximum: 100
+              platform:
+                description: 参照`MODELS-平台`
+                type: string
+              region:
+                type: string
+                description: 参照`MODELS-地区`
+              currency:
+                type: string
+                description: 参照`MODELS-币种`
+              withdrawStatus:
+                $ref: '#/definitions/withdrawStatus'
+              externalTransId:
+                type: string
+                description: 第三方提现订单号
+            required:
+              - startTime
+              - endTime
+              - pageNum
+              - pageSize
+          x-examples:
+            application/json:
+              startTime: '2019-11-08 00:00:00'
+              endTime: '2019-11-09 00:00:00'
+              pageNum: 1
+              pageSize: 10
+  /bankcard/query/list:
+    post:
+      responses:
+        '200':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  totalSize:
+                    type: integer
+                  resultList:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        cardId:
+                          type: string
+                          description: 连连银行卡编号
+                          maxLength: 50
+                        bankCardNo:
+                          type: string
+                          description: 提现银行卡号
+                          maxLength: 32
+                        bankAccountName:
+                          type: string
+                          description: 提现银行卡户名
+                          maxLength: 150
+                        bankName:
+                          type: string
+                          description: 提现银行卡名称
+                          maxLength: 150
+                        currency:
+                          type: string
+                          description: '币种</br>示例：[\"USD\"]'
+                          maxLength: 100
+                        district:
+                          type: string
+                          description: 发卡地区
+                          enum:
+                            - CN
+                            - HK
+                            - GB
+                            - SG
+                            - US
+                          maxLength: 10
+                        cardType:
+                          $ref: '#/definitions/cardType'
+                      required:
+                        - cardId
+                        - bankCardNo
+                        - bankAccountName
+                        - bankName
+                        - currency
+                        - district
+                        - cardType
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                totalSize: 2
+                resultList:
+                  - cardId: 009f2ab568454e4e573b783ba29b576f
+                    bankCardNo: 0112 **** **** 5134
+                    bankAccountName: hahaha
+                    bankName: 'Citibank N.A., Hong Kong Branch'
+                    currency: '["USD"]'
+                    district: HK
+                    cardType: '2'
+                  - cardId: e71cb4c1dd6ce7cbcf41af66098e8f40
+                    bankCardNo: 6222 **** **** 7202
+                    bankAccountName: 张三
+                    bankName: 中国工商银行
+                    currency: '["CNY"]'
+                    district: CN
+                    cardType: '0'
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |999995|参数校验不通过|请求参数不正确|
+            |999999|System is busy, please retry later.|系统未知异常|
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: '[currency] length is 3'
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 提现银行卡查询
+      tags:
+        - 接口
+      description: |-
+        查询已绑定提现银行卡
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/bankcard/query/list** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/bankcard/query/list**
+      operationId: bankcard-query-list
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+        - in: header
+          name: LLPAY-Signature
+          type: string
+        - in: header
+          name: Content-Type
+          type: string
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              currency:
+                type: string
+                description: 参照`MODELS-币种`
+  /captcha/mobile/withdraw/combine:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: string
+          examples:
+            application/json:
+              code: '000000'
+              data: ''
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: "|code\t  |message\t    |说明|\n|-------|-------------|-------|\n|999995\t|参数校验不通过  |请求参数不合法|\n|999999\t|System is busy, please retry later.\t      |系统未知异常|\n|110006\t|发送短信验证码过于频繁|每小时上限10次|\n"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: '[captchaType=payment_supplier] 输入不合法，支持的验证码类型为''withdraw_combine'''
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 用户资金操作-发送验证码
+      tags:
+        - 接口
+      description: |-
+        验证码发送至连连账户当前绑定手机号</br>短信验证码获取上限：每小时10次，有效期10分钟</br>错误次数上限8次，超过后用户被锁定一小时，不允许发起提现
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/captcha/mobile/withdraw/combine** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/captcha/mobile/withdraw/combine**
+      operationId: captcha-mobile-withdraw-combine
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              captchaType:
+                type: string
+                description: |-
+                  验证码类型
+                  提现：withdraw_combine
+                enum:
+                  - withdraw_combine
+            required:
+              - captchaType
+          x-examples:
+            application/json:
+              captchaType: withdraw_combine
+  /withdraw/combine/submit:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    description: 提现交易流水号，同transId
+                    maxLength: 20
+                  createTime:
+                    type: string
+                    description: 提现创建时间
+                    example: '2021-05-12 15:11:04'
+                  transId:
+                    type: string
+                    description: 提现交易流水号
+                    maxLength: 20
+          examples:
+            application/json:
+              code: '000000'
+              data:
+                orderId: '202105128693417'
+                createTime: '2021-05-12 15:11:04'
+                transId: '202105128693417'
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |999999|System is busy, please retry later.|系统未知异常|
+            |999995|参数校验不通过|请求参数不合法|
+            |100003|用户被锁定|错误次数上限8次，超过后用户被锁定一小时，不允许发起提现|
+            |110004|您输入的验证码有误，请检查||
+            |110005|未发送验证码或验证码已失效||
+            |141001|提现银行卡信息不存在||
+            |141002|提现银行卡信息脱敏异常||
+            |141003|银行分发渠道查询失败|银行分发渠道查询失败|
+            |141004|提现银行卡状态异常||
+            |141005|提现银行币种不支持||
+            |141006|银行分发渠道查询失败|银行分发渠道查询失败|
+            |141008|外部订单号重复||
+            |143001|没有找到相应的电商平台||
+            |143002|查询收款平台信息失败||
+            |145001|提现银行卡不符合用户提现规则|提现银行卡不符合用户提现规则|
+            |145002|提现币种不一致|提现币种不一致|
+            |145003|您有正在受理的提现申请，请稍后再试|您有正在受理的提现申请，请稍后再试|
+            |145005|提现平台不一致||
+            |145007|当前平台假期期间暂不支持发起人民币提现||
+            |146001|查询用户手续费费率失败|查询用户手续费费率失败|
+            |147001|汇率查询失败|汇率查询失败|
+            |148001|账户余额查询失败|账户余额查询失败|
+            |148002|账户余额不足|账户余额不足|
+            |149001|提现金额未达到起提线|提现金额未达到起提线|
+            |150001|店铺查询失败|店铺查询失败|
+            |150002|店铺状态异常|店铺状态异常|
+            |150003|店铺授权未通过|店铺授权未通过|
+            |151001|您的企业信息不完整，请联系客服处理||
+            |153001|实时汇率服务已关闭|实时汇率服务已关闭|
+            |153002|实时汇率服务当前不在服务窗口内|实时汇率服务当前不在服务窗口内|
+            |153003|实时汇率服务获取汇率异常|实时汇率服务获取汇率异常|
+            |300005|查询用户账户列表失败||
+            |4000032|该业务场景单笔交易最大限额*万人民币,您当前交易已超过最大值,请您修改交易金额。||
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '145005'
+              message: 提现平台不一致
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 用户资金提现
+      tags:
+        - 接口
+      description: |-
+        用户资金提现只支持单平台单站点多账户提现，不支持跨平台同币种提现。
+
+        目前API接口支持</br>提现币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,IDR,SGD,AED</br>到账币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,CNY,SGD,CNH
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/combine/submit** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/withdraw/combine/submit**
+      operationId: withdraw-combine-submit
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              externalTransId:
+                type: string
+                description: 第三方提现订单号
+                minLength: 8
+                maxLength: 32
+              withdrawCurrency:
+                type: string
+                description: 提现币种
+                enum:
+                  - USD
+                  - CAD
+                  - EUR
+                  - GBP
+                  - JPY
+                  - HKD
+                  - AUD
+                  - IDR
+                  - SGD
+                  - AED
+              arrivalCurrency:
+                type: string
+                description: 到账币种
+                enum:
+                  - USD
+                  - CAD
+                  - EUR
+                  - GBP
+                  - JPY
+                  - HKD
+                  - AUD
+                  - CNY
+                  - SGD
+                  - CNH
+              cardId:
+                type: string
+                description: 提现收款银行卡编号
+              captcha:
+                type: string
+                description: 短信验证码
+              withdrawDetailList:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    accountId:
+                      type: string
+                      description: 连连账户编号
+                    amount:
+                      type: number
+                      description: 金额
+                  required:
+                    - accountId
+                    - amount
+            required:
+              - externalTransId
+              - withdrawCurrency
+              - arrivalCurrency
+              - cardId
+              - captcha
+              - withdrawDetailList
+          x-examples:
+            application/json:
+              withdrawDetailList:
+                - accountId: '202006048505160'
+                  amount: '0.01'
+              captcha: '684321'
+              externalTransId: f34a4424-2549-47ae-44b3-ac3bf83ewe21b3233p23pp44
+              withdrawCurrency: USD
+              cardId: 10126e472a667b7fbe4f2e3faaeb0ecb
+              arrivalCurrency: CNY
+  /collection/v1/kyc/status:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                enum:
+                  - ACTIVE
+                  - INACTIVE
+            required:
+              - status
+          examples:
+            application/json:
+              status: ACTIVE
+      summary: 查询用户KYC状态
+      operationId: kyc-status
+      tags:
+        - 接口
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+      description: |-
+        查询用户收款账户余额
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/kyc/status**  </br>
+        生产域名 - **https://global-api.lianlianpay.com/collection/v1/kyc/status**
+tags:
+  - name: Operations
+  - name: 接口
+definitions:
+  platform:
+    title: 平台
+    description: |-
+      |字段值|注释|类型|
+      |-|-|-|
+      |Amazon|亚马逊|电商平台|
+      |PAYPAL|Ebay|电商平台|
+      |WISH|WISH|电商平台|
+      |CDiscount|-|电商平台|
+      |Rakuten|法国乐天|电商平台|
+      |SOUQ|-|电商平台|
+      |Mercado|Mercado Libre|电商平台|
+      |JDID|京东印尼(USD)|电商平台|
+      |JDIDIDR|京东印尼|电商平台|
+      |BRINGLY|-|电商平台|
+      |ADMOB|Google AdMob|广告联盟|
+      |ADSENSE|Google AdSense|广告联盟|
+      |ALIEXPRESS|速卖通|电商平台|
+      |ALIPAY|LAZADA|电商平台|
+      |ALLEGRO_PLN|ALLEGRO(PLN)|电商平台|
+      |APPSTORE|-|应用|
+      |B2W|-|电商平台|
+      |BIGCOMMERCE|-|独立站|
+      |BUKALAPAK|-|电商平台|
+      |Carrefour.es|家乐福西班牙|电商平台|
+      |COUPANG|-|电商平台|
+      |DARTY|-|电商平台|
+      |DERT|德国乐天|电商平台|
+      |EMAG|-|电商平台|
+      |ETSY|-|电商平台|
+      |FBA|亚马逊印度站（FBA）|电商平台|
+      |FNAC|-|电商平台|
+      |FRUUGO|-|电商平台|
+      |GOOGLE_SHOPPING_ACTIONS|-|电商平台|
+      |IGLOO|-|其他服务|
+      |MAGENTO|-|独立站|
+      |MEESHO|-|电商平台|
+      |Mydeal|-|电商平台|
+      |NEWEGG|-|电商平台|
+      |NOON|-|电商平台|
+      |PASSFEED|-|电商平台|
+      |QOO10|趣天|电商平台|
+      |REAL_DE|Kaufland.de|电商平台|
+      |SELF_BUILD|自建站|独立站|
+      |SHOPEE|-|电商平台|
+      |SHOPIFY|-|独立站|
+      |SHOPLAZZA|店匠|独立站|
+      |SHOPYY|-|独立站|
+      |VOVA|-|电商平台|
+      |WAYFAIR|-|电商平台|
+      |WIX|-|独立站|
+      |XSHOPPY|-|独立站|
+      |ZILINGO|-|电商平台|
+      |DHGATE|敦煌网|电商平台|
+      |EBAY_MANAGED_PAYMENTS|-|电商平台|
+      |GOOGLE_PLAY|-|应用|
+      |SALE_MONSTER|-|其他服务|
+      |SHOPBASE|-|独立站|
+      |SHOPLINE|-|独立站|
+      |AWSVC|-|电商平台|
+      |COUPANG_TW|Coupang台湾|电商平台|
+      |JDB2B|-|电商平台|
+      |JOOM|-|电商平台|
+      |LAZADA_LOCAL|-|电商平台|
+      |MICROSOFT|-|电商平台|
+      |OZON|-|电商平台|
+      |SHOPEXPRESS|-|独立站|
+      |SHOPEE_LOCAL|-|电商平台|
+      |LOCAL_SHOP|-|电商平台|
+      |TIKTOK_LOCAL|-|电商平台|
+      |TOKOPEDIA_LOCAL|-|电商平台|
+      |HOME_DEPOT|-|电商平台|
+      |LOWES|-|电商平台|
+      |TARGET|-|电商平台|
+      |OVERSTOCK|-|电商平台|
+      |MERCARI|-|电商平台|
+      |DEBENHAMS|-|电商平台|
+      |COSTCO|-|电商平台|
+      |AMERICANAS|-|电商平台|
+      |SHOPTOP|-|独立站|
+      |KLARNA|-|电商平台|
+      |OZON_BULK|-|电商平台|
+      |DUBUY|-|电商平台|
+      |AUDIENCE_NETWORK|-|广告联盟|
+      |APP_TOPUP|-|应用|
+      |THISSHOP|-|电商平台|
+      |UNITY_ADS|-|广告联盟|
+      |ELEVEN_MAIN|-|电商平台|
+      |ELEVEN_STREET|-|电商平台|
+      |CATCH|-|电商平台|
+      |KOGAN|-|电商平台|
+      |BEST_BUY|-|电商平台|
+      |WISECART|-|电商平台|
+      |DOT_BO|-|电商平台|
+      |JUMIA|-|电商平台|
+      |FAIRE|-|电商平台|
+      |THE_RANGE|-|电商平台|
+      |ONBUY|-|电商平台|
+      |QUUBE|-|电商平台|
+      |LOTTE_ON|-|电商平台|
+      |YAHOO|-|电商平台|
+      |ECRATER|-|电商平台|
+      |GEMAFINA|-|电商平台|
+      |OPEN_SKY|-|电商平台|
+      |NAVER|-|电商平台|
+      |MAYOREOEXPRESS|-|电商平台|
+      |MERCADO_LOCAL|-|电商平台|
+      |TIKTOK|-|电商平台|
+      |MANOMANO|-|电商平台|
+      |YOUZAN|-|进口平台|
+      |LOGISTICS_BUSINESS|-|服务商|
+      |FUND_PARK|-|金融放款|
+      |LOGISTICS_BUSINESS_HK|-|服务商|
+      |REFUND|-|退款平台|
+      |TMALL_GLOBAL|-|进口平台|
+      |PDD_GLOBAL|-|进口平台|
+      |JD_GLOBAL|-|进口平台|
+      |IMPORT_DTC|-|进口平台|
+      |TIKTOK_SHOP|-|进口平台|
+      |jingya|-|进口平台|
+      |VIPSHOP|-|进口平台|
+      |AMAZON_AFFILIATE|-|广告联盟|
+      |HUICHUKOU|-|其他服务|
+      |TEMU|-|电商平台|
+      |APP_GALLERY|-|应用|
+      |KAOLA|-|进口平台|
+      |SHEIN|-|电商平台|
+      |APPLOVIN|-|广告联盟|
+      |WALMART|-|电商平台|
+      |XIAOMI|-|进口平台|
+      |GOOGLE_BOOKS|-|应用|
+      |DEWU|-|进口平台|
+    type: string
+  region:
+    description: |-
+      字段值|注释
+      -|-
+      AE|阿联酋
+      AEEUR|阿联酋(EUR)
+      AU|澳洲
+      B2B|NEWEGG B2B站点
+      BE|比利时
+      BR|巴西
+      CA|加拿大
+      CL|智利
+      CO|哥伦比亚
+      ES|西班牙
+      EU|欧洲
+      FR|法国
+      GB|英国
+      HK|香港
+      ID|印尼
+      IN|印度
+      IT|意大利
+      JP|日本
+      KR|韩国
+      MX|墨西哥
+      MY|马来西亚
+      PH|菲律宾
+      PL|波兰
+      PT|葡萄牙
+      SA|沙特
+      SE|瑞典
+      SG|新加坡
+      TH|泰国
+      TR|土耳其
+      TW|台湾
+      UK|英国
+      US|美国
+      VN|越南
+      CN|中国
+      HU|匈牙利
+      BG|保加利亚
+      CZ|捷克
+    title: 地区(站点)
+    type: string
+  marketplaceName:
+    type: string
+    title: marketplaceName
+    description: |-
+      亚马逊入账来源
+      marketplaceName|注释
+      -|-
+      Amazon.ca|加拿大站
+      Amazon.co.uk|英国站
+      Amazon.com|美国站
+      Amazon.com.mx|墨西哥站
+      Amazon.de|德国站
+      Amazon.es|西班牙站
+      Amazon.fr|法国站
+      Amazon.it|意大利站
+      Amazon.nl|荷兰站
+      Amazon.se|瑞典站
+      SI CA Prod Marketplace|加拿大站
+      SI Prod ES Marketplace|西班牙站
+      SI Prod IT Marketplace|意大利站
+      SI UK Prod Marketplace|英国站
+  currency:
+    type: string
+    title: 币种
+    description: |
+      ISO 4217
+      |字段值|注释|
+      |-|-|
+      |USD|美元|
+      |CAD|加元|
+      |EUR|欧元|
+      |GBP|英镑|
+      |JPY|日元|
+      |AUD|澳元|
+      |IDR|印尼盾|
+      |SGD|新加坡元|
+      |AED|迪拉姆|
+      |CNY|人民币|
+      |CNH|离岸人民币|
+      |HKD|港币|
+      |PLN|兹罗提|
+      |MXN|墨西哥比索|
+      |THB|泰铢|
+      |PHP|菲律宾比索|
+      |BRL|巴西雷亚尔|
+      |CZK|捷克克朗|
+  shopStatus:
+    title: 店铺状态
+    description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|0\t|待完善信息  |\n|1\t|待审核\t      |\n|2\t|审核通过\t      |\n|3\t|审核失败\t      |\n|4\t|已注销\t      |\n|5\t|已迁移\t      |\n|6\t|待激活\t      |\n"
+    type: integer
+  busiType:
+    title: 资金流水业务类型
+    description: "|字段值\t  |\n|-------|\n|入账\t|\n|提现\t|\n|供应商付款\t|\n|VAT缴税\t|\n|增值服务\t|\n|支付费用\t|\n|转入出账\t|\n|转入入账\t|\n|汇兑出账\t|\n|汇兑入账\t|\n|金融还款\t|\n|退款\t|\n|提前宝入账\t|\n|提前宝出账\t|\n|提前宝还款\t|\n|提前宝失败入账\t|\n|提前宝还款撤销\t|\n|提前宝失败出账\t|\n|服务费退款\t|\n|服务费\t|\n|ESG手续费\t|\n|其他入账\t|\n|其他出账\t|\n|VAT WITHHOLDING\t|\n|VAT WITHHOLDING REFUND\t|\n|店铺集中管理入账\t|\n|店铺集中管理出账\t|\n|闪收入账\t|\n|闪收服务费\t|\n|闪收出账\t|\n|闪收超期服务费\t|\n|闪收手续费退还\t|\n|欧税通手续费\t|\n|提现退手续费\t|"
+    type: string
+  withdrawStatus:
+    title: 提现状态
+    description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|1\t|提现中\t      |\n|2\t|提现成功\t      |\n|3\t|提现失败\t      |"
+    type: integer
+  creditStatus:
+    title: 入账状态
+    description: "| 字段值 | 状态 | 注释 |\n| -------|-------|-------|\n| 0\t| 挂起 | |\n| 1\t| 加款中 | |\n| 2\t| 加款成功 | 即入账成功，连连官网页面交易明细仅展示此状态单据 |\n| 3\t| 退还中 | |\n| 4\t| 已退还 | |\n| 5\t| 已红冲 | 加款成功后退款红冲 |\n| 6\t| 待加款 | |\n| 7\t| 待退款 | |"
+    type: string
+    x-internal: false
+  cardType:
+    title: 提现银行卡类型
+    description: |-
+      字段值|注释
+      -|-
+      0|借记卡
+      1|信用卡
+      2|对公银行卡
+    type: string
+  platform-region:
+    type: object
+    title: 平台站点对应币种
+    description: |-
+      platform|region|currency|注释
+      -|-|-|-
+      ADMOB|HK|HKD|Google Admob(HKD)
+      ADMOB|US|USD|Google Admob(USD)
+      ADSENSE|HK|HKD|Google Adsense(HKD)
+      ADSENSE|US|USD|Google Adsense(USD)
+      ALIEXPRESS|CN|CNH|AliExpress(CNH)
+      ALIEXPRESS|EU|EUR|AliExpress(EUR)
+      ALIEXPRESS|HK|USD|AliExpress(USD)
+      ALIPAY|US|USD|Lazada
+      ALLEGRO_PLN|CZ|CZK|Allegro捷克站
+      ALLEGRO_PLN|PL|PLN|Allegro
+      AMAZON_AFFILIATE|US|USD|Amazon Affiliate
+      AMERICANAS|US|USD|Americanas
+      APP_GALLERY|EU|EUR|AppGallery(EUR)
+      APP_GALLERY|US|USD|AppGallery(USD)
+      APP_TOPUP|HK|HKD|应用官网充值(HKD)
+      APP_TOPUP|US|USD|应用官网充值(USD)
+      APPLOVIN|HK|USD|AppLovin
+      APPSTORE|US|USD|AppStore
+      AUDIENCE_NETWORK|US|USD|Audience Network
+      AWS|AE|AED|亚马逊阿联酋
+      AWS|AEEUR|EUR|亚马逊阿联酋(EUR)
+      AWS|AU|AUD|亚马逊澳洲
+      AWS|CA|CAD|亚马逊加拿大
+      AWS|EU|EUR|亚马逊欧洲
+      AWS|IN|USD|亚马逊印度
+      AWS|JP|JPY|亚马逊日本
+      AWS|MX|MXN|亚马逊墨西哥
+      AWS|PL|PLN|亚马逊波兰
+      AWS|SA|USD|亚马逊沙特
+      AWS|SE|EUR|亚马逊瑞典
+      AWS|SG|SGD|亚马逊新加坡
+      AWS|TR|USD|亚马逊土耳其
+      AWS|UK|GBP|亚马逊英国
+      AWS|US|USD|亚马逊北美
+      AWSVC|AE|AED|Amazon-VC 阿联酋
+      AWSVC|AU|AUD|Amazon-VC(澳洲）
+      AWSVC|EU|EUR|Amazon-VC 欧洲
+      AWSVC|JP|JPY|Amazon-VC 日本
+      AWSVC|SA|USD|Amazon-VC 沙特
+      AWSVC|UK|GBP|Amazon-VC 英国
+      AWSVC|US|USD|Amazon-VC 北美
+      B2W|BR|USD|B2W
+      BEST_BUY|CA|CAD|BESTBUY(CAD)
+      BEST_BUY|US|USD|BESTBUY(USD)
+      BIGCOMMERCE|AU|AUD|Bigcommerce(AUD)
+      BIGCOMMERCE|EU|EUR|Bigcommerce(EUR)
+      BIGCOMMERCE|HK|HKD|Bigcommerce(HKD)
+      BIGCOMMERCE|JP|JPY|Bigcommerce(JPY)
+      BIGCOMMERCE|SG|SGD|Bigcommerce(SGD)
+      BIGCOMMERCE|UK|GBP|Bigcommerce(GBP)
+      BIGCOMMERCE|US|USD|Bigcommerce(USD)
+      BRINGLY|HK|USD|bringly
+      BUKALAPAK|ID|IDR|Bukalapak
+      Carrefour.es|ES|EUR|Carrefour.es
+      CATCH|AU|AUD|catch(AUD)
+      CD|EU|EUR|Cdiscount
+      COSTCO|US|USD|Costco
+      COUPANG_TW|TW|USD|Coupang台湾
+      COUPANG|HK|USD|Coupang(USD)
+      COUPANG|UK|GBP|Coupang(GBP)
+      DARTY|EU|EUR|Darty
+      DEBENHAMS|UK|GBP|Debenhams
+      DERT|EU|EUR|DeRakuten
+      DEWU|CA|CAD|得物（CAD）
+      DEWU|CN|CNH|得物（CNH）
+      DEWU|EU|EUR|得物（EUR）
+      DEWU|GB|GBP|得物（GBP）
+      DEWU|JP|JPY|得物（JPY）
+      DEWU|US|USD|得物（USD）
+      DHGATE|US|USD|DHgate
+      DOT_BO|US|USD|Dot&Bo(USD)
+      DUBUY|AE|AED|Dubuy(AED)
+      EBAY_MANAGED_PAYMENTS|HK|HKD|eBay Managed Payments(HKD)
+      EBAY_MANAGED_PAYMENTS|SG|SGD|eBay Managed Payments(SGD)
+      EBAY_MANAGED_PAYMENTS|US|USD|eBay Managed Payments(USD)
+      ECRATER|US|USD|eCRATER(USD)
+      ELEVEN_MAIN|US|USD|11 Main(USD)
+      ELEVEN_STREET|US|USD|11street(USD)
+      EMAG|BG|EUR|eMAG保加利亚站
+      EMAG|EU|EUR|eMAG罗马尼亚站
+      EMAG|HU|EUR|eMAG匈牙利站
+      ETSY|AU|AUD|Etsy(AUD)
+      ETSY|CA|CAD|Etsy(CAD)
+      ETSY|EU|EUR|Etsy(EUR)
+      ETSY|HK|HKD|Etsy(HKD)
+      ETSY|UK|GBP|Etsy(GBP)
+      ETSY|US|USD|Etsy(USD)
+      FAIRE|EU|EUR|Faire(EUR)
+      FBA|IN|USD|亚马逊印度站(FBA)
+      FNAC|BE|EUR|Fnac比利时站
+      FNAC|ES|EUR|Fnac西班牙站
+      FNAC|FR|EUR|Fnac法国站
+      FNAC|PT|EUR|Fnac葡萄牙站
+      FRRT|EU|EUR|Priceminister Rakuten
+      FRRT|JP|JPY|Japan Rakuten
+      FRUUGO|EU|EUR|Fruugo(EUR)
+      FRUUGO|UK|GBP|Fruugo(GBP)
+      FRUUGO|US|USD|Fruugo(USD)
+      FUND_PARK|HK|USD|丰泊国际有限公司
+      GEMAFINA|US|USD|gemafina(USD)
+      GOOGLE_BOOKS|HK|HKD|Google Books(HKD)
+      GOOGLE_PLAY|EU|EUR|Google Play(EUR)
+      GOOGLE_PLAY|HK|HKD|Google Play(HKD)
+      GOOGLE_PLAY|SG|SGD|Google Play(SGD)
+      GOOGLE_PLAY|US|USD|Google Play(USD)
+      GOOGLE_SHOPPING_ACTIONS|US|USD|Google Shopping Actions
+      HOME_DEPOT|US|USD|HomeDepot
+      HUICHUKOU|US|USD|惠出口
+      IGLOO|US|USD|Igloo
+      IMPORT_DTC|CN|CNY|进口自建站
+      JD_GLOBAL|AU|AUD|京东国际（AUD）
+      JD_GLOBAL|CA|CAD|京东国际（CAD）
+      JD_GLOBAL|EU|EUR|京东国际（EUR）
+      JD_GLOBAL|GB|GBP|京东国际（GBP）
+      JD_GLOBAL|HK|HKD|京东国际（HKD）
+      JD_GLOBAL|JP|JPY|京东国际（JPY）
+      JD_GLOBAL|PL|PLN|京东国际（PLN）
+      JD_GLOBAL|SG|SGD|京东国际（SGD）
+      JD_GLOBAL|US|USD|京东国际（USD）
+      JDB2B|US|USD|JD JOYBUY(USD)
+      JDID|HK|USD|JD.ID(USD)
+      JDIDIDR|ID|IDR|JD.ID
+      jingya|AU|AUD|鲸芽（AUD）
+      jingya|CA|CAD|鲸芽（CAD）
+      jingya|EU|EUR|鲸芽（EUR）
+      jingya|GB|GBP|鲸芽（GBP）
+      jingya|HK|HKD|鲸芽（HKD）
+      jingya|JP|JPY|鲸芽（JPY）
+      jingya|PL|PLN|鲸芽（PLN）
+      jingya|SG|SGD|鲸芽（SGD）
+      jingya|US|USD|鲸芽（USD）
+      JOOM|US|USD|Joom
+      JUMIA|US|USD|JUMIA(USD)
+      KAOLA|AU|AUD|考拉海购（AUD）
+      KAOLA|CA|CAD|考拉海购（CAD）
+      KAOLA|EU|EUR|考拉海购（EUR）
+      KAOLA|GB|GBP|考拉海购（GBP）
+      KAOLA|HK|HKD|考拉海购（HKD）
+      KAOLA|JP|JPY|考拉海购（JPY）
+      KAOLA|SG|SGD|考拉海购（SGD）
+      KAOLA|US|USD|考拉海购（USD）
+      KLARNA|EU|EUR|Klarna（EUR）
+      KLARNA|US|USD|Klarna（USD）
+      KOGAN|AU|AUD|Kogan(AUD)
+      KOGAN|US|USD|Kogan(USD)
+      LAZADA_LOCAL|ID|IDR|印尼-Lazada(IDR)
+      LAZADA_LOCAL|PH|PHP|菲律宾-Lazada(PHP)
+      LAZADA_LOCAL|SG|SGD|新加坡-Lazada(SGD)
+      LAZADA_LOCAL|TH|THB|泰国-Lazada(THB)
+      LOCAL_SHOP|SG|SGD|Local shop(SGD)
+      LOGISTICS_BUSINESS_HK|CA|CAD|物流商(CAD)
+      LOGISTICS_BUSINESS_HK|EU|EUR|物流商(EUR)
+      LOGISTICS_BUSINESS_HK|HK|HKD|物流商(HKD)
+      LOGISTICS_BUSINESS_HK|UK|GBP|物流商(GBP)
+      LOGISTICS_BUSINESS_HK|US|USD|物流商(USD)
+      LOGISTICS_BUSINESS|CN|CNY|物流商
+      LOTTE_ON|US|USD|LOTTE ON(USD)
+      LOWES|US|USD|Lowes
+      MAGENTO|AU|AUD|Magento(AUD)
+      MAGENTO|EU|EUR|Magento(EUR)
+      MAGENTO|HK|HKD|Magento(HKD)
+      MAGENTO|JP|JPY|Magento(JPY)
+      MAGENTO|SG|SGD|Magento(SGD)
+      MAGENTO|TH|THB|Magento(THB)
+      MAGENTO|UK|GBP|Magento(GBP)
+      MAGENTO|US|USD|Magento(USD)
+      MANOMANO|EU|EUR|ManoMano(EUR)
+      MAYOREOEXPRESS|MX|MXN|MayoreoExpress(MXN)
+      MEESHO|HK|USD|Meesho(集货)
+      MEESHO|IN|USD|Meesho(自报关)
+      MERCADO_LOCAL|BR|BRL|Mercado(本土)-巴西站
+      MERCADO_LOCAL|MX|MXN|Mercado(本土)-墨西哥站
+      MERCADO|HK|USD|Mercado-跨境店
+      #N/A
+      #N/A
+      MERCARI|US|USD|Mercari(USD)
+      MICROSOFT|HK|HKD|Microsoft(HKD)
+      MICROSOFT|US|USD|Microsoft(USD)
+      Mydeal|AU|AUD|Mydeal
+      NAVER|US|USD|NAVER(USD)
+      NEWEGG|B2B|USD|NeweggBusiness.com
+      NEWEGG|CA|CAD|Newegg.ca
+      NEWEGG|US|USD|Newegg.com
+      NOON|AE|AED|Noon
+      ONBUY|EU|EUR|OnBuy(EUR)
+      ONBUY|UK|GBP|OnBuy(GBP)
+      OPEN_SKY|US|USD|OPENSKY(USD)
+      OVERSTOCK|US|USD|Overstock
+      OZON_BULK|EU|EUR|Ozon(EUR)
+      OZON_BULK|HK|CNH|Ozon(CNH)
+      OZON_BULK|US|USD|Ozon(USD)
+      OZON|EU|EUR|Ozon旧(EUR)
+      OZON|HK|CNH|Ozon旧(CNH)
+      OZON|US|USD|Ozon旧(USD)
+      PASSFEED|HK|HKD|Passfeed
+      PAYPAL|AU|AUD|eBay(AUD)
+      PAYPAL|CA|CAD|eBay(CAD)
+      PAYPAL|EU|EUR|eBay(EUR)
+      PAYPAL|HK|HKD|eBay(HKD)
+      PAYPAL|PL|PLN|ebay(PLN)
+      PAYPAL|UK|GBP|eBay(GBP)
+      PAYPAL|US|USD|eBay(USD)
+      PDD_GLOBAL|AU|AUD|多多国际（AUD）
+      PDD_GLOBAL|CA|CAD|多多国际（CAD）
+      PDD_GLOBAL|EU|EUR|多多国际（EUR）
+      PDD_GLOBAL|GB|GBP|多多国际（GBP）
+      PDD_GLOBAL|HK|HKD|多多国际（HKD）
+      PDD_GLOBAL|JP|JPY|多多国际（JPY）
+      PDD_GLOBAL|PL|PLN|多多国际（PLN）
+      PDD_GLOBAL|SG|SGD|多多国际（SGD）
+      PDD_GLOBAL|US|USD|多多国际(USD)
+      QOO10|HK|USD|Qoo10新加坡站(USD)
+      QOO10|JP|USD|Qoo10日本站(USD)
+      QOO10|KR|USD|Qoo10韩国站
+      QOO10|SG|SGD|Qoo10新加坡站(SGD)
+      QOO10|US|JPY|Qoo10日本站(JPY)
+      QUUBE|SG|SGD|QuuBe(SGD)
+      REAL_DE|EU|EUR|Kaufland.de
+      SALE_MONSTER|JP|JPY|SaleMonster
+      SELF_BUILD|AE|AED|自建站(AED)
+      SELF_BUILD|AU|AUD|自建站(AUD)
+      SELF_BUILD|CA|CAD|自建站(CAD)
+      SELF_BUILD|EU|EUR|自建站(EUR)
+      SELF_BUILD|HK|HKD|自建站(HKD)
+      SELF_BUILD|JP|JPY|自建站(JPY)
+      SELF_BUILD|SG|SGD|自建站(SGD)
+      SELF_BUILD|TH|THB|自建站(THB)
+      SELF_BUILD|UK|GBP|自建站(GBP)
+      SELF_BUILD|US|USD|自建站(USD)
+      SHEIN|US|USD|SHEIN
+      SHOPBASE|AU|AUD|ShopBase(AUD)
+      SHOPBASE|EU|EUR|ShopBase(EUR)
+      SHOPBASE|HK|HKD|ShopBase(HKD)
+      SHOPBASE|JP|JPY|ShopBase(JPY)
+      SHOPBASE|SG|SGD|ShopBase(SGD)
+      SHOPBASE|UK|GBP|ShopBase(GBP)
+      SHOPBASE|US|USD|ShopBase(USD)
+      SHOPEE_LOCAL|ID|IDR|印尼-Shopee(IDR)
+      SHOPEE_LOCAL|PH|PHP|菲律宾-Shopee(PHP)
+      SHOPEE_LOCAL|SG|SGD|新加坡-Shopee(SGD)
+      SHOPEE_LOCAL|TH|THB|泰国-Shopee(THB)
+      SHOPEE|BR|USD|Shopee 巴西站
+      SHOPEE|CL|USD|Shopee 智利站
+      SHOPEE|CO|USD|Shopee 哥伦比亚站
+      SHOPEE|ES|EUR|Shopee 西班牙站
+      SHOPEE|FR|EUR|Shopee 法国站
+      SHOPEE|ID|IDR|Shopee 印尼站
+      SHOPEE|MX|USD|Shopee 墨西哥站
+      SHOPEE|MY|USD|Shopee 马来西亚站
+      SHOPEE|PH|USD|Shopee 菲律宾站
+      SHOPEE|PL|EUR|Shopee 波兰站
+      SHOPEE|SG|SGD|Shopee 新加坡站
+      SHOPEE|TH|USD|Shopee 泰国站
+      SHOPEE|TW|USD|Shopee 中国台湾站
+      SHOPEXPRESS|AU|AUD|ShopExpress(AUD)
+      SHOPEXPRESS|EU|EUR|ShopExpress(EUR)
+      SHOPEXPRESS|HK|HKD|ShopExpress(HKD)
+      SHOPEXPRESS|JP|JPY|ShopExpress(JPY)
+      SHOPEXPRESS|SG|SGD|ShopExpress(SGD)
+      SHOPEXPRESS|UK|GBP|ShopExpress(GBP)
+      SHOPEXPRESS|US|USD|ShopExpress(USD)
+      SHOPIFY|AU|AUD|Shopify(AUD)
+      SHOPIFY|CA|CAD|Shopify(CAD)
+      SHOPIFY|EU|EUR|Shopify(EUR)
+      SHOPIFY|HK|HKD|Shopify(HKD)
+      SHOPIFY|JP|JPY|Shopify(JPY)
+      SHOPIFY|SG|SGD|Shopify(SGD)
+      SHOPIFY|TH|THB|Shopify(THB)
+      SHOPIFY|UK|GBP|Shopify(GBP)
+      SHOPIFY|US|USD|Shopify(USD)
+      SHOPLAZZA|AU|AUD|Shoplazza(AUD)
+      SHOPLAZZA|CA|CAD|Shoplazza(CAD)
+      SHOPLAZZA|EU|EUR|Shoplazza(EUR)
+      SHOPLAZZA|HK|HKD|Shoplazza(HKD)
+      SHOPLAZZA|JP|JPY|Shoplazza(JPY)
+      SHOPLAZZA|SG|SGD|Shoplazza(SGD)
+      SHOPLAZZA|UK|GBP|Shoplazza(GBP)
+      SHOPLAZZA|US|USD|Shoplazza(USD)
+      SHOPLINE|AU|AUD|Shopline(AUD)
+      SHOPLINE|CA|CAD|Shopline(CAD)
+      SHOPLINE|EU|EUR|Shopline(EUR)
+      SHOPLINE|HK|HKD|Shopline(HKD)
+      SHOPLINE|JP|JPY|Shopline(JPY)
+      SHOPLINE|SG|SGD|Shopline(SGD)
+      SHOPLINE|UK|GBP|Shopline(GBP)
+      SHOPLINE|US|USD|Shopline(USD)
+      SHOPTOP|AU|AUD|Shoptop（AUD）
+      SHOPTOP|EU|EUR|Shoptop（EUR）
+      SHOPTOP|GB|GBP|Shoptop（GBP）
+      SHOPTOP|HK|HKD|Shoptop（HKD）
+      SHOPTOP|JP|JPY|Shoptop（JPY）
+      SHOPTOP|US|USD|Shoptop（USD）
+      SHOPYY|AU|AUD|Shopyy(AUD)
+      SHOPYY|CA|CAD|Shopyy(CAD)
+      SHOPYY|EU|EUR|Shopyy(EUR)
+      SHOPYY|HK|HKD|Shopyy(HKD)
+      SHOPYY|JP|JPY|Shopyy(JPY)
+      SHOPYY|SG|SGD|Shopyy(SGD)
+      SHOPYY|UK|GBP|Shopyy(GBP)
+      SHOPYY|US|USD|Shopyy(USD)
+      SOUQ|HK|USD|Souq 中东站
+      TARGET|US|USD|Target
+      TEMU|HK|CNH|Temu(CNH)
+      TEMU|US|USD|Temu(USD)
+      THE_RANGE|UK|GBP|The Range(GBP)
+      THISSHOP|TH|THB|Thisshop(THB)
+      TIKTOK_LOCAL|ID|IDR|印尼-Tiktok(IDR)
+      TIKTOK_LOCAL|PH|PHP|菲律宾-Tiktok(PHP)
+      TIKTOK_LOCAL|SG|SGD|新加坡-Tiktok(SGD)
+      TIKTOK_LOCAL|TH|THB|泰国-Tiktok(THB)
+      TIKTOK_LOCAL|US|USD|美国-Tiktok(USD)
+      TIKTOK_SHOP|AU|AUD|抖店（AUD）
+      TIKTOK_SHOP|CA|CAD|抖店（CAD）
+      TIKTOK_SHOP|CN|CNH|抖店（CNH）
+      TIKTOK_SHOP|EU|EUR|抖店（EUR）
+      TIKTOK_SHOP|GB|GBP|抖店（GBP）
+      TIKTOK_SHOP|HK|HKD|抖店（HKD）
+      TIKTOK_SHOP|JP|JPY|抖店（JPY）
+      TIKTOK_SHOP|PL|PLN|抖店（PLN）
+      TIKTOK_SHOP|SG|SGD|抖店（SGD）
+      TIKTOK_SHOP|US|USD|抖店（USD）
+      TIKTOK|US|USD|TikTok(USD)
+      TMALL_GLOBAL|AU|AUD|天猫国际（AUD）
+      TMALL_GLOBAL|CA|CAD|天猫国际（CAD）
+      TMALL_GLOBAL|EU|EUR|天猫国际（EUR）
+      TMALL_GLOBAL|GB|GBP|天猫国际（GBP）
+      TMALL_GLOBAL|HK|HKD|天猫国际（HKD）
+      TMALL_GLOBAL|JP|JPY|天猫国际（JPY）
+      TMALL_GLOBAL|PL|PLN|天猫国际（PLN）
+      TMALL_GLOBAL|SG|SGD|天猫国际（SGD）
+      TMALL_GLOBAL|US|USD|天猫国际（USD）
+      TOKOPEDIA_LOCAL|ID|IDR|Tokopedia Local(IDR)
+      UNITY_ADS|US|USD|Unity Ads
+      VIPSHOP|AU|AUD|唯品国际（AUD）
+      VIPSHOP|CA|CAD|唯品国际（CAD）
+      VIPSHOP|EU|EUR|唯品国际（EUR）
+      VIPSHOP|GB|GBP|唯品国际（HKD）
+      VIPSHOP|HK|HKD|唯品国际（HKD）
+      VIPSHOP|JP|JPY|唯品国际（JPY）
+      VIPSHOP|PL|PLN|唯品国际（PLN）
+      VIPSHOP|SG|SGD|唯品国际（SGD）
+      VIPSHOP|US|USD|唯品国际（USD）
+      VOVA|HK|USD|Vova
+      WALMART|US|USD|Walmart
+      WAYFAIR|CA|CAD|Wayfair(CAD)
+      WAYFAIR|EU|EUR|Wayfair(EUR)
+      WAYFAIR|US|USD|Wayfair(USD)
+      WISECART|EU|EUR|Wisecart(EUR)
+      WISH|HK|CNH|Wish
+      WISH|US|USD|Wish
+      WIX|HK|HKD|Wix(HKD)
+      WIX|US|USD|Wix(USD)
+      XIAOMI|AU|AUD|小米有品（AUD）
+      XIAOMI|CA|CAD|小米有品（CAD）
+      XIAOMI|CN|CNH|小米有品（CNH）
+      XIAOMI|EU|EUR|小米有品（EUR）
+      XIAOMI|GB|GBP|小米有品（GBP）
+      XIAOMI|HK|HKD|小米有品（HKD）
+      XIAOMI|JP|JPY|小米有品（JPY）
+      XIAOMI|SG|SGD|小米有品（SGD）
+      XIAOMI|US|USD|小米有品（USD）
+      XSHOPPY|AU|AUD|XShoppy(AUD)
+      XSHOPPY|CA|CAD|XShoppy(CAD)
+      XSHOPPY|EU|EUR|XShoppy(EUR)
+      XSHOPPY|HK|HKD|XShoppy(HKD)
+      XSHOPPY|JP|JPY|XShoppy(JPY)
+      XSHOPPY|SG|SGD|XShoppy(SGD)
+      XSHOPPY|UK|GBP|XShoppy(GBP)
+      XSHOPPY|US|USD|XShoppy(USD)
+      YAHOO|JP|JPY|Yahoo(JPY)
+      YOUZAN|CN|CNY|有赞
+      ZILINGO|SG|SGD|Zilingo
+  authStatus:
+    type: object
+    x-stoplight:
+      id: pdbpbsie2gg1v
+    title: 店铺授权状态
+    description: |-
+      authStatus|注释
+      -|-
+      AUTH_SUCCESS|授权成功
+      AUTH_EXPIRED|授权失效
+      AUTH_WAIT|待授权
+      NO_AUTH|无需授权
+  withdrawCallback:
+    type: object
+    x-stoplight:
+      id: frlu9f4zy2n7y
+    title: 提现交易状态更新回调通知
+    description: 如需接收通知，请先调用`通用服务API-注册WebHook`注册付款Event`withdraw.event.response`
+    x-examples:
+      '':
+        createTime: '2022-01-01T01:40:18.305Z'
+        topic: withdraw.event.response
+        data: '{"externalTransId":"2022010100001310001","status":2}'
+responses: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /api/
+securityDefinitions: {}
+security:
+  - authorization: []
+  - llpay-signature: []
+parameters: {}
+x-: ''

@@ -1,0 +1,263 @@
+openapi: 3.1.0
+x-stoplight:
+  id: o1dh50klonzrj
+info:
+  title: 材料
+  version: '1.0'
+servers:
+  - url: 'https://global-api.lianlian.com/api/v2'
+paths:
+  /documents:
+    parameters: []
+    post:
+      summary: Create a transaction document
+      operationId: post-transaction_documents-create
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../models/TransactionDocumentCreateResponseV2.yaml
+                  x-stoplight:
+                    id: zfttbhagr0t9l
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing  e.g:purpose invalid\r\nMATERIAL_BATCH_IS_OVER_SIZE|documentBatch is overSize\r\nPURPOSE_NOT_UNIQUE|purpose not unique\r\nOWNER_TYPE_NOT_SAME|ownerType is not the same\r\nREQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\nREQUEST_ID_NOT_EXIST|request id not exist\r\nMATERIAL_IS_EXIST|material is exist\r\nBUSINESS_TYPE_NOT_UNIQUE|businessType not unique"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      description: |-
+        ### 功能说明：
+        创建贸易材料信息。
+        ### 幂等说明：
+        - 请求报文体内容完全相同时，支持幂等，会返回上一次的结果；
+        - 业务字段request_id或original_order_id相同时，不支持幂等，返回`REQUEST_ID_NOT_UNIQUE`或`ORIGINAL_ORDER_ID_IS_EXIST`错误（transaction_amount为负数时，允许original_order_id重复）；
+        - 业务字段request_id不相同且origina_order_id不相同时，按新资源，创建新的贸易材料资源。
+        ### 超时应对方案：
+        如果调用Create a transaction document接口超时，可以选择如下方案进行处理：
+        - 立即原报文重试，会幂等返回结果。
+        - 使用request_id或original_order_id调用Get list of transaction documents接口获取结果，如果不存在，可重新提交。
+        ### 业务逻辑说明：
+        - 接口会同步返回贸易材料的校验结果和贸易材料的业务状态。
+        - 单次调用，同一批次号的贸易材料会按批进行处理，任意一笔材料校验失败，则本次调用同一批次号的数据受理失败，连连不会落库。
+        - 单次调用，可以同时传多个批次号的贸易材料数据。
+        - 单次调用支持贸易材料条数最大500条，如果单个批次号内材料明细条数超过500条，可以拆分为多次调用。
+        - 单次调用条数500条时，接口响应时间（RT）为4~5秒钟。
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionDocument2.0'
+        description: ''
+      tags:
+        - Transaction Documents
+      x-stoplight:
+        id: fnmyecwdrgun7
+  '/documents/{transaction_document_batch_id}':
+    get:
+      summary: Get transaction document by ID
+      tags:
+        - Transaction Documents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/TransactionDocumentsCallback.2.0 - copy.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-transaction_documents
+      security:
+        - 客户端凭据授权: []
+      requestBody:
+        content: {}
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      description: |-
+        此接口将返回批次内所有明细的处理结果。
+        如明细总条数、处理成功条数、处理失败条数。
+        需要注意的是，当批次内明细数据小于等于500条时，可通过此接口查看详情。
+        如果批次明细大于500条，建议您使用Get list of transaction document接口分页查询详细信息。
+      x-stoplight:
+        id: e40mk37daihb9
+    parameters:
+      - schema:
+          type: string
+        name: transaction_document_batch_id
+        in: path
+        required: true
+        description: 材料批次ID，长度64
+  /documents/quotas:
+    get:
+      summary: Get list of transaction quotas
+      tags:
+        - Transaction Documents
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: wv4rbnm7yj4nd
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: 2oyaht5c8iea5
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: 0h1jcoew4ovxc
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: gad4pgs8slcw6
+                    description: 总页数
+                  page_list:
+                    type: array
+                    x-stoplight:
+                      id: edvs481xut6do
+                    items:
+                      x-stoplight:
+                        id: yowvzyzfjm7g7
+                      type: object
+                      properties:
+                        transaction_document_batch_id:
+                          type: string
+                          x-stoplight:
+                            id: 5ja2jthqbzb89
+                          description: 批次号
+                        owner_type:
+                          type: string
+                          x-stoplight:
+                            id: pm7ll2owly17j
+                          description: "贸易材料所属方。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）\r\n\r\n枚举|说明\r\n---|---\r\nBENEFICIARY|收款方收款币种为货币管制国家的管制货币时\r\nPAYER|付款方付款币种为货币管制国家的管制货币时"
+                        owner_id:
+                          type: string
+                          x-stoplight:
+                            id: dcky6l38u63nw
+                          description: "贸易材料所属方ID。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）\r\n\r\n- owner_type=`BENEFICIARY`时，owner_id为Beneficiary资源对象的ID即beneficiary_id\r\n- owner_type=`PAYER`时，owner_id为Payer资源对象的ID即payer_id"
+                        currency:
+                          type: string
+                          x-stoplight:
+                            id: itgllfadct1s6
+                          description: '币种，[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)三位字母货币代码'
+                        total_quota:
+                          type: string
+                          x-stoplight:
+                            id: biydxvuzibpfd
+                          description: 材料总额度，单位元
+                        available_quota:
+                          type: string
+                          x-stoplight:
+                            id: qfsq0mc073kp5
+                          description: 材料的剩余可用额度，单位元
+                        frozen_quota:
+                          type: string
+                          x-stoplight:
+                            id: ysv4ex54p2ml1
+                          description: 材料的冻结额度，单位元
+                        business_type:
+                          type: string
+                          x-stoplight:
+                            id: 3crlre5jwz24w
+                          description: 业务类型
+                        purpose:
+                          type: string
+                          x-stoplight:
+                            id: pth0vzinsoswg
+                          description: 提供材料的用途。
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_NOT_EXIST|payer is not exist\r\nBENEFICIARY_NOT_EXIST|beneficiary is not exist"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-documents-quotas
+      x-stoplight:
+        id: escmui7or43t3
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+        - schema:
+            type: string
+          in: query
+          name: owner_type
+          description: 贸易材料所属方，BENEFICIARY或PAYER
+        - schema:
+            type: string
+          in: query
+          name: owner_id
+          description: 贸易材料所属方ID，beneficiary_id或payer_id
+        - schema:
+            type: array
+          in: query
+          name: transaction_document_batch_ids
+          description: 批次号列表
+        - schema:
+            type: string
+          in: query
+          name: page
+          description: '页码,默认值为1'
+        - schema:
+            type: string
+          in: query
+          name: page_size
+          description: '每页查询数量,默认值20'
+        - schema:
+            type: string
+          in: query
+          name: business_type
+          description: 业务类型 TRAVEL 酒旅
+        - schema:
+            type: string
+          in: query
+          name: purpose
+          description: 提供材料的用途 PAYOUT 付款
+components:
+  schemas:
+    TransactionDocument2.0:
+      $ref: ../models/TransactionDocumentsCallbackv2.0.yaml
+      x-stoplight:
+        id: avfwoak4v1p57
+      title: ''
+  securitySchemes:
+    客户端凭据授权:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: '详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权'

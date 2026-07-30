@@ -1,0 +1,125 @@
+openapi: 3.1.0
+x-stoplight:
+  id: t268rmyd2cy2p
+info:
+  title: OAuth2
+  version: '1.0'
+servers:
+  - url: 'https://global-api.lianlian.com/api/v2'
+paths:
+  /oauth2/token:
+    post:
+      summary: Get or refresh access token
+      operationId: Exchange-access-token
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/AccessTokenResponse.yaml
+        '400':
+          description: "code | message\r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n PARAM_ERROR | A parameter value is not valid.\r\n INVALID_REFRESH_TOKEN |Invalid refresh token.\r\n INVALID_CLIENT | Client dose not exist.\r\n INVALID_CLIENT_SECRET | Invalid client secret.\r\n INVALID_AUTH_CODE | Incorrect authorization code.\r\n FUNCTION_SCOPE_BLANK | The scopeCodes is not set.\r\n REQUEST_CONFLICT | The request cannot be processed as another request is being processed."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '401':
+          description: "code | message\r\n---------|----------\r\n NOT_AUTHORIZED | Lacks valid authentication credentials or insufficient permissions."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/AccessTokenRequest.yaml
+            examples:
+              Example 1:
+                value:
+                  grant_type: string
+                  client_id: string
+                  client_secret: string
+                  code: string
+                  refresh_token: string
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties: {}
+          text/plain:
+            schema:
+              type: object
+              properties: {}
+          application/EDI-X12:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      description: "获取或者刷新access token。\r\n- 业务字段（grant_type、client_id、client_secret）相同时，不支持幂等，会创建多个access token。"
+      parameters:
+        - $ref: ./Webhooks.yaml#/components/parameters/header-Content-Type
+    parameters: []
+components:
+  schemas:
+    AccessToken:
+      title: AccessToken
+      x-stoplight:
+        id: 9ws6tnwbamipp
+      type: object
+      properties:
+        access_token:
+          type: string
+          x-stoplight: null
+          id: q8w707qc5befy
+          description: 授权码凭证
+        token_type:
+          type: string
+          description: 固定值：Bearer
+          x-stoplight: null
+          id: k9f9bzvqomqyh
+        expires_in:
+          type: string
+          x-stoplight: null
+          id: cc9tejxwfe2bl
+          description: 有限期，秒
+        refresh_token:
+          type: string
+          x-stoplight: null
+          id: f878w9yju8e4i
+          description: 授权码授权情况下返回，当访问令牌`access_token`即将过期时，第三方应用可以使用刷新令牌来获取新的访问令牌
+        scope:
+          type: string
+          x-stoplight: null
+          id: ys8z5dnglnks5
+          description: 权限作用域
+        client_id:
+          type: string
+          x-stoplight: null
+          id: krnpt17zs7y5v
+          description: 授权时使用的`client_id`
+        account_id:
+          type: string
+          x-stoplight:
+            id: 5kdhsud9kgu9j
+          description: 授权码授权情况下返回，每个应用的已授权用户生成一个`account_id`，可以用来查询授权用户信息
+      examples:
+        - access_token: string
+          token_type: string
+          expires_in: string
+          refresh_token: string
+          scope: string
+          client_id: string
+          account_id: string
+  responses: {}
+  requestBodies: {}
+  securitySchemes: {}
+  parameters: {}

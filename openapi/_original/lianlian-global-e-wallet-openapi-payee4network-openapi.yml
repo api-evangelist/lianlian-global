@@ -1,0 +1,302 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "o0hv3o2ya24dy"
+    },
+    "info": {
+        "title": "Payee4Network",
+        "version": "1.0",
+        "description": "A payee needs to be created before a payout can be made, the payee notes the individual or corporate being paid along with the bank details. "
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-contacts/network/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true
+                }
+            ],
+            "get": {
+                "summary": "Get a Network Contact",
+                "tags": [
+                    "Operations"
+                ],
+                "operationId": "get-beneficiary-info",
+                "description": "Get a specific network contact by the `contact_id`.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Payee"
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NetworkPayee"
+                                },
+                                "examples": {
+                                    "Example 1": {
+                                        "value": {
+                                            "id": "string",
+                                            "merchant_client_id": "string",
+                                            "entity_type": "CORPORATE",
+                                            "base_info": {
+                                                "country_code": "string",
+                                                "corporate_name": "string",
+                                                "email": "string",
+                                                "first_name": "string",
+                                                "middle_name": "string",
+                                                "last_name": "string",
+                                                "nickname": "string"
+                                            },
+                                            "file_folder_id": "string",
+                                            "status": "REJECTED",
+                                            "additional_info": [
+                                                {
+                                                    "name": "string",
+                                                    "value": "string"
+                                                }
+                                            ],
+                                            "user_kyc_name": "string",
+                                            "user_kyc_status": "ACCEPTED"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a Network Contact",
+                "operationId": "delete-payees-payee_id",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "description": "Delete a specific network contact by the `contact_id`.",
+                "tags": [
+                    "Operations"
+                ],
+                "parameters": []
+            }
+        },
+        "/ew-contacts/network": {
+            "post": {
+                "summary": "Create a New Network Contact",
+                "operationId": "post-ew-payees-network",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NetworkPayee"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "NETWORK Payee",
+                                "properties": {
+                                    "entity_type": {
+                                        "type": "string",
+                                        "description": "Payee type, one of `INDIVIDUAL` and `CORPORATE`",
+                                        "enum": [
+                                            "INDIVIDUAL",
+                                            "CORPORATE"
+                                        ]
+                                    },
+                                    "merchant_client_id": {
+                                        "type": "string",
+                                        "description": "Merchant ID as known by the client platform."
+                                    },
+                                    "base_info": {
+                                        "$ref": "./CommonModel.json#/components/schemas/NetworkBaseInfo"
+                                    },
+                                    "additional_info": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "./Items.json#/components/schemas/Item"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "entity_type",
+                                    "merchant_client_id",
+                                    "base_info"
+                                ]
+                            }
+                        },
+                        "application/xml": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        }
+                    },
+                    "description": ""
+                },
+                "description": "Create a new network `Payee` which will be audited by LianLian Global before that can be used in payout transaction.\nA notification of the audit result will be sent by Webhook after subscribing the payee related event `Payee`."
+            },
+            "parameters": []
+        },
+        "/ew-contacts/network/merchant-client-id/{merchant_client_id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "merchant_client_id",
+                    "in": "path",
+                    "required": true
+                }
+            ],
+            "get": {
+                "summary": "Get a Network Contact by Merchant Client Id",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NetworkPayee"
+                                },
+                                "examples": {}
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-ew-network-payees-by-merchant-client-id-id",
+                "description": "Get a specific network payee by the `merchant_client_id`."
+            },
+            "delete": {
+                "summary": "Delete a Network Contact by Merchant Client Id",
+                "tags": [
+                    "Operations"
+                ],
+                "operationId": "delete-ew-network-payees-by-merchant-client-id-id",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "description": "Delete a specific network payee by the `merchant_client_id`."
+            }
+        }
+    },
+    "basePath": "/v1/payment",
+    "components": {
+        "schemas": {
+            "NetworkPayee": {
+                "title": "NetworkPayee",
+                "x-stoplight": {
+                    "id": "j141nmzurux84"
+                },
+                "x-tags": [
+                    "Models"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier for the payee."
+                    },
+                    "merchant_client_id": {
+                        "type": "string",
+                        "description": "Merchant ID as known by the client platform."
+                    },
+                    "entity_type": {
+                        "type": "string",
+                        "description": "Payee entity type, one of `INDIVIDUAL` and `CORPORATE`",
+                        "enum": [
+                            "CORPORATE",
+                            "INDIVIDUAL"
+                        ]
+                    },
+                    "base_info": {
+                        "$ref": "./CommonModel.json#/components/schemas/NetworkBaseInfo"
+                    },
+                    "file_folder_id": {
+                        "description": "The ID of `File Folder` object.",
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status of this payee in Lianian Global's system.",
+                        "enum": [
+                            "REJECTED",
+                            "ACCEPTED",
+                            "PROCESSING"
+                        ]
+                    },
+                    "additional_info": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "./Items.json#/components/schemas/Item"
+                        }
+                    },
+                    "user_kyc_name": {
+                        "type": "string",
+                        "description": "User KYC name for this Payee."
+                    },
+                    "user_kyc_status": {
+                        "type": "string",
+                        "description": "User KYC status for this Payee.",
+                        "enum": [
+                            "ACCEPTED",
+                            "PROCESSING",
+                            "DECLINED"
+                        ]
+                    }
+                }
+            }
+        },
+        "requestBodies": {}
+    }
+}

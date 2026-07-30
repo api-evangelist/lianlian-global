@@ -1,0 +1,321 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "File",
+        "version": "1.0",
+        "description": "This is an object representing a File witch stored on LianLian Global's servers. "
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/file/{id}": {
+            "get": {
+                "summary": "Download File",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "File data streaming."
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "": {
+                        "description": "",
+                        "headers": {},
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "description": "File data streaming."
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "download-File",
+                "description": "Download File by `id`."
+            },
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "File ID"
+                }
+            ]
+        },
+        "/ew-files": {
+            "parameters": [],
+            "get": {
+                "summary": "Get list of Files",
+                "operationId": "get-files",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "total_count": {
+                                            "type": "string",
+                                            "description": "Total data number."
+                                        },
+                                        "page_list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/File"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [],
+                "tags": [
+                    "Operations"
+                ],
+                "description": "Get list of Files.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "File ID."
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "A file name in the server, require exact match."
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "description": "User naming the file when uploading, require exact match"
+                                    },
+                                    "page_number": {
+                                        "type": "integer",
+                                        "description": "The query page number."
+                                    },
+                                    "page_size": {
+                                        "description": "The default value is 20. A maximum of 100 data items can be displayed on a page.",
+                                        "type": "integer"
+                                    },
+                                    "start_time": {
+                                        "description": "File object creation period start time.",
+                                        "type": "integer"
+                                    },
+                                    "end_time": {
+                                        "description": "File object creation period end time.",
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": ""
+                }
+            }
+        },
+        "/file/upload": {
+            "post": {
+                "summary": "Upload File",
+                "operationId": "upload-file",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/File"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "description": "Upload a file to LianLian Global's server. The max size of an upload file is up to 10MB.\nWhen you upload a file, the API responds with a `id`.\nThis `id` will be referenced as required as part of the `File Folder` object.\n\nAllowed file types:\n`application/x-rar-compressed` `application/zip` `application/pdf` `image/jpeg` `image/png`\n\n",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/File"
+                            }
+                        },
+                        "application/xml": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "object"
+                                    },
+                                    "size": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "text/plain": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        },
+                        "application/EDI-X12": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        },
+                        "application/EDIFACT": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        },
+                        "application/atom+xml": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {}
+                            }
+                        }
+                    },
+                    "description": "file : File stream, A maximum of 10 MB files are supported. Empty files are not allowed.<br>\nextension_info : json object structure is {\"notes\":\"notes descn\",\"title\":\"1fzip\"}.\n<br><br>\nnotes : The notes of the file, max length is 128 characters. <br>\ntitle : User naming the file when uploading."
+                },
+                "x-internal": false,
+                "tags": [
+                    "Operations"
+                ],
+                "parameters": [
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "file",
+                        "description": "File stream, A maximum of 10 MB files are supported. Empty files are not allowed.",
+                        "required": true
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "notes",
+                        "description": "The notes of the file, max length is 128 characters."
+                    },
+                    {
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "name": "title",
+                        "description": "User naming the file when uploading."
+                    }
+                ]
+            },
+            "parameters": []
+        }
+    },
+    "components": {
+        "schemas": {
+            "File": {
+                "title": "File",
+                "type": "object",
+                "examples": [],
+                "x-tags": [
+                    "Models"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The unique identifier of the File object."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The file name on the server."
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The original file that named by user when uploading."
+                    },
+                    "create_time": {
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch. It's a `long` type number. ",
+                        "type": "integer"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "description": "The notes of the File, max length is 128 characters."
+                    }
+                }
+            }
+        },
+        "securitySchemes": {}
+    }
+}

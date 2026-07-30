@@ -1,0 +1,449 @@
+swagger: '2.0'
+info:
+  title: VCC API
+  version: '1.0'
+host: global-api.lianlianpay.com/
+paths:
+  /vcc/apply:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VCC-Info'
+      summary: Apply VCC
+      tags:
+        - OPERATIONS
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: VCC Information
+            description: VCC information defined in Lianlian Pay's system
+            properties:
+              tradeFileId:
+                type: array
+                description: Unique Trade file Id from client
+                maxItems: 10
+                items:
+                  type: string
+                  maxLength: 32
+              expiryDate:
+                type: string
+                description: 'Expire Date of VCC, cannot exceed 5 years,format:MMYY'
+                minLength: 4
+                maxLength: 4
+              limit:
+                type: string
+                description: Limit of this VCC
+              bin:
+                type: string
+                description: |-
+                  bin of VCC, one of 
+                  |bin|description|
+                  |---|----|
+                  |493193 |3DS OTP|
+                  |438366 |3DS OTP|
+                  |477511 |bypass 3DS OTP|
+            required:
+              - tradeFileId
+              - limit
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: 'The cardId of the VCC will be returned in real time. The VCC generation is an asynchronous process, and after the VCC is generated, LianlianPay will notify the counterpart through webhook, and the counterpart can query the VCC information through API.'
+  '/vcc/{cardId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VCC-Info'
+      summary: Get VCC Info by Card ID
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - name: cardId
+        in: path
+        type: string
+        required: true
+    delete:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties: {}
+      summary: Block VCC
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+  /vcc/authTransaction:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              authTrans:
+                type: array
+                description: Authorization Records
+                items:
+                  $ref: '#/definitions/VCC-Authorization-Trans'
+              totalCount:
+                type: string
+                description: Total count of authorization records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+      summary: Get List of VCC Authorization Transacions
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: cardId
+          description: Unique Card ID defined by LianlianPay
+        - type: string
+          in: query
+          name: transactionId
+          description: Unique authorization transaction id defined by LianlianPay
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: beginTime
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+          required: true
+        - type: string
+          in: query
+          name: endTime
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+          required: true
+      description: The scale of the search cannot exceed 7 days
+  '/vcc/authTransaction/{transactionId}':
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/VCC-Authorization-Trans'
+        '404':
+          description: ''
+        '500':
+          description: ''
+      summary: Get VCC Authorization Transaction
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - name: transactionId
+        in: path
+        type: string
+        required: true
+  /vcc/settleTransaction:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              settlementTrans:
+                type: array
+                description: Settlement Records
+                items:
+                  $ref: '#/definitions/VCC-Settlement-Trans'
+              totalCount:
+                type: string
+                description: Total count of settlement records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+      summary: Get List of VCC Settlement Transactions
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: cardId
+          description: Unique Card ID defined by LianlianPay
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: beginTime
+          required: true
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          name: endTime
+          required: true
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          description: Unique settlement transaction id defined by LianlianPay
+          name: transactionId
+      description: The scale of the search cannot exceed 7 days
+    parameters: []
+  '/vcc/otp/{otpId}':
+    parameters:
+      - type: string
+        name: otpId
+        in: path
+        required: true
+        description: Unique ID for this 3DS OTP
+    get:
+      summary: Get VCC 3DS otp
+      tags:
+        - OPERATIONS
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/3DS-OTP'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-vcc-otp-otpId
+basePath: outbound/card/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  VCC-Authorization-Trans:
+    title: VCC-Authorization-Trans
+    type: object
+    properties:
+      transactionId:
+        type: string
+        description: Unique authorization transaction id defined by LianlianPay
+      billingCurrency:
+        type: string
+        description: Authorization currency
+      billingAmount:
+        type: string
+        description: Authorization Amount
+      transactionTime:
+        type: string
+        description: |
+          Transaction Time
+        format: date-time
+      transactionType:
+        type: string
+        description: |-
+          Transaction Type, one of
+          |Code|Description|
+          |----|----|
+          |0|Authorization|
+          |1|Authorization cancelled|
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianlianPay
+      status:
+        type: string
+        description: |-
+          Authorization status, one of
+          |Code|Description|
+          |-----|------|
+          |FAILED|Authorization Failed|
+          |SUCCEED|Authorization Succeed|
+      merchantName:
+        type: string
+        description: Merchant Name
+    required:
+      - transactionId
+      - billingCurrency
+      - billingAmount
+      - transactionTime
+      - transactionType
+      - cardId
+      - status
+    x-tags:
+      - Models
+  VCC-Settlement-Trans:
+    title: VCC-Settlement-Trans
+    type: object
+    x-tags:
+      - Models
+    properties:
+      transactionId:
+        type: string
+        description: Unique settlement transaction id defined by LianlianPay
+      transationCurrency:
+        type: string
+        description: 'Transaction currency, currency deducted by the merchant'
+      transationAmount:
+        type: string
+        description: 'Transaction amount, amount deducted by the merchant'
+      billingCurrency:
+        type: string
+        description: billing currency
+      billingAmount:
+        type: string
+        description: Settlement Amount
+      transactionTime:
+        type: string
+        description: |
+          Transaction Time
+        format: date-time
+      transactionType:
+        type: string
+        description: |-
+          Transaction Type, one of
+          |Code|Description|
+          |----|----|
+          |0|Settlement|
+          |1|Settlement reverse|
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianlianPay
+      merchantName:
+        type: string
+        description: Merchant Name
+    required:
+      - transactionId
+      - transationCurrency
+      - transationAmount
+      - billingCurrency
+      - billingAmount
+      - transactionTime
+      - transactionType
+      - cardId
+  3DS-OTP:
+    title: 3DS-OTP
+    type: object
+    description: ''
+    x-tags:
+      - Models
+    properties:
+      otpId:
+        type: string
+        description: Unique ID for this 3DS OTP
+      otp:
+        type: string
+        description: Otp
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianlianPay
+      cardNo:
+        type: string
+        description: VCC Number
+      transactionCurrency:
+        type: string
+        description: Transaction currency
+      transactionAmount:
+        type: string
+        description: Transaction amount
+  VCC-Info:
+    title: VCC-Info
+    type: object
+    description: VCC information defined in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      tradeFileId:
+        type: array
+        description: Unique Trade file Id from client
+        maxItems: 10
+        items:
+          type: string
+          maxLength: 32
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianlianPay
+      cardNo:
+        type: string
+        description: VCC Number
+      limit:
+        type: string
+        description: Limit of this VCC
+      expiryDate:
+        type: string
+        description: VCC expiry date
+      cvv2:
+        type: string
+        description: cvv2
+      bin:
+        type: string
+        description: |-
+          bin of VCC, one of
+          |bin|description|
+          |---|----|
+          |493193 |3DS OTP|
+          |438366 |3DS OTP|
+          |477511 |bypass 3DS OTP|
+      createTime:
+        type: string
+        description: 'VCC create time,UTC+0'
+        format: date-time
+      modifyTime:
+        type: string
+        description: 'Modify time, UTC+0'
+        format: date-time
+      status:
+        type: string
+        description: |-
+          VCC status, one of 
+          |Code|Description|
+          |----|----|
+          |CREATING|VCC Creating|
+          |ACTIVE|VCC Active|
+          |FROZEN|VCC Frozen|
+          |EXPIRED|VCC Expired|
+          |BLOCKED|VCC Blocked|
+    required:
+      - cardId
+      - createTime
+      - status
+tags:
+  - name: OPERATIONS

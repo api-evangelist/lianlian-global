@@ -1,0 +1,693 @@
+swagger: '2.0'
+info:
+  title: VCC API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /vcc/apply:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VCC-Info'
+          examples:
+            Example 1:
+              tradeFileId:
+                - tf2023010100001
+              limit: '5200.00'
+              bin: '438366'
+              expiryDate: '1025'
+              cardId: '2023062177994790'
+              cardNo: '4383663532658632'
+              cvv2: iaew
+              createTime: '2023-01-01T10:15:22Z'
+              modifyTime: '2023-01-01T10:15:22Z'
+              status: CREATING
+        '400':
+          description: |-
+            Bad Request
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 500001|贸易材料资金处理中，请稍后|
+            | 500002|已经存在一种支付方式|
+            | 500003|申请vcc卡时,无贸易材料汇兑|
+            | 500004|申请vcc卡时,贸易材料汇兑未成功|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: htilljlefmeg4
+              message:
+                type: string
+                x-stoplight:
+                  id: qkka523vh91bn
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: k6hgpcz42v4iv
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500002'
+              message: 已经存在一种支付方式
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: pckau4rql208e
+              message:
+                type: string
+                x-stoplight:
+                  id: tbgil8tsiptxx
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: 9h3rkp7ig3i7o
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      summary: Apply VCC
+      tags:
+        - OPERATIONS
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: VCC Information
+            description: VCC information defined in LianLian Global's system
+            properties:
+              tradeFileId:
+                type: array
+                description: Unique Trade file Id from client
+                maxItems: 10
+                items:
+                  type: string
+                  maxLength: 32
+              limit:
+                type: string
+                description: Limit of this VCC
+              bin:
+                type: string
+                description: 'Bin of VCC, designated by LianLian Global'
+                minLength: 6
+                maxLength: 6
+              expiryDate:
+                type: string
+                description: 'Expire date of VCC, cannot exceed 5 years,format: MMYY'
+                minLength: 4
+                maxLength: 4
+            required:
+              - tradeFileId
+              - limit
+              - bin
+          x-examples:
+            Example 1:
+              tradeFileId:
+                - tf2023010100001
+              limit: '5200.00'
+              bin: '438366'
+              expiryDate: '1025'
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: 'The cardId of the VCC will be returned in real time. The VCC generation is an asynchronous process, and after the VCC is generated, LianLian Global will notify the counterpart through webhook, and the counterpart can query the VCC information through API.'
+      operationId: post-vcc
+  '/vcc/{cardId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VCC-Info'
+      summary: Get VCC Info by Card ID
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - name: cardId
+        in: path
+        type: string
+        required: true
+    delete:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                x-stoplight:
+                  id: 092j3viwfru7o
+      summary: Block VCC
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+  /vcc/authTransaction:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              authTrans:
+                type: array
+                description: Authorization Records
+                items:
+                  $ref: '#/definitions/VCC-Authorization-Trans'
+              totalCount:
+                type: string
+                description: Total count of authorization records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+      summary: Get List of VCC Authorization Transacions
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: cardId
+          description: Unique Card ID defined by LianLian Global
+        - type: string
+          in: query
+          name: transactionId
+          description: Unique authorization transaction id defined by LianLian Global
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: beginTime
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+          required: true
+        - type: string
+          in: query
+          name: endTime
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+          required: true
+      description: The scale of the search cannot exceed 7 days
+  '/vcc/authTransaction/{transactionId}':
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/VCC-Authorization-Trans'
+        '404':
+          description: ''
+        '500':
+          description: ''
+      summary: Get VCC Authorization Transaction
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - name: transactionId
+        in: path
+        type: string
+        required: true
+  /vcc/settleTransaction:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              settlementTrans:
+                type: array
+                description: Settlement Records
+                items:
+                  $ref: '#/definitions/VCC-Settlement-Trans'
+              totalCount:
+                type: string
+                description: Total count of settlement records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+      summary: Get List of VCC Settlement Transactions
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: cardId
+          description: Unique Card ID defined by LianLian Global
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: beginTime
+          required: true
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          name: endTime
+          required: true
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          description: Unique settlement transaction id defined by LianLian Global
+          name: transactionId
+      description: The scale of the search cannot exceed 7 days
+    parameters: []
+  /vcc/card/authTransaction:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              authTrans:
+                type: array
+                description: Authorization Records
+                items:
+                  $ref: '#/definitions/VCC-Authorization-Trans'
+              totalCount:
+                type: string
+                description: Total count of authorization records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+      summary: Get List of VCC Card Authorization Transacions
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: cardId
+          description: Unique Card ID defined by LianLian Global
+        - type: string
+          in: query
+          name: transactionId
+          description: Unique authorization transaction id defined by LianLian Global
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: beginTime
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+          required: true
+        - type: string
+          in: query
+          name: endTime
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+          required: true
+      description: The scale of the search cannot exceed 7 days
+      x-stoplight:
+        id: 7xivb7rms6c2c
+    parameters: []
+  '/vcc/card/authTransaction/{transactionId}':
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/VCC-Authorization-Trans'
+        '404':
+          description: ''
+        '500':
+          description: ''
+      summary: Get VCC Card Authorization Transaction
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-stoplight:
+        id: nub24nczilwtr
+    parameters:
+      - name: transactionId
+        in: path
+        type: string
+        required: true
+  /vcc/card/settleTransaction:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              settlementTrans:
+                type: array
+                description: Settlement Records
+                items:
+                  $ref: '#/definitions/VCC-Settlement-Trans'
+              totalCount:
+                type: string
+                description: Total count of settlement records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+      summary: Get List of VCC Card Settlement Transactions
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: cardId
+          description: Unique Card ID defined by LianLian Global
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: beginTime
+          required: true
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          name: endTime
+          required: true
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+        - type: string
+          in: query
+          description: Unique settlement transaction id defined by LianLian Global
+          name: transactionId
+      description: The scale of the search cannot exceed 7 days
+      x-stoplight:
+        id: 793mjfbhdq8jk
+    parameters: []
+  '/vcc/otp/{otpId}':
+    parameters:
+      - type: string
+        name: otpId
+        in: path
+        required: true
+        description: Unique ID for this 3DS OTP
+    get:
+      summary: Get VCC 3DS otp
+      tags:
+        - OPERATIONS
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/3DS-OTP'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-vcc-otp-otpId
+basePath: /outbound/card/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  VCC-Authorization-Trans:
+    title: VCC-Authorization-Trans
+    type: object
+    x-tags:
+      - Models
+    required:
+      - transactionId
+      - billingCurrency
+      - billingAmount
+      - transactionTime
+      - transactionType
+      - cardId
+      - status
+    properties:
+      transactionId:
+        type: string
+        description: Unique authorization transaction id defined by LianLian Global
+      billingCurrency:
+        type: string
+        description: Authorization currency
+      billingAmount:
+        type: string
+        description: Authorization Amount
+      transactionTime:
+        type: string
+        description: |
+          Transaction Time
+        format: date-time
+      transactionType:
+        type: string
+        description: |-
+          Transaction Type, one of
+          |Code|Description|
+          |----|----|
+          |0|Authorization|
+          |1|Authorization cancelled|
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianLian Global
+      status:
+        type: string
+        description: |-
+          Authorization status, one of
+          |Code|Description|
+          |-----|------|
+          |FAILED|Authorization Failed|
+          |SUCCEED|Authorization Succeed|
+      merchantName:
+        type: string
+        description: Merchant Name
+      mcc:
+        type: string
+        description: MCC
+        x-stoplight:
+          id: wlrwkmxmdm0tm
+  VCC-Settlement-Trans:
+    title: VCC-Settlement-Trans
+    type: object
+    x-tags:
+      - Models
+    required:
+      - transactionId
+      - transationCurrency
+      - transationAmount
+      - billingCurrency
+      - billingAmount
+      - transactionTime
+      - transactionType
+      - cardId
+    properties:
+      transactionId:
+        type: string
+        description: Unique settlement transaction id defined by LianLian Global
+      transationCurrency:
+        type: string
+        description: 'Transaction currency, currency deducted by the merchant'
+      transationAmount:
+        type: string
+        description: 'Transaction amount, amount deducted by the merchant'
+      billingCurrency:
+        type: string
+        description: billing currency
+      billingAmount:
+        type: string
+        description: Settlement Amount
+      transactionTime:
+        type: string
+        description: |
+          Transaction Time
+        format: date-time
+      transactionType:
+        type: string
+        description: |-
+          Transaction Type, one of
+          |Code|Description|
+          |----|----|
+          |0|Settlement|
+          |1|Settlement reverse|
+          |2|Card recharge|
+          |3|Card recharge reverse|
+          |4|Dispute Refund|
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianLian Global
+      merchantName:
+        type: string
+        description: Merchant Name
+      mcc:
+        type: string
+        description: MCC
+        x-stoplight:
+          id: yzvr9xxy68ct2
+  3DS-OTP:
+    title: 3DS-OTP
+    type: object
+    description: ''
+    x-tags:
+      - Models
+    properties:
+      otpId:
+        type: string
+        description: Unique ID for this 3DS OTP
+      otp:
+        type: string
+        description: Otp
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianLian Global
+      cardNo:
+        type: string
+        description: VCC Number
+      transactionCurrency:
+        type: string
+        description: Transaction currency
+      transactionAmount:
+        type: string
+        description: Transaction amount
+  VCC-Info:
+    title: VCC-Info
+    type: object
+    description: VCC information defined in LianLian Global's system
+    x-tags:
+      - Models
+    required:
+      - tradeFileId
+      - cardId
+      - limit
+      - bin
+      - createTime
+      - status
+    properties:
+      tradeFileId:
+        type: array
+        description: Unique Trade file Id from client
+        maxItems: 10
+        items:
+          type: string
+          maxLength: 32
+      cardId:
+        type: string
+        description: Unique Card ID defined by LianLian Global
+      cardNo:
+        type: string
+        description: VCC Number
+      limit:
+        type: string
+        description: Limit of this VCC
+      expiryDate:
+        type: string
+        description: VCC expiry date
+      cvv2:
+        type: string
+        description: cvv2
+      bin:
+        type: string
+        description: bin of VCC
+      createTime:
+        type: string
+        description: 'VCC create time,UTC+0'
+        format: date-time
+      modifyTime:
+        type: string
+        description: 'Modify time, UTC+0'
+        format: date-time
+      status:
+        type: string
+        description: |-
+          VCC status, one of 
+          |Code|Description|
+          |----|----|
+          |CREATING|VCC Creating|
+          |ACTIVE|VCC Active|
+          |FROZEN|VCC Frozen|
+          |EXPIRED|VCC Expired|
+          |BLOCKING|VCC Blocking|
+          |BLOCKED|VCC Blocked|
+tags:
+  - name: OPERATIONS

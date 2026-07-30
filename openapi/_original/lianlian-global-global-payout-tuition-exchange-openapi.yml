@@ -1,0 +1,232 @@
+swagger: '2.0'
+info:
+  title: Exchange
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /exchange:
+    post:
+      summary: Create a Currency Exchange
+      operationId: post-transaction
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Exchange'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 156002| The Payee does not exist |
+            | 156003| Payee verification failed |
+            | 156004| Payee verification processing |
+            | 156010| Duplicate transactionId |
+            | 156015| payeeBankAccount is not supported |
+            | 156008| payee rejected by blacklist|
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Transaction
+            type: object
+            description: Exchange info record object in Lianlian Pay's system
+            x-tags:
+              - Models
+            properties:
+              exchangeId:
+                type: string
+                description: Unique Transaction ID From Merchant's System
+                maxLength: 32
+              exchangeType:
+                type: string
+                description: |-
+                  Exchange Type, one of
+                  |Code|Description|
+                  |----|----|
+                  |FX|Currency conversion|
+                enum:
+                  - FX
+              pricingCurrency:
+                type: string
+                description: Pricing Currency
+                minLength: 3
+                maxLength: 3
+              sourceCurrency:
+                type: string
+                description: Orginal Currency
+                minLength: 3
+                maxLength: 3
+              sourceAmount:
+                type: string
+                description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+                maxLength: 10
+              targetCurrency:
+                type: string
+                description: Distribute Currency
+                minLength: 3
+                maxLength: 3
+              targetAmount:
+                type: string
+                description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+                maxLength: 10
+              rateId:
+                type: string
+                description: 'Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Create LockFX Rate` API.'
+              payeeId:
+                type: string
+                description: Unique Payee ID in Merchant's Syetem
+                maxLength: 32
+            required:
+              - exchangeId
+              - exchangeType
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+          description: ''
+      description: |-
+        Create currency exchange request, result will be return via webhook. Merchant can also use `Get Exchange Info` API to retrieve coresponding request results.
+
+        Interface Maximum Concurrency：300
+      tags:
+        - Operations
+  '/exchange/{exchangeId}':
+    parameters:
+      - name: exchangeId
+        in: path
+        type: string
+        required: true
+        maxLength: 32
+    get:
+      summary: Get Exchange Info
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Exchange'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-transaction-transactionId
+      description: |-
+        Get Exchange Info Request, `exchange` object will be returned
+
+        Interface Maximum Concurrency：300
+definitions:
+  Exchange:
+    title: Exchange
+    type: object
+    description: Exchange info record object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      exchangeId:
+        type: string
+        description: Unique Exchange ID From Merchant's System
+        maxLength: 32
+      transactionId:
+        type: string
+        description: Unique Transaction ID From Merchant's System
+        maxLength: 32
+      exchangeType:
+        type: string
+        description: |-
+          Exchange Type, one of
+          |Code|Description|
+          |----|----|
+          |FX|Currency conversion|
+        enum:
+          - FX
+      pricingCurrency:
+        type: string
+        description: Pricing Currency
+        minLength: 3
+        maxLength: 3
+      sourceCurrency:
+        type: string
+        description: Orginal Currency
+        minLength: 3
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+        maxLength: 10
+      targetCurrency:
+        type: string
+        description: Distribute Currency
+        minLength: 3
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+        maxLength: 10
+      rateId:
+        type: string
+        description: 'Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Get FX Rate` API.'
+      rate:
+        type: string
+        description: FX rate
+        maxLength: 16
+      payeeId:
+        type: string
+        description: Unique Payee ID in Merchant's Syetem
+        maxLength: 32
+      status:
+        type: string
+        description: |
+          Transaction Status, one of
+          |Code|Description|
+          |---|---|
+          |FX_Processing|Currency Exchange processing|
+          |FX_Failed|Currency Exchange Failed|
+          |FX_Successed|Currency Exchange Success|
+        maxLength: 64
+      failedReason:
+        type: string
+        maxLength: 256
+        description: Failed Reason
+    required:
+      - exchangeId
+      - exchangeType
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - status
+basePath: /global/payout/v1
+tags:
+  - name: Operations

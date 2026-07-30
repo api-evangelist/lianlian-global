@@ -1,0 +1,96 @@
+openapi: 3.1.0
+x-stoplight:
+  id: o7a2sh688qpf7
+info:
+  title: Member
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /v1/member/register:
+    post:
+      summary: 创建用户
+      operationId: post-member
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+              examples:
+                example-1:
+                  value:
+                    member_id: string
+                    member_type: MASTER
+                    status: INIT
+                    create_time: string
+                    modify_time: string
+          headers: {}
+        '400':
+          description: Missing Required Information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  description: 主会员id(uniqueId)
+                  maxLength: 32
+                member_type:
+                  type: string
+                  description: '会员类型，主账户:MASTER ,子账户： SUB'
+                  enum:
+                    - MASTER
+                    - SUB
+                  maxLength: 8
+              required:
+                - member_id
+                - member_type
+            examples:
+              example-1:
+                value:
+                  member_id: string
+                  member_type: MASTER
+        description: ''
+      description: Create a new member.
+      parameters: []
+    parameters: []
+components:
+  schemas:
+    Member:
+      title: Member
+      x-stoplight:
+        id: gyihh8tndv5t0
+      type: object
+      description: ''
+      x-internal: false
+      properties:
+        member_id:
+          type: string
+          description: 主会员id(uniqueId)
+          maxLength: 32
+        member_type:
+          type: string
+          description: '平台创建会员类型 主会员:MASTER ,子会员： SUB'
+          enum:
+            - MASTER
+            - SUB
+          maxLength: 8
+        status:
+          type: string
+          description: |-
+            初始化：INIT；
+            激活：ACTIVE
+          enum:
+            - INIT
+            - ACTIVE
+          maxLength: 8
+        create_time:
+          type: string
+          description: 创建时间，10位 秒级时间戳
+        modify_time:
+          type: string
+          description: 更新时间，10位 秒级时间戳

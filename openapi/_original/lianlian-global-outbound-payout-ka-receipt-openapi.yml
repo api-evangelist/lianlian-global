@@ -1,0 +1,159 @@
+swagger: '2.0'
+info:
+  title: Receipt API
+  version: '1.0'
+  description: Obtain LianLian Global payment receipt
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /receipt:
+    post:
+      summary: Create Receipt
+      operationId: post-receipt
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Receipt'
+          examples:
+            Example 1:
+              transacionId: llp_20230101485386
+              receiptType: RECEIPT
+              documentId: '202301014365346'
+              status: CREATING
+              createTime: '2023-01-01T10:15:22Z'
+              modifyTime: '2023-01-01T10:15:22Z'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+              receiptType:
+                type: string
+                enum:
+                  - RECEIPT
+                  - VOUCHER
+                  - VCC_AUTH_RECEIPT
+                description: |
+                  Receipt type,one of:
+
+                  |RECEIPTTYPE|DESCRIPTION|
+                  |---|---|
+                  |RECEIPT|Payment processing notice|
+                  |VOUCHER|Payment invoice|
+                  |VCC_AUTH_RECEIPT|VCC payment processing notice|
+            required:
+              - transactionId
+          x-examples:
+            Example 1:
+              transactionId: llp_20230101485386
+              receiptType: RECEIPT
+      tags:
+        - OPERATIONS
+  '/receipt/{receiptType}/{transactionId}':
+    parameters:
+      - type: string
+        name: receiptType
+        in: path
+        required: true
+      - type: string
+        name: transactionId
+        in: path
+        required: true
+    get:
+      summary: Get Receipt Info
+      operationId: get-receipt-transactionId
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Receipt'
+      tags:
+        - OPERATIONS
+      x-stoplight:
+        id: xr2mwtwgwban9
+  '/receipt/{transactionId}':
+    parameters:
+      - type: string
+        name: transactionId
+        in: path
+        required: true
+    get:
+      summary: Get Receipt Info
+      operationId: get-receipt-transactionId2
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Receipt'
+      tags:
+        - OPERATIONS
+basePath: /outbound/card/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  Receipt:
+    title: Receipt
+    type: object
+    description: |
+      Receipt object defined in LianLian  Global's system.
+    x-tags:
+      - Models
+    x-examples: {}
+    required:
+      - transacionId
+    properties:
+      transacionId:
+        type: string
+        description: Payout request id or VCC transaction id from client
+        maxLength: 32
+      receiptType:
+        type: string
+        enum:
+          - RECEIPT
+          - VOUCHER
+          - VCC_AUTH_RECEIPT
+          - VA_TRANSACTION_RECEIPT
+        description: |-
+          Receipt type,one of:
+
+          |RECEIPTTYPE|DESCRIPTION|
+          |---|---|
+          |RECEIPT|Payment processing notice|
+          |VOUCHER|Payment invoice|
+          |VCC_AUTH_RECEIPT|VCC payment processing notice|
+      documentId:
+        type: string
+        description: 'Attachment ID, refer to [Download Document](https://developer.lianlianglobal.com/docs/outbound-payout-ka/d356e8b0e8cca-download-document) to download'
+      status:
+        type: string
+        description: |-
+          Receipt creation status, one of 
+
+          |Code|Description|
+          |--|--|
+          |CREATING|receipt creation request processing|
+          |CREATED|receipt created|
+          |FAILED|receipt creation failed|
+        enum:
+          - CREATING
+          - CREATED
+          - FAILED
+      createTime:
+        type: string
+        description: 'Create time, UTC+0'
+        format: date-time
+      modifyTime:
+        type: string
+        description: 'Modify Time, UTC+0'
+        format: date-time
+tags:
+  - name: OPERATIONS

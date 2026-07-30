@@ -1,0 +1,1057 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 91jfx04sdnbg4
+info:
+  title: Accept Payments
+  version: '1.0'
+  summary: accept payments
+  description: "通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。\r\n"
+servers:
+  - url: 'https://global-api.lianlian.com/api/v1'
+paths:
+  /accept_payments/checkout/sessions:
+    post:
+      summary: Create a checkout session
+      tags:
+        - Checkout
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid.\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n EXPIRES_TIME_INVALID|The expires time is not supported.\r\n MERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\n MERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\r\n MERCHANT_ACCT_CUR_ERROR|The merchant does not support this currency.\r\n MERCHANT_ACCT_NOT_EXIST|The merchant currency account doesn't exist.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n MERCHANT_ACCT_BIZ_INVALID|The merchant bizType is invalid.\r\n MERCHANT_PAY_METHOD_NOT_EXIST|Payment method not exist.\r\n MERCHANT_PAY_METHOD_INVALID|Payment method not supported.\r\n ORDER_EXIST_AND_EXPIRED|The order exists but has expired, please change the order information and create again.\r\n CUR_SUPPORT_ERROR|The currency is not supported.\r\n ORDER_AMOUNT_ERROR|Currency order amount is incorrect.\r\n ORDER_AMOUNT_LIMIT_ERROR|The amount exceeds the limit for that currency.\r\n MERCHANT_CHARGE_COLLECT_WAY_BLANK|The charge collect way is blank.\r\n MERCHANT_CHARGE_COLLECT_WAY_INVALID|The charge collect way not supported.\r\n REQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\n CREATE_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_ALREADY_EXISTS|Payment already exists.\r\n PAYMENT_CLOSED|Payment has been closed.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n SUBMIT_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_NOT_EXIST|Payment does not exist.\r\n PAYMENT_REPEAT|Payment has already been successfully paid.\r\n PAYMENT_FAILED|Payment unsuccessful.\r\n PAYMENT_ANOMALY|Payment anomaly.\r\n PAYMENT_PROCESSED|Payment being processed.\r\n REQUEST_CONFLICT|The request cannot be processed as another request is being processed."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '500':
+          description: |
+            code | message 
+            ---------|----------
+             INTERNAL_SERVER_ERROR|An internal server error has occurred.
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-checkout-sessions
+      x-stoplight:
+        id: w75rld3e64kjt
+      description: "## 功能说明\r\nCheckout是一种预先构建的付款形式，企业可以使用Checkout在网站上完成收款。Checkout Session提供一个支付URL，将客户重定向到支付页面完成付款。通过该接口创建Checkout Session获取收银台的支付URL。\r\n## 防重和幂等说明\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，返回最新的支付收银台url；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付收银台url。"
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - request_id
+                - amount
+                - currency
+                - customer
+                - product_info
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: ep4ih9igtf051
+                  description: 商户系统中该笔订单的唯一编码
+                  maxLength: 64
+                  minLength: 1
+                  example: 4e95132208654df990eb9b34edfefdca
+                amount:
+                  type: string
+                  x-stoplight:
+                    id: easgu7yu5jlmp
+                  description: 订单金额，商户需要用户支付的订单金额，单位元
+                currency:
+                  type: string
+                  x-stoplight:
+                    id: o9kw04yyi0x6a
+                  description: '订单币种，[ISO 4217](https://www.iso.org/iso-4217-currency-codes.html)三位字母货币代码，商户需要用户支付的订单币种'
+                customer:
+                  type: object
+                  x-stoplight:
+                    id: yq6oqxnlqg0zh
+                  required:
+                    - identifier
+                  properties:
+                    identifier:
+                      type: string
+                      x-stoplight:
+                        id: iqbj8fg8ul2z4
+                      description: 用户在商户系统中的唯一编号
+                      minLength: 1
+                      maxLength: 64
+                    name:
+                      type: string
+                      x-stoplight:
+                        id: co6xm504dtdhz
+                      description: 付款人的姓名或公司名称
+                      minLength: 1
+                      maxLength: 64
+                    identification_type:
+                      x-stoplight:
+                        id: e4mtzadoqlllk
+                      enum:
+                        - ID_CARD
+                        - UNIFIED_SOCIAL_CREDIT_ID
+                      description: "付款人的证件类型，payment_method为CN_FAST_PAYMENT_CREDIT_CARD或CN_FAST_PAYMENT_DEBIT_CARD时，identification_type必须填ID_CARD\r\n枚举值|说明\r\n----|----\r\nID_CARD|中国大陆居民身份证\r\nUNIFIED_SOCIAL_CREDIT_ID|中国大陆企业统一社会信用代码证"
+                    id_number:
+                      type: string
+                      x-stoplight:
+                        id: chgwg92je8j2p
+                      description: 付款人的证件号码，18位有效的个人身份证号码或统一社会信用代码证
+                      minLength: 1
+                      maxLength: 24
+                payment_method:
+                  x-stoplight:
+                    id: 1wv4y8l6r4bk0
+                  description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|CNY 快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|CNY 快捷支付借记卡\r\nCNY_COMPANY_BANK_CARD|CNY 企业网银\r\n"
+                  enum:
+                    - CN_FAST_PAYMENT_CREDIT_CARD
+                    - CN_FAST_PAYMENT_DEBIT_CARD
+                    - CNY_COMPANY_BANK_CARD
+                description:
+                  type: string
+                  x-stoplight:
+                    id: 2dq2vv6iv2lf3
+                  description: 订单的描述信息，会显示在收银台页面。默认值：取product_info中的第一条商品名称
+                  maxLength: 256
+                  example: 支付广告年费
+                expires_time:
+                  type: number
+                  x-stoplight:
+                    id: 33pna3yakcw5m
+                  description: 订单的过期时间，13位时间戳毫秒。默认值：从订单创建时间起，7天后过期。超过过期时间，支付状态将变为`EXPIRED`
+                  maximum: 13
+                  minimum: 13
+                  example: 1712635467276
+                product_info:
+                  type: array
+                  x-stoplight:
+                    id: 93bw6rd1pzhfb
+                  description: 商品信息，最多15条商品明细
+                  maxItems: 15
+                  items:
+                    x-stoplight:
+                      id: g2dfm9rlcexds
+                    type: object
+                    required:
+                      - product_name
+                      - quantity
+                    properties:
+                      product_name:
+                        type: string
+                        x-stoplight:
+                          id: e048inpng5ibc
+                        description: 商品名称
+                        maxLength: 256
+                      quantity:
+                        type: integer
+                        x-stoplight:
+                          id: o7nyce1fehpgc
+                        description: 商品数量
+                      category:
+                        type: string
+                        x-stoplight:
+                          id: 0q0qkpnl8f3hd
+                        description: 商品类目
+                        maxLength: 64
+                return_url:
+                  type: string
+                  x-stoplight:
+                    id: 912x2rtgxu3io
+                  description: 用户在收银台页面完成付款或取消支付时，重定向跳回的地址。
+                  maxLength: 255
+                metadata:
+                  type: object
+                  x-stoplight:
+                    id: aolu8xgebax15
+                  description: 商户自定义的数据，可以key-value pairs 的方式设置值。转换为String长度<= 1024 characters
+                additional_info:
+                  type: object
+                  x-stoplight:
+                    id: bg5om60cj6cf0
+                  description: 扩展字段，附加信息
+    parameters: []
+  '/accept_payments/request_id/{request_id}':
+    parameters:
+      - schema:
+          type: string
+        name: request_id
+        in: path
+        required: true
+        description: 商户系统中该笔订单的唯一编码
+    get:
+      summary: Get a payment  detail by ID
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-payment-by-request-id
+      x-stoplight:
+        id: 2bkaq0mco6pae
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+      description: 根据商户系统中request_id查询支付结果详情。
+      tags:
+        - Payment
+  /accept_payments/agreements:
+    get:
+      summary: Get list of agreements
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: kki1qd0pte39r
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: xssvye5my03bb
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: ky5da178cajp6
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: gz7kag8curfig
+                    description: 总页数
+                  page_list:
+                    type: array
+                    x-stoplight:
+                      id: vcxako4ioa7v1
+                    items:
+                      $ref: '#/components/schemas/Agreement'
+                      x-stoplight:
+                        id: 5cjx77iskbd66
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-accept_payments-agreement
+      x-stoplight:
+        id: ly03gf9apeu75
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+        - schema:
+            type: string
+          in: query
+          name: customer_identifier
+          description: 用户在商户系统中的唯一编号
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: 授权协议的ID
+        - schema:
+            type: string
+          in: query
+          name: page
+          description: 页码，默认值为1
+        - schema:
+            type: string
+          in: query
+          name: page_size
+          description: 每页条数，默认值为20
+        - schema:
+            type: string
+          in: query
+          name: status
+          description: 协议的状态
+      requestBody:
+        content: {}
+      tags:
+        - Agreement
+    parameters: []
+  '/accept_payments/agreements/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: 授权协议的ID
+    get:
+      summary: Get a agreement by ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agreement'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-accept_payments-agreement-agreement_id
+      x-stoplight:
+        id: vel9tarnkj1oj
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+      tags:
+        - Agreement
+  /accept_payments/autopayment:
+    post:
+      summary: Create a automatic payment
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nCUR_SUPPORT_ERROR | The currency is not supported.\r\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\r\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\r\nAGREEMENT_NOT_EXIST | Agreement does not exist.\r\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\r\nAGREEMENT_CANCELLED | The agreement has been cancelled.\r\nAGREEMENT_EXPIRED | The agreement has been expired.\r\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\r\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\r\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\r\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\r\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\r\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\r\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\r\nAML_REJECT | AML reject.\r\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\r\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\r\nPAYMENT_ALREADY_EXISTS | Payment already exists.\r\nPAYMENT_CLOSED | Payment has been closed.\r\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\r\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\r\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\r\nPAYMENT_REPEAT | Payment has already been successfully paid.\r\nPAYMENT_EXPIRED | Payment has expired."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-accept_payments-payment
+      x-stoplight:
+        id: pg3uo8nm0h0ry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - request_id
+                - amount
+                - currency
+                - business_type
+                - customer
+                - product_info
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: zhmbcymucw94h
+                  description: 商户系统中该笔订单的唯一编码
+                  minLength: 1
+                  maxLength: 64
+                  example: 4e95132208654df990eb9b34edfefdca
+                amount:
+                  type: string
+                  x-stoplight:
+                    id: uhz1klbblpvoa
+                  description: 订单金额，需要用户支付的订单金额，单位元
+                currency:
+                  type: string
+                  x-stoplight:
+                    id: 7avydxdvwnybv
+                  description: 订单币种，ISO 4217三位字母货币代码，商户需要用户支付的订单币种
+                business_type:
+                  type: string
+                  x-stoplight:
+                    id: nepy8xsjmlepj
+                  description: "业务类型\r\n枚举 | 说明 \r\n---------|----------\r\nYICAIFU|易采付"
+                amount_details:
+                  type: object
+                  x-stoplight:
+                    id: qwlr522bhay0f
+                  description: 订单金额的明细
+                  properties:
+                    product_money_amount:
+                      type: string
+                      x-stoplight:
+                        id: ssbto54xr0w7m
+                      description: 商品总金额
+                    product_money_amount_currency:
+                      type: string
+                      x-stoplight:
+                        id: 012kjywsrh7xu
+                      description: 商品总金额币种
+                    fee_money_amount:
+                      type: string
+                      x-stoplight:
+                        id: p4i6dthvw9oub
+                      description: 费用总金额
+                    fee_money_amount_currency:
+                      type: string
+                      x-stoplight:
+                        id: dwgkatly6e7cg
+                      description: 费用总金额币种
+                customer:
+                  type: object
+                  x-stoplight:
+                    id: do8e1gz2l69kz
+                  required:
+                    - identifier
+                  properties:
+                    identifier:
+                      type: string
+                      x-stoplight:
+                        id: 058pb65ozqchi
+                      description: 用户在商户系统中的唯一编号
+                      minLength: 1
+                      maxLength: 64
+                    name:
+                      type: string
+                      x-stoplight:
+                        id: m31hw7y1jg061
+                      description: 付款人的姓名或公司名称
+                      minLength: 1
+                      maxLength: 64
+                    identification_type:
+                      type: string
+                      x-stoplight:
+                        id: ujscxio92j45o
+                      description: "付款人的证件类型\r\n枚举值|说明\r\n----|----\r\nID_CARD|中国大陆居民身份证\r\nUNIFIED_SOCIAL_CREDIT_ID|中国大陆企业统一社会信用代码证"
+                    id_number:
+                      type: string
+                      x-stoplight:
+                        id: 7ku3bbc9flbqa
+                      description: 付款人的证件号码，18位有效的个人身份证号码或统一社会信用代码证
+                      minLength: 1
+                      maxLength: 24
+                payment_method:
+                  type: string
+                  x-stoplight:
+                    id: td7pi0gk4ty5h
+                  description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|CNY 快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|CNY 快捷支付借记卡\r\nACCOUNT_BALANCE_PAYMENT|账户余额支付"
+                description:
+                  type: string
+                  x-stoplight:
+                    id: 2apjs3wble8v8
+                  description: 订单的描述信息
+                  maxLength: 256
+                expires_time:
+                  type: number
+                  x-stoplight:
+                    id: l4900xsho2hoo
+                  description: 订单的过期时间，13位时间戳毫秒。默认值：从订单创建时间起，7天后过期。超过过期时间，支付状态将变为EXPIRED
+                  minimum: 13
+                  maximum: 13
+                  example: 1712635467276
+                product_info:
+                  type: array
+                  x-stoplight:
+                    id: giauxq5rrafoo
+                  description: 商品信息，最多15条商品明细
+                  items:
+                    x-stoplight:
+                      id: 5fdltmp5475oj
+                    type: object
+                    maxProperties: 15
+                    properties:
+                      product_name:
+                        type: string
+                        x-stoplight:
+                          id: ceiqtbnhyh63w
+                        description: 商品名称
+                        maxLength: 256
+                      quantity:
+                        type: integer
+                        x-stoplight:
+                          id: 6d6enywobzy7i
+                        description: 商品数量
+                metadata:
+                  type: object
+                  x-stoplight:
+                    id: mb0n6tbgb1izk
+                  description: 商户自定义的数据，可以key-value pairs 的方式设置值。转换为String长度<= 1024 characters
+                additional_info:
+                  type: object
+                  x-stoplight:
+                    id: 8zwq0ixvpvyzn
+                  description: 扩展字段，附加信息
+      security:
+        - {}
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      description: "### 功能说明：\r\n自动免密支付接口。\r\n### 幂等说明：\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，继续执行原支付交易；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付交易。\r\n### 超时方案：\r\n如果调用Create a automatic payment接口超时，可使用request_id调用Get a payment detail by ID接口获取结果。\r\n### 验证支付：\r\n如果调用Create a automatic payment接口返回status=REQUIRES_ACTION，需要调用Send captcha on a payment获取支付验证码，然后调用Verify captcha on a payment进行验证支付。"
+    parameters: []
+  '/accept_payments/captchas/{request_id}':
+    post:
+      summary: Send captcha on a payment
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Captcha'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nPAYMENT_NOT_EXIST|Payment does not exist.\r\nNO_NEED_VERIFY|No need to verify.\r\nREQUEST_CONFLICT|The request cannot be processed as another request is being processed.\r\nREMOTE_INVOKE_FAIL|A system or application error occurred."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-accept_payments-captchas-verify
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                captcha:
+                  type: string
+                  x-stoplight:
+                    id: kiykayjuj2y0i
+                  description: |-
+                    验证码，6位数字
+                    >= 6 characters
+                    <= 6 characters
+                    Example:
+                    651938
+      security:
+        - {}
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      description: "### 功能说明：\r\n当支付需要进行验证时，通过该接口发送支付验证码。\r\n"
+      x-stoplight:
+        id: gv4642wlru10g
+    parameters:
+      - schema:
+          type: string
+        name: request_id
+        in: path
+        required: true
+  '/accept_payments/captchas/verify/{request_id}':
+    post:
+      summary: Verify captcha on a payment
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nCUR_SUPPORT_ERROR | The currency is not supported.\r\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\r\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\r\nAGREEMENT_NOT_EXIST | Agreement does not exist.\r\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\r\nAGREEMENT_CANCELLED | The agreement has been cancelled.\r\nAGREEMENT_EXPIRED | The agreement has been expired.\r\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\r\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\r\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\r\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\r\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\r\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\r\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\r\nAML_REJECT | AML reject.\r\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\r\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\r\nPAYMENT_ALREADY_EXISTS | Payment already exists.\r\nPAYMENT_CLOSED | Payment has been closed.\r\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\r\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\r\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\r\nPAYMENT_REPEAT | Payment has already been successfully paid.\r\nPAYMENT_EXPIRED | Payment has expired.\r\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\r\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\t\r\nCAPTCHA_NOT_VALID|The verification code has expired, please retrieve it again.\t\r\nCAPTCHA_NOT_MATCH|The verification code is incorrect, please check.\t\r\nCAPTCHA_USED|The verification code has been used, please retrieve a new one."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-accept_payments-captchas-verify
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                captcha:
+                  type: string
+                  description: 验证码，6位数字
+                  minLength: 6
+                  maxLength: 6
+                  example: '651938'
+      security:
+        - {}
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      description: "### 功能说明：\r\n提交验证码进行验证支付，推进支付流程。\r\n\r\n"
+      x-stoplight:
+        id: 99p15q3c1cqqk
+    parameters:
+      - schema:
+          type: string
+        name: request_id
+        in: path
+        required: true
+  '/accept_payments/refunds/request_id/{request_id}':
+    parameters:
+      - schema:
+          type: string
+        name: request_id
+        in: path
+        required: true
+        description: 商户系统中该笔退款的唯一编码
+    get:
+      summary: Get a refund detail by ID
+      tags:
+        - Refund
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.\r\nMERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\nMERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "code | message \r\n---------|----------\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-accept_payments-refunds-id
+      x-stoplight:
+        id: posx3qerxuxxa
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: Bearer <Token>
+          name: Authorization
+  /accept_payments/refunds:
+    post:
+      summary: Create a refund
+      tags:
+        - Refund
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+        '400':
+          description: "code | message \r\n---------|----------\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.\r\nAMOUNT_NOT_EQUAL|The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\nMERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\r\nMERCHANT_ACCT_NOT_EXIST|The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\nPAYMENT_NOT_EXIST|Payment does not exist.\r\nPAYMENT_NOT_SUCCEED|Payment has not been successfully paid.\r\nREFUND_EXPIRED|Refund has expired.\r\nREFUND_AMOUNT_EXCEEDED|The refund amount cannot be greater than the paid amount.\r\nREQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID|The merchant account status is invalid.\r\nACCOUNT_BALANCE_INSUFFICIENT|Account balance insufficient.\r\nREFUND_NOT_SUPPORTED|Refunds are not supported.\r\nREQUEST_CONFLICT|The request cannot be processed as another request is being processed.\r\n"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-accept_payments-refunds
+      x-stoplight:
+        id: 9raeaqvqudpab
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer <Token>
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - request_id
+                - amount
+                - payment_request_id
+              properties:
+                request_id:
+                  type: string
+                  x-stoplight:
+                    id: wh4gfklrlwknt
+                  description: 商户系统中该笔退款的唯一编码
+                amount:
+                  type: string
+                  x-stoplight:
+                    id: 85gmhl3v2wovq
+                  description: 退款金额，与原支付订单的币种一致，累计退款金额不能大于原支付订单的金额
+                amount_details:
+                  type: object
+                  x-stoplight:
+                    id: wfpzb5h4qez2u
+                  properties:
+                    product_money_amount:
+                      type: string
+                      x-stoplight:
+                        id: 0ukxoz8vh8jy5
+                      description: 本次退款的商品总金额，与原支付订单的币种一致
+                    fee_money_amount:
+                      type: string
+                      x-stoplight:
+                        id: f0mvzdq6j8rbz
+                      description: 本次退款的费用金额，与原支付订单的币种一致
+                payment_request_id:
+                  type: string
+                  x-stoplight:
+                    id: mjn5xaqf7p0sb
+                  description: 原支付订单的request_id
+                reason:
+                  type: string
+                  x-stoplight:
+                    id: cq0isevfspwd3
+                  description: 退款原因
+                metadata:
+                  type: object
+                  x-stoplight:
+                    id: 0cut7oxoh8ptk
+                  description: 商户自定义的数据，可以key-value pairs 的方式设置值。转换为String长度<= 1024 characters
+      description: "### 功能说明：\r\n对指定的支付订单进行退款，支持多次部分退款。\r\n### 幂等说明：不支持幂等\r\n- request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id不同，业务字段相同时，按全新交易处理，创建新的Refund交易。\r\n### 超时方案：\r\n如果调用Create a refund接口超时，可使用request_id调用Get a refund detail by ID接口获取结果。"
+components:
+  schemas:
+    Payment:
+      title: Payment
+      x-stoplight:
+        id: 0j3wys1kil3ym
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: dpu3lfw0yvobq
+          description: LianLian GLobal系统的唯一编号
+        request_id:
+          type: string
+          x-stoplight:
+            id: cbruq0anfc7my
+          description: 商户系统中该笔订单的唯一编码
+        amount:
+          type: string
+          x-stoplight:
+            id: 1yr0qexvyvwda
+          description: 订单金额，商户需要用户支付的订单金额，单位元
+        currency:
+          type: string
+          x-stoplight:
+            id: 40j3jpzjiklmp
+          description: 订单币种，ISO 4217三位字母货币代码，商户需要用户支付的订单币种
+        status:
+          x-stoplight:
+            id: luwt1l1uh3d4n
+          enum:
+            - CREATED
+            - PROCESSING
+            - SUCCEEDED
+            - CANCELED
+            - EXPIRED
+            - REQUIRES_ACTION
+          description: "支付状态\r\n枚举值|说明\r\n----|----\r\nCREATED|已创建，等待支付\r\nPROCESSING|支付中\r\nREQUIRES_ACTION|待验证码验证支付\r\nSUCCEEDED|成功\r\nCANCELED|已取消\r\nEXPIRED|过期"
+        payment_method:
+          x-stoplight:
+            id: al4uj0pwcgu9j
+          enum:
+            - CN_FAST_PAYMENT_CREDIT_CARD
+            - CN_FAST_PAYMENT_DEBIT_CARD
+            - CNY_COMPANY_BANK_CARD
+          description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|银行卡快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|银行卡快捷支付借记卡\r\nCNY_COMPANY_BANK_CARD|CNY 企业网银\r\n"
+        payment_currency:
+          type: string
+          x-stoplight:
+            id: eg7xw8otcawb4
+          description: 支付币种，ISO 4217三位字母货币代码。
+        payment_amount:
+          type: string
+          x-stoplight:
+            id: j9m8mpafqk950
+          description: 支付金额
+        fx:
+          type: object
+          x-stoplight:
+            id: tenwszm7o2on9
+          description: payment_currency与currency不相同时，对应的汇率
+          properties:
+            rate:
+              type: string
+              x-stoplight:
+                id: 8p6zd6gmwyp11
+              description: 汇率
+            currency_pair:
+              type: string
+              x-stoplight:
+                id: hbx3600outjd4
+              description: 币种对
+            base_currency:
+              type: string
+              x-stoplight:
+                id: 86tklh88pstqy
+              description: 基础币种
+        payment_time:
+          type: number
+          x-stoplight:
+            id: s7r8h0vsyws5i
+          description: 支付完成时间，13位时间戳
+        accounting_date:
+          type: string
+          x-stoplight:
+            id: h02odxwgk62wn
+          description: 记账日期，格式yyyyMMdd，例如20240308
+        metadata:
+          type: object
+          x-stoplight:
+            id: mv18ha5grzh0l
+          description: 商户自定义的数据，可以key-value pairs 的方式设置值。
+        url:
+          type: string
+          x-stoplight:
+            id: c39h6umfg38b0
+          description: 支付收银台的url地址（Checkout URL），可以将用户重定向到该url地址，打开收银台页面。url在40分钟内有效，超过40分钟后需要重新获取。
+        create_time:
+          type: number
+          x-stoplight:
+            id: t5yzt9ife9xgz
+          description: 创建时间，13位时间戳
+        update_time:
+          type: number
+          x-stoplight:
+            id: r2h9170uhq8s1
+          description: 更新时间，13位时间戳
+        business_type:
+          type: string
+          x-stoplight:
+            id: io6j2ri2cd9nb
+          description: "业务类型\r\n枚举 | 说明 \r\n---------|----------\r\nYICAIFU|易采付"
+    Agreement:
+      title: Agreement
+      x-stoplight:
+        id: 8fycyvasfltcw
+      type: object
+      description: 支付授权协议
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: qtluyu3z7h4su
+          description: LianLian GLobal系统授权协议的唯一编号
+        customer:
+          type: object
+          x-stoplight:
+            id: dgg6vt73h281x
+          properties:
+            identifier:
+              type: string
+              x-stoplight:
+                id: 8qj94z5kigw7q
+              description: 用户在商户系统中的唯一编号
+        status:
+          type: string
+          x-stoplight:
+            id: qaggzldrbngt1
+          description: "协议的状态\r\n枚举值|说明\r\n----|----\r\nACTIVE|正常\r\nCANCELED|已取消（已解除）\r\nEXPIRED|已过期"
+        create_time:
+          type: number
+          x-stoplight:
+            id: 4ofgegz6x2d3b
+          description: 创建时间，13位时间戳
+        update_time:
+          type: number
+          x-stoplight:
+            id: g6yy7u3kqdjax
+          description: 更新时间，13位时间戳
+        expires_time:
+          type: number
+          x-stoplight:
+            id: oxuhzmdh6q21r
+          description: 协议的到期时间，13位时间戳毫秒。
+    Refund:
+      title: Refund
+      x-stoplight:
+        id: msuvj07ttcz6a
+      type: object
+      description: 退款单信息
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: vtnahzdx5urds
+          description: LianLian GLobal系统退款的唯一编号
+        request_id:
+          type: string
+          x-stoplight:
+            id: 34ykg4nqx22lp
+          description: 商户系统中该笔退款的唯一编码
+        amount:
+          type: string
+          x-stoplight:
+            id: cotmlbfbsfi80
+          description: 退款金额
+        currency:
+          type: string
+          x-stoplight:
+            id: tc2t8k76gb42w
+          description: 退款币种
+        payment_request_id:
+          type: string
+          x-stoplight:
+            id: ce05w9whwe1as
+          description: 原支付订单的request_id
+        payment_id:
+          type: string
+          x-stoplight:
+            id: va84kapqf13oi
+          description: 原支付订单连连系统唯一ID
+        status:
+          type: string
+          x-stoplight:
+            id: ukpwb9y2zxry2
+          description: "退款状态\r\n枚举值|说明\r\n----|----\r\nCREATED|已创建，等待退款\r\nPROCESSING|退款处理中\r\nSUCCEEDED|退款成功\r\nFAILED|退款失败"
+        failure_code:
+          type: string
+          x-stoplight:
+            id: qlmvreri3m31r
+          description: "退款失败原因错误码\r\n**failure_code** |**failure_reason** |**中文解释**\r\n---------|----------|----------\r\nACCOUNT_BALANCE_INSUFFICIENT|Account balance insufficient. | 账户余额不足\r\nREFUND_ERROR|Refund error, Please contact technical support.| 退款发生其他原因的异常，可联系连连的技术支持人员"
+        failure_reason:
+          type: string
+          x-stoplight:
+            id: 22ktct9k8qcai
+          description: 退款失败原因描述
+        refund_time:
+          type: number
+          x-stoplight:
+            id: kfem9aeiiy94x
+          description: 退款完成时间，13位时间戳
+        accounting_date:
+          type: string
+          x-stoplight:
+            id: 23kf2j3kbg6fn
+          description: 记账日期，格式yyyyMMdd，例如20240308
+        metadata:
+          type: object
+          x-stoplight:
+            id: l417sj0tu5paa
+          description: 商户自定义的数据，可以key-value pairs 的方式设置值。
+        create_time:
+          type: number
+          x-stoplight:
+            id: y7x769pcig7fj
+          description: 创建时间，13位时间戳
+        update_time:
+          type: number
+          x-stoplight:
+            id: anqxak23nc6ma
+          description: 更新时间，13位时间戳
+    Captcha:
+      title: Captcha
+      x-stoplight:
+        id: avwxzy6nqni4l
+      type: object
+      properties:
+        request_id:
+          type: string
+          x-stoplight:
+            id: w06gj2yscma2g
+          description: 商户系统中该笔订单的唯一编码。
+        send_time:
+          type: number
+          x-stoplight:
+            id: 3ytmr9h6lcfo3
+          description: 发送时间，13位时间戳。
+        send_type:
+          type: string
+          x-stoplight:
+            id: l06omig2r96no
+          description: '验证码发送方式：PHONE, EMAIL。'
+        country_code:
+          type: string
+          x-stoplight:
+            id: qgc51p9koogga
+          description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码。
+        phone_tail:
+          type: string
+          x-stoplight:
+            id: xbbnvvlqgertf
+          description: 手机号后4位
+  securitySchemes:
+    客户端凭据授权:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}

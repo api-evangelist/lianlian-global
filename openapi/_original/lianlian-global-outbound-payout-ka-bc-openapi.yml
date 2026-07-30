@@ -1,0 +1,181 @@
+swagger: '2.0'
+x-stoplight:
+  id: mc0k4d6cp3g4r
+info:
+  title: BC Virtual Account API
+  version: '1.0'
+  description: ''
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /bc/va:
+    get:
+      responses:
+        '200':
+          description: '[](url)'
+          schema:
+            $ref: '#/definitions/BC-VA'
+          examples: {}
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 600001|交易信息不存在|
+            | 600002|申请VA此币种暂不支持|
+            | 600003|贸易材料对应付款人不一致|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: wo6zu3e3tnf5e
+              message:
+                type: string
+                x-stoplight:
+                  id: xbpwzfboma6iq
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: g9damu9u3okpu
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '600002'
+              message: 申请VA此币种暂不支持
+              httpCode: '400'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: ngqowpliltaug
+              message:
+                type: string
+                x-stoplight:
+                  id: fmg7f1nmcbvqx
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: m8v0mf161jh1e
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      summary: Get BC VA Info
+      tags:
+        - OPERATIONS
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: VA Information
+            description: VA information defined in LianLian Global's system
+            properties:
+              payoutId:
+                type: string
+                maxLength: 32
+                x-stoplight:
+                  id: 4ury1aagk926m
+                description: Payout request id from client.
+              accountNo:
+                type: string
+                x-stoplight:
+                  id: oyzj0b39yfwtp
+                description: BC virtual account number.
+          x-examples:
+            Example 1:
+              payoutId:
+                - tf2023010100001
+              accountNo: '''GB28CITI185008509123456'''
+          description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: ''
+      operationId: get-vadd
+      x-stoplight:
+        id: io3v89g1zdjx7
+      x-internal: false
+    parameters: []
+basePath: /outbound/card/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  BC-VA:
+    title: BC-VA
+    x-stoplight:
+      id: 5fl04kj3kbdxl
+    type: object
+    properties:
+      payoutId:
+        type: string
+        x-stoplight:
+          id: udlcw7c4zomk3
+        description: Payout request id from client
+      accountNo:
+        type: string
+        x-stoplight:
+          id: n1mesldv4qiaq
+        description: BC virtual account number
+      accountName:
+        type: string
+        x-stoplight:
+          id: 4q7313suvigv1
+        description: BC virtual account name
+      bankName:
+        type: string
+        x-stoplight:
+          id: voejujimnv0xv
+        description: BC virtual account bank name
+      swiftCode:
+        type: string
+        x-stoplight:
+          id: bfspfw5349dpi
+        description: Bank SWIFT code
+      bankCountry:
+        type: string
+        x-stoplight:
+          id: 9lqep90t3hwd0
+        description: 'Bank account country,ISO 3166-1 alpha-2'
+      bankAddress:
+        type: string
+        x-stoplight:
+          id: nfjqi0poapia2
+      custType:
+        type: string
+        x-stoplight:
+          id: 10p4vzjd8vcwq
+        description: "|TYPE|DESCRIPTION|\r\n|---|---|\r\n|CORPORATE|Corporate|\r\n|INDIVIDUAL|Individual|"
+      createTime:
+        type: string
+        x-stoplight:
+          id: nm4vqqzd7ec2m
+        description: 'YYYY-MM-DD hh:mm:ss'
+tags:
+  - name: OPERATIONS

@@ -1,0 +1,192 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "File Folder",
+        "version": "1.0",
+        "description": "A `File Folder` object includes multiple `File` objects' reference.\n\nAnd the `File Folder` objects are used for payout, payee, etc."
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-folders/{id}": {
+            "get": {
+                "summary": "Get File Folder Info by ID",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileFolder"
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "operationId": "get-file",
+                "description": "Get File Floder Info by ID.",
+                "parameters": []
+            },
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "File Floder ID"
+                }
+            ],
+            "delete": {
+                "summary": "Delete File Folder Info by ID",
+                "operationId": "delete-Folder-id",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "description": "Delete `File Folder` Info by ID. This method only delete File Floder object, not the files associated with it.",
+                "tags": [
+                    "Operations"
+                ]
+            }
+        },
+        "/ew-folders": {
+            "post": {
+                "summary": "Create File Folder Info",
+                "operationId": "create-file",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileFolder"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "description": "create a new `File Floder` with multiple `File` refrence.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "./CommonModel.json#/components/schemas/FileRequest"
+                            }
+                        },
+                        "application/xml": {
+                            "schema": {
+                                "$ref": "#/components/schemas/File"
+                            }
+                        }
+                    },
+                    "description": ""
+                },
+                "tags": [
+                    "Operations"
+                ]
+            },
+            "parameters": []
+        }
+    },
+    "components": {
+        "schemas": {
+            "FileFolder": {
+                "title": "File Folder",
+                "type": "object",
+                "description": "",
+                "examples": [
+                    {
+                        "id": "string",
+                        "purpose": "payout",
+                        "files": [
+                            {
+                                "id": "string",
+                                "name": "string",
+                                "title": "string",
+                                "create_time": "string",
+                                "notes": "string"
+                            }
+                        ],
+                        "additional_info": [
+                            {
+                                "name": "string",
+                                "value": "string"
+                            }
+                        ],
+                        "create_time": "string",
+                        "update_time": "string",
+                        "file_folder_name": "string"
+                    }
+                ],
+                "x-tags": [
+                    "Models"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "File Folder unique identifier."
+                    },
+                    "purpose": {
+                        "type": "string",
+                        "description": "The purpose of the upload file.",
+                        "enum": [
+                            "PAYOUT",
+                            "PAYEE"
+                        ]
+                    },
+                    "files": {
+                        "type": "array",
+                        "description": "List of File info",
+                        "items": {
+                            "$ref": "./Attachment.json#/components/schemas/File"
+                        }
+                    },
+                    "additional_info": {
+                        "type": "array",
+                        "description": "For File Folder information to be transmitted as agreed between LianLian Global and client.",
+                        "items": {
+                            "$ref": "./Items.json#/components/schemas/Item"
+                        }
+                    },
+                    "create_time": {
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch.",
+                        "type": "integer"
+                    },
+                    "file_folder_name": {
+                        "type": "string",
+                        "description": "Name of File Folder."
+                    }
+                }
+            }
+        },
+        "securitySchemes": {}
+    }
+}

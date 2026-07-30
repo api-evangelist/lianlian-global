@@ -1,0 +1,307 @@
+openapi: 3.1.0
+x-stoplight:
+  id: cd4kuv7gsez0s11
+info:
+  title: Control APIS
+  version: '1.0'
+  description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+  contact:
+    name: ''
+  summary: VCC -APIS
+servers:
+  - url: 'https://test-global-api.lianlianpay-inc.com'
+  - url: 'https://global-api.lianlian.com'
+    description: ''
+paths:
+  '/gateway/vcc-api/card/{cardId}/limit':
+    post:
+      summary: 更新卡交易限额
+      operationId: psot-gateway-vcc-api-card-cardId-limit
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    data: true
+                    success: true
+                    message: SUCCESS
+                required:
+                  - code
+                  - success
+                  - message
+                properties:
+                  code:
+                    type: integer
+                    description: 响应码
+                  success:
+                    type: boolean
+                    description: 成功标识
+                  message:
+                    type: string
+                    description: 响应描述
+        '400':
+          description: Missing Required Information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  singleLimit: '100'
+                  singleDayLimit: '10000'
+                  transactionCurrencyLimitList:
+                    - currency: USD
+                      singleLimit: '400.0'
+                      singleDayLimit: '4000.0'
+                      singleMonthLimit: ''
+                      lifeTimeLimit: '10000000'
+                    - currency: GBP
+                      singleLimit: '400.0'
+                      singleDayLimit: '4000.0'
+                      singleMonthLimit: ''
+                      lifeTimeLimit: '10000000'
+              required:
+                - currency
+              properties:
+                singleLimit:
+                  type: string
+                  description: 单笔授权交易限额，默认最高5wUSD，若传空则不限额
+                singleDayLimit:
+                  type: string
+                  description: 单日授权交易限额，若传空则不限额
+                currency:
+                  type: string
+                  x-stoplight:
+                    id: 6j6c042qmhjxw
+                  description: 基础币种，默认USD
+                singleMonthLimit:
+                  type: string
+                  x-stoplight:
+                    id: hpvr1uxdubzw5
+                  description: 单月授权交易限额，若传空则不限额
+                lifeTimeLimit:
+                  type: string
+                  x-stoplight:
+                    id: dwgg8qnadjohm
+                  description: 授权交易总限额，若传空则不限额
+                transactionCurrencyLimitList:
+                  type: array
+                  description: 消费币种限额列表
+                  items:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        description: 消费币种
+                      singleLimit:
+                        type: string
+                        description: 单笔消费币种，若传空则不限额
+                      singleDayLimit:
+                        type: string
+                        description: 单日消费币种，若传空则不限额
+                      singleMonthLimit:
+                        type: string
+                        description: 单月消费币种，若传空则不限额
+                      lifeTimeLimit:
+                        type: string
+                        description: 授权消费币种，若传空则不限额
+            examples:
+              Example 1:
+                value:
+                  currency: USD
+                  lifeTimeLimit: '500000.0'
+                  transactionCurrencyLimitList:
+                    - currency: KRW
+                      lifeTimeLimit: '100000.0'
+                      singleMonthLimit: '10000.0'
+                      singleDayLimit: '1000.0'
+                      singleLimit: '100.0'
+        description: ''
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: 'Authorization:'
+          description: 'Basic {token}'
+        - schema:
+            type: string
+          in: header
+          name: 'LLPAY-Signature:'
+          description: 't={REQUEST_EPOCH},v={payload}'
+      x-stoplight:
+        id: 8kaceldg2s6a1
+    parameters:
+      - schema:
+          type: string
+        name: cardId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: cardId
+        in: path
+        required: true
+    get:
+      summary: 查询卡交易限额
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 100001
+                    message: SUCCESS
+                    data:
+                      cardId: '2023111367505835'
+                      currency: USD
+                      singleLimit: '50000.00'
+                      singleDayLimit: '1000.00'
+                      singleDayLimitRemaining: '1000.00'
+                      transactionCurrencyLimitList:
+                        - singleLimit: '22222.00'
+                          singleDayLimitRemaining: '1000.00'
+                          currency: EUR
+                          singleDayLimit: '1000.00'
+                        - singleMonthLimitRemaining: '3000.00'
+                          singleLimit: '1000.00'
+                          singleMonthLimit: '3000.00'
+                          singleDayLimitRemaining: '2000.00'
+                          currency: GBP
+                          singleDayLimit: '2000.00'
+                          lifeTimeLimitRemaining: '4000.00'
+                          lifeTimeLimit: '4000.00'
+                    success: true
+                required:
+                  - code
+                  - message
+                  - success
+                properties:
+                  code:
+                    type: integer
+                    description: 响应码
+                  message:
+                    type: string
+                    description: 响应描述
+                  success:
+                    type: boolean
+                    description: 成功标识
+                  data:
+                    type: object
+                    properties:
+                      cardId:
+                        type: string
+                        description: 卡唯一编号
+                      currency:
+                        type: string
+                        description: 卡币种
+                      singleLimit:
+                        type: string
+                        description: 卡限额
+                      singleDayLimit:
+                        type: string
+                        description: 单日限额
+                      singleDayLimitRemaining:
+                        type: string
+                        description: 单日限额余额
+                      singleMonthLimit:
+                        type: string
+                        x-stoplight:
+                          id: u80nguiovdket
+                        description: 单月授权交易限额  单位：元
+                      singleMonthLimitRemaining:
+                        type: string
+                        x-stoplight:
+                          id: ccqzz0g5smsr9
+                        description: 单月剩余限额 单位：元
+                      lifeTimeLimit:
+                        type: string
+                        x-stoplight:
+                          id: yoyz90j18lqwk
+                        description: 授权交易总限额  单位：元
+                      lifeTimeLimitRemaining:
+                        type: string
+                        x-stoplight:
+                          id: wiyt5zu7b9qu1
+                        description: 总剩余限额 单位：元
+                      singleWeekLimitRemaining:
+                        type: string
+                        x-stoplight:
+                          id: m8mogf1p57m1j
+                        description: 单周剩余限额 单位：元
+                      transactionCurrencyLimitList:
+                        type: array
+                        description: 授权交易币种限额列表
+                        items:
+                          type: object
+                          properties:
+                            singleLimit:
+                              type: string
+                              description: 单笔授权交易限额  单位：元
+                            singleDayLimitRemaining:
+                              type: string
+                              description: 单日授权交易余额
+                            currency:
+                              type: string
+                              description: 交易币种
+                            singleDayLimit:
+                              type: string
+                              description: 单日授权交易限额  单位：元
+                            singleMonthLimitRemaining:
+                              type: string
+                              description: 单月授权交易余额
+                            singleMonthLimit:
+                              type: string
+                              description: 单月授权交易限额  单位：元
+                            lifeTimeLimitRemaining:
+                              type: string
+                              description: 授权交易总限额余额
+                            lifeTimeLimit:
+                              type: string
+                              description: 授权交易总限额  单位：元
+                            singleWeekLimitRemaining:
+                              type: string
+                              x-stoplight:
+                                id: gpe6m52vhlfdl
+                              description: 单周剩余限额 单位：元
+              examples:
+                Example 1:
+                  value:
+                    code: 100001
+                    message: SUCCESS
+                    data:
+                      cardId: '2023111367505835'
+                      currency: USD
+                      singleLimit: '50000.00'
+                      singleDayLimit: '1000.00'
+                      singleDayLimitRemaining: '1000.00'
+                      transactionCurrencyLimitList:
+                        - singleLimit: '22222.00'
+                          singleDayLimitRemaining: '1000.00'
+                          currency: EUR
+                          singleDayLimit: '1000.00'
+                        - singleMonthLimitRemaining: '3000.00'
+                          singleLimit: '1000.00'
+                          singleMonthLimit: '3000.00'
+                          singleDayLimitRemaining: '2000.00'
+                          currency: GBP
+                          singleDayLimit: '2000.00'
+                          lifeTimeLimitRemaining: '4000.00'
+                          lifeTimeLimit: '4000.00'
+                    success: true
+      operationId: get-gateway-vcc-api-card-cardId-limit
+      x-stoplight:
+        id: hj8am8v33kuqo
+      description: "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+components:
+  schemas: {}

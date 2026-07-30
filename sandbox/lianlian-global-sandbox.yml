@@ -1,0 +1,51 @@
+generated: '2026-07-19'
+method: searched
+source: OpenAPI servers[]/host across openapi/, service summaries on https://developer.lianlianglobal.com, https://github.com/LLGlobal/lianlian-devtool
+description: LianLian Global separates test and production by hostname rather than by key prefix. Every API product
+  documents a sandbox host alongside its production host; credentials are issued per environment from the corresponding
+  console.
+separation: host-based
+environments:
+- name: sandbox
+  hosts:
+  - https://global-api-sandbox.lianlianpay-inc.com
+  - https://gtest-open-api.lianlianpay-inc.com
+  - https://test-global-api.lianlianpay-inc.com
+  console: https://test-global.lianlianpay-inc.com/console
+- name: production
+  hosts:
+  - https://global-api.lianlianpay.com
+  - https://global-open-api.lianlianpay.com
+  - https://global-api.lianlian.com
+  - https://us-api.lianlianglobal.com
+  - https://uk-api.lianlianglobal.com
+  console: https://global.lianlian.com/console
+host_map:
+- product: B2C Services API (llp-api)
+  sandbox: https://gtest-open-api.lianlianpay-inc.com
+  production: https://global-open-api.lianlianpay.com
+- product: Currency account / supplier payout / common services
+  sandbox: https://global-api-sandbox.lianlianpay-inc.com
+  production: https://global-api.lianlianpay.com
+- product: LLG Payments v2
+  sandbox: https://global-api-sandbox.lianlianpay-inc.com/payments/v2
+  production: https://global-api.lianlianpay.com/payments/v2
+- product: Cards Open API
+  sandbox: https://test-global-api.lianlianpay-inc.com
+  production: https://global-api.lianlian.com
+- product: e-Wallet OpenAPI
+  sandbox: https://test-global-api.lianlianpay-inc.com/gateway/v1
+  production: https://us-api.lianlianglobal.com/gateway/v1 | https://uk-api.lianlianglobal.com/gateway/v1
+provisioning:
+  tool: EW DevTool
+  url: https://github.com/LLGlobal/lianlian-devtool
+  steps:
+  - python main.py register — create a sandbox account and submit KYC
+  - wait for KYC approval from the LianLian dev team
+  - python main.py developer — activate the developer account and receive API credentials
+  notes: For the signature-based products, developer credentials (developer_id, master_token, LianLian public key)
+    are issued by emailing dev_support@lianlianpay.com with your developer_name, RSA public key and optional webhook_url.
+test_values: null
+test_values_note: LianLian does not publish magic test card numbers, test bank accounts or test clocks; sandbox
+  behaviour is driven by real-shaped data against the sandbox hosts. No test values are recorded here because none
+  are published.

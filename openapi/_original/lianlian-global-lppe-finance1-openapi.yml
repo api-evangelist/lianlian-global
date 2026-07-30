@@ -1,0 +1,780 @@
+openapi: 3.1.0
+info:
+  title: Finance
+  version: '1.0'
+  summary: Finance API
+servers:
+  - url: 'https://global-api.lianlian.com/api/v1'
+paths:
+  /reports/download:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: 41x95h1lf1aeq
+                  description: 报表ID
+          application/xml:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: 2j8tdgq15x2n5
+                  description: 报表ID
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: kcdbxt7tlfy6j
+                  description: 报表ID
+        description: ''
+      summary: Download a report by ID
+      x-stoplight:
+        id: 5i4gn0flov8it
+      tags:
+        - Reports
+      responses:
+        '200':
+          description: 返回报告文件流信息
+        '400':
+          description: |-
+            **CODE**|**MESSAGE**
+            ---|---
+            MISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.
+            FILE_SERVER_REMOTE_ERROR|A system or application error occurred.
+            REPORT_STATUS_UNAVAILABLE|The report status is unavailable.
+            REPORT_FILE_EXPIRED|The report file is expired.
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '401':
+          description: |-
+            **CODE**|**MESSAGE**
+            ---|---
+            NOT_AUTHORIZED|Lacks valid authentication credentials or insufficient permissions.
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+        '404':
+          description: |-
+            **CODE**|**MESSAGE**
+            ---|---
+            RESOURCE_NOT_FOUND|The specified resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      description: "根据唯一ID获取交易报告文件，以下载的方式返回报告文件流信息。\r\n- 业务字段相同时，支持幂等，多次调用返回结果一致"
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+    parameters: []
+  /reports:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/ReportRequest.yaml
+          application/xml:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: 报表ID
+        description: ''
+      summary: Create a report
+      x-stoplight:
+        id: m4tlwogyg236z
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report - copy'
+        '400':
+          description: "code | message \r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n PARAM_ERROR | A parameter value is not valid.\r\n DATE_RANGE_TOO_BIG | The time interval exceeds 3 months.\r\n REPORT_TIME_FORBIDDEN | Report creation is prohibited at the current time.\r\n REPORT_TIME_TOO_EARLY | The report time is too early.\r\n MERCHANT_ACCT_NOT_EXIST | The merchant currency account doesn't exist.\r\n STATEMENT_REPORT_MUST_BEFORE_TODAY | The end time of statement report must be earlier than today."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      tags:
+        - Reports
+      description: "## 功能说明\r\n调用`Create a report`接口创建一个生成报告的任务，报告文件生成完成后会发送webhook通知，可以通过`Download a report by ID`接口下载报告文件。\r\n## 接口幂等说明\r\n- 业务字段相同时，不支持幂等，会创建多个report\r\n## 报表说明\r\n- 支持获取2年内的交易明细和资金明细数据。\r\n- 查询条件时间from到to时间范围不能超过3个月。\r\n- TRANSACTION_REPORT：交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- TRANSACTION_PLATFORM_REPORT：账户体系产品平台维度获取交易明细，交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- STATEMENT_REPORT：资金明细包含交易后余额，不包含账户期初期末余额，支持查询D日最新的资金明细。\r\n- STATEMENT_BALANCE_REPORT：包含期初和期末余额的资金对账单，仅支持获取D-1日数据，请在D日凌晨3点钟以后发起请求。\r\n- ACCEPT_PAYMENT_TRANSACTION_BILL：支付收单（Accept Payments）交易明细，仅支持获取D-1日数据，支持transaction_type:ACCEPT_PAYMENT和ACCEPT_PAYMENT_REFUND\r\n- ACCEPT_PAYMENT_BALANCE_BILL：支付收单（Accept Payments）资金明细，仅支持获取D-1日数据，支持transaction_type:ACCEPT_PAYMENT和ACCEPT_PAYMENT_REFUND\r\n- ACCEPT_PAYMENT_SETTLEMENT_REPORT：支付收单（Accept Payments）结算单。"
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+    parameters: []
+    get:
+      summary: Get list of reports
+      operationId: get-reports
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    description: 每页条数
+                  page:
+                    type: string
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    description: 总条数
+                  total_page:
+                    type: string
+                    description: 总页数
+                  page_list:
+                    description: 分页数据
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Report - copy'
+                      x-stoplight:
+                        id: h2h7aytqsrmbj
+        '400':
+          description: "code | message \r\n---------|----------\r\n START_AND_END_DATE_INVALID | Both the start time and end time must be either both filled in or both empty.\r\n PARAM_ERROR| A parameter value is not valid.\r\n MISSING_REQUIRED_PARAMETER|A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      x-stoplight:
+        id: 1k91j48bvqmr4
+      tags:
+        - Reports
+      requestBody:
+        content: {}
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/page_size'
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+        - schema:
+            type: string
+          in: query
+          name: type
+          description: 报告类型
+        - schema:
+            type: number
+          in: query
+          name: start_time
+          description: 创建开始时间， 时间戳，毫秒
+        - schema:
+            type: number
+          in: query
+          name: end_time
+          description: 创建结束时间，时间戳，毫秒
+      security:
+        - 客户端凭据授权: []
+      description: 获取报告文件详情列表信息。
+  '/reports/{id}':
+    get:
+      summary: Get a report by ID
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report - copy'
+        '400':
+          description: "code | message \r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER| A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "code | message \r\n---------|----------\r\n RESOURCE_NOT_FOUND| The specified resource does not exist.\r\n"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-a-financial-report
+      description: 根据唯一ID获取报告文件详情信息。
+      x-stoplight:
+        id: fhy2ms5peco44
+      requestBody:
+        content: {}
+      tags:
+        - Reports
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        description: 报表ID
+        required: true
+  '/transactions/{id}':
+    get:
+      summary: Get a transaction by ID
+      tags:
+        - Transaction
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: ../models/TransactionDetail.yaml
+        '400':
+          description: |-
+            **CODE**|**MESSAGE**
+            ---|---
+            PARAM_ERROR|A parameter value is not valid or missing.
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-a-financial-transaction
+      description: 通过唯一交易ID获取交易明细详情信息。
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        description: 交易ID
+        required: true
+  /transactions:
+    get:
+      summary: Get list of transactions
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    description: 每页条数
+                  page:
+                    type: string
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    description: 总条数
+                  total_page:
+                    type: string
+                    description: 总页数
+                  page_list:
+                    description: 分页数据
+                    type: array
+                    items:
+                      $ref: ../models/Transactions.yaml
+                      x-stoplight:
+                        id: 3735buav2xh6h
+        '400':
+          description: |-
+            **CODE**|**MESSAGE**
+            ---|---
+            PARAM_ERROR|A parameter value is not valid or missing.
+            DATE_RANGE_TOO_BIG|The time span can be up to 3 months.
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: list-of-financial-transactions
+      description: 通过分页方式获取交易明细列表信息。
+      parameters:
+        - $ref: '#/components/parameters/page_size'
+        - $ref: '#/components/parameters/page'
+        - schema:
+            type: string
+          in: query
+          name: request_id
+          description: 客户请求ID
+        - schema:
+            type: string
+          in: query
+          name: currency
+          description: 交易币种
+        - schema:
+            type: string
+          in: query
+          name: status
+          description: 交易状态
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: 交易明细ID
+        - schema:
+            type: number
+          in: query
+          name: start_time
+          description: create_time起始时间，13位时间戳毫秒
+          required: true
+        - schema:
+            type: number
+          in: query
+          name: end_time
+          description: create_time结束时间，13位时间戳毫秒
+          required: true
+      tags:
+        - Transaction
+      security:
+        - 客户端凭据授权: []
+    parameters: []
+  /receipts:
+    post:
+      summary: Create a receipt
+      tags:
+        - Receipts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    x-stoplight:
+                      id: b8q31uds7o1ot
+                    description: 交易订单ID
+                  receipt_type:
+                    type: string
+                    x-stoplight:
+                      id: r7qyinwrcysrx
+                    description: "类型\r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: 4m1k6tvgarpq3
+                    description: 凭证的状态`PROCESSING`或`COMPLETED`
+                  create_time:
+                    type: number
+                    x-stoplight:
+                      id: 2o4ajnl1zpj5k
+                    description: 创建时间，13位时间戳
+        '400':
+          description: "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\nPARAM_ERROR | A parameter value is not valid or is missing.\r\nTRANSACTION_ID_NOT_FOUND | The transaction order is not found. \r\nTRANSACTION_NOT_SUCCEED | The transaction order status is not SUCCEEDED. "
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: post-receipts
+      x-stoplight:
+        id: sz4mlktkiad15
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - transaction_id
+              properties:
+                transaction_id:
+                  type: string
+                  x-stoplight:
+                    id: vn9sbi1hhu5ah
+                  description: 连连生成的交易订单ID
+                receipt_type:
+                  type: string
+                  x-stoplight:
+                    id: 3kpwe7ip45aml
+                  description: "类型，默认为VOUCHER \r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+      description: 创建一个凭证申请，凭证生成后通过webhook通知状态`COMPLETED`，此时可以通过凭证下载接口获取交易凭证或外汇汇款申请书文件。
+  /receipts/download:
+    post:
+      summary: Download a receipt by ID
+      tags:
+        - Receipts
+      responses:
+        '200':
+          description: 付款凭证或外汇汇款申请书文件流信息，文件为ZIP压缩文件，解压缩后是PDF格式文件。
+      operationId: post-receipts-download
+      x-stoplight:
+        id: q317xoxbw2ky3
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          required: true
+          description: application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - transaction_id
+              properties:
+                transaction_id:
+                  type: string
+                  x-stoplight:
+                    id: d3xz0b5gwd1mx
+                  description: 交易单号
+                receipt_type:
+                  type: string
+                  x-stoplight:
+                    id: 22yrxousxupky
+                  description: "类型，默认为VOUCHER \r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+      description: 付款凭证或外汇汇款申请书文件下载，获取的凭证文件为ZIP压缩文件，解压缩后是PDF格式文件。
+  '/receipts/{transaction_id}/{receipt_type}':
+    parameters:
+      - schema:
+          type: string
+        name: transaction_id
+        in: path
+        description: 交易单号
+        required: true
+      - schema:
+          type: string
+        name: receipt_type
+        in: path
+        description: 类型，默认值为：VOUCHER。VOUCHER（付款凭证）或APPLICATION_FOR_FUNDS_TRANSFERS（外汇汇款申请书）
+    get:
+      summary: Get a receipt
+      tags:
+        - Receipts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    x-stoplight:
+                      id: ohkz1visucbij
+                    description: 交易单号
+                  receipt_type:
+                    type: string
+                    x-stoplight:
+                      id: 3dzebkx9dp3h5
+                    description: "类型\r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: oey69hr5c7x36
+                    description: 凭证的状态`PROCESSING`或`COMPLETED`
+                  create_time:
+                    type: number
+                    x-stoplight:
+                      id: p2ju07i5e6pp5
+                    description: 创建时间
+        '400':
+          description: "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-receipts-id
+      x-stoplight:
+        id: m361i6s89glg3
+      security:
+        - 客户端凭据授权: []
+      parameters: []
+      description: 获取凭证或外汇汇款申请书文件的生成状态。
+components:
+  schemas:
+    Report - copy:
+      title: Report
+      type: object
+      properties:
+        file_format:
+          type: string
+          description: 报表下载的文件格式，`CSV` `EXCEL`
+        file_name:
+          type: string
+          description: "文件名称，如果未在请求参数中自定义文件名称，将会使用默认的文件名称。\r\n默认名称：报表类型_查询开始时间_查询截止时间，日期时间格式yyyyMMdd（使用传入的13位时间戳转换）。默认名称例子：file_name=TRANSACTION_REPORT_20230914_20230922"
+        id:
+          type: string
+          description: 报表的ID
+        expires:
+          type: number
+          description: '报表下载的截止时间,13位时间戳。如果报表处于PENDING状态或报表永久有效，此字段值为空字符串'
+        report_parameters:
+          type: object
+          description: 用于生成报表的参数
+          properties:
+            from:
+              type: number
+              description: 资源创建的起始时间，13位时间戳毫秒，时间范围最多3个月
+            to:
+              type: number
+              description: 资源创建的结束时间，13位时间戳毫秒，时间范围最多3个月
+            transaction_types:
+              type: array
+              description: |-
+                交易类型，枚举值为：`RECEIVING` `PAYOUT` `WITHDRAW` `CONVERSION` 
+                - `RECEIVING`：收款
+                - `PAYOUT`：付款
+                - `WITHDRAW`：提现
+                - `CONVERSION`：换汇
+              items:
+                type: string
+            currencies:
+              type: array
+              description: '报表中包含的货币(每个货币为3位编码，符合[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)规范)'
+              items:
+                type: string
+        type:
+          type: string
+          description: "报告类型\r\n- `TRANSACTION_REPORT`：交易明细\r\n- `TRANSACTION_PLATFORM_REPORT`：平台交易明细\r\n- `STATEMENT_REPORT`：资金对账单\r\n- `STATEMENT_BALANCE_REPORT`：资金对账单（包含期初和期末余额）"
+        status:
+          type: string
+          description: 报表中包含的状态，`PROCESSING`或`COMPLETED`
+        create_time:
+          type: number
+          x-stoplight:
+            id: eq1m7anti3z77
+          description: 报表创建时间，毫秒
+    Transaction:
+      title: Transaction
+      x-stoplight:
+        id: t0humuhfnmxj5
+      type: object
+      properties:
+        request_id:
+          type: string
+          x-stoplight:
+            id: ejbcei7bptlrc
+          description: 客户端请求ID
+        id:
+          type: string
+          x-stoplight:
+            id: m8lhmkktp29vv
+          description: 交易ID
+        amount:
+          type: string
+          description: 交易总额
+          x-stoplight:
+            id: sjgwh7jh5sc5n
+        net:
+          type: string
+          x-stoplight:
+            id: xnt6iuwz0a7bn
+          description: "交易净额，Net amount of the transaction, 单位元，精度分\r\n[net=amount-fee]"
+        rate:
+          type: string
+          x-stoplight:
+            id: x913u4v9ltzze
+          description: 汇率
+        currency:
+          type: string
+          x-stoplight:
+            id: 2i9bs2yxsdo54
+          description: 交易币种
+        currency_pair:
+          type: string
+          x-stoplight:
+            id: 6mugxlwr4yqsd
+          description: 引用rate的货币对
+        fee:
+          type: string
+          x-stoplight:
+            id: tdy73piqcuslg
+          description: 实收手续费，Fees (单位元，精度分) paid for this transaction.
+        fee_currency:
+          type: string
+          x-stoplight:
+            id: 20u1deumylfzl
+          description: '手续费币种，[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)三位字母货币代码'
+        fee_details:
+          type: array
+          x-stoplight:
+            id: ebb10dx3am9we
+          description: 手续费详情
+          items:
+            x-stoplight:
+              id: sp0oakhuxeosk
+            type: object
+            properties:
+              type:
+                type: string
+                x-stoplight:
+                  id: pen7frf6sv082
+                description: 'Type of the fee, such as  `POBO` `BASIC`'
+              amount:
+                type: string
+                x-stoplight:
+                  id: y59airxltrqbw
+                description: 'Amount of the fee, 单位元，精度分'
+              currency:
+                type: string
+                x-stoplight:
+                  id: qr5pvlvnd81rh
+                description: '[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)三位字母货币代码'
+        status:
+          type: string
+          x-stoplight:
+            id: 0bvsapkqt5mdm
+          description: "交易状态，枚举：\r\n- `PROCESSING`：处理中\r\n- `SUCCEEDED`：成功\r\n- `CANCELLED`：已取消\r\n- `REFUNDED`：已退款\r\n- `REFUNDING`：退款中\r\n- `FAILED`：失败"
+        counterparty:
+          type: object
+          x-stoplight:
+            id: 1g2wrrut8w74k
+          description: "交易对手方信息。\r\n- 当transaction_type=`RECEIVING`/`TOPUP`时：`counterparty`为付款人，内容取自银行文件信息\r\n- 当transaction_type=`PAYMENT`/`WITHDRAW`时：`counterparty`为收款人，内容取自[Beneficiaries](https://developer.lianlianglobal.com/docs/lppe/wnizvfic1ix83-beneficiary)\r\n- 当transaction_type=`CONVERSION`时：`counterparty`为空"
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: v3xen7gx6mt6w
+              description: 交易对手方名称
+            account:
+              type: string
+              x-stoplight:
+                id: 8zb0jv9114wlo
+              description: 交易对手方账号，可能是银行账户或者LLG账户
+        transaction_type:
+          type: string
+          description: "交易类型，枚举值为：`TOPUP` `RECEIVING` `PAYOUT` `WITHDRAW` `CONVERSION` \r\n- `TOPUP`：充值\r\n- `RECEIVING`：收款\r\n- `PAYOUT`：付款\r\n- `WITHDRAW`：提现\r\n- `CONVERSION`：换汇"
+        remark:
+          type: string
+          x-stoplight:
+            id: kngo6hw9azjsz
+          description: 交易附言
+        create_time:
+          type: number
+          x-stoplight:
+            id: g6wf8ia2efzpb
+          description: 交易发起时间，13位时间戳毫秒
+        failure_reason:
+          type: object
+          description: 当交易失败时，此字段能帮助您获取更多异常信息。
+          properties:
+            description:
+              type: string
+              description: 失败原因
+            refund_amount:
+              type: string
+              description: 当前此交易已经发生退款的金额。
+        order_number:
+          type: string
+          description: "业务订单号，您可通过此单号分别查询不同交易类型的交易详情。\r\n- transaction_type=`TOPUP`/`RECEIVING`时：此字段对应加款单中的deposit_id\r\n- transaction_type`PAYOUT`/`WITHDRAW`时：此字段对应付款单/提现单中的transaction_id"
+    Receipt:
+      title: Receipt
+      x-stoplight:
+        id: ibgprxguwc5lh
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          x-stoplight:
+            id: t0upjlfkwdh82
+          description: 交易单号
+        receipt_type:
+          type: string
+          x-stoplight:
+            id: 7642uxm02v5wm
+          description: "类型\r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+        status:
+          type: string
+          x-stoplight:
+            id: 0yakq4idif45b
+          description: 状态：`COMPLETED` 已完成
+        create_time:
+          type: number
+          x-stoplight:
+            id: i9tu8rxa22jbz
+          description: 创建时间
+  parameters:
+    page_size:
+      name: page_size
+      in: query
+      required: false
+      schema:
+        type: integer
+      description: 每页条数
+    page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: string
+      description: 页码
+    end_time:
+      name: end_time
+      in: query
+      required: false
+      schema:
+        type: string
+      description: create_time结束时间
+    start_time:
+      name: start_time
+      in: query
+      required: false
+      schema:
+        type: string
+      description: create_time起始时间
+  responses: {}
+  securitySchemes:
+    客户端凭据授权:
+      type: oauth2
+      description: '详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权'
+      flows:
+        clientCredentials:
+          scopes: {}
+          refreshUrl: /oauth2/token
+          tokenUrl: /oauth2/token
+    授权码授权:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: '详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 授权码授权'

@@ -1,0 +1,253 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Payout",
+        "version": "1.0",
+        "description": "A payment resource is created when you send funds to a bank account beneficiary. You should create the payment by using the `Contact` Object ID which was previously created using the beneficiary resource."
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-payouts/{request_id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "request_id",
+                    "in": "path",
+                    "required": true,
+                    "description": "Request ID"
+                }
+            ],
+            "get": {
+                "summary": "Get Payout by Request ID",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Payout"
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payout"
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payout"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "operationId": "get-payout-payout_id",
+                "description": "Get the detail of a payout transaction by Request ID."
+            }
+        },
+        "/ew-payouts": {
+            "post": {
+                "summary": "Create a Payout",
+                "operationId": "post-payout",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payout"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "description": "Create a payout to a payee.  \nThe successful creation only represents the successful receipt of the distribution order by LianLian Global, does not means the transaction succeed. You can use `Get Payout by Request ID` API to obtain transaction results.\n\nIf you want to receive notification of transaction results, you can subscribe to payout related event `Payout`.\n \n[Note] Payment can include exchange when `send_currency `and `pay_currency` are different, and conversion is not included when `send_currency` matches `pay_currency`.  \n\nThe payer is responsible for the payment fee.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "./CommonModel.json#/components/schemas/PayoutRequest"
+                            },
+                            "examples": {}
+                        }
+                    },
+                    "description": ""
+                },
+                "tags": [
+                    "Operations"
+                ]
+            },
+            "parameters": []
+        },
+        "/ew-payouts-to-app": {
+            "parameters": [],
+            "post": {
+                "summary": "Create a payout to APP",
+                "operationId": "post-payouts-by-contract",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Payout"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Create a payout to APP(this APP will onboarding Ewallet).  \nThe successful creation only represents the successful receipt of the distribution order by LianLian Global, does not means the transaction succeed. You can use `Get Payout by Request ID` API to obtain transaction results.\n\nIf you want to receive notification of transaction results, you can subscribe to payout related event `Payout`.\n \n[Note] Payment can include exchange when `send_currency `and `pay_currency` are different, and conversion is not included when `send_currency` matches `pay_currency`.  \n\nThe payer is responsible for the payment fee.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "./CommonModel.json#/components/schemas/PayoutRequest2me"
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Operations"
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Payout": {
+                "title": "Payout",
+                "type": "object",
+                "description": "Payment from wallet balance to bank account or network.",
+                "x-tags": [
+                    "Models"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier of the payment."
+                    },
+                    "request_id": {
+                        "type": "string",
+                        "description": "The idempotent value generated by the client must be unique on each request. Conversion requests with the same `request_id` will be rejected. The parameter contains a maximum of 128 characters."
+                    },
+                    "business_order_id": {
+                        "type": "string",
+                        "description": "Business Order ID."
+                    },
+                    "payee_id": {
+                        "type": "string",
+                        "description": "Unique identifier for the `Contact` Object ID."
+                    },
+                    "payee_bank_info": {
+                        "$ref": "./CommonModel.json#/components/schemas/Bank"
+                    },
+                    "conversion": {
+                        "$ref": "./CommonModel.json#/components/schemas/ConversionInfo"
+                    },
+                    "pay_currency": {
+                        "type": "string",
+                        "description": "The currency actually paid by the payer (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "pay_amount": {
+                        "type": "string",
+                        "description": "The amount actually paid by the payer, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "send_currency": {
+                        "type": "string",
+                        "description": "Currency of payment to payee (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "send_amount": {
+                        "type": "string",
+                        "description": "Amount paid to payee, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "fee": {
+                        "type": "object",
+                        "properties": {
+                            "currency": {
+                                "type": "string",
+                                "description": "The payout fee currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                            },
+                            "amount": {
+                                "type": "string",
+                                "description": "The payout fee amount."
+                            }
+                        }
+                    },
+                    "purpose": {
+                        "type": "string",
+                        "description": "Purpose of payout."
+                    },
+                    "refund_currency": {
+                        "type": "string",
+                        "description": "Return the funds to the payer's currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "refund_amount": {
+                        "type": "string",
+                        "description": "Return the funds to the payer's amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "failure_code": {
+                        "type": "string",
+                        "description": "This field occurs when an error occurs during payment."
+                    },
+                    "failure_reason": {
+                        "type": "string",
+                        "description": "This field occurs when an error occurs during payment."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The payout status.",
+                        "enum": [
+                            "PROCESSING",
+                            "FAILED",
+                            "CANCELLED",
+                            "REFUNDING",
+                            "REFUNDED",
+                            "COMPLETED"
+                        ]
+                    },
+                    "file_folder_id": {
+                        "type": "string",
+                        "description": "The ID of `File Folder` object."
+                    },
+                    "reference": {
+                        "type": "string",
+                        "description": "This is the postscript information visible to the payee."
+                    },
+                    "additional_info": {
+                        "description": "Set of key-value pairs that you can attach the business information according to Lianlian's requirements.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "./Items.json#/components/schemas/Item"
+                        }
+                    },
+                    "create_time": {
+                        "type": "integer",
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch. It's a `long` type number. "
+                    }
+                }
+            }
+        }
+    }
+}

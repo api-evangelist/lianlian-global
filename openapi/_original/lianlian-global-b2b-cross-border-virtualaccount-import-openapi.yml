@@ -1,0 +1,206 @@
+swagger: '2.0'
+info:
+  title: Virtual Account API
+  version: '1.0'
+  description: ''
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /virtualaccount:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      summary: 创建虚拟卡
+      description: 为一对新的买卖关系创建虚拟卡
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: 虚拟卡
+            description: 连连侧虚拟卡对象
+            properties:
+              functionType:
+                type: string
+                description: |-
+                  功能类型，用以识别发卡逻辑
+
+                  |传输值|解释|
+                  |---|---|
+                  |0|针对一对买卖关系发一张虚拟卡|
+                  |1|针对一个订单发一张虚拟卡|
+                enum:
+                  - 0
+                  - 1
+              tradeFileId:
+                type: string
+                description: 平台侧订单唯一编号，若functionType=1，则该字段必填
+                maxLength: 64
+              payeeId:
+                type: string
+                description: 商户侧收款人唯一编号
+                maxLength: 64
+              payerId:
+                type: string
+                description: 商户侧付款人唯一编号，若functionType=0，则该字段必填
+                maxLength: 64
+              payerName:
+                type: string
+                description: 付款人名称
+                maxLength: 64
+              payerAccountNumber:
+                type: string
+                description: 付款人银行账号
+                maxLength: 32
+            required:
+              - payeeId
+              - payerId
+              - payerName
+              - payerAccountNumber
+      tags:
+        - 接口
+  '/virtualaccount/{receivingAccountNo}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      summary: 查询虚拟卡号
+      tags:
+        - 接口
+    parameters:
+      - name: receivingAccountNo
+        in: path
+        type: string
+        required: true
+        minLength: 32
+        description: 收款虚拟卡号
+  /virtualaccounts:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/new-model'
+      summary: 批量查询虚拟卡号
+      description: 批量查询虚拟卡号
+      parameters:
+        - in: query
+          name: payeeId
+          type: string
+          allowEmptyValue: true
+          description: 商户侧收款人唯一编号
+          maxLength: 64
+        - in: query
+          name: payerId
+          type: string
+          allowEmptyValue: true
+          description: 商户侧付款人唯一编号
+          maxLength: 64
+        - in: query
+          name: pageNum
+          type: integer
+          default: 1
+          allowEmptyValue: true
+          minimum: 1
+          description: |
+
+
+            查询页码
+
+            若返回数据为多条，可以将数据进行分页，将该字段与`pageSize` 配合使用
+        - in: query
+          name: pageSize
+          type: integer
+          default: 20
+          allowEmptyValue: true
+          description: |
+            单页展示数据条数
+
+            若返回数据为多条，需要将该字段与`pageNum`联合使用，单页做多数据展示条数为20条
+          maximum: 20
+      tags:
+        - 接口
+definitions:
+  new-model:
+    type: object
+    title: 虚拟卡
+    description: 连连侧虚拟卡对象
+    properties:
+      functionType:
+        type: string
+        description: |-
+          功能类型，用以识别发卡逻辑
+
+          |传输值|解释|
+          |---|---|
+          |0|针对一对买卖关系发一张虚拟卡|
+          |1|针对一个订单发一张虚拟卡|
+        enum:
+          - 0
+          - 1
+      tradeFileId:
+        type: string
+        description: 平台侧订单唯一编号，若functionType=1，则该字段必填
+        maxLength: 64
+      payeeId:
+        type: string
+        description: 商户侧收款人唯一编号
+        maxLength: 64
+      payerId:
+        type: string
+        description: 商户侧付款人唯一编号，若functionType=0，则该字段必填
+        maxLength: 64
+      payerName:
+        type: string
+        description: 付款人名称
+        maxLength: 64
+      payerAccountNumber:
+        type: string
+        description: 平台传输付款人银行账号
+        maxLength: 32
+      accountName:
+        type: string
+        description: 虚拟卡支持币种的信息
+      receivingAccountNo:
+        type: string
+        description: 收款虚拟卡号
+        maxLength: 32
+      bankName:
+        type: string
+        description: 虚拟账户银行名称
+        maxLength: 32
+      bankBranchName:
+        type: string
+        description: 虚拟账户银行分行名称
+        maxLength: 11
+      cnapsCode:
+        type: string
+        maxLength: 32
+        description: Cnaps Code
+      bankDistrict:
+        type: string
+        description: 虚拟卡银行所在地
+        maxLength: 32
+      createTime:
+        type: string
+        description: '虚拟卡创建时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+    required:
+      - functionType
+      - payeeId
+      - payerName
+tags:
+  - name: Operations
+  - name: 接口
+basePath: /b2b-import/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json

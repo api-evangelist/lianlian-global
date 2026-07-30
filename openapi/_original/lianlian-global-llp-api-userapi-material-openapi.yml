@@ -1,0 +1,464 @@
+swagger: '2.0'
+info:
+  title: 自建站贸易真实性材料采集接口API
+  version: '1.0'
+  termsOfService: ''
+  description: |-
+    联调域名 - **https://gtest-open-api.lianlianpay-inc.com**
+
+    生产域名 - **https://global-open-api.lianlianpay.com**
+  contact:
+    email: dev_support@lianlianpay.com
+paths:
+  /trade/material/commit:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+              data:
+                type: string
+          examples:
+            application/json:
+              code: '000000'
+              data: ''
+        '400':
+          description: |-
+            | Code | Message | 说明 |
+            |------|-------------|-------------|
+            | 400001 | signature header is missing |请求头缺失 |
+            | 400003 | invalid signature time | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400004 | invalid signature header scheme | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400005 | invalid signature header | 请求头LLPAY-Signature有误，请参照授权流程中身份认证格式检查 |
+            | 400006 | signature validate fail |验签异常，请参照授权流程中签名规则检查 |
+          examples:
+            application/json:
+              error: signature_error
+              code: '400006'
+              message: signature validate fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+        '402':
+          description: |-
+            |code|message|说明|
+            |-|-|-|
+            |154003|Payment materials system is busy, please try again later.||
+            |154005|Duplicate trade order number,  please verify and resubmit.|订单号重复|
+            |999995|参数校验不通过|请求参数不正确|
+            |999999|System is busy, please retry later.|系统未知异常|
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: request_failed
+              code: '999995'
+              message: '[tradeOrderId] can''t be empty.'
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |inner service error |
+      summary: 自建站贸易材料真实性采集接口
+      operationId: trade-material-commit
+      tags:
+        - Operations
+      description: |-
+        该接口用以传输自建站贸易材料信息 
+
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/trade/material/commit** </br>
+        生产域名 - **https://global-open-api.lianlianpay.com/trade/material/commit**
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              tradeMaterialList:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tradeOrderId:
+                      type: string
+                      description: '交易订单号，唯一 '
+                      minLength: 1
+                      maxLength: 32
+                    tradeType:
+                      type: string
+                      enum:
+                        - GOODS
+                        - SERVICE
+                      description: 交易类型
+                    tradeTime:
+                      type: string
+                      pattern: yyyyMMdd
+                      description: 交易日期
+                    tradeCurrency:
+                      type: string
+                      description: 真实交易场景中的交易币种</br>ISO 4217标准
+                      minLength: 3
+                      maxLength: 3
+                    targetAmount:
+                      type: string
+                      description: '真实交易场景中的交易金额， 单位元</br>例10.11 '
+                      format: 'NUMBER(10,2)'
+                    payeeId:
+                      type: string
+                      description: 收款人编号</br>自建站即连连虚拟卡号
+                    payerName:
+                      type: string
+                      description: 付款人名称（买家名称）
+                      maxLength: 64
+                    payerCountryCode:
+                      type: string
+                      description: |-
+                        买家国籍或居住地区，3 位ISO代码，例如：CNH,USA</br>详情请参考MODELS-国家/地区编码
+                         
+                      minLength: 3
+                      maxLength: 3
+                    tradeName:
+                      type: string
+                      description: 交易名称</br>tradeType= GOODS 填写物品名称，可以填多个，格式无要求</br>tradeType= SERVICE 填写贸易
+                      maxLength: 256
+                    tradeCount:
+                      type: integer
+                      description: tradeType=GOODS 填写物品数量</br>tradeType=SERVICE 填写服务次数
+                    goodsCarrier:
+                      type: string
+                      description: '货贸承运人</br>tradeType=GOODS时必填</br>格式：承运人;物流单号 '
+                      maxLength: 64
+                    serviceDetail:
+                      type: string
+                      description: 服贸交易细节</br>tradeType=SERVICE时必填
+                      maxLength: 128
+                    serviceTime:
+                      type: string
+                      description: 服贸服务时间</br>tradeType= SERVICE时必填
+                      maxLength: 64
+                      pattern: yyyyMMdd
+                  required:
+                    - tradeOrderId
+                    - tradeType
+                    - tradeTime
+                    - tradeCurrency
+                    - targetAmount
+                    - payeeId
+                    - payerName
+                    - payerCountryCode
+                    - tradeName
+                    - tradeCount
+          x-examples:
+            application/json:
+              tradeMaterialList:
+                - tradeOrderId: '202105268426540119'
+                  tradeType: GOODS
+                  tradeTime: '20210514'
+                  tradeCurrency: USD
+                  targetAmount: '17.66'
+                  payeeId: '8426540119'
+                  payerName: paypal_express
+                  payerCountryCode: USA
+                  tradeName: ROIDMI 3S Dual USB Bluetooth Music Car Charger for iPhone and Android
+                  tradeCount: '1'
+                  goodsCarrier: testgoodsCarrier
+                  serviceDetail: ''
+                  serviceTime: ''
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+tags:
+  - name: Operations
+definitions:
+  国家/地区编码:
+    title: 国家/地区编码
+    type: string
+    description: |-
+      |  Code   | Country Name  | Country Name in Chinese  |
+      |  ----  | ----  | ----  |
+      |ABW|Aruba|阿鲁巴|
+      |AFG|Afghanista|阿富汗|
+      |AGO|Republic of Angola|安哥拉共和国|
+      |AIA|Anguill|安圭拉|
+      |ALB|Republic of Albani|阿尔巴尼亚共和国|
+      |AND|Principality of Andorra|安道尔公国|
+      |ANT|Netherlands Antilles|荷属安的列斯|
+      |ARE|United Arab Emirates|阿拉伯联合酋长国|
+      |ARG|Argentine Republic|阿根廷共和国|
+      |ARM|Republic of Armenia|亚美尼亚共和国|
+      |ASM|American Samoa|美属萨摩亚|
+      |ATA|Antarctica|南极洲|
+      |ATF|French Southern Territories|法属南部领地|
+      |ATG|Antigua and Barbuda|安提瓜和巴布达|
+      |AUS|Commonwealth of Australia|澳大利亚联邦|
+      |AUT|Republic of Austria|奥地利共和国|
+      |AZE|Republic of Azerbaijan|阿塞拜疆共和国|
+      |BDI|Republic of Burundi|布隆迪共和国|
+      |BEL|Kingdom of Belgium|比利时王国|
+      |BEN|Republic of Benin|贝宁共和国|
+      |BFA|Burkina Faso|布基纳法索|
+      |BGD|People's Republic of Bangladesh|孟加拉人民共和国|
+      |BGR|Republic of Bulgaria|保加利亚共和国|
+      |BHR|State of Bahrain|巴林国|
+      |BHS|Commonwealth of the Bahamas|巴哈马联邦|
+      |BIH|Bosnia and Herzegovina|波斯尼亚和黑塞哥维那|
+      |BLR|Republic of Belarus|白俄罗斯共和国|
+      |BLZ|Belize|伯利兹|
+      |BMU|Bermuda|百慕大|
+      |BOL|Republic of Bolivia|玻利维亚共和国|
+      |BRA|Federative Republic of Brazil|巴西联邦共和国|
+      |BRB|Barbados|巴巴多斯|
+      |BRN|Brunei Darussalam|文莱达鲁萨兰国|
+      |BTN|Kingdom of Bhutan|不丹王国|
+      |BVT|Bouvet Island|布维岛|
+      |BWA|Republic of Botswana|博茨瓦纳共和国|
+      |CAF|Central African Republic|中非共和国|
+      |CAN|Canada|加拿大|
+      |CCK|Cocos(Keeling) Islands|科科斯(基林)群岛|
+      |CHE|Swiss Confederation|瑞士联邦|
+      |CHL|Republic of Chile|智利共和国|
+      |CHN|People's Republic of China|中华人民共和国|
+      |CIV|Republic of Cote d'Ivoire|科特迪瓦共和国|
+      |CMR|Republic of Cameroon|喀麦隆共和国|
+      |COD|Democratic Republic of Congo|刚果民主共和国|
+      |COG|Republic of Congo|刚果共和国|
+      |COK|Cook Islands|库克群岛|
+      |COL|Republic of Colombia|哥伦比亚共和国|
+      |COM|Islamic Federal Republic of the Comoros|科摩罗伊斯兰联邦共和国|
+      |CPV|Republic of Cape Verd|佛得角共和国|
+      |CRI|Republic of Costa Rica|哥斯达黎加共和国|
+      |CUB|Republic of Cuba|古巴共和国|
+      |CUW|Curacao|库拉索|
+      |CXR|Christmas Island|圣诞岛|
+      |CYM|Cayman Islands|开曼群岛|
+      |CYP|Republic of Cyprus|塞浦路斯共和国|
+      |CZE|Czech Republic|捷克共和国|
+      |DEU|Federal Republic of Germany|德意志联邦共和国|
+      |DJI|Republic of Djibouti|吉布提共和国|
+      |DMA|Commonwealth of Dominica|多米尼克国|
+      |DNK|Kingdom of Denmark|丹麦王国|
+      |DOM|Dominican Republic|多米尼加共和国|
+      |DZA|Democratic People's Republic of Algeri|阿尔及利亚民主人民共和国|
+      |ECU|Republic of Ecuador|厄瓜多尔共和国|
+      |EGY|Arab Republic of Egypt|阿拉伯埃及共和国|
+      |ERI|State of Eritrea|厄立特里亚国|
+      |ESH|Western Sahara|西撒哈拉|
+      |ESP|Kingdom of Spain|西班牙王国|
+      |EST|Republic of Estonia|爱沙尼亚共和国|
+      |ETH|Federal Democratic Republic of Ethiopia|埃塞俄比亚联邦民主共和国|
+      |FIN|Republic of Finland|芬兰共和国|
+      |FJI|Republic of the Fiji Islands|斐济群岛共和国|
+      |FLK|Falkland Islands (Malvinas)|福克兰群岛(马尔维纳斯群岛)|
+      |FRA|French Republic|法兰西共和国|
+      |FRO|Faroe Islands|法罗群岛|
+      |FSM|Federated States of Micronesia|密克罗尼西亚联邦|
+      |GAB|Gabonese Republic|加蓬共和国|
+      |GBR|United Kingdom of Great Britain and Northern lreland|大不列颠及北爱尔兰联合王国|
+      |GEO|Georgia|格鲁吉亚|
+      |GHA|Republic of Ghana|加纳共和国|
+      |GIB|Gibraltar|直布罗陀|
+      |GIN|Republic of Guinea|几内亚共和国|
+      |GLP|Guadeloupe|瓜德罗普|
+      |GMB|Republic of the Gambia|冈比亚共和国|
+      |GNB|Republic of Guinea-Bissau|几内亚比绍共和国|
+      |GNQ|Republic of Equatorial Guinea|赤道几内亚共和国|
+      |GRC|Hellenic Republic|希腊共和国|
+      |GRD|Grenada|格林纳达|
+      |GRL|Greenland|格陵兰|
+      |GTM|Republic of Guatemala|危地马拉共和国|
+      |GUF|French Guiana|法属圭亚那|
+      |GUM|Guam|关岛|
+      |GUY|Cooperative Republic of Guyana|圭亚那合作共和国|
+      |HKG|Hong Kong Special Administrative Region of China|中国香港特别行政区|
+      |HMD|Heard Island and Mcdonald Islands|赫德岛和麦克唐纳岛|
+      |HND|Republic of Honduras|洪都拉斯共和国|
+      |HRV|Republic of Croatia|克罗地亚共和国|
+      |HTI|Republic of Haiti|海地共和国|
+      |HUN|Republic of Hungary|匈牙利共和国|
+      |IDN|Republic of Indonesia|印度尼西亚共和国|
+      |IMN|Isle of Man British Independency|英属马恩岛|
+      |IND|Republic of India|印度共和国|
+      |IOS|International Organizations|国际组织（中国注册）|
+      |IOT|British Indian Ocean Territory|英属印度洋领地|
+      |IRL|Ireland|爱尔兰|
+      |IRN|Islamic Republic of Iran|伊朗伊斯兰共和国|
+      |IRQ|Republic of Iraq|伊拉克共和国|
+      |ISL|Republic of Iceland|冰岛共和国|
+      |ISR|State of Israel|以色列国|
+      |ITA|Italian Republic|意大利共和国|
+      |JAM|Jamaica|牙买加|
+      |JEY|Jersey|泽西岛|
+      |JOR|Hashemite Kingdom of Jordan|约旦哈希姆王国|
+      |JPN|Japan|日本国|
+      |KAZ|Republic of Kazakhstan|哈萨克斯坦共和国|
+      |KEN|Republic of Kenya|肯尼亚共和国|
+      |KGZ|Kyrgyz Republic|吉尔吉斯共和国|
+      |KHM|Kingdom of Cambodia|柬埔寨王国|
+      |KIR|Republic of Kiribati|基里巴斯共和国|
+      |KNA|Federation of Saint Kitts and Nevis|圣基茨和尼维斯联邦|
+      |KOR|Republic of Korea|大韩民国|
+      |KWT|State of Kuwait|科威特国|
+      |LAO|Lao People's Democratic Republic|老挝人民民主共和国|
+      |LBN|Lebanese Republic|黎巴嫩共和国|
+      |LBR|Republic of Liberia|利比里亚共和国|
+      |LBY|Great Socialist People's Libyan Arab Jamahiriya|大阿拉伯利比亚人民社会主义民众国|
+      |LCA|Saint Lucia|圣卢西亚|
+      |LIE|Principality of Liechtenstein|列支敦士登公国|
+      |LKA|Democratic Socialist Republic of Sri Lanka|斯里兰卡民主社会主义共和国|
+      |LSO|Kingdom of Lesotho|莱索托王国|
+      |LTU|Republic of Lithuania|立陶宛共和国|
+      |LUX|Grand Duchy of Luxembourg|卢森堡大公国|
+      |LVA|Republic of Latvia|拉脱维亚共和国|
+      |MAC|Macau Special Administrative Region of China|中国澳门特别行政区|
+      |MAR|Kingdom of Morocco|摩洛哥王国|
+      |MCO|Principality of Monaco|摩纳哥公国|
+      |MDA|Republic of Moldova|摩尔多瓦共和国|
+      |MDG|Republic of Madagascar|马达加斯加共和国|
+      |MDV|Republic of Maldives|马尔代夫共和国|
+      |MEX|United States of Mexico|墨西哥合众国|
+      |MHL|Republic of the Marshall Islands|马绍尔群岛共和国|
+      |MKD|The former Yugoslav Republic of Macedonia|前南斯拉夫马其顿共和国|
+      |MLI|Republic of Mali|马里共和国|
+      |MLT|Republic of Malta|马耳他共和国|
+      |MMR|Union of Myanmar|缅甸联邦|
+      |MNE|Montenegro|黑山|
+      |MNG|Mongolia|蒙古国|
+      |MNP|Commonwealth of the IVIariana Islands|北马里亚纳自由联邦|
+      |MOZ|Republic of Mozambique|莫桑比克共和国|
+      |MRT|Islamic Republic of Mauritania|毛里塔尼亚伊斯兰共和国|
+      |MSR|Montserrat|蒙特塞拉特|
+      |MTQ|Martinique|马提尼克|
+      |MUS|Republic of Mauritius|毛里求斯共和国|
+      |MWI|Republic of Malawi|马拉维共和国|
+      |MYS|Malaysia|马来西亚|
+      |MYT|Mayotte|马约特|
+      |NAM|Republic of Namibia|纳米比亚共和国|
+      |NCL|New Caledonia|新喀里多尼亚|
+      |NER|Republic of Niger|尼日尔共和国|
+      |NFK|Norfolk Island|诺福克岛|
+      |NGA|Federal Republic of Nigeria|尼日利亚联邦共和国|
+      |NIC|Republic of Nicaragua|尼加拉瓜共和国|
+      |NIU|Niue|纽埃|
+      |NLD|Kingdom of the Netherlands|荷兰王国|
+      |NOR|Kingdom of Norway|挪威王国|
+      |NPL|Kingdom of Nepal|尼泊尔王国|
+      |NRU|Republic of Nauru|瑙鲁共和国|
+      |NZL|New Zealand|新西兰|
+      |OMN|Sultanate of Oman|阿曼苏丹国|
+      |PAK|Islamic Republic of Pakistan|巴基斯坦伊斯兰共和国|
+      |PAN|Republic of Panama|巴拿马共和国|
+      |PCN|Pitcairn|皮特凯恩|
+      |PER|Republic of Peru|秘鲁共和国|
+      |PHL|Republic of the Philippines|菲律宾共和国|
+      |PLW|Republie of Palau|帕劳共和国|
+      |PNG|Independent State of Papua New Guinea|巴布亚新几内亚独立国|
+      |POL|Republic of Poland|波兰共和国|
+      |PRI|Puerto Rico|波多黎各自由联邦|
+      |PRK|Democratic People's Republic of Korea|朝鲜民主主义人民共和国|
+      |PRT|Portuguese Republic|葡萄牙共和国|
+      |PRY|Republic of Paraguay|巴拉圭共和国|
+      |PSE|State of Palestine|巴勒斯坦国|
+      |PYF|French Polynesia|法属波利尼西亚|
+      |QAT|State of Qatar|卡塔尔国|
+      |REU|Reunion|留尼汪|
+      |ROM|Romania|罗马尼亚|
+      |RUS|Russian Federation|俄罗斯联邦|
+      |RWA|Republic of Rwanda|卢旺达共和国|
+      |SAU|Kingdom of Saudi Arabia|沙特阿拉伯王国|
+      |SDN|the Republic of the Sudan|苏丹共和国|
+      |SEN|Republic of Senegal|塞内加尔共和国|
+      |SGP|Republic of Singapore|新加坡共和国|
+      |SGS|South Georgia and the South Sandwich Islands|南乔治亚岛和南桑德韦奇岛|
+      |SHN|Saint Helena|圣赫勒拿|
+      |SJM|Svalbard and Jan Mayen|斯瓦尔巴岛和扬马延岛|
+      |SLB|Solomon Islands|所罗门群岛|
+      |SLE|Republic of Sierra Leone|塞拉利昂共和国|
+      |SLV|Republic of El Salvador|萨尔瓦多共和国|
+      |SMR|Republic of San Marino|圣马力诺共和国|
+      |SOM|Somali Republic|索马里共和国|
+      |SPM|Saint Pierre and Miquelon|圣皮埃尔和密克隆|
+      |SRB|Serbia|塞尔维亚|
+      |SSD|the Republic of South Sudan|南苏丹共和国|
+      |STP|Democratic Republic of Sao Tome and Principe|圣多美和普林西比民主共和国|
+      |SUR|Republic of Suriname|苏里南共和国|
+      |SVK|Slovak Republic|斯洛伐克共和国|
+      |SVN|Republic of Slovenia|斯洛文尼亚共和国|
+      |SWE|Kingdom of Sweden|瑞典王国|
+      |SWZ|Kingdom of Swaziland|斯威士兰王国|
+      |SYC|Republic of Seychelles|塞舌尔共和国|
+      |SYR|Syrian Arab Republic|阿拉伯叙利亚共和国|
+      |TCA|Turks and Caicos lslands|特克斯和凯科斯群岛|
+      |TCD|Republic of Chad|乍得共和国|
+      |TGO|Republic of Togo|多哥共和国|
+      |THA|Kingdom of Thailand|泰王国|
+      |TJK|Republic of Tajikistan|塔吉克斯坦共和国|
+      |TKL|Tokelau|托克劳|
+      |TKM|Turkmenistan|土库曼斯坦|
+      |TLS|Timor_Leste|东帝汶|
+      |TON|Kingdom of Tonga|汤加王国|
+      |TTO|Republic of Trinidad and Tobago|特立尼达和多巴哥共和国|
+      |TUN|Republic of Tunisia|突尼斯共和国|
+      |TUR|Republic of Turkey|土耳其共和国|
+      |TUV|Tuvalu|图瓦卢|
+      |TWN|Taiwan, Province of China|中国台湾|
+      |TZA|United Republic of Tanzani|坦桑尼亚联合共和国|
+      |UGA|Republic of Uganda|乌干达共和国|
+      |UKR|Ukraine|乌克兰|
+      |UMI|United States Minor Outlying Islands|美国本土外小岛屿|
+      |URY|Oriental Republic of Uruguay|乌拉圭东岸共和国|
+      |USA|United States of America|美利坚合众国|
+      |UZB|Republic of Uzbekistan|乌兹别克斯坦共和国|
+      |VAT|Vatican City State|梵蒂冈城国|
+      |VCT|Saint Vincent and the Grenadines|圣文森特和格林纳丁斯|
+      |VEN|Republic of Venezuela|委内瑞拉共和国|
+      |VGB|British Virgin Islands|英属维尔京群岛|
+      |VIR|Virgin Islands of the United States|美属维尔京群岛|
+      |VNM|Socialist Republic of Viet Nam|越南社会主义共和国|
+      |VUT|Republic of Vanuatu|瓦努阿图共和国|
+      |WLF|Wallis and Futuna|瓦利斯和富图纳|
+      |WSM|Independent State of Samoa|萨摩亚独立国|
+      |YEM|Republic of Yemen|也门共和国|
+      |ZAF|Republic of South Africa|南非共和国|
+      |ZMB|Republic of Zambia|赞比亚共和国|
+      |ZWE|Republic of Zimbabwe|津巴布韦共和国|
+      |ZZZ|Others|其他国家和地区|
+responses: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /api
+securityDefinitions: {}
+security:
+  - Authorization: []
+  - LLPAY-Signature: []
+host: gtest-open-api.lianlianpay-inc.com

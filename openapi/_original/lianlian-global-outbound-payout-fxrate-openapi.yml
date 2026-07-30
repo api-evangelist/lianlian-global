@@ -1,0 +1,231 @@
+swagger: '2.0'
+info:
+  title: FX RATE
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: This section contains the operations and models of Lianlian Pay fx rate service.
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  '/rate/{rateType}/{sourceCurrency}/{targetCurrency}':
+    get:
+      summary: Get FX Rate
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/rate'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+        '':
+          schema:
+            $ref: '#/definitions/rate'
+          description: ''
+      operationId: get-rate
+      description: 'This operation '
+      parameters: []
+    parameters:
+      - type: string
+        name: sourceCurrency
+        in: path
+        required: true
+        description: Source Currency
+        maxLength: 3
+      - type: string
+        name: targetCurrency
+        in: path
+        required: true
+        description: Target Currency
+        maxLength: 3
+      - type: string
+        name: rateType
+        in: path
+        required: true
+        description: |-
+          Rate Type, one of 
+          |Code|Decription|
+          |----|-----|
+          |reference|Rate for reference|
+        maxLength: 10
+definitions:
+  rate:
+    title: Fx-Rate
+    type: object
+    description: fx-rate object in Lianlian Pay's system
+    properties:
+      rate:
+        type: string
+        description: Rate
+        maxLength: 10
+      rateId:
+        type: string
+        description: Rate ID
+        maxLength: 24
+      sourceCurrency:
+        type: string
+        description: Source Currency
+        maxLength: 3
+      targetCurrency:
+        type: string
+        maxLength: 3
+        description: Target Currency
+      rateTime:
+        type: string
+        maxLength: 20
+        description: Rate Time
+      baseCurrency:
+        type: string
+        maxLength: 3
+        description: |-
+          Base Currency
+          Sample: USD is the Base Currency for USD/CNY
+    required:
+      - rate
+      - sourceCurrency
+      - targetCurrency
+      - rateTime
+      - baseCurrency
+    x-tags:
+      - Models
+securityDefinitions:
+  authorization:
+    name: Authorization
+    type: apiKey
+    in: header
+    description: |-
+      LianLian Pay API uses an API key to authenticate requests. To request Lianlian Pay developer account, send the following two information to `fx_support@lianlianpay.com`:
+      <!-- theme: info -->
+      >**developer_name**
+      >
+      >**developer_public_key**
+
+      After process, Lianlian Pay will replay with:
+      <!-- theme: info -->
+      >**developer_master_token** - api authentication
+      >
+      >**developer_refresh_token** - refresh developer master token, valid for a year. Can be updated by sending request to `fx_support@lianlianpay.com`
+      >
+      >**LianlianPay_public_key**
+
+      The `Authorization` header must be included in all requests with the following format:
+
+      ```
+      Authorization: Basic {master_token}
+      ```
+  llpay-signature:
+    name: LLPAY-Signature
+    type: apiKey
+    in: header
+    description: |
+      The LLPAY-Signature header contains a timestamp and one or more signatures. The timestamp is prefixed by t=, and each signature is prefixed by a scheme. Schemes start with v, potentially followed by an integer.
+
+      ```
+      LLPAY-Signature: t=1492774577, v=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+      ```
+
+      Note that newlines have been added in the example above for clarity, but a real LLPAY-Signature header will be all one line.
+
+      Lianlian Pay and clients shall exchange each party’s public key.  The LLPAY-Signature will be signed by with the RSA private key.
+
+      **Step 1:** Determine the signature payload
+
+      Create a `payload` string which is the following connected with `&`
+
+      * HTTP_METHOD: The actual method defined for specific API endpoint `POST`
+      * URI: The request's URL Path, such as `/profiles/{profileId}`
+      * REQUEST_EPOCH: The seconds elapsed since 1970/1/1 00:00:00 GMT, same as value of `t`
+      * REQUEST_PAYLOAD: The contents of request body in JSON format. 
+      * QUERY_STRING: The query string of the URL, URL Encoded, such as `attr1%3Dvalue1%26attr2%3Dvalue2`
+
+      <!-- theme: info -->
+      >Case 1: QUERY_STRING is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD
+      >
+      >---
+      >Case 2: REQUEST_PAYLOAD is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&&QUERY_STRING
+      >
+      >---
+      >Case 3: REQUEST_PAYLOAD and QUERY_STRING both are empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&
+
+
+      Put typical GET and POST examples here.
+
+      Example POST `payload`:
+      ```
+      POST&/kyc/v1/profiles&19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      Example GET `payload`:
+      ```
+      GET&/events/v1&19879234&&status%3DMAXIMUM_RETRIES_REACHED
+      ```
+
+
+
+      **Step 2:** Prepare the `LLPAY-Signature` string
+
+      Achieve this by concatenating:
+      * The timestamp (Seconds elapsed since 1970/1/1 00:00:00 GMT as a string)
+      * Use your RSA private key and calculate the string `BASE64(RSAwithSHA256(STEP_1_RESULT)))` from Step 1
+
+      ### Result Signature
+
+      LianLian Pay result headers also contain the `LLPAY-Signature` header as described above but signed with Lianlian Pay's private RSA key.  You may verify the signature corresponds to the Result body by calculating the signature and comparing it to the unencrypted version of `LLPAY-Signature` using the Lianlian Pay's public RSA key.  Here are the steps:
+
+      **Step 1:** Determine the signature `payload`
+
+      Create a `payload` string which is the following separated by `&`
+
+      * Response Timestamp: Extract t from LLPay-Signature and use it as timestamp
+      * Response Payload: The contents of response body in JSON format
+
+      Example `payload`:
+      ```
+      19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      **Step 2:** Use RSA Verify to compare signatures
+
+      Compare the LLPay-Signature received with the `payload` calculated in Step 1 using the Lianlian Pay's Public Key using the following algorithm:
+
+      ```
+      RSA.verify( LLPAY-Signature, 
+                  '19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}', 
+                  Lianlian Pay Public Key )
+      ```
+security:
+  - authorization: []
+  - llpay-signature: []

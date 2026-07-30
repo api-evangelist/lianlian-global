@@ -1,0 +1,209 @@
+generated: '2026-07-19'
+method: searched
+source: https://developer.lianlianglobal.com/docs/lppe/8u4o96gz8w7bq-webhook-overview
+spec_type: Webhooks
+spec_type_note: LianLian Global documents a full webhook event catalogue and delivery contract but publishes no
+  AsyncAPI document. Searched the developer portal, the LLGlobal GitHub organization and /asyncapi.yaml on the API
+  hosts — none found. This artifact captures the published webhook surface verbatim rather than fabricating a spec.
+transport: HTTPS POST to a subscriber-configured URL, JSON body
+subscription:
+  console: https://global.lianlian.com/console
+  sandbox_console: https://test-global.lianlianpay-inc.com/console
+  notes: Webhook subscriptions are managed in the developer console; for the signature-based products the webhook_url
+    is registered when the developer account is created.
+delivery_headers:
+- header: LLPAY-Hook-ID
+  description: ID of the subscribed webhook event
+- header: LLPAY-Event-Name
+  description: Name of the event that triggered the webhook
+- header: LLPAY-Delivery-ID
+  description: Unique delivery ID — use it to de-duplicate
+- header: LLPAY-Delivery-Time
+  description: Delivery timestamp, 13-digit epoch milliseconds
+- header: LLPAY-Signature
+  description: t=<epoch_seconds>,v=<base64 RSA SHA-256 signature>
+signature:
+  header: LLPAY-Signature
+  algorithm: SHA256WithRSA
+  key: LianLian RSA public key
+  payload: epoch + "&" + raw_request_body
+  notes: Take epoch from the LLPAY-Signature header t value and the context from the request body, concatenate as
+    payload = epoch + & + context, and verify against LianLian's public key.
+delivery_semantics:
+  ordering: not guaranteed
+  duplicates: possible — handle events idempotently
+  ack: respond HTTP 200; any other response triggers retry
+retry_schedule:
+- attempt: 1
+  delay: 10s
+- attempt: 2
+  delay: 30s
+- attempt: 3
+  delay: 1m
+- attempt: 4
+  delay: 2m
+- attempt: 5
+  delay: 3m
+- attempt: 6
+  delay: 4m
+- attempt: 7
+  delay: 5m
+- attempt: 8
+  delay: 6m
+- attempt: 9
+  delay: 7m
+- attempt: 10
+  delay: 8m
+- attempt: 11
+  delay: 9m
+- attempt: 12
+  delay: 10m
+- attempt: 13
+  delay: 20m
+- attempt: 14
+  delay: 30m
+- attempt: 15
+  delay: 1h
+- attempt: 16
+  delay: 2h
+naming_convention: resource.event
+event_count: 42
+event_groups:
+- resource: accept_payment
+  events:
+  - lppe.accept_payment.agreement.active
+  - lppe.accept_payment.agreement.canceled
+  - lppe.accept_payment.agreement.expired
+  - lppe.accept_payment.expired
+  - lppe.accept_payment.refund.failed
+  - lppe.accept_payment.refund.succeeded
+  - lppe.accept_payment.succeeded
+- resource: account
+  events:
+  - lppe.account.active
+  - lppe.account.closed
+  - lppe.account.suspended
+- resource: accounts
+  events:
+  - lppe.accounts.status.active
+  - lppe.accounts.status.closed
+  - lppe.accounts.status.require_action
+  - lppe.accounts.status.suspended
+- resource: bank_card_verification
+  events:
+  - lppe.bank_card_verification.failed
+  - lppe.bank_card_verification.requires_action
+  - lppe.bank_card_verification.succeeded
+- resource: beneficiary
+  events:
+  - lppe.beneficiary.blocked
+  - lppe.beneficiary.failed
+  - lppe.beneficiary.succeeded
+- resource: compliance
+  events:
+  - lppe.compliance.failed
+  - lppe.compliance.requires_action
+  - lppe.compliance.succeeded
+- resource: conversion
+  events:
+  - lppe.conversion.result
+- resource: document
+  events:
+  - lppe.document.supplement.audit.failed
+  - lppe.document.supplement.audit.succeeded
+- resource: payer
+  events:
+  - lppe.payer.blocked
+  - lppe.payer.failed
+  - lppe.payer.succeeded
+- resource: payout
+  events:
+  - lppe.payout.failed
+  - lppe.payout.returned
+  - lppe.payout.succeeded
+- resource: receipts
+  events:
+  - lppe.receipts.contents
+- resource: receiving_accounts
+  events:
+  - lppe.receiving_accounts.deposit.onway
+  - lppe.receiving_accounts.deposit.pending
+  - lppe.receiving_accounts.deposit.refund
+  - lppe.receiving_accounts.deposit.requires_action
+  - lppe.receiving_accounts.deposit.succeeded
+  - lppe.receiving_accounts.failed
+  - lppe.receiving_accounts.succeeded
+- resource: report
+  events:
+  - lppe.report.created
+- resource: transaction_document
+  events:
+  - lppe.transaction_document.completed
+events:
+- lppe.accept_payment.agreement.active
+- lppe.accept_payment.agreement.canceled
+- lppe.accept_payment.agreement.expired
+- lppe.accept_payment.expired
+- lppe.accept_payment.refund.failed
+- lppe.accept_payment.refund.succeeded
+- lppe.accept_payment.succeeded
+- lppe.account.active
+- lppe.account.closed
+- lppe.account.suspended
+- lppe.accounts.status.active
+- lppe.accounts.status.closed
+- lppe.accounts.status.require_action
+- lppe.accounts.status.suspended
+- lppe.bank_card_verification.failed
+- lppe.bank_card_verification.requires_action
+- lppe.bank_card_verification.succeeded
+- lppe.beneficiary.blocked
+- lppe.beneficiary.failed
+- lppe.beneficiary.succeeded
+- lppe.compliance.failed
+- lppe.compliance.requires_action
+- lppe.compliance.succeeded
+- lppe.conversion.result
+- lppe.document.supplement.audit.failed
+- lppe.document.supplement.audit.succeeded
+- lppe.payer.blocked
+- lppe.payer.failed
+- lppe.payer.succeeded
+- lppe.payout.failed
+- lppe.payout.returned
+- lppe.payout.succeeded
+- lppe.receipts.contents
+- lppe.receiving_accounts.deposit.onway
+- lppe.receiving_accounts.deposit.pending
+- lppe.receiving_accounts.deposit.refund
+- lppe.receiving_accounts.deposit.requires_action
+- lppe.receiving_accounts.deposit.succeeded
+- lppe.receiving_accounts.failed
+- lppe.receiving_accounts.succeeded
+- lppe.report.created
+- lppe.transaction_document.completed
+webhook_apis_in_openapi:
+- openapi/lianlian-global-b2b-cross-border-event-import-openapi.yml
+- openapi/lianlian-global-b2b-cross-border-event-openapi.yml
+- openapi/lianlian-global-b2b-cross-border-webhook-import-openapi.yml
+- openapi/lianlian-global-b2b-cross-border-webhook-openapi.yml
+- openapi/lianlian-global-b2b-inflow-payout-event-openapi.yml
+- openapi/lianlian-global-b2b-inflow-payout-webhook-openapi.yml
+- openapi/lianlian-global-cards-open-api-webhook-openapi.yml
+- openapi/lianlian-global-connect-event-openapi.yml
+- openapi/lianlian-global-connect-ota-event-openapi.yml
+- openapi/lianlian-global-connect-ota-webhook-openapi.yml
+- openapi/lianlian-global-global-payout-event-openapi.yml
+- openapi/lianlian-global-global-payout-tuition-event-openapi.yml
+- openapi/lianlian-global-global-payout-tuition-webhook-openapi.yml
+- openapi/lianlian-global-global-payout-webhook-openapi.yml
+- openapi/lianlian-global-outbound-payout-event-openapi.yml
+- openapi/lianlian-global-outbound-payout-ka-event-openapi.yml
+- openapi/lianlian-global-outbound-payout-ka-webhook-openapi.yml
+- openapi/lianlian-global-outbound-payout-service-event-openapi.yml
+- openapi/lianlian-global-outbound-payout-service-webhook-openapi.yml
+- openapi/lianlian-global-outbound-payout-verification-event-openapi.yml
+- openapi/lianlian-global-outbound-payout-verification-webhook-openapi.yml
+- openapi/lianlian-global-outbound-payout-webhook-openapi.yml
+- openapi/lianlian-global-standard-remittance-event-openapi.yml
+- openapi/lianlian-global-standard-remittance-webhook-openapi.yml

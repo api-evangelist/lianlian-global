@@ -1,0 +1,51 @@
+openapi: 3.1.0
+x-stoplight:
+  id: ug4gap2q0jpb9
+info:
+  title: File
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /gateway/v1/file/upload:
+    post:
+      summary: 文件上传
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file_id:
+                    type: string
+                    description: 文件id
+      operationId: get-gateway-v1-file-upload
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file_content:
+                  type: 'null'
+                  description: byte_array
+                purpose:
+                  type: string
+                  description: Connect
+                  enum:
+                    - CONNECT
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                purpose:
+                  type: string
+                  description: Connect
+        description: ''
+      description: ''
+      x-internal: false
+components:
+  schemas: {}

@@ -1,0 +1,215 @@
+swagger: '2.0'
+info:
+  title: WEBHOOK API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: |-
+    本节包含Webhook服务的操作和模型。
+
+    Webhook是一项由多个Lianlian Pay产品共享的通用服务。
+
+    线上环境地址 - https://global-api.lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /webhooks:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/webhook'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 108012 | Duplicate Webhook Registration |
+          schema:
+            type: object
+        '500':
+          description: ''
+      summary: 注册WebHooks
+      description: 注册webHook，系统会自动推送事件。
+      operationId: register-webhook
+      tags:
+        - 接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              url:
+                type: string
+                description: 临时接受地址
+                maxLength: 64
+              topic:
+                type: string
+                description: |-
+                  连连定义的Topic
+
+                  | Topic | Description |
+                  |--------|------------|
+                  | b2b.payee.approved | 收款人审核通过 |
+                  | b2b.payee.rejected |  收款人审核不通过 |
+                  |b2b.shop.approved|店铺审核通过|
+                  |b2b.shop.rejected|店铺审核不通过|
+                  |b2b.funding.successed| 加款成功 |
+                  |b2b.funding.hedged| 红冲成功 |
+                  |b2b.funding.refunded| 退款成功 |
+                  |b2b.tradeFile.approved|贸易材料审核通过|
+                  |b2b.tradeFile.rejected|贸易材料审核不通过|
+                  |b2b.distribute.successed| 分账成功 |
+                  |b2b.distribute.failed| 分账失败 |
+                  |b2b.payout.successed | 分发成功 |
+                  | b2b.payout.failed | 分发失败 |
+                  |b2b.payout.hedged|分发红冲|
+                enum:
+                  - b2b.payee.rejected
+                  - b2b.payout.successed
+                  - b2b.payout.failed
+                  - b2b.distribute.successed
+                  - b2b.distribute.failed
+                  - b2b.funding.successed
+                  - b2b.payee.approved
+                  - b2b.funding.hedged
+                  - b2b.funding.refunded
+                  - b2b.shop.approved
+                  - b2b.shop.rejected
+                  - b2b.tradeFile.approved
+                  - b2b.tradeFile.rejected
+                  - b2b.payout.hedged
+            required:
+              - url
+              - topic
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/webhook'
+        '404':
+          description: Not Found
+        '500':
+          description: ''
+      summary: 查询WebHook列表
+      description: 查询WebHook列表
+      operationId: get-webhooks-registration-list
+      tags:
+        - 接口
+  '/webhooks/{webhookId}':
+    get:
+      summary: 查询Webhook
+      description: 通过webhookId查询WebHook
+      operationId: get-webhook-registration
+      tags:
+        - 接口
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/webhook'
+        '404':
+          description: ''
+        '500':
+          description: ''
+    parameters:
+      - name: webhookId
+        in: path
+        type: string
+        required: true
+    delete:
+      responses:
+        '200':
+          description: ''
+        '404':
+          description: ''
+        '500':
+          description: ''
+      summary: 删除Webhook
+      description: 删除WebHook
+      operationId: delete-webhook-registration
+      tags:
+        - 接口
+tags:
+  - name: Operations
+  - name: 接口
+definitions:
+  webhook:
+    type: object
+    title: Webhook注册结果
+    description: |
+      Webhook注册结果对象
+    properties:
+      id:
+        type: string
+        description: 流水单号
+        maxLength: 32
+      url:
+        type: string
+        description: Webhook url
+        maxLength: 64
+      createTime:
+        type: string
+        description: '注册时间, UTC+0 timestamp'
+        format: date-time
+      topic:
+        type: string
+        description: |-
+          连连定义的Topic
+
+          | Topic | Description |
+          |--------|------------|
+          | b2b.payee.approved | 收款人审核通过 |
+          | b2b.payee.rejected |  收款人审核不通过 |
+          |b2b.shop.approved|店铺审核通过|
+          |b2b.shop.rejected|店铺审核不通过|
+          |b2b.funding.successed| 加款成功 |
+          |b2b.funding.hedged| 红冲成功 |
+          |b2b.funding.refunded| 退款成功 |
+          |b2b.tradeFile.approved|贸易材料审核通过|
+          |b2b.tradeFile.rejected|贸易材料审核不通过|
+          |b2b.distribute.successed| 分账成功 |
+          |b2b.distribute.failed| 分账失败 |
+          |b2b.payout.successed | 分发成功 |
+          | b2b.payout.failed | 分发失败 |
+          |b2b.payout.hedged|分发红冲|
+        enum:
+          - b2b.payee.rejected
+          - b2b.payout.successed
+          - b2b.payout.failed
+          - b2b.distribute.successed
+          - b2b.distribute.failed
+          - b2b.funding.successed
+          - b2b.payee.approved
+          - b2b.funding.hedged
+          - b2b.funding.refunded
+          - b2b.shop.approved
+          - b2b.shop.rejected
+          - b2b.tradeFile.approved
+          - b2b.tradeFile.rejected
+          - b2b.payout.hedged
+    required:
+      - id
+      - url
+      - createTime
+      - topic
+    x-tags:
+      - 对象
+responses: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - authorization: []
+  - llpay-signature: []
+securityDefinitions: {}
+basePath: /common/v1

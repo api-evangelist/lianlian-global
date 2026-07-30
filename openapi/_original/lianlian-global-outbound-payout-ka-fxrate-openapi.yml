@@ -1,0 +1,152 @@
+swagger: '2.0'
+info:
+  title: FX RATE
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: This section contains the operations and models of LianLian Global fx rate service.
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  '/rate/{rateType}/{sourceCurrency}/{targetCurrency}':
+    get:
+      summary: Get FX Rate
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/rate'
+          examples:
+            Example 1:
+              rate: '6.3569'
+              rateId: ''
+              sourceCurrency: USD
+              targetCurrency: CNY
+              rateTime: '2023-01-01T10:00:00.000Z'
+              baseCurrency: USD
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+        '':
+          schema:
+            $ref: '#/definitions/rate'
+          description: ''
+      operationId: get-rate
+      description: Query the reference exchange rate provided LianLian Global
+      parameters:
+        - in: query
+          name: rateChannel
+          type: string
+          description: 'Rate channel, one of  onshore,offshore '
+      x-stoplight:
+        id: qgi854kd943g1
+    parameters:
+      - type: string
+        name: sourceCurrency
+        in: path
+        required: true
+        description: Source Currency
+        maxLength: 3
+      - type: string
+        name: targetCurrency
+        in: path
+        required: true
+        description: Target Currency
+        maxLength: 3
+      - type: string
+        name: rateType
+        in: path
+        required: true
+        description: |-
+          Rate Type, one of 
+          |Code|Decription|
+          |----|-----|
+          |reference|Rate for reference|
+        maxLength: 10
+        default: reference
+definitions:
+  rate:
+    title: Fx-Rate
+    type: object
+    description: Fx-rate object in LianLian Global's system
+    x-tags:
+      - Models
+    properties:
+      baseCurrency:
+        type: string
+        maxLength: 3
+        description: |-
+          Base Currency
+          Sample: USD is the Base Currency for USD/CNY
+      sourceCurrency:
+        type: string
+        description: Source Currency
+        maxLength: 3
+      targetCurrency:
+        type: string
+        maxLength: 3
+        description: Target Currency
+      rateChannel:
+        x-stoplight:
+          id: vh10v84q7s60s
+        enum:
+          - onshore
+          - offshore
+        description: "Rate channel, one of \r\n\r\nVALUE | DESCRIPTION \r\n---------|---------\r\n onshore | Onshore exchange rate \r\n offshore | Offshore exchange rate\r\n"
+      rate:
+        type: string
+        description: Rate
+        maxLength: 10
+      rateId:
+        type: string
+        description: Rate ID
+        maxLength: 24
+      rateTime:
+        type: string
+        description: Rate Time
+        format: date-time
+      startTime:
+        type: string
+        x-stoplight:
+          id: 00gp1fbm7vlxc
+        description: "FX rate validity start time\r\n\r\n"
+        format: date-time
+      endTime:
+        type: string
+        x-stoplight:
+          id: zudmg1tujv8vq
+        description: FX rate validity end time
+        format: date-time
+    required:
+      - baseCurrency
+      - sourceCurrency
+      - targetCurrency
+      - rate
+      - rateTime
+securityDefinitions: {}

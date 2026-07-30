@@ -1,0 +1,272 @@
+swagger: '2.0'
+info:
+  title: Trade File API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /tradefile:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      summary: 提交贸易材料
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: 贸易材料
+            description: 连连侧贸易材料对象
+            properties:
+              materialId:
+                type: string
+                description: 商户侧指令唯一编号
+                maxLength: 64
+              tradeFileId:
+                type: string
+                description: 平台侧订单唯一编号
+                maxLength: 64
+              fundingInfo:
+                type: array
+                description: 订单对应的加款信息
+                items:
+                  type: object
+                  properties:
+                    fundingId:
+                      type: string
+                      description: 连连侧加款唯一编号
+                      maxLength: 64
+              paymentType:
+                type: string
+                description: |-
+                  订单支付方式，填写方式如下
+
+                  |传输值|解释|
+                  |----|----|
+                  |0|Paypal、stripe收单|
+                  |1|线下转账支付|
+                enum:
+                  - 0
+                  - 1
+              payerName:
+                type: string
+                description: 付款人名称
+                maxLength: 32
+              payerCountryCode:
+                type: string
+                description: 付款方国别或地区，参考附录国家或地区代码
+                minLength: 3
+                maxLength: 3
+              payeeId:
+                type: string
+                description: 商户侧收款人唯一编号
+                maxLength: 64
+              tradeType:
+                type: string
+                description: |-
+                  交易类型，传输方式如下
+
+                  |传输值|解释|
+                  |----|-----|
+                  |0|货物贸易|
+                  |1|服务贸易|
+                enum:
+                  - 0
+                  - 1
+              tradeTime:
+                type: string
+                description: '交易时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+              tradeCurrency:
+                type: string
+                description: 交易币种，参考附录币种代码
+                minLength: 3
+                maxLength: 3
+              tradeAmount:
+                type: string
+                description: 交易金额
+                maxLength: 10
+              tradeName:
+                type: string
+                description: 商品名称
+                maxLength: 512
+              shopURL:
+                type: string
+                description: 商品所对应的店铺链接
+                maxLength: 128
+              tradeCount:
+                type: string
+                description: 商品数量
+                maxLength: 10
+              goodsCarrier:
+                type: string
+                description: |-
+                  物流信息，填写方式如下
+
+                  货物承运人及运货单号，例如：
+                  中外运空运;MC2410918701000931505
+                maxLength: 128
+              serviceDetail:
+                type: string
+                description: 服务贸易详情，若tradeType=1时必填
+                maxLength: 512
+              serviceTime:
+                type: string
+                description: '服务发生时间，若tradeType=1时必填，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+            required:
+              - materialId
+              - tradeFileId
+              - fundingInfo
+              - payerName
+              - payerCountryCode
+              - payeeId
+              - tradeType
+              - tradeTime
+              - tradeCurrency
+              - tradeAmount
+              - tradeName
+      tags:
+        - 接口
+  '/tradefile/{materialId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      summary: 查询贸易材料信息
+      tags:
+        - 接口
+    parameters:
+      - name: materialId
+        in: path
+        type: string
+        required: true
+        description: 商户侧指令唯一编号
+        maxLength: 64
+definitions:
+  new-model:
+    type: object
+    title: 贸易材料
+    description: 连连侧贸易材料对象
+    properties:
+      materialId:
+        type: string
+        description: 商户侧指令唯一编号
+        maxLength: 64
+      tradeFileId:
+        type: string
+        description: 平台侧订单唯一编号
+        maxLength: 64
+      fundingInfo:
+        type: array
+        description: 订单对应加款信息
+        items:
+          type: object
+          properties:
+            fundingId:
+              type: string
+              description: 连连侧加款唯一编号
+              maxLength: 64
+          required:
+            - fundingId
+      paymentType:
+        type: string
+        description: |-
+          订单支付方式，填写方式如下
+
+          |传输值|解释|
+          |----|----|
+          |0|线上收单|
+          |1|转账支付|
+        enum:
+          - 0
+          - 1
+      payeeName:
+        type: string
+        description: 收款人名称
+        maxLength: 32
+      payeeCountryCode:
+        type: string
+        description: 收款方国别或地区，参考附录国家或地区代码
+        minLength: 3
+        maxLength: 3
+      payerId:
+        type: string
+        description: 商户侧付款人唯一编号
+        maxLength: 64
+      tradeType:
+        type: string
+        description: |-
+          交易类型，传输方式如下
+
+          |传输值|解释|
+          |----|-----|
+          |0|货物贸易|
+          |1|服务贸易|
+        enum:
+          - 0
+          - 1
+      tradeTime:
+        type: string
+        description: '交易时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+      tradeCurrency:
+        type: string
+        description: 交易币种，参考附录币种代码
+        minLength: 3
+        maxLength: 3
+      tradeAmount:
+        type: string
+        description: 交易金额
+        maxLength: 10
+      tradeName:
+        type: string
+        description: 商品名称
+        maxLength: 512
+      shopURL:
+        type: string
+        description: 商品所对应的店铺链接
+        maxLength: 128
+      tradeCount:
+        type: string
+        description: 商品数量
+        maxLength: 10
+      goodsCarrier:
+        type: string
+        description: |-
+          物流信息，填写方式如下
+
+          货物承运人及运货单号，例如：
+          中外运空运;MC2410918701000931505
+        maxLength: 128
+      serviceDetail:
+        type: string
+        description: 服务贸易详情，若tradeType=1时必填
+        maxLength: 512
+      serviceTime:
+        type: string
+        description: '服务发生时间，若tradeType=1时必填，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+    required:
+      - materialId
+      - tradeFileId
+      - fundingInfo
+      - paymentType
+      - payeeName
+      - payeeCountryCode
+      - payerId
+      - tradeType
+      - tradeTime
+      - tradeCurrency
+      - tradeAmount
+      - tradeName
+tags:
+  - name: Operations
+  - name: 接口
+basePath: /b2b-import/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json

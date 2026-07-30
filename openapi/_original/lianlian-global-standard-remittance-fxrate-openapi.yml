@@ -1,0 +1,164 @@
+openapi: 3.1.0
+x-stoplight:
+  id: ydanajuqx1scl
+info:
+  title: FX RATE
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: This section contains the operations and models of LianLian Global fx rate service.
+servers:
+  - url: 'https://gtest-open-api.lianlianpay-inc.com/remittance/outward/v2/exchangeRate'
+    description: Sandbox
+  - description: Online
+    url: 'https://global-open-api.lianlianpay.com/remittance/outward/v2/exchangeRate'
+paths:
+  /query:
+    post:
+      summary: Get FX Rate
+      operationId: post-rate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rate:
+                    type: string
+                    description: Rate
+                    maxLength: 10
+                  rateId:
+                    type: string
+                    description: "Rate ID\r\n\r\n"
+                    maxLength: 24
+                  baseCurrency:
+                    type: string
+                    description: "Base Currency Sample: USD is the Base Currency for USD/CNY\r\n\r\n"
+                    maxLength: 3
+                  sourceCurrency:
+                    type: string
+                    description: "Source Currency\r\n\r\n"
+                    maxLength: 3
+                  targetCurrency:
+                    type: string
+                    description: Target Currency
+                    maxLength: 3
+                  rateTime:
+                    type: string
+                    format: date-time
+                    description: "Rate Time\r\n\r\n"
+                examples:
+                  New User Bob Fellow:
+                    value:
+                      rate: '6.3569'
+                      rateId: ''
+                      sourceCurrency: USD
+                      targetCurrency: CNY
+                      rateTime: '2023-01-01T10:00:00.000Z'
+                      baseCurrency: USD
+              examples:
+                Example 1:
+                  value:
+                    rate: '7.382954'
+                    rateId: '2045992848223'
+                    baseCurrency: USD
+                    sourceCurrency: CNY
+                    targetCurrency: USD
+                    rateTime: '2023-01-01T10:00:00Z'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Failed object in LianLian Global's system
+                properties:
+                  code:
+                    type: string
+                    x-stoplight:
+                      id: 2sfuug0byo53n
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: 73doqsc62z948
+                  httpCode:
+                    type: string
+                    x-stoplight:
+                      id: gx7w1x7ddaxms
+                required:
+                  - code
+                  - message
+                  - httpCode
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error object in LianLian Global's system
+                properties:
+                  code:
+                    type: string
+                    x-stoplight:
+                      id: cfdaslnlw6c24
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: u47ktnhu5tbm1
+                  httpCode:
+                    type: string
+                    x-stoplight:
+                      id: 4j9591ysx4ap0
+                required:
+                  - code
+                  - message
+                  - httpCode
+              examples:
+                Example 1:
+                  value:
+                    code: '500000'
+                    message: 'Internal Server Error, Contact Lianlian Pay for technical support'
+                    httpCode: '500'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sourceCurrency:
+                  type: string
+                  x-stoplight:
+                    id: zytko6n126vj4
+                  maxLength: 3
+                  default: CNY
+                  description: Source currency
+                targetCurrency:
+                  type: string
+                  x-stoplight:
+                    id: 1f1twviynr4qw
+                  maxLength: 3
+                  description: Target currency
+              required:
+                - sourceCurrency
+                - targetCurrency
+            examples:
+              Example 1:
+                value:
+                  sourceCurrency: CNY
+                  targetCurrency: USD
+        description: ''
+      description: Query the reference exchange rate provided by LianLian Global
+      x-stoplight:
+        id: l2eykshn0ltcq
+    parameters: []
+components:
+  schemas: {}

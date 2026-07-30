@@ -1,0 +1,157 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Balance",
+        "version": "1.0",
+        "description": "The Balance API can be used to get available balances in each currency.\n\nDifferent currency of available balances at present under your LianLian Global account.\n"
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-balances": {
+            "parameters": [],
+            "get": {
+                "summary": "Get list of Balances",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Balance"
+                                    }
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Balance"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-balance",
+                "description": "#### Demo for java SDK\n```java\n//create an API service as native Object\nBalanceReadService service = GatewayProxyFactory.getInstance().create(BalanceReadService.class, config);\n//init your API call parameter\nBaseOpenApiReq req = new BaseOpenApiReq();\n//invoke api as native call and get the deserialized result Object\nRichOpenRes<List<BalanceDetailRes>> res = service.list(req);\n//if invoke succeed do your business\nif (res.isSuccess()) {\n    //do your business here\n    System.out.println(res);\n    System.out.println(JSONObject.toJSON(res));\n    if (res.getModel() != null) {\n        System.out.println(\"return balance list:\");\n        res.getModel().forEach(e -> {\n            System.out.println(\"accountId:\" + e.getAccountId() + \"\\t\\t\" + \"accountId:\" + e.getAccountId() + \"\\t\\t\" + \"availableAmount:\" + e.getAvailableAmount());\n        });\n    }\n} else {//if invoked error check the return error message and do your error handler\n    //error handler\n    System.out.println(\"there is a error for API invoke, the detail message is:\");\n    System.out.println(\"error:\" + res.getError());\n    System.out.println(\"message:\" + res.getMessage());\n    System.out.println(\"success:\" + res.isSuccess());\n    System.out.println(\"code:\" + res.getCode());\n}\n```",
+                "parameters": [],
+                "x-internal": false
+            }
+        },
+        "/ew-balances-with-settings": {
+            "get": {
+                "summary": "Get List of Balances With Settings",
+                "tags": [
+                    "Operations"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BalanceWithSetting"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-ew-balances-with-settings",
+                "description": "Get list of balances and with the account settings."
+            },
+            "parameters": []
+        }
+    },
+    "components": {
+        "schemas": {
+            "Balance": {
+                "title": "Balance",
+                "type": "array",
+                "description": "",
+                "examples": [
+                    [
+                        {
+                            "account_id": "string",
+                            "currency": "string",
+                            "availible_amount": "string"
+                        }
+                    ]
+                ],
+                "x-tags": [
+                    "Models"
+                ],
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "account_id": {
+                            "type": "string",
+                            "description": "Unique identifier of the LianLian Global account."
+                        },
+                        "currency": {
+                            "type": "string",
+                            "description": "Three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code."
+                        },
+                        "available_amount": {
+                            "type": "string",
+                            "description": "Available amount."
+                        }
+                    }
+                }
+            },
+            "BalanceWithSetting": {
+                "title": "BalanceWithSetting",
+                "x-stoplight": {
+                    "id": "qy39qjflt8hew"
+                },
+                "x-tags": [
+                    "Models"
+                ],
+                "type": "object",
+                "properties": {
+                    "account_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the LianLian Global account."
+                    },
+                    "currency": {
+                        "type": "string",
+                        "description": "Three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code."
+                    },
+                    "available_amount": {
+                        "type": "string",
+                        "description": "Available amount."
+                    },
+                    "auto_recharge_setting": {
+                        "$ref": "./CommonModel.json#/components/schemas/BalanceRechargeSetting",
+                        "description": "Balance auto recharge setting."
+                    }
+                }
+            }
+        }
+    }
+}

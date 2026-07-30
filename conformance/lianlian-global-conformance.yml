@@ -1,0 +1,61 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ securitySchemes + https://developer.lianlianglobal.com conventions docs
+standards:
+- id: oauth2
+  conforms: true
+  evidence: OpenAPI securitySchemes of type oauth2 with clientCredentials and authorizationCode flows across the
+    LPPE product; documented at /docs/lppe/b6b6c2d4906e9-authentication
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: POST /api/v1/oauth2/token with grant_type=client_credentials
+- id: oauth2-authorization-code
+  conforms: true
+  evidence: authorization endpoint https://global.lianlian.com/account/#/application-center/auth with response_type=code,
+    state and scope
+- id: oidc
+  conforms: false
+  evidence: no openIdConnect scheme and no /.well-known/openid-configuration (404)
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a custom JSON envelope (code/message/param/trace_id), not application/problem+json
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no Sunset or Deprecation header support documented
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on all probed hosts
+- id: idempotency-key
+  conforms: true
+  evidence: Idempotency-Key request header documented across document, funding, payout and webhook operations
+- id: http-signature-rsa-sha256
+  conforms: true
+  evidence: LLPAY-Signature header, SHA256WithRSA over HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD (provider-specific
+    scheme, not RFC 9421)
+- id: rfc9421-http-message-signatures
+  conforms: false
+  evidence: signing scheme is provider-specific, not the RFC 9421 Signature/Signature-Input form
+- id: iso4217-currency
+  conforms: true
+  evidence: Data Types doc mandates ISO 4217 three-letter currency codes
+- id: iso3166-country
+  conforms: true
+  evidence: Data Types doc mandates ISO 3166-2 two-letter country codes
+- id: uri-path-versioning
+  conforms: true
+  evidence: 'Versioning doc: all APIs carry the version in the URL path, e.g. /v1'
+- id: json-api
+  conforms: false
+  evidence: plain JSON, not the JSON:API media type
+- id: fapi
+  conforms: false
+  evidence: no FAPI security profile claimed
+- id: psd2
+  conforms: false
+  evidence: no PSD2 / open-banking conformance claimed
+- id: openapi-3
+  conforms: true
+  evidence: 58 of 173 published specs are OpenAPI 3.1.0; the remainder are Swagger 2.0
+compliance_program: null
+compliance_note: No published certification page (SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP) was found. The us.lianlianglobal.com/licenses
+  page is client-side rendered and returned no extractable certification text; no Compliance pointer is emitted.

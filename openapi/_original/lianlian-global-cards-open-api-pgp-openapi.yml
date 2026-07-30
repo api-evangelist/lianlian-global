@@ -1,0 +1,79 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 26l9t2kln5qrh
+info:
+  title: PGP
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths: {}
+components:
+  schemas:
+    PGP命令:
+      title: PGP命令
+      x-stoplight:
+        id: f6r5d7wz8n9oi
+      type: object
+      description: |-
+        Perl
+
+        Generate a PGP key: gpg --full-generate-key
+
+        List PGP secret keys: gpg --list-secret-keys
+      examples:
+        - {}
+    PGP密钥生成步骤:
+      title: PGP密钥生成步骤
+      x-stoplight:
+        id: 95k0sgww8a3g4
+      type: object
+      description: |-
+        Plain Text
+        以下步骤将帮助您生成 PGP 密钥。以下密钥是在Windows上使用Git-Bash生成的。生成 PGP 密钥：<br>
+        1.<br>
+
+        $ gpg --full-generate-key <br>
+
+        gpg （GnuPG） 2.2.13-未知;版权所有 （C） 2019 自由软件基金会这是自由软件：你可以自由地更改和重新分发它。 <br> 在法律允许的范围内，不提供任何保证。<br>
+        gpg （GnuPG） 2.2.13-未知;版权所有 （C） 2019 自由软件基金会 <br>
+        这是自由软件：你可以自由地更改和重新分发它。在法律允许的范围内，不提供任何保证。 <br> 
+
+        2.<br>
+
+        请您选择所需的密钥类型： <br>
+        (1) RSA and RSA(default) <br>
+        (2) DSA and Elgamal <br>
+        (3) DSA(sign only) <br>
+        (4) RSA(sign only) <br>
+
+        3.<br>
+
+        RSA 密钥长度应在 1024 位与 4096 位之间。 <br>
+        您想要用多大的密钥尺寸？(2048) <br>
+        密钥越长越安全，默认是 2048 位。 <br>
+
+        4.<br>
+
+        请您设定这把密钥的有效期限。 <br>
+        0 = 密钥永不过期 <br>
+        = 密钥在 n 天后过期 <br>
+        w = 密钥在 n 周后过期 <br>
+        m = 密钥在 n 月后过期 <br>
+        y = 密钥在 n 年后过期 <br>
+
+
+        5.<br>
+
+        需要真实用户信息构造一个用户 ID 来识别您的密钥。 <br>
+        真实姓名： <br>
+        电子邮件地址： <br>
+
+        6.<br>
+
+        需要一个密码来保护您的私钥： <br>
+        （我们需要生成大量随机字节。在质数生成期间执行其他一些操作（在键盘上键入，移动鼠标，利用磁盘） <br> 是一个好主意; <br> 这为随机数生成器提供了获得足够熵的更好机会。我们需要生成大量随机字节。在质数生成期间执行其他一些操作（在键盘上键入，移动鼠标，利用磁盘）是一个好主意;这为随机数生成器提供了获得足够熵的更好机会）<br>
+
+        7.<br>
+
+        几分钟以后，系统提示密钥已经生成了。<br>
+  examples: {}

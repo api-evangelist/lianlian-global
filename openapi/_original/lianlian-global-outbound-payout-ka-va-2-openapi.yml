@@ -1,0 +1,822 @@
+swagger: '2.0'
+x-stoplight:
+  id: bp0b9lnuu3jcy1
+info:
+  title: DD Virtual Account API
+  version: '1.0'
+  description: ''
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /va/apply:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-Info'
+          examples:
+            Example 1:
+              tradeFileId:
+                - tf2023010100001
+              accountId: '2023051274598508'
+              accountNo: '8740002047'
+              currency: USD
+              bankName: CFSB
+              bankAddress: HangZhou
+              swiftCode: CLOEUS66
+              routingNo: '026009593'
+              createTime: '2023-01-01T10:00:09.000Z'
+              modifyTime: '2023-01-01T10:00:09.000Z'
+              status: CREATING
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 600001|交易信息不存在|
+            | 600002|申请VA此币种暂不支持|
+            | 600003|贸易材料对应付款人不一致|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: 7x394nbkdbw6f
+              message:
+                type: string
+                x-stoplight:
+                  id: mzq5krguwyqag
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: b5cb99ew434ea
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '600002'
+              message: 申请VA此币种暂不支持
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+                x-stoplight:
+                  id: esa4u8nwala8b
+              message:
+                type: string
+                x-stoplight:
+                  id: qlo7ac2hlch1m
+              httpCode:
+                type: string
+                x-stoplight:
+                  id: hcnji1fyx3tgt
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      summary: Apply Virtual Account
+      tags:
+        - OPERATIONS
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: VA Information
+            description: VA information defined in LianLian Global's system
+            required:
+              - tradeFileId
+              - limit
+              - cardholderName
+              - cardholderIdType
+              - cardholderIdNo
+              - cardholderBirth
+              - cardholderAddress
+              - schoolName
+              - cardPurpose
+              - cardholderIdPhotoFileId
+              - payerInfo
+            properties:
+              tradeFileId:
+                type: array
+                description: Unique Trade file Id from client
+                maxItems: 10
+                items:
+                  type: string
+                  maxLength: 32
+              limit:
+                type: string
+                description: Limit of this VA
+              currency:
+                type: string
+                description: Currency of Virtual Account
+                minLength: 3
+                maxLength: 3
+              cardholderName:
+                type: string
+                maxLength: 128
+                x-stoplight:
+                  id: eo056njrde03p
+                description: Can be Chinese character.
+              cardholderIdType:
+                type: string
+                enum:
+                  - ID_CARD
+                  - OTHER
+                x-stoplight:
+                  id: 895cqr7ck8usx
+                description: 'one of ID_CARD,OTHER'
+              cardholderIdNo:
+                type: string
+                maxLength: 32
+                x-stoplight:
+                  id: agzepok4zexxm
+              cardholderBirth:
+                type: string
+                x-stoplight:
+                  id: 2hzfqo4fzujrk
+                description: YYYY-MM-DD
+              cardholderAddress:
+                type: object
+                x-stoplight:
+                  id: piis9pqjxn0ih
+                required:
+                  - country
+                  - region
+                  - locality
+                  - subLocality
+                  - street
+                properties:
+                  country:
+                    type: string
+                    x-stoplight:
+                      id: c5355oniovbql
+                    description: ' must meet ASCII,eg:CN'
+                  region:
+                    type: string
+                    x-stoplight:
+                      id: cxkit3cs1swmj
+                    description: 'state/province,must meet ASCII,eg:Shanghai'
+                  locality:
+                    type: string
+                    x-stoplight:
+                      id: x7uflb25la7il
+                    description: 'city,must meet ASCII,eg:Shanghai City'
+                  subLocality:
+                    type: string
+                    x-stoplight:
+                      id: 6lro6evdtecaj
+                    description: 'county/district,must meet ASCII,eg:BaoShan District'
+                  street:
+                    type: string
+                    x-stoplight:
+                      id: obq5j5q0hpxyy
+                    description: 'must meet ASCII,eg:Nanjing road'
+              schoolName:
+                type: string
+                x-stoplight:
+                  id: rnvjcxb32ywdg
+                description: 'School name must meet ASCII,eg:New York University'
+                maxLength: 140
+              cardPurpose:
+                x-stoplight:
+                  id: uapg7b5bhdcz1
+                enum:
+                  - TUITION
+                  - INSURANCE
+                  - APARTMENT
+                description: 'one of TUITION,INSURANCE,APARTMENT'
+              cardholderIdPhotoFileId:
+                type: string
+                x-stoplight:
+                  id: x2opybeonkr2c
+                description: 'upload the ID photos of the cardholder (must include both front and back), then provide the returned file ID.'
+                maxLength: 100
+              payerInfo:
+                type: object
+                x-stoplight:
+                  id: dq9wtsq4qrpoq
+                description: payer info
+                required:
+                  - payerName
+                  - payerIdAddress
+                  - relationship
+                properties:
+                  payerName:
+                    type: string
+                    x-stoplight:
+                      id: 43fia8ztuzgs9
+                    description: 'payer name, required in English. When the payer''s country is China, please separate the first name and last name. e.g ''**XIAOMING WANG**''.'
+                    maxLength: 80
+                    minLength: 0
+                    example: XIAOMING WANG
+                  payerIdAddress:
+                    type: string
+                    x-stoplight:
+                      id: mhh9zwr1q5jf2
+                    description: 'the address on the payer''s ID,required in English. This should include the **country** and **city**.'
+                    minLength: 0
+                    maxLength: 200
+                  relationship:
+                    x-stoplight:
+                      id: 8o4ccoi0xa5zj
+                    enum:
+                      - SELF
+                      - FAMILY
+                      - IMMEDIATE_FAMILY
+                      - OTHER_RELATIVES
+                      - FRIEND
+                      - ORGANIZATION
+                      - INTERMEDIARY
+                      - OTHER
+                    description: "Payer and beneficiary relationship, one of:\r\n\r\nIf payer type is \"INDIVIDUAL\"\r\n\r\n| VALUE | DESCRIPTION |\r\n|-------|-------------|\r\n| SELF | payer is beneficiary |\r\n| FAMILY | Payer is the family member of beneficiary |\r\n| IMMEDIATE_FAMILY | Parents, children, spouse |\r\n| OTHER_RELATIVES | Any relative other than \"Parents, children, spouse\" |\r\n| FRIEND | Friends |\r\n| OTHER | other relationship |\r\n\r\nIf payer type is \"CORPORATE\"\r\n\r\n| VALUE | DESCRIPTION |\r\n|-------|-------------|\r\n| ORGANIZATION | The company/school to which the student belongs |\r\n| INTERMEDIARY | Student commissioned agency |\r\n| OTHER | other relationship |"
+          x-examples:
+            Example 1:
+              tradeFileId:
+                - tf2023010100001
+              limit: '145.00'
+              currency: USD
+          description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: 'You can apply for a virtual account through this API, after submitting the application, the initial status of the virtual account is CREATING, after the status is changed to ACTIVE, you can get the detail information of the virtual account, the notification of the status change can be received via webhook'
+      operationId: post-vadd
+      x-stoplight:
+        id: j7n7pmt8e574b
+    parameters: []
+  /va/supplement:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema: null
+          examples: {}
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 600001|交易信息不存在|
+            | 600002|申请VA此币种暂不支持|
+            | 600003|贸易材料对应付款人不一致|
+            | 600018|No Permission|
+            | 600019|超过最大金额限制|
+            | 600020|超过当日/当月交易次数限制|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '600002'
+              message: 申请VA此币种暂不支持
+              httpCode: 400
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      summary: Supplement Virtual Account
+      tags:
+        - OPERATIONS
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: VA Information
+            description: VA information defined in LianLian Global's system
+            required:
+              - tradeFileId
+              - amount
+            properties:
+              tradeFileId:
+                type: array
+                description: Unique Trade file Id from client
+                maxItems: 10
+                items:
+                  type: string
+                  maxLength: 32
+              amount:
+                type: string
+                description: Amount of this supplement
+                x-stoplight:
+                  id: 9ujpns7du6pio
+              currency:
+                type: string
+                description: Currency of Virtual Account
+                minLength: 3
+                maxLength: 3
+              accountId:
+                type: string
+                x-stoplight:
+                  id: 3ach5dx4j99vu
+                description: Virtual Account unique ID defined by LianLian Global
+              externalFundingIndicator:
+                type: string
+                x-stoplight:
+                  id: fai1yxp3f7n89
+                description: "external funding indicator, one of \r\n\r\n|Code|Description|\r\n|----|-----|\r\n|N|N0|\r\n|Y|YES|"
+          x-examples:
+            Example 1:
+              tradeFileId:
+                - tf2023010100001
+              limit: '145.00'
+              currency: USD
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      description: 'You can supplement a virtual account through this API, before submitting the application, the status of the virtual account should be ACTIVE.'
+      operationId: post-vadd
+      x-stoplight:
+        id: 256x59rk88kw2
+    parameters: []
+  '/va/balance/{currency}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+        '404':
+          description: ''
+        '500':
+          description: ''
+        '':
+          schema:
+            $ref: '#/definitions/VA-Info_copy'
+      summary: Get Currency Account Balance
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-stoplight:
+        id: pen150l74umww
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties: {}
+    get - copy:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+        '404':
+          description: ''
+        '500':
+          description: ''
+        '':
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+      summary: Get Virtual Account Debit Record
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - type: string
+        name: currency
+        in: path
+        required: true
+  '/va/{accountId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-Info'
+        '':
+          schema:
+            $ref: '#/definitions/VA-Info'
+      summary: Get Virtual Account Info by ID
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-stoplight:
+        id: zhl8hodzwwavj
+    parameters:
+      - type: string
+        name: accountId
+        in: path
+        required: true
+        description: Virtual Account unique ID defined by LianLian Global
+  /va/transaction:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              authTrans:
+                type: array
+                description: Authorization Records
+                items:
+                  $ref: '#/definitions/VA-Debit-Record'
+              totalCount:
+                type: string
+                description: Total count of authorization records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+      summary: Get List of Virtual Account Debit Records
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - type: string
+          in: query
+          name: accountId
+          description: Virtual Account unique ID defined by LianLian Global
+        - type: string
+          in: query
+          name: transactionId
+          description: Unique transaction id defined by LianLian Global
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: beginTime
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+          required: true
+        - type: string
+          in: query
+          name: endTime
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+          required: true
+      description: The scale of the search cannot exceed 7 days
+      x-stoplight:
+        id: 77sjvdi4o1yq9
+    parameters: []
+  '/va/transaction/{transactionId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+        '404':
+          description: ''
+        '500':
+          description: ''
+        '':
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+      summary: Get Virtual Account Debit Record
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-stoplight:
+        id: uq89xg86i4sg8
+    get - copy:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+        '404':
+          description: ''
+        '500':
+          description: ''
+        '':
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+      summary: Get Virtual Account Debit Record
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - name: transactionId
+        in: path
+        type: string
+        required: true
+        description: Unique transaction id defined by LianLian Global
+  '/va/verify/{transactionId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-EntryOrder'
+        '404':
+          description: ''
+        '500':
+          description: ''
+      summary: Get Virtual Account Verify
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-stoplight:
+        id: u9ei07ent05hu
+    get - copy:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+        '404':
+          description: ''
+        '500':
+          description: ''
+        '':
+          schema:
+            $ref: '#/definitions/VA-Debit-Record'
+      summary: Get Virtual Account Debit Record
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters:
+      - name: transactionId
+        in: path
+        type: string
+        required: true
+        description: Unique transaction id defined by LianLian Global
+basePath: /outbound/card/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  VA-Debit-Record:
+    title: VA- Debit-Record
+    type: object
+    x-tags:
+      - Models
+    x-stoplight:
+      id: 6eyhz91fdd265
+    required:
+      - transactionId
+      - currency
+      - amount
+      - transactionTime
+      - accountId
+      - status
+    properties:
+      transactionId:
+        type: string
+        description: Unique authorization transaction id defined by LianLian Global
+      currency:
+        type: string
+        description: Transaction currency
+      amount:
+        type: string
+        description: Transaction Amount
+      transactionTime:
+        type: string
+        description: |
+          Transaction Time
+        format: date-time
+      accountId:
+        type: string
+        description: Unique Card ID defined by LianLian Global
+      status:
+        type: string
+        description: |-
+          Transaction status, one of
+          |Code|Description|
+          |-----|------|
+          |PENDING|Pre-debit Succeed|
+          |SUCCEED|Debit Succeed|
+          |REJECTED|Debit rejected|
+          |RECALLING|Debit Recalling|
+      overLimitStatus:
+        type: string
+        description: |-
+          Transaction overLimitStatus, one of
+          |Code|Description|
+          |-----|------|
+          |UN_OVER|Un OverLimit|
+          |OVER_UN_TREATED|Limit Un-Treated|
+          |OVER_TREATED|Limit Already-Treated|    
+      merchantName:
+        type: string
+        description: Transaction Beneficiary Name
+      institutionName:
+        type: string
+        description: Transaction Institution Name
+  VA-EntryOrder:
+    title: VA- Debit-Record
+    x-stoplight:
+      id: lmculeh8br5j9
+    type: object
+    x-tags:
+      - Models
+    required:
+      - transactionId
+      - currency
+      - amount
+      - transactionTime
+      - accountId
+    properties:
+      transactionId:
+        type: string
+        description: Va entry order transaction id defined by LianLian Global
+      currency:
+        type: string
+        description: Transaction currency
+      amount:
+        type: string
+        description: Transaction Amount
+      transactionTime:
+        type: string
+        description: |
+          Transaction Time
+        format: date-time
+      accountId:
+        type: string
+        description: Unique Card ID defined by LianLian Global
+      verifyCode:
+        type: string
+        description: Verify code
+        x-stoplight:
+          id: xmr1jeyg83vf7
+  VA-Info:
+    title: VA-Info
+    type: object
+    description: VA information defined in LianLian Global's system
+    x-tags:
+      - Models
+    x-stoplight:
+      id: nx3f8g1c39b0l
+    required:
+      - currency
+      - status
+    properties:
+      tradeFileId:
+        type: array
+        description: Unique Trade file Id from client
+        maxItems: 10
+        items:
+          type: string
+          maxLength: 32
+      accountId:
+        type: string
+        description: Virtual Account unique ID defined by LianLian Global
+      accountNo:
+        type: string
+        description: Virtural Account Number
+      bizVirtualAccountNo:
+        type: string
+        x-stoplight:
+          id: ku0e1nc0a8tzc
+        description: Virtual account number  for transactions
+      localAccountNo:
+        type: string
+        description: 'The local bank account number, such as the IBAN in the SPAE'
+        x-stoplight:
+          id: brtpti0ggxjpu
+      currency:
+        type: string
+        description: Currency of virtual account
+      bankName:
+        type: string
+        description: Bank name of virtual account
+      bankAddress:
+        type: string
+        description: Bank address of virtual account
+      swiftCode:
+        type: string
+        description: Bank SWIFT code
+        minLength: 8
+        maxLength: 11
+      routingNo:
+        type: string
+        description: 'The corresponding code for the clearing network, e.g., the ABA number, or SORT code'
+      status:
+        type: string
+        description: |-
+          VA status, one of 
+          |Code|Description|
+          |----|----|
+          |CREATING|VA Creating|
+          |ACTIVE|VA Active|
+          |FROZEN|VA Frozen|
+          |BLOCKING|VA Blocking|
+          |BLOCKED|VA Blocked|
+        enum:
+          - CREATING
+          - ACTIVE
+          - FROZEN
+          - BLOCKING
+          - BLOCKED
+      createTime:
+        type: string
+        description: 'Create time, UTC+0'
+        format: date-time
+      modifyTime:
+        type: string
+        description: 'Modify time, UTC+0'
+        format: date-time
+      availableBalance:
+        type: string
+        x-stoplight:
+          id: 6dnt0qwds7g1o
+        description: Available balance of virtual account
+  VA-Info_copy:
+    title: VA-Balance
+    x-stoplight:
+      id: 34wllpb7co15f
+    type: object
+    description: VA Balance in LianLian Global's system
+    x-tags:
+      - Models
+    properties:
+      currency:
+        type: string
+        x-stoplight:
+          id: tfxsoi2hcigmn
+      availableBalance:
+        type: string
+        x-stoplight:
+          id: oi9n77k3y6zth
+tags:
+  - name: OPERATIONS

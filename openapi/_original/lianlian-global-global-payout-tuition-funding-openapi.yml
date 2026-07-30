@@ -1,0 +1,183 @@
+swagger: '2.0'
+info:
+  title: Funding API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /funding:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              fundings:
+                type: array
+                items:
+                  $ref: '#/definitions/Funding'
+              totalCount:
+                type: string
+                description: Total count of authorization records
+              pageNum:
+                type: string
+                description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+              pageSize:
+                type: string
+                description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      summary: Get List of Fundings
+      tags:
+        - Operations
+      description: |-
+        Get List of Fundings detail
+
+        Interface Maximum Concurrency：300
+      parameters:
+        - type: string
+          in: query
+          name: beginTime
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+          required: true
+        - type: string
+          in: query
+          name: endTime
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+          required: true
+        - type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+    parameters: []
+  '/funding/{fundingId}':
+    parameters:
+      - type: string
+        name: fundingId
+        in: path
+        required: true
+        description: Unique Funding ID From Merchant's System
+        maxLength: 32
+    get:
+      summary: Get Funding by ID
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Funding'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Funding'
+      operationId: get-funding-fundingId
+    put:
+      summary: Return funding
+      operationId: put-funding-fundingId
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Funding'
+        '400':
+          description: Bad Request
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      tags:
+        - Operations
+definitions:
+  Funding:
+    title: Funding
+    type: object
+    description: Funding info record object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      fundingId:
+        type: string
+        description: Unique Funding ID From Merchant's System
+        maxLength: 32
+      createTime:
+        type: string
+        maxLength: 16
+        description: The time that Lianlianpay received this fund
+      updateTime:
+        type: string
+        description: The time that status of this fund changed
+        maxLength: 64
+      currency:
+        type: string
+        minLength: 3
+        maxLength: 3
+        description: Funding Currency
+      amount:
+        type: string
+        maxLength: 10
+        description: Funding amount
+      payerName:
+        type: string
+        description: Real payer name of this funding
+      payerAccountNo:
+        type: string
+        description: Payer bank account number of this funding
+      payerBankName:
+        type: string
+        description: Payer Bank Name
+      remark:
+        type: string
+        description: The statement reference of this funding
+      status:
+        type: string
+        description: |-
+          Funding status, one of
+          |Code|Description|
+          |---|---|
+          |FUNDING_SUCCEED|Funding received and available|
+          |FUNDING_PROCESSING|Funding received but not available|
+          |RETURN_SUCCEED|Return funding successful|
+          |RETURN_PROCESSING|Return funding processing|
+    required:
+      - fundingId
+      - createTime
+      - updateTime
+      - currency
+      - amount
+      - status
+basePath: /global/payout/v1
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+tags:
+  - name: Operations

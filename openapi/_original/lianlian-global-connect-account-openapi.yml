@@ -1,0 +1,304 @@
+openapi: 3.1.0
+x-stoplight:
+  id: t2q4oke06f8ni
+info:
+  title: Account
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /v1/accounts/apply:
+    post:
+      summary: 申请收款账户
+      operationId: post-account
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Missing Required Information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  description: 会员id
+                  maxLength: 32
+                currency_list:
+                  type: array
+                  description: '币种列表 例如：["USD","JPY"]'
+                  items:
+                    type: string
+                    maxLength: 128
+              required:
+                - member_id
+                - currency_list
+        description: ''
+      description: 创建币种账户
+    parameters: []
+  '/v1/accounts/{member_id}':
+    get:
+      summary: 会员账户信息查询
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '400':
+          description: Bad Request
+      operationId: get-v1-account-get_account_list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  description: 会员id
+                  maxLength: 32
+              required:
+                - member_id
+          application/xml:
+            schema:
+              type: object
+              properties:
+                member_id:
+                  type: string
+                  description: 会员id
+                  maxLength: 32
+                account_id:
+                  type: string
+                  description: 账户号，如果account_id和currency_list同时存在，以account_id为查询条件
+                  maxLength: 32
+                currency_list:
+                  type: string
+                  description: '币种列表 例如：["USD","JPY"]'
+                  maxLength: 128
+              required:
+                - member_id
+        description: ''
+      parameters: []
+    parameters:
+      - schema:
+          type: string
+        name: member_id
+        in: path
+        required: true
+  /v1/statement/transactions:
+    parameters: []
+    get:
+      summary: 账户资金流水查询
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Statement'
+                  page_size:
+                    type: integer
+                    description: 每页条数
+                  page:
+                    description: 当前页码
+                    type: integer
+                  total_count:
+                    type: integer
+                    description: 总条数
+        '400':
+          description: Bad Request
+      operationId: get-v1-statement
+      description: ''
+      parameters:
+        - schema:
+            type: string
+            maxLength: 32
+          in: query
+          name: account_id
+          description: 账户号
+        - schema:
+            type: string
+          in: query
+          name: begin_time
+          description: 开始时间，10位 秒级时间戳
+        - schema:
+            type: string
+          in: query
+          name: end_time
+          description: 结束时间，10位 秒级时间戳
+        - schema:
+            type: integer
+            maximum: 8
+          in: query
+          name: page
+          description: 页码，默认值为1
+        - schema:
+            type: integer
+            maximum: 8
+          in: query
+          name: page_size
+          description: 每页查询数量，默认值20
+components:
+  schemas:
+    Account:
+      title: Account
+      type: object
+      description: 收款账户（带充值功能）
+      examples: []
+      properties:
+        account_id:
+          type: string
+          description: 账户号
+          maxLength: 32
+        account_type:
+          type: string
+          description: 账户类型
+          maxLength: 8
+          enum:
+            - TOPUP
+            - RECEIVING
+        member_id:
+          type: string
+          description: 会员id
+          maxLength: 32
+        currency:
+          type: string
+          description: '币种，3位，参考：https://www.iso.org/iso-4217-currency-codes.html'
+        status:
+          type: string
+          description: 状态
+          maxLength: 8
+          enum:
+            - ENABLED
+            - DISABLED
+        freeze_amount:
+          type: string
+          maxLength: 16
+        available_amount:
+          type: string
+          maxLength: 16
+        bank:
+          $ref: '#/components/schemas/Bank'
+      required:
+        - account_id
+        - account_type
+        - member_id
+        - currency
+        - freeze_amount
+    Bank:
+      title: Bank
+      x-stoplight:
+        id: w1hhf29j491my
+      type: object
+      description: 银行虚拟卡
+      properties:
+        region:
+          type: string
+          description: 地区，定长2位
+        account_name:
+          type: string
+          description: 虚拟卡名称
+          maxLength: 256
+        status:
+          type: string
+          description: 状态
+          maxLength: 10
+          enum:
+            - DISABLED
+            - ENABLED
+        account_number:
+          type: string
+          description: 虚拟卡号
+          maxLength: 32
+        swift_code:
+          type: string
+          description: swift code
+          minLength: 8
+          maxLength: 11
+        bank_name:
+          type: string
+          description: 银行名称
+          maxLength: 256
+        branch_code:
+          type: string
+          description: 开户银行分行代码
+          maxLength: 32
+        bank_address:
+          type: string
+          description: 银行地址
+          maxLength: 256
+        currency:
+          type: string
+          description: 币种，定长3位
+      required:
+        - region
+        - account_name
+        - status
+        - account_number
+        - swift_code
+        - bank_name
+    Statement:
+      title: Statement
+      x-stoplight:
+        id: lvtk50rja7ekx
+      type: object
+      description: 账户流水
+      properties:
+        bill_number:
+          type: string
+          description: 账单流水
+          maxLength: 32
+        fund_direction:
+          type: string
+          description: '资金流向 '
+          enum:
+            - CREDIT
+            - DEBIT
+          maxLength: 8
+        currency:
+          type: string
+          maxLength: 3
+        transaction_amount:
+          type: string
+          description: 交易金额
+          maxLength: 16
+        balance:
+          type: string
+          description: 可用余额
+          maxLength: 16
+        account_date:
+          type: string
+          description: 账务日期，YYYYMMDD
+        remark:
+          type: string
+          description: 备注
+          maxLength: 512
+        transaction_time:
+          type: string
+          description: 交易时间，10位秒级时间戳
+      required:
+        - bill_number
+        - fund_direction
+        - currency
+        - transaction_amount
+        - balance
+        - account_date
+        - transaction_time

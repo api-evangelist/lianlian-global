@@ -1,0 +1,101 @@
+swagger: '2.0'
+info:
+  title: FX RATE API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: ''
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  '/rate/{rateType}/{sourceCurrency}/{targetCurrency}':
+    get:
+      summary: 查询汇率
+      tags:
+        - 接口
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/rate'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+        '':
+          schema:
+            $ref: '#/definitions/rate'
+          description: ''
+      operationId: get-rate
+      description: ''
+      parameters: []
+    parameters:
+      - type: string
+        name: sourceCurrency
+        in: path
+        required: true
+        description: 源币种
+        maxLength: 3
+      - type: string
+        name: targetCurrency
+        in: path
+        required: true
+        description: 目的币种
+        maxLength: 3
+      - type: string
+        name: rateType
+        in: path
+        required: true
+        description: |-
+          汇率类型, 传输方式如下 
+          |传输值|解释|
+          |----|-----|
+          |reference|参考汇率|
+        maxLength: 10
+definitions:
+  rate:
+    type: object
+    description: 连连侧汇率对象
+    title: 汇率
+    properties:
+      rate:
+        type: string
+        description: 汇率
+        maxLength: 10
+      rateId:
+        type: string
+        description: 汇率编号
+        maxLength: 24
+      sourceCurrency:
+        type: string
+        description: 源币种
+        maxLength: 3
+      targetCurrency:
+        type: string
+        maxLength: 3
+        description: 目的币种
+      baseCurrency:
+        type: string
+        maxLength: 3
+        description: |-
+          基准币种
+          例子: USD/CNY的汇率下，USD为基准币种
+    required:
+      - rate
+      - sourceCurrency
+      - targetCurrency
+      - baseCurrency
+    x-tags:
+      - 对象
+securityDefinitions: {}
+security:
+  - authorization: []
+  - llpay-signature: []
+basePath: /connect/v1
+tags:
+  - name: 接口

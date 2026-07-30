@@ -1,0 +1,468 @@
+openapi: 3.1.0
+x-stoplight:
+  id: istp7knw8ky30
+info:
+  title: VA.oas2.yml
+  version: '1.0'
+servers:
+  - url: 'https://global-api-sandbox.lianlianpay-inc.com/global/payout/v1'
+paths:
+  /va/apply:
+    post:
+      summary: Apply Virtual Account
+      operationId: ''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VA-Info'
+              examples: {}
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  '':
+                    $ref: '#/components/schemas/VA-Info'
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    description: Unique request id
+                  VAInfo:
+                    $ref: '#/components/schemas/VA-Info'
+        '400':
+          description: Missing Required Information
+        '500':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requestId:
+                  type: string
+                  description: |
+                    Unique request id from client
+                limit:
+                  type: string
+                  description: Limit of this VA
+                currency:
+                  type: string
+                  description: Currency of VA
+                clientInfo:
+                  type: object
+                  description: client information
+                  required:
+                    - clientType
+                    - clientIdNo
+                  properties:
+                    clientType:
+                      type: string
+                      description: |-
+                        client type,one of
+                        |Code|Description|
+                        |----|----|
+                        |INDIVIDUAL|individual client|
+                        |CORPORATE|corporate client|
+                      enum:
+                        - INDIVIDUAL
+                        - CORPORATE
+                    clientIdNo:
+                      type: string
+                      description: client identification number
+                      maxLength: 32
+                    clientName:
+                      type: string
+                      description: 'client name, mandatory if clientType = `CORPORATE`'
+                      maxLength: 128
+                    clientFirstName:
+                      type: string
+                      description: 'client first name ,mandatory if clientType = `INDIVIDUAL`'
+                      maxLength: 64
+                    clientLastName:
+                      type: string
+                      description: 'client last name ,mandatory if clientType = `INDIVIDUAL`'
+                      maxLength: 64
+                    clientBirthDate:
+                      type: string
+                      description: 'client''s date of birth,yyyy-MM-dd,mandatory if clientType = `INDIVIDUAL`'
+                      format: date
+              required:
+                - requestId
+                - limit
+                - currency
+                - clientInfo
+            examples: {}
+        description: ''
+      description: 'You can apply for a virtual account through this API, after submitting the application, the initial status of the virtual account is CREATING, after the status is changed to ACTIVE, you can get the detail information of the virtual account, the notification of the status change can be received via webhook'
+      x-internal: false
+      tags:
+        - OPERATIONS
+    parameters: []
+  /va/supplement:
+    post:
+      summary: Supplement Virtual Account
+      operationId: ''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: null
+              examples: {}
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  '':
+                    $ref: '#/components/schemas/VA-Info'
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  requestId:
+                    type: string
+                    description: Unique request id
+                  VAInfo:
+                    $ref: '#/components/schemas/VA-Info'
+        '400':
+          description: Missing Required Information
+        '500':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - amount
+                - currency
+                - accountId
+              properties:
+                amount:
+                  type: string
+                  description: Amount of this supplement
+                  x-stoplight:
+                    id: 2nnmlxk2q0ny7
+                currency:
+                  type: string
+                  description: Currency of VA
+                accountId:
+                  type: string
+                  description: |
+                    Virtual Account unique ID defined by LianLian Global
+                  x-stoplight:
+                    id: hmfkk18ahxn1w
+            examples: {}
+        description: ''
+      description: 'You can supplement a virtual account through this API, before submitting the application, the status of the virtual account should be ACTIVE.'
+      x-internal: false
+      tags:
+        - OPERATIONS
+      x-stoplight:
+        id: 3w085gabp2xsj
+    parameters: []
+  '/va/{accountId}':
+    parameters:
+      - schema:
+          type: string
+        name: accountId
+        in: path
+        required: true
+        description: Virtual Account unique ID defined by LianlianPay
+    get:
+      summary: Get Virtual Account Info by ID
+      tags:
+        - OPERATIONS
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VA-Info'
+      operationId: ''
+  /va/transaction:
+    get:
+      summary: Get List of Virtual Account Debit Records
+      tags:
+        - OPERATIONS
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vaTrans:
+                    type: array
+                    description: VA debit records
+                    items:
+                      $ref: '#/components/schemas/VA-Debit-Record'
+                  totalCount:
+                    type: string
+                    description: Total count of authorization records
+                  pageNum:
+                    type: string
+                    description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+                  pageSize:
+                    type: string
+                    description: |
+                      if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 100 records(default to 20 records)
+      operationId: ''
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: accountId
+          description: Virtual Account unique ID defined by LianlianPay
+        - schema:
+            type: string
+          in: query
+          name: pageNum
+          description: 'if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets'
+        - schema:
+            type: string
+          in: query
+          name: pageSize
+          description: 'if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records'
+        - schema:
+            type: string
+          in: query
+          name: beginTime
+          description: 'beginning time of funding created, in format of timestamp and units are seconds'
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: endTime
+          description: 'ending time of funding created, in format of timestamp and units are seconds'
+          required: true
+  '/va/transaction/{transactionId}':
+    parameters:
+      - schema:
+          type: string
+        name: transactionId
+        in: path
+        required: true
+        description: Unique transaction id defined by LianlianPay
+    get:
+      summary: Get Virtual Account Debit Record
+      tags:
+        - OPERATIONS
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VA-Debit-Record'
+      operationId: ''
+      x-internal: false
+  '/va/verify/{transactionId}':
+    parameters:
+      - schema:
+          type: string
+        name: transactionId
+        in: path
+        required: true
+        description: Unique transaction id defined by LianlianPay
+    get:
+      summary: Get Virtual Account Verify
+      tags:
+        - OPERATIONS
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VA-EntryOrder'
+      operationId: ''
+      x-internal: false
+      x-stoplight:
+        id: x3dyt2wqemstp
+components:
+  schemas:
+    VA-Debit-Record:
+      title: VA- Debit-Record
+      x-stoplight:
+        id: ea2e20c62df36
+      type: object
+      x-tags:
+        - Models
+      properties:
+        transactionId:
+          type: string
+          description: Unique authorization transaction id defined by LianlianPay
+        currency:
+          type: string
+          description: Transaction currency
+        amount:
+          type: string
+          description: Transaction Amount
+        transactionTime:
+          type: string
+          description: Transaction Time
+          format: date-time
+        accountId:
+          type: string
+          description: Unique Card ID defined by LianlianPay
+        status:
+          type: string
+          description: |-
+            Authorization status, one of
+             |Code|Description|
+             |-----|------|
+             |REJECTED|Debit rejected|
+             |SUCCEED|Debit succeed|
+        merchantName:
+          type: string
+          description: Transaction Beneficiary Name
+        institutionName:
+          type: string
+          description: Transaction Institution Name
+      required:
+        - transactionId
+        - currency
+        - amount
+        - transactionTime
+        - accountId
+        - status
+    VA-EntryOrder:
+      title: VA-EntryOrder
+      x-stoplight:
+        id: gt9fdnwy3lnts
+      type: object
+      x-tags:
+        - Models
+      required:
+        - transactionId
+        - currency
+        - amount
+        - transactionTime
+        - accountId
+        - verifyCode
+      properties:
+        transactionId:
+          type: string
+          description: Va entry order transaction id defined by LianLian Global
+        currency:
+          type: string
+          description: Transaction currency
+        amount:
+          type: string
+          description: Transaction Amount
+        transactionTime:
+          type: string
+          description: Transaction Time
+          format: date-time
+        accountId:
+          type: string
+          description: Unique Card ID defined by LianlianPay
+        verifyCode:
+          type: string
+          description: Verify code
+          x-stoplight:
+            id: 7s3yguvwbzgc1
+    VA-Info:
+      title: VA-Info
+      x-stoplight:
+        id: mo76tazl1v0dq
+      type: object
+      x-tags:
+        - Models
+      properties:
+        requestId:
+          type: string
+          description: Unique request id from client
+        clientInfo:
+          type: object
+          description: client information
+          properties:
+            clientType:
+              type: string
+              description: |-
+                client type,one of
+                |Code|Description|
+                |----|----|
+                |INDIVIDUAL|individual client|
+                |CORPORATE|corporate client|
+              enum:
+                - INDIVIDUAL
+                - CORPORATE
+            clientIdNo:
+              type: string
+              maxLength: 32
+              description: client identification number
+            clientName:
+              type: string
+              maxLength: 128
+              description: 'client name, mandatory if clientType = `CORPORATE`'
+            clientFirstName:
+              type: string
+              maxLength: 64
+              description: 'client first name ,mandatory if clientType = `INDIVIDUAL`'
+            clientLastName:
+              type: string
+              maxLength: 64
+              description: 'client last name ,mandatory if clientType = `INDIVIDUAL`'
+            clientBirthDate:
+              type: string
+              format: date
+              description: 'client''s date of birth ,mandatory if clientType = `INDIVIDUAL`'
+        accountId:
+          type: string
+          description: Virtual Account unique ID defined by LianlianPay
+        accountNo:
+          type: string
+          description: Virtural Account Number
+        currency:
+          type: string
+          description: Currency of virtual account
+        bankAddress:
+          type: string
+          description: Bank address of virtual account
+        bankName:
+          type: string
+          description: Bank name of virtual account
+        swiftCode:
+          type: string
+          description: Bank SWIFT code
+          minLength: 8
+          maxLength: 11
+        routingNo:
+          type: string
+          description: Routing Number
+        createTime:
+          type: string
+          description: Create time
+          format: date-time
+        modifyTime:
+          type: string
+          description: Modify time
+          format: date-time
+        status:
+          type: string
+          description: |-
+            VA status, one of 
+            |Code|Description|
+            |----|----|
+            |CREATING|VA Creating|
+            |ACTIVE|VA Active|
+            |FROZEN|VA Frozen|
+            |BLOCKING|VA Blocking|
+            |BLOCKED|VA Blocked|
+          enum:
+            - CREATING
+            - CREATING
+            - ACTIVE
+            - FROZEN
+            - BLOCKING
+            - BLOCKED

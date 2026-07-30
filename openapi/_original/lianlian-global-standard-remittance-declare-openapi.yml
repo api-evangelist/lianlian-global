@@ -1,0 +1,365 @@
+swagger: '2.0'
+x-stoplight:
+  id: rli2o2j93uo9b
+info:
+  title: Deaclration API
+  description: 'To submit declaration information, the main body of declaration materials is the payer, which needs to call the **Create a Payer** interface in advance to submit the payer information and call it after approval.<br>提交申报信息，申报材料的主体是付款人，需要提前调用 **Create a Payer** 接口提交付款人信息且审核通过后调用。'
+  contact:
+    email: fx_support@lianlianpay.com
+  version: '1.0'
+host: gtest-open-api.lianlianpay-inc.com
+basePath: /remittance/outward/v2/declare
+schemes:
+  - https
+paths:
+  /apply:
+    post:
+      tags:
+        - Operations
+      summary: Submit Declaration
+      description: |-
+        Submit declaration information through this interface.<br>
+        通过该接口提交申报信息.
+      operationId: post-declare
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            description: Declaration info
+            properties:
+              transactionId:
+                type: string
+                description: Transaction id
+                maxLength: 32
+                x-stoplight:
+                  id: qllx7iy536ywu
+              declareId:
+                type: string
+                description: Unique declare id from client
+                maxLength: 32
+                x-stoplight:
+                  id: 0o3b9fg3p0yer
+              originalDeclareId:
+                type: string
+                maxLength: 32
+                x-stoplight:
+                  id: c3pp82yufvl12
+                description: 'Original declare ID, mandatory for reverse declaration.'
+              payerId:
+                type: string
+                description: Payer ID
+                maxLength: 32
+              sourceCurrency:
+                type: string
+                minLength: 3
+                maxLength: 3
+                x-stoplight:
+                  id: ol08hgdhisy5j
+                example: CNY
+                description: Source currency
+              sourceAmount:
+                type: string
+                description: 'Source amount, transfer negative amount during reverse declaration'
+                maxLength: 15
+                x-stoplight:
+                  id: mvzds4hyqmnm7
+              targetCurrency:
+                type: string
+                description: Target currency
+                maxLength: 3
+                x-stoplight:
+                  id: c9sxqr0mamyo7
+                minLength: 3
+              targetAmount:
+                type: string
+                x-stoplight:
+                  id: 3u1chokuc8mxs
+                description: 'Target amount, transfer negative amount during reverse declaration'
+                maxLength: 15
+              tradeCode:
+                type: string
+                x-stoplight:
+                  id: rht15apjp88rl
+                maxLength: 8
+                description: 'Trade code, refer to the appendix [Trade Declaration Code](https://developer.lianlianglobal.com/docs/standard-remittance/45e9b9449a155-trade-code)'
+            required:
+              - transactionId
+              - declareId
+              - payerId
+              - sourceCurrency
+              - targetCurrency
+              - tradeCode
+          description: ''
+          x-examples:
+            Example 1:
+              transactionId: Pay202301010001
+              declareId: Decl20230101001
+              originalDeclareId: OriDecl20230101001
+              payerId: Payer0001
+              sourceCurrency: CNY
+              sourceAmount: '2500.00'
+              targetCurrency: USD
+              targetAmount: '380.00'
+              tradeCode: '223030'
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/declaration'
+          examples:
+            Example 2:
+              transactionId: Pay202301010001
+              declareId: Decl20230101001
+              originalDeclareId: OriDecl20230101001
+              payerId: Payer0001
+              status: DECLARE_SUCCESS
+        '402':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 180200|申报材料已存在 |
+            | 180201|原申报材料不存在|
+            |180202|原申报材料数据校验失败|
+            |180204|申报材料对应指令已提交|
+            |180107|付款人信息未审核通过|
+            |180108|付款人不存在|
+            | 999995 |参数校验不通过|
+          schema:
+            type: object
+            description: Failed object in LianLian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '180200'
+              message: 申报材料已存在
+              httpCode: '402'
+      x-stoplight:
+        id: qtvra39hnvw9i
+    parameters: []
+  /get:
+    post:
+      tags:
+        - Operations
+      summary: Get Declaration Info
+      description: Get declaration details in LianLian Global's system by `declareId`.<br>通过`declareId`查询连连国际系统中的申报详细信息。
+      operationId: get-declare
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              declareId:
+                type: string
+                description: Unique declare ID from client
+                maxLength: 32
+                x-stoplight:
+                  id: wfqxb6wh0jim6
+            required:
+              - declareId
+          description: ''
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+                x-stoplight:
+                  id: s2o72bx7kb460
+                maxLength: 32
+              declareId:
+                type: string
+                x-stoplight:
+                  id: cp19cnc3xxgl9
+                maxLength: 32
+              originalDeclareId:
+                type: string
+                x-stoplight:
+                  id: 7lu1e1zt2z6xu
+                maxLength: 32
+              payerId:
+                type: string
+                x-stoplight:
+                  id: wppri37y5ugug
+                maxLength: 32
+              sourceCurrency:
+                type: string
+                x-stoplight:
+                  id: prrgcg0e8b8ir
+                maxLength: 3
+                minLength: 3
+              sourceAmount:
+                type: string
+                x-stoplight:
+                  id: 9conyobfm6myf
+                maxLength: 15
+              targetCurrency:
+                type: string
+                x-stoplight:
+                  id: 97a7f49gzezr4
+                minLength: 3
+                maxLength: 3
+              targetAmount:
+                type: string
+                x-stoplight:
+                  id: wmnng348uzvxo
+                maxLength: 15
+              tradeCode:
+                type: string
+                x-stoplight:
+                  id: na7evo0ibxbxx
+                maxLength: 8
+                description: 'Trade code, refer to the appendix [Trade Declaration Code](https://developer.lianlianglobal.com/docs/standard-remittance/45e9b9449a155-trade-code)'
+            required:
+              - transactionId
+              - declareId
+              - payerId
+              - sourceCurrency
+              - targetCurrency
+              - tradeCode
+          examples:
+            Example 1:
+              transactionId: Pay202301010001
+              declareId: De202301010001
+              payerId: Payer0001
+              sourceCurrency: CNY
+              sourceAmount: '2300.30'
+              targetCurrency: USD
+              targetAmount: '220.88'
+              tradeCode: '223022'
+        '402':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 180203|申报材料不存在 |
+            | 999995 |参数校验不通过 |
+          schema:
+            type: object
+            description: Failed object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '180203'
+              message: 申报材料不存在
+              httpCode: '402'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      x-stoplight:
+        id: aq3ha3utel8r1
+    parameters: []
+tags:
+  - name: Operations
+definitions:
+  declaration:
+    type: object
+    title: DeclarationInfo
+    description: Declaration information object in LianLian Global's system
+    x-tags:
+      - Models
+    x-stoplight:
+      id: f28wkgysnn81s
+    properties:
+      transactionId:
+        type: string
+        description: Transaction id
+        maxLength: 32
+        x-stoplight:
+          id: e64vk5byrkbql
+      declareId:
+        description: Unique declare id from client
+        x-stoplight:
+          id: 6ozict3sgj4gi
+        type: string
+        maxLength: 32
+      originalDeclareId:
+        type: string
+        description: 'Original declare ID, mandatory for reverse declaration.'
+        maxLength: 32
+        x-stoplight:
+          id: tjnw6zudio0qn
+      payerId:
+        description: Payer id from client
+        x-stoplight:
+          id: zqq3f8p5ltdco
+        type: string
+        maxLength: 32
+      status:
+        enum:
+          - DECLARE_SUCCESS
+        description: |-
+          Status, one of
+
+          |value|descrption|
+          |------|-------------|
+          |DECLARE_SUCCESS|成功|
+    required:
+      - transactionId
+      - declareId
+      - payerId
+      - status
+produces:
+  - application/json
+consumes:
+  - application/json

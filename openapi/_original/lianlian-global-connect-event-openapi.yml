@@ -1,0 +1,57 @@
+openapi: 3.1.0
+x-stoplight:
+  id: xq9x12knesf42
+info:
+  title: Event
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths: {}
+components:
+  schemas:
+    Event:
+      title: Event
+      x-stoplight:
+        id: irnvej5cj0p3v
+      type: object
+      description: ''
+      properties:
+        topic:
+          type: string
+          enum:
+            - connect.member.active
+            - connect.kyc.failed
+            - connect.kyc.succeeded
+            - connect.account.created
+            - connect.topup.succeeded
+            - connect.conversion.succeeded
+            - connect.conversion.failed
+            - connect.transfer.succeeded
+            - connect.transfer.failed
+            - connect.charge.succeeded
+            - connect.charge.failed
+            - connect.payment.succeeded
+            - connect.payment.failed
+            - connect.payment.hedged
+            - connect.withdraw.succeeded
+            - connect.withdraw.failed
+            - connect.withdraw.hedged
+        data:
+          type: object
+          properties:
+            objectType:
+              type: string
+              enum:
+                - member
+                - kyc
+                - account
+                - topup
+                - conversion
+                - transfer
+                - charge
+                - payment
+                - withdraw
+            objectId:
+              type: string
+            url:
+              type: string

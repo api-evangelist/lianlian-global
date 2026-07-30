@@ -1,0 +1,2847 @@
+swagger: '2.0'
+info:
+  title: 供应商付款服务 API
+  version: '1.0'
+  description: '联调域名 - **https://global-api-sandbox.lianlianpay-inc.com** </br> 生产域名 - **https://global-api.lianlianpay.com**'
+  contact:
+    name: ''
+    email: dev_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /payee-document:
+    put:
+      summary: 更新收款人材料信息
+      operationId: put-payee-document
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 109006 | 收款人信息不存在。 | |
+            | 109007 | 存在正在审核的合同。 | 审核成功状态的收款人可调此接口更新材料 |
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 510004 | File does not exist. | |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '109007'
+              message: 存在正在审核的合同。
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      description: |-
+        更新合同材料信息
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-document**  </br>
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-document**
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              payeeBankAccountId:
+                type: string
+                description: |-
+                  收款人银行账户编号
+                  即创建收款人银行账号信息接口返回id
+              attachmentId:
+                type: string
+                description: 即上传附件接口返回id
+            required:
+              - payeeBankAccountId
+              - attachmentId
+          description: ''
+          x-examples:
+            application/json:
+              payeeBankAccountId: '202106011567401'
+              attachmentId: '202106162194017'
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+      tags:
+        - 接口
+  /payee-bank-accounts:
+    post:
+      summary: 创建收款人银行账号信息
+      operationId: post-payees
+      responses:
+        '200':
+          description: OK
+          schema:
+            title: 收款人银行账号信息
+            type: object
+            description: 收款人银行账号信息
+            x-tags:
+              - 对象
+            properties:
+              id:
+                type: string
+                description: 收款人银行卡账户编号
+                maxLength: 32
+              accountType:
+                type: string
+                enum:
+                  - ENTERPRISE
+                  - INDIVIDUAL
+                description: |-
+                  银行卡账户绑定类型：
+                    ENTERPRISE: 对公类型
+                    INDIVIDUAL: 对私类型
+              region:
+                type: string
+                description: 地区，参考`MODELS-地区`
+                enum:
+                  - CN
+                  - US
+                  - FR
+                  - DE
+                  - IT
+                  - ES
+                  - GB
+                  - HK
+                  - AU
+                  - TW
+                  - KR
+                  - JP
+                  - SG
+                  - CA
+                  - NL
+                minLength: 2
+                maxLength: 2
+              status:
+                type: string
+                description: |2-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      WAITING_DOCUMENT("待完善材料"),
+                      WAITING_CHECK("待审核"),
+                      SUCCESS("成功"),
+                      FAILED("失败")
+                enum:
+                  - WAITING_DOCUMENT
+                  - WAITING_CHECK
+                  - SUCCESS
+                  - FAILED
+              createTime:
+                type: string
+                description: 创建时间
+                format: date-time
+                pattern: 'yyyy-MM-ddTHH:mm:ss.sssZ'
+              cnyBankAccountInfo:
+                title: 人民币银行账号信息
+                type: object
+                description: 人民币银行账号信息，创建国内CNY（人民币）银行账号信息时必传
+                x-tags:
+                  - 对象
+                properties:
+                  accountName:
+                    type: string
+                    description: 账户名称
+                    maxLength: 32
+                  bankName:
+                    type: string
+                    description: 银行名称，请参照右侧Allowed Values
+                    enum:
+                      - 中国工商银行
+                      - 中国农业银行
+                      - 中国银行
+                      - 中国建设银行
+                      - 中国邮政储蓄银行
+                      - 招商银行
+                      - 光大银行
+                      - 平安银行
+                      - 中信银行
+                      - 民生银行
+                      - 兴业银行
+                      - 华夏银行
+                      - 上海浦东发展银行
+                      - 广东发展银行
+                      - 北京银行
+                      - 杭州银行
+                      - 交通银行
+                      - 安徽省农村信用社联合社
+                      - 安阳商业银行
+                      - 鞍山银行
+                      - 包商银行
+                      - 宝鸡商行
+                      - 保定银行
+                      - 北京农村商业银行
+                      - 渤海银行
+                      - 沧州银行
+                      - 常熟农村商业银行
+                      - 朝阳银行
+                      - 成都农村商业银行
+                      - 成都市商业银行
+                      - 承德市商业银行
+                      - 承德银行
+                      - 大华银行（ 中国）
+                      - 大连市商业银行
+                      - 大新银行（ 中国）
+                      - 大兴安岭农村商业银行
+                      - 丹东市商业银行
+                      - 德阳市商业银行
+                      - 德阳银行
+                      - 德州银行
+                      - 东莞农商
+                      - 东莞商行
+                      - 东莞银行
+                      - 东亚银行
+                      - 东营银行
+                      - 佛山顺德农村商业银行
+                      - 福建海峡银行
+                      - 福建省农村信用社联合社
+                      - 抚顺市商业银行
+                      - 抚顺银行
+                      - 阜新市商业银行
+                      - 阜新银行
+                      - 富滇银行
+                      - 甘肃农信社
+                      - 甘肃银行
+                      - 赣州市商业银行
+                      - 赣州银行股份有限公司
+                      - 广东华兴银行
+                      - 广东南粤银行
+                      - 广东农信
+                      - 广西北部湾银行
+                      - 广西农村信用社联合社
+                      - 广元贵商村镇银行
+                      - 广州农商
+                      - 广州市商业银行
+                      - 广州银行
+                      - 贵阳银行
+                      - 贵州省农村信用社联合社
+                      - 贵州银行
+                      - 桂林市商业银行
+                      - 桂林银行
+                      - 哈尔滨农村商业银行股份有限公司
+                      - 哈尔滨商行
+                      - 哈密市商业银行
+                      - 海口联合农村商业银行
+                      - 海南省农村信用社联合社
+                      - 海南银行股份有限公司
+                      - 邯郸市商业银行
+                      - 韩亚银行（ 中国）
+                      - 汉口银行
+                      - 河北省农村信用社联合社
+                      - 河北银行股份有限公司
+                      - 河南省农村信用社联合社
+                      - 鹤壁银行
+                      - 黑龙江农信社
+                      - 恒丰银行
+                      - 恒生银行
+                      - 衡水市商业银行
+                      - 侯马太行村镇银行
+                      - 葫芦岛银行
+                      - 湖北农信社
+                      - 湖北银行
+                      - 湖南省农村信用社联合社
+                      - 湖州市商业银行
+                      - 花旗银行
+                      - 华美银行
+                      - 华融湘江银行
+                      - 黄河农村商业银行
+                      - 徽商银行
+                      - 汇丰银行
+                      - 吉林省农信社
+                      - 吉林市商业银行
+                      - 吉林银行
+                      - 济南市商业银行
+                      - 济宁银行
+                      - 嘉兴市商业银行
+                      - 江门新会农村商业银行
+                      - 江南农村商业银行
+                      - 江苏东吴农村商业银行
+                      - 江苏省农村信用社联合社
+                      - 江苏沭阳东吴村镇银行
+                      - 江苏银行
+                      - 江苏紫金农村商业银行
+                      - 江西省农村信用社联合社
+                      - 江西银行
+                      - 江阴市农村商业银行
+                      - 焦作市商业银行
+                      - 金华银行
+                      - 锦州银行
+                      - 晋城商业银行
+                      - 晋商银行
+                      - 晋中市商业银行
+                      - 九江银行
+                      - 开封新东方村镇银行
+                      - 昆仑银行股份有限公司
+                      - 昆明农联社
+                      - 昆明商业银行
+                      - 昆山农村信用合作社联合社
+                      - 莱商银行
+                      - 兰州市商业银行
+                      - 廊坊银行
+                      - 乐山市商业银行
+                      - 连云港市商业银行
+                      - 辽宁省农村信用社联合社
+                      - 辽阳市商业银行
+                      - 临商银行
+                      - 柳州市商业银行
+                      - 柳州银行
+                      - 龙江银行
+                      - 泸州市商业银行
+                      - 洛阳银行
+                      - 漯河银行
+                      - 绵阳市商业银行
+                      - 南昌市商业银行
+                      - 南充市商业银行
+                      - 南京银行
+                      - 南宁市商业银行
+                      - 南通市商业银行
+                      - 南洋商业银行
+                      - 南洋商业银行（ 中国）
+                      - 内蒙古农村信用社联合式
+                      - 内蒙古银行
+                      - 宁波市农业银行
+                      - 宁波通商银行
+                      - 宁波银行
+                      - 宁波鄞州农村合作银行
+                      - 宁夏贺兰回商村镇银行
+                      - 宁夏银行
+                      - 宁阳沪农商村镇银行
+                      - 农信社
+                      - 攀枝花市商业银行
+                      - 平顶山银行股份有限公司
+                      - 齐鲁银行
+                      - 齐商银行
+                      - 秦皇岛市商业银行
+                      - 青岛农信
+                      - 青岛市商业银行
+                      - 青海省农村信用社联合社
+                      - 青海银行
+                      - 曲靖市商业银行
+                      - 泉州银行
+                      - 日照银行
+                      - 融水柳银村镇银行
+                      - 瑞穗银行（ 中国） 有限公司
+                      - 三门峡银行
+                      - 厦门国际银行
+                      - 厦门市商业银行
+                      - 厦门银行股份有限公司
+                      - 山东农信社
+                      - 山东省农联社
+                      - 山西省农村信用社联合社
+                      - 陕西省农村信用社联合社
+                      - 商丘市商业银行
+                      - 上海华瑞银行
+                      - 上海农村商业银行
+                      - 上海银行
+                      - 上饶银行
+                      - 绍兴市商业银行
+                      - 深农商行
+                      - 沈阳于洪永安村镇银行
+                      - 盛京银行
+                      - 石嘴山银行
+                      - 双流诚民村镇银行
+                      - 四川省农村信用社联合社
+                      - 四川天府银行股份有限公司
+                      - 苏州银行股份有限公司
+                      - 遂宁市商业银行
+                      - 台州市商业银行
+                      - 太仓农村商业银行
+                      - 泰安市商业银行
+                      - 泰隆城市信用社
+                      - 唐山市商业银行
+                      - 天津金城银行
+                      - 天津农村商业银行
+                      - 天津市农村信用社
+                      - 天津银行
+                      - 威海市商业银行
+                      - 微信转清
+                      - 潍坊银行
+                      - 温州银行
+                      - 乌海市商业银行
+                      - 乌鲁木齐市商业银行
+                      - 无锡农村商业银行
+                      - 吴江农商行
+                      - 武冈包商村镇银行
+                      - 武汉农商行
+                      - 武汉众邦银行
+                      - 西安高陵阳光村镇银行
+                      - 西安市商业银行
+                      - 西安银行
+                      - 新韩银行
+                      - 新疆农村信用社联合社
+                      - 新网银行
+                      - 新乡市商业银行
+                      - 信阳银行
+                      - 信阳珠江村镇银行
+                      - 星展银行
+                      - 邢台银行
+                      - 兴业扫码
+                      - 徐州市商业银行
+                      - 徐州市市郊农村信用合作社
+                      - 许昌市商业银行
+                      - 烟台市商业银行
+                      - 尧都区农村信用合作社联社
+                      - 宜宾市商业银行
+                      - 营口市商业银行
+                      - 营口沿海银行
+                      - 永亨银行
+                      - 玉溪市商业银行
+                      - 云南省农村信用社
+                      - 枣庄银行
+                      - 渣打银行
+                      - 张家港市农村商业银行
+                      - 张家口市商业银行
+                      - 长安银行
+                      - 长江商业银行
+                      - 长沙银行
+                      - 长治市商业银行
+                      - 浙江稠州商业银行
+                      - 浙江民泰商业银行
+                      - 浙江泰隆商业银行
+                      - 浙江萧山湖商村镇银行
+                      - 浙江萧山农村商业银行
+                      - 浙商银行
+                      - 郑州银行
+                      - 中国工商银行(亚洲) 有限公司
+                      - 中原银行
+                      - 重庆富民银行
+                      - 重庆农村商业银行
+                      - 重庆三峡银行
+                      - 重庆市农村信用社联合社
+                      - 重庆市商业银行
+                      - 重庆渝北银座村镇银行
+                      - 周口市商业银行
+                      - 珠海华润银行
+                      - 驻马店银行
+                      - 自贡市商业银行
+                      - ANZ银行
+                      - Bank of America
+                      - Barclays Bank
+                      - BMO Bank of Montreal
+                      - Branch Banking and Trust Company
+                      - CIMB Bank Berhad
+                      - Citibank
+                      - N.A.
+                      - Hong Kong Branch
+                      - Commonwealth Bank of Australia
+                      - Deutsche Bank AG(德意志银行)
+                      - National Westminster Bank
+                      - Raiffeisenbank AO
+                      - RHB Bank Berhad
+                    maxLength: 64
+                  branchBankName:
+                    type: string
+                    description: 支行名称
+                    maxLength: 32
+                  certNo:
+                    type: string
+                    maxLength: 18
+                    description: '收款人证件号码:对公时为企业信用代码；对私为个人身份证号码'
+                  accountNo:
+                    type: string
+                    description: 银行卡号
+                    maxLength: 32
+                  contactPhone:
+                    type: string
+                    description: 收款人联系电话
+                    maxLength: 12
+                required:
+                  - accountName
+                  - certNo
+                  - accountNo
+                  - contactPhone
+              fcyBankAccountInfo:
+                title: 非人民币银行账户信息
+                type: object
+                description: 非人民币银行账户信息，创建非人民币银行账户信息时必传
+                x-tags:
+                  - 对象
+                properties:
+                  accountName:
+                    type: string
+                    description: 非中文账户名称
+                    maxLength: 64
+                  bankName:
+                    type: string
+                    description: 银行名称
+                    maxLength: 32
+                  cardNumber:
+                    type: string
+                    description: '卡号（不能以-:/开头   ''DE'',''FR'',''ES'',''IT'' 有IBAN 校验）'
+                    maxLength: 32
+                  bankCode:
+                    type: string
+                    description: 银行编码（美国9位路线号、英国银行分类号码、澳洲BSB)
+                  swiftCode:
+                    type: string
+                    description: SWIFT code
+                  bankAddress:
+                    type: string
+                    description: 银行地址
+                  currencyCode:
+                    type: string
+                    description: 币种
+                    example: USD
+                    minLength: 3
+                    maxLength: 3
+                required:
+                  - accountName
+                  - bankName
+                  - swiftCode
+                  - bankAddress
+            required:
+              - id
+              - accountType
+              - region
+              - status
+              - createTime
+          headers: {}
+          examples:
+            人民币银行账户:
+              id: '202101196545280'
+              accountType: INDIVIDUAL
+              region: CN
+              status: WAITING_CHECK
+              createTime: '2021-01-19T06:19:18.000Z'
+              cnyBankAccountInfo:
+                accountName: 徐一一
+                bankName: 中国工商银行
+                accountNo: '6212261111121395849'
+                branchBankName: 深圳福田支行
+                certNo: '510104196908161452'
+                contactPhone: '15906606970'
+            非人民币银行账户: |-
+              {
+                "id": "202010160969611",
+                "accountType": "ENTERPRISE",
+                "region": "US",
+                "status": "SUCCESS",
+                "createTime": "2020-10-16T03:40:19.000Z",
+                "fcyBankAccountInfo": {
+                  "accountName": "baolzCOMPANY",
+                  "bankName": "city.bank",
+                  "cardNumber": "4039445450",
+                  "bankCode": "123123123",
+                  "swiftCode": "DKFEUSDE",
+                  "bankAddress": "address"
+                }
+              }
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 009012 | 该银行卡企业“贸易外汇收支企业名录”状态异常，无法提现至该银行卡 | |
+            | 009013 | 该银行卡企业未在当地外管局办理名录登记，无法提现至该银行卡 | |
+            | 109001 | 收款人申报失败 | |
+            | 109002 | 收款人审核失败。 | |
+            | 109003 | 对公账户不支持绑定对私银行卡。 | |
+            | 109004 | 存在待审核的合同。 | 已存在审核中的收款人 |
+            | 109008 | 卡号不正确，请检查卡号是否存在。 | |
+            | 109009 | 禁止付境外个人 | |
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 510004 | File does not exist. | attachmentId不存在 |
+            | 999995 | 例："[accountType]may not be empty" |请求参数有误 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '109002'
+              message: 收款人审核失败。
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+          examples: {}
+      description: |-
+        创建收款人银行账号信息
+        * 创建前请提前调用`通用服务-上传附件`接口上传相关材料文件（采购单/结算单/物流单/报关单等，具体可咨询客户经理），创建成功会返回收款人信息，如果姓名、证件号、银行账号匹配已有收款人信息，则会返回已存在的收款人。
+
+        * 成功创建收款人银行账号之后，连连这边会进行申报审核，状态为审核成功之后就能正常使用该收款人。
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts** </br>
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts**
+      tags:
+        - 接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              attachmentId:
+                type: string
+                description: 附件编号（附件上传接口返回的Id）
+                maxLength: 32
+              accountType:
+                type: string
+                enum:
+                  - ENTERPRISE
+                  - INDIVIDUAL
+                description: |-
+                  银行账户绑定类型：</br>ENTERPRISE: 对公类型</br>
+                     INDIVIDUAL: 对私类型
+              region:
+                type: string
+                description: 地区，参考`MODELS-地区`
+                enum:
+                  - CN
+                  - US
+                  - FR
+                  - DE
+                  - IT
+                  - ES
+                  - GB
+                  - HK
+                  - AU
+                  - TW
+                  - KR
+                  - JP
+                  - SG
+                  - CA
+                  - NL
+                minLength: 2
+                maxLength: 2
+              cnyBankAccountInfo:
+                type: object
+                description: 人民币银行账户
+                properties:
+                  contactPhone:
+                    type: string
+                    description: 收款人联系电话
+                    maxLength: 12
+                  accountNo:
+                    type: string
+                    description: 银行账号
+                    maxLength: 32
+                  certNo:
+                    type: string
+                    maxLength: 18
+                    description: '收款人证件号码:</br>对公时为企业信用代码</br>对私为个人身份证号码'
+                  branchBankName:
+                    type: string
+                    description: '支行名称</br>添加大陆对私银行卡时不必传</br>添加大陆对公银行卡时必传，可调用`通用服务API-大陆银行支行名称模糊查询`，且无需再传cityCode,bankCode字段。'
+                    maxLength: 32
+                  accountName:
+                    type: string
+                    description: 账户名称
+                    maxLength: 32
+                  bankCode:
+                    type: string
+                    description: 银行编码，请参照`MODELS-收款银行编码`对象填写编号
+                  cityCode:
+                    type: string
+                    description: |-
+                      城市编码
+
+                      请调用`通用服务-省市字典接口`查询获得provincecode，再用具体某一个provincecode调接口获取对应的cityCode
+                required:
+                  - contactPhone
+                  - accountNo
+                  - certNo
+                  - accountName
+              fcyBankAccountInfo:
+                title: 非人民币银行账户信息
+                type: object
+                description: 非人民币银行账户信息，创建非人民币银行账户信息时必传
+                x-tags:
+                  - 对象
+                properties:
+                  accountName:
+                    type: string
+                    description: 非中文账户名称
+                    maxLength: 64
+                  bankName:
+                    type: string
+                    description: 银行名称
+                    maxLength: 32
+                  accountNo:
+                    type: string
+                    description: '卡号（不能以-:/开头   ''DE'',''FR'',''ES'',''IT'' 有IBAN 校验）'
+                    maxLength: 32
+                  bankCode:
+                    type: string
+                    description: '银行编码</br>地区为美国、英国、澳洲时必填</br>US:9位路线号</br>GB:银行分类号码</br>澳洲:BSB'
+                  swiftCode:
+                    type: string
+                    description: SWIFT code
+                  bankAddress:
+                    type: string
+                    description: 银行地址
+                  currency:
+                    type: string
+                    description: 币种
+                    example: USD
+                    minLength: 3
+                    maxLength: 3
+                required:
+                  - accountName
+                  - bankName
+                  - accountNo
+                  - swiftCode
+                  - bankAddress
+            required:
+              - attachmentId
+              - accountType
+              - region
+          x-examples:
+            人民币银行账户:
+              attachmentId: '202101186508731'
+              accountType: INDIVIDUAL
+              region: CN
+              cnyBankAccountInfo:
+                contactPhone: '15906601111'
+                accountNo: '6212261111121395849'
+                certNo: '510104196908161452'
+                branchBankName: 深圳福田支行
+                accountName: 张三
+                bankCode: '1020000'
+                cityCode: '440304'
+            非人民币银行账户:
+              attachmentId: '202003249773800'
+              accountType: ENTERPRISE
+              region: US
+              fcyBankAccountInfo:
+                bankCode: '123123123'
+                accountName: baolzCOMPANY
+                accountNo: '4039445450'
+                swiftCode: DKFEUSDE
+                bankName: city.bank
+                bankAddress: address
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              total:
+                type: number
+                description: 总大小
+              list:
+                type: array
+                items:
+                  title: 收款人银行账号信息
+                  type: object
+                  description: 收款人银行账号信息
+                  x-tags:
+                    - 对象
+                  properties:
+                    id:
+                      type: string
+                      description: 收款人银行卡账户编号
+                      maxLength: 32
+                    accountType:
+                      type: string
+                      enum:
+                        - ENTERPRISE
+                        - INDIVIDUAL
+                      description: '银行卡账户绑定类型：</br>  ENTERPRISE: 对公类型</br>  INDIVIDUAL: 对私类型'
+                    region:
+                      type: string
+                      description: 地区，参考`MODELS-地区`
+                      enum:
+                        - CN
+                        - US
+                        - FR
+                        - DE
+                        - IT
+                        - ES
+                        - GB
+                        - HK
+                        - AU
+                        - TW
+                        - KR
+                        - JP
+                        - SG
+                        - CA
+                        - NL
+                      minLength: 2
+                      maxLength: 2
+                    status:
+                      type: string
+                      description: |2-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            WAITING_DOCUMENT("待完善材料"),
+                            WAITING_CHECK("待审核"),
+                            SUCCESS("成功"),
+                            FAILED("失败")
+                      enum:
+                        - WAITING_DOCUMENT
+                        - WAITING_CHECK
+                        - SUCCESS
+                        - FAILED
+                    createTime:
+                      type: string
+                      description: 创建时间
+                      format: date-time
+                      pattern: 'yyyy-MM-ddTHH:mm:ss.sssZ'
+                    cnyBankAccountInfo:
+                      title: 人民币银行账号信息
+                      type: object
+                      description: 人民币银行账号信息，创建国内CNY（人民币）银行账号信息时必传
+                      x-tags:
+                        - 对象
+                      properties:
+                        accountName:
+                          type: string
+                          description: 账户名称
+                          maxLength: 32
+                        bankName:
+                          type: string
+                          description: 银行编码，请参照`收款银行编码`对象中的银行名称
+                          enum:
+                            - 中国工商银行
+                            - 中国农业银行
+                            - 中国银行
+                            - 中国建设银行
+                            - 中国邮政储蓄银行
+                            - 招商银行
+                            - 光大银行
+                            - 平安银行
+                            - 中信银行
+                            - 民生银行
+                            - 兴业银行
+                            - 华夏银行
+                            - 上海浦东发展银行
+                            - 广东发展银行
+                            - 北京银行
+                            - 杭州银行
+                            - 交通银行
+                            - 安徽省农村信用社联合社
+                            - 安阳商业银行
+                            - 鞍山银行
+                            - 包商银行
+                            - 宝鸡商行
+                            - 保定银行
+                            - 北京农村商业银行
+                            - 渤海银行
+                            - 沧州银行
+                            - 常熟农村商业银行
+                            - 朝阳银行
+                            - 成都农村商业银行
+                            - 成都市商业银行
+                            - 承德市商业银行
+                            - 承德银行
+                            - 大华银行（ 中国）
+                            - 大连市商业银行
+                            - 大新银行（ 中国）
+                            - 大兴安岭农村商业银行
+                            - 丹东市商业银行
+                            - 德阳市商业银行
+                            - 德阳银行
+                            - 德州银行
+                            - 东莞农商
+                            - 东莞商行
+                            - 东莞银行
+                            - 东亚银行
+                            - 东营银行
+                            - 佛山顺德农村商业银行
+                            - 福建海峡银行
+                            - 福建省农村信用社联合社
+                            - 抚顺市商业银行
+                            - 抚顺银行
+                            - 阜新市商业银行
+                            - 阜新银行
+                            - 富滇银行
+                            - 甘肃农信社
+                            - 甘肃银行
+                            - 赣州市商业银行
+                            - 赣州银行股份有限公司
+                            - 广东华兴银行
+                            - 广东南粤银行
+                            - 广东农信
+                            - 广西北部湾银行
+                            - 广西农村信用社联合社
+                            - 广元贵商村镇银行
+                            - 广州农商
+                            - 广州市商业银行
+                            - 广州银行
+                            - 贵阳银行
+                            - 贵州省农村信用社联合社
+                            - 贵州银行
+                            - 桂林市商业银行
+                            - 桂林银行
+                            - 哈尔滨农村商业银行股份有限公司
+                            - 哈尔滨商行
+                            - 哈密市商业银行
+                            - 海口联合农村商业银行
+                            - 海南省农村信用社联合社
+                            - 海南银行股份有限公司
+                            - 邯郸市商业银行
+                            - 韩亚银行（ 中国）
+                            - 汉口银行
+                            - 河北省农村信用社联合社
+                            - 河北银行股份有限公司
+                            - 河南省农村信用社联合社
+                            - 鹤壁银行
+                            - 黑龙江农信社
+                            - 恒丰银行
+                            - 恒生银行
+                            - 衡水市商业银行
+                            - 侯马太行村镇银行
+                            - 葫芦岛银行
+                            - 湖北农信社
+                            - 湖北银行
+                            - 湖南省农村信用社联合社
+                            - 湖州市商业银行
+                            - 花旗银行
+                            - 华美银行
+                            - 华融湘江银行
+                            - 黄河农村商业银行
+                            - 徽商银行
+                            - 汇丰银行
+                            - 吉林省农信社
+                            - 吉林市商业银行
+                            - 吉林银行
+                            - 济南市商业银行
+                            - 济宁银行
+                            - 嘉兴市商业银行
+                            - 江门新会农村商业银行
+                            - 江南农村商业银行
+                            - 江苏东吴农村商业银行
+                            - 江苏省农村信用社联合社
+                            - 江苏沭阳东吴村镇银行
+                            - 江苏银行
+                            - 江苏紫金农村商业银行
+                            - 江西省农村信用社联合社
+                            - 江西银行
+                            - 江阴市农村商业银行
+                            - 焦作市商业银行
+                            - 金华银行
+                            - 锦州银行
+                            - 晋城商业银行
+                            - 晋商银行
+                            - 晋中市商业银行
+                            - 九江银行
+                            - 开封新东方村镇银行
+                            - 昆仑银行股份有限公司
+                            - 昆明农联社
+                            - 昆明商业银行
+                            - 昆山农村信用合作社联合社
+                            - 莱商银行
+                            - 兰州市商业银行
+                            - 廊坊银行
+                            - 乐山市商业银行
+                            - 连云港市商业银行
+                            - 辽宁省农村信用社联合社
+                            - 辽阳市商业银行
+                            - 临商银行
+                            - 柳州市商业银行
+                            - 柳州银行
+                            - 龙江银行
+                            - 泸州市商业银行
+                            - 洛阳银行
+                            - 漯河银行
+                            - 绵阳市商业银行
+                            - 南昌市商业银行
+                            - 南充市商业银行
+                            - 南京银行
+                            - 南宁市商业银行
+                            - 南通市商业银行
+                            - 南洋商业银行
+                            - 南洋商业银行（ 中国）
+                            - 内蒙古农村信用社联合式
+                            - 内蒙古银行
+                            - 宁波市农业银行
+                            - 宁波通商银行
+                            - 宁波银行
+                            - 宁波鄞州农村合作银行
+                            - 宁夏贺兰回商村镇银行
+                            - 宁夏银行
+                            - 宁阳沪农商村镇银行
+                            - 农信社
+                            - 攀枝花市商业银行
+                            - 平顶山银行股份有限公司
+                            - 齐鲁银行
+                            - 齐商银行
+                            - 秦皇岛市商业银行
+                            - 青岛农信
+                            - 青岛市商业银行
+                            - 青海省农村信用社联合社
+                            - 青海银行
+                            - 曲靖市商业银行
+                            - 泉州银行
+                            - 日照银行
+                            - 融水柳银村镇银行
+                            - 瑞穗银行（ 中国） 有限公司
+                            - 三门峡银行
+                            - 厦门国际银行
+                            - 厦门市商业银行
+                            - 厦门银行股份有限公司
+                            - 山东农信社
+                            - 山东省农联社
+                            - 山西省农村信用社联合社
+                            - 陕西省农村信用社联合社
+                            - 商丘市商业银行
+                            - 上海华瑞银行
+                            - 上海农村商业银行
+                            - 上海银行
+                            - 上饶银行
+                            - 绍兴市商业银行
+                            - 深农商行
+                            - 沈阳于洪永安村镇银行
+                            - 盛京银行
+                            - 石嘴山银行
+                            - 双流诚民村镇银行
+                            - 四川省农村信用社联合社
+                            - 四川天府银行股份有限公司
+                            - 苏州银行股份有限公司
+                            - 遂宁市商业银行
+                            - 台州市商业银行
+                            - 太仓农村商业银行
+                            - 泰安市商业银行
+                            - 泰隆城市信用社
+                            - 唐山市商业银行
+                            - 天津金城银行
+                            - 天津农村商业银行
+                            - 天津市农村信用社
+                            - 天津银行
+                            - 威海市商业银行
+                            - 微信转清
+                            - 潍坊银行
+                            - 温州银行
+                            - 乌海市商业银行
+                            - 乌鲁木齐市商业银行
+                            - 无锡农村商业银行
+                            - 吴江农商行
+                            - 武冈包商村镇银行
+                            - 武汉农商行
+                            - 武汉众邦银行
+                            - 西安高陵阳光村镇银行
+                            - 西安市商业银行
+                            - 西安银行
+                            - 新韩银行
+                            - 新疆农村信用社联合社
+                            - 新网银行
+                            - 新乡市商业银行
+                            - 信阳银行
+                            - 信阳珠江村镇银行
+                            - 星展银行
+                            - 邢台银行
+                            - 兴业扫码
+                            - 徐州市商业银行
+                            - 徐州市市郊农村信用合作社
+                            - 许昌市商业银行
+                            - 烟台市商业银行
+                            - 尧都区农村信用合作社联社
+                            - 宜宾市商业银行
+                            - 营口市商业银行
+                            - 营口沿海银行
+                            - 永亨银行
+                            - 玉溪市商业银行
+                            - 云南省农村信用社
+                            - 枣庄银行
+                            - 渣打银行
+                            - 张家港市农村商业银行
+                            - 张家口市商业银行
+                            - 长安银行
+                            - 长江商业银行
+                            - 长沙银行
+                            - 长治市商业银行
+                            - 浙江稠州商业银行
+                            - 浙江民泰商业银行
+                            - 浙江泰隆商业银行
+                            - 浙江萧山湖商村镇银行
+                            - 浙江萧山农村商业银行
+                            - 浙商银行
+                            - 郑州银行
+                            - 中国工商银行(亚洲) 有限公司
+                            - 中原银行
+                            - 重庆富民银行
+                            - 重庆农村商业银行
+                            - 重庆三峡银行
+                            - 重庆市农村信用社联合社
+                            - 重庆市商业银行
+                            - 重庆渝北银座村镇银行
+                            - 周口市商业银行
+                            - 珠海华润银行
+                            - 驻马店银行
+                            - 自贡市商业银行
+                            - ANZ银行
+                            - Bank of America
+                            - Barclays Bank
+                            - BMO Bank of Montreal
+                            - Branch Banking and Trust Company
+                            - CIMB Bank Berhad
+                            - Citibank
+                            - N.A.
+                            - Hong Kong Branch
+                            - Commonwealth Bank of Australia
+                            - Deutsche Bank AG(德意志银行)
+                            - National Westminster Bank
+                            - Raiffeisenbank AO
+                            - RHB Bank Berhad
+                          maxLength: 64
+                        branchBankName:
+                          type: string
+                          description: 支行名称
+                          maxLength: 32
+                        certNo:
+                          type: string
+                          maxLength: 18
+                          description: '收款人证件号码:对公时为企业信用代码；对私为个人身份证号码'
+                        accountNo:
+                          type: string
+                          description: 银行卡号
+                          maxLength: 32
+                        contactPhone:
+                          type: string
+                          description: 收款人联系电话
+                          maxLength: 12
+                      required:
+                        - accountName
+                        - bankName
+                        - branchBankName
+                        - certNo
+                        - accountNo
+                        - contactPhone
+                    fcyBankAccountInfo:
+                      title: 非人民币银行账户信息
+                      type: object
+                      description: 非人民币银行账户信息，创建非人民币银行账户信息时必传
+                      x-tags:
+                        - 对象
+                      properties:
+                        accountName:
+                          type: string
+                          description: 非中文账户名称
+                          maxLength: 64
+                        bankName:
+                          type: string
+                          description: 银行名称
+                          maxLength: 32
+                        cardNumber:
+                          type: string
+                          description: '卡号（不能以-:/开头   ''DE'',''FR'',''ES'',''IT'' 有IBAN 校验）'
+                          maxLength: 32
+                        bankCode:
+                          type: string
+                          description: 银行编码（美国9位路线号、英国银行分类号码、澳洲BSB)
+                        swiftCode:
+                          type: string
+                          description: SWIFT code
+                        bankAddress:
+                          type: string
+                          description: 银行地址
+                        currencyCode:
+                          type: string
+                          description: 币种
+                      required:
+                        - accountName
+                        - bankName
+                        - swiftCode
+                        - bankAddress
+                    needSubmitMaterial:
+                      type: boolean
+                      x-stoplight:
+                        id: h57w22l6ypled
+                      description: 是否需要补充材料
+                    verifyInfo:
+                      type: string
+                      x-stoplight:
+                        id: tm88ccf1k2k2l
+                      description: 审核信息
+                  required:
+                    - id
+                    - accountType
+                    - region
+                    - status
+                    - createTime
+                    - needSubmitMaterial
+            required:
+              - total
+          examples:
+            application/json:
+              list:
+                - id: '202105261332423'
+                  accountType: INDIVIDUAL
+                  region: CN
+                  status: SUCCESS
+                  createTime: '2021-05-26T08:50:10.000Z'
+                  cnyBankAccountInfo:
+                    accountName: 李白
+                    bankName: 中国工商银行
+                    accountNo: '6212260200003085678'
+                    branchBankName: 北京银行
+                    certNo: '513436200005267677'
+                    contactPhone: '18910233456'
+                - id: '202304072043748'
+                  accountType: ENTERPRISE
+                  region: ES
+                  status: FAILED
+                  createTime: '2023-04-07T07:20:33.000Z'
+                  fcyBankAccountInfo:
+                    accountName: TEST LIMITED
+                    bankName: ES BANK
+                    cardNumber: ES9121000000000000051332
+                    swiftCode: BCITESMMXXX
+                    bankAddress: Madrid
+                  needSubmitMaterial: true
+                  verifyInfo: 您添加的个人收款人非供应商公司的法人、董事或股东，我司暂不支持该模式的代收。 具体请查看材料要求
+                - id: '202104190073389'
+                  accountType: ENTERPRISE
+                  region: HK
+                  status: SUCCESS
+                  createTime: '2021-04-19T11:22:14.000Z'
+                  fcyBankAccountInfo:
+                    accountName: LLP TEST inc.
+                    bankName: 'CITIBANK N.A.,Hong Kong Branch'
+                    cardNumber: '039089436288347'
+                    swiftCode: CITIHKHXXXX
+                    bankAddress: test Address
+                    currencyCode: USD
+              total: 3
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | 例："[pageSize]min value is 1" | 请求参数有误 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '999995'
+              message: '[pageSize]max value is 100'
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+          examples: {}
+      summary: 查询收款人信息
+      description: |-
+        分页查询收款人信息
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts**  </br>
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts**
+      operationId: get-payees
+      tags:
+        - 接口
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: query
+          name: id
+          type: string
+          description: 收款人银行账户编号</br>即创建收款人银行账号信息接口返回id
+        - in: query
+          name: region
+          type: string
+          description: 地区，参考`MODELS-地区`
+        - in: query
+          name: accountNo
+          type: string
+          description: 银行账号
+        - in: query
+          name: pageSize
+          type: string
+          description: 分页大小
+          required: true
+        - in: query
+          name: pageNum
+          type: string
+          description: 分页页码
+          required: true
+  '/payee-bank-accounts/account/{payeeBankAccountId}':
+    delete:
+      summary: 删除收款人银行账号信息
+      operationId: delete-payee-bank-accounts-account-id
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400003'
+              message: Invalid signature time.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      description: |-
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts/account/{payeeBankAccountId}**  </br>
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts/account/{payeeBankAccountId}**
+      tags:
+        - 接口
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: path
+          name: payeeBankAccountId
+          type: string
+          required: true
+          description: 即创建收款人银行账号信息接口返回id
+    parameters:
+      - name: payeeBankAccountId
+        in: path
+        type: string
+        required: true
+  /batch-payments:
+    get:
+      summary: 查询批量付款结果
+      responses:
+        '200':
+          description: OK
+          schema:
+            title: 付款批次
+            type: object
+            description: 批次付款object
+            x-tags:
+              - 对象
+            properties:
+              createTime:
+                type: string
+                description: 创建时间
+                format: date-time
+                pattern: 'yyyy-MM-ddTHH:mm:ss.sssZ'
+              batchId:
+                type: string
+                description: 批次号
+              total:
+                type: integer
+                description: 批次请求总数
+              targetCurrency:
+                type: string
+                description: 目标币种
+              targetAmount:
+                type: string
+                description: 目标金额
+              payingTotal:
+                type: integer
+                description: 付款中笔数
+              paidTotal:
+                type: integer
+                description: 已付款笔数
+              failedTotal:
+                type: integer
+                description: 失败笔数
+            required:
+              - createTime
+              - batchId
+              - total
+              - targetCurrency
+              - targetAmount
+              - payingTotal
+              - paidTotal
+              - failedTotal
+          examples:
+            application/json:
+              batchId: '202106083513523'
+              createTime: '2021-06-08T08:02:23.000Z'
+              total: 2
+              targetCurrency: CNY
+              targetAmount: '10200.00'
+              payingTotal: 0
+              paidTotal: 0
+              failedTotal: 2
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400003'
+              message: Invalid signature time.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+          examples: {}
+          schema: {}
+      operationId: get-pays
+      description: |-
+        查询批量付款结果信息
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments**  </br>
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments**
+      parameters:
+        - in: query
+          name: batchId
+          required: true
+          description: 批量付款批次号
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+      tags:
+        - 接口
+    post:
+      summary: 创建批量付款
+      operationId: post-pays
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              batchId:
+                type: string
+                description: 付款唯一批次号
+              createTime:
+                type: string
+                description: |-
+                  创建时间
+                  格式：yyyy-MM-ddTHH:mm:ss.sssZ
+                  例如：2021-06-08T08:02:23.000Z
+                format: date-time
+                pattern: 'yyyy-MM-ddTHH:mm:ss.sssZ'
+              total:
+                type: integer
+                description: 批次付款总笔数
+              sourceCurrency:
+                type: string
+                description: 源币种
+              targetCurrency:
+                type: string
+                description: 目标金额
+              targetAmount:
+                type: string
+                description: 目标金额
+              payingTotal:
+                type: integer
+                description: 付款中笔数
+              paidTotal:
+                type: integer
+                description: 付款成功笔数
+              failedTotal:
+                type: integer
+                description: 失败笔数
+          examples:
+            application/json:
+              batchId: '202106083513522'
+              createTime: '2021-06-08T10:32:19.000Z'
+              total: 2
+              sourceCurrency: CNH
+              targetCurrency: CNY
+              targetAmount: '10200.00'
+              payingTotal: 2
+              paidTotal: 0
+              failedTotal: 0
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 009007 | 假期期间暂不支持使用 | |
+            | 009018 | 您输入的验证码有误，请检查 | |
+            | 109051 | 外部付款单号重复 | paymentId已存在 |
+            | 109052 | 外部批次号重复 | batchId已存在 |
+            | 150003 | 账户余额查询失败 | |
+            | 150004 | 账户余额不足 | |
+            | 109054 | 收款关系不存在 | payeeBankAccountId不存在 |
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | 例："[sourceCurrency] 不正确" | 请求参数有误 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '109052'
+              message: 外部批次号重复
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      description: |
+        1、该接口的调用需要优先在连连端开通功能白名单方可使用，当连连这边认定的假期期间，供应商付款也是暂时不可用的；</br>
+        2、在创建该请求前用户需要先调用短信验证码接口来获取二次校验，每小时获取短信验证码上限10次；短信验证码错误次数达8次账号锁定且在2小时之内不能再进行资金操作；</br>
+        3、当用户发送批量付款请求时，API端会根据当前汇率来预估用户余额是否充足，如果余额不足会返回余额不足错误。
+        ### 供应商付款流程图
+        ![](https://cbva-cms2.oss-cn-hangzhou.aliyuncs.com/cb_file/erp/20220630-154046.jpg)
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments** </br>
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments**
+      tags:
+        - 接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              batchId:
+                type: string
+                minLength: 16
+                maxLength: 32
+                description: 付款唯一批次号
+              verificationCode:
+                type: string
+                description: 短信验证码
+                minLength: 4
+                maxLength: 8
+              sourceCurrency:
+                type: string
+                description: 源币种
+                example: USD
+                minLength: 3
+                maxLength: 3
+              targetCurrency:
+                type: string
+                description: 目标币种
+                example: USD
+                minLength: 3
+                maxLength: 3
+              list:
+                type: object
+                description: 批量付款总笔数，最大1000条
+                maxProperties: 1000
+                required:
+                  - tradeCode
+                  - payeeBankAccountId
+                  - payeeBankAccountNo
+                  - paymentId
+                  - tradeDate
+                  - targetAmount
+                properties:
+                  tradeCode:
+                    $ref: '#/definitions/tradeCode'
+                  payeeBankAccountId:
+                    type: string
+                    description: 收款人编号，即创建收款人银行账号信息返回的id
+                    maxLength: 32
+                  payeeBankAccountNo:
+                    type: string
+                    description: 收款人银行账号，用于校验
+                    maxLength: 32
+                  paymentId:
+                    type: string
+                    description: 外部唯一单号
+                    maxLength: 32
+                  tradeDate:
+                    type: string
+                    description: 交易时间
+                    format: date
+                    pattern: yyyyMMdd
+                  goodsName:
+                    type: string
+                    description: 商品名称</br>tradeCode为E_BUSINESS时必填
+                    maxLength: 64
+                  goodsNumber:
+                    type: integer
+                    description: 商品数量</br>tradeCode为E_BUSINESS时必填
+                    exclusiveMaximum: false
+                  goodsPrice:
+                    type: number
+                    description: 商品单价</br>tradeCode为E_BUSINESS时必填
+                    minimum: 0
+                  logistics:
+                    type: string
+                    description: |-
+                      tradeCode为E_BUSINESS时必填</br>
+                      EXPRESS(快递)</br>
+                      OFFLINE(当面采购)</br>
+                      LOGISTICS(物流)
+                    enum:
+                      - EXPRESS
+                      - OFFLINE
+                      - LOGISTICS
+                  procurementType:
+                    type: string
+                    description: |-
+                      tradeCode为E_BUSINESS时必填</br>
+                      ONLINE(网络采购)</br>
+                      OFFLINE_HAS_TAX(线下有票(增值税发票))</br>
+                      OFFLINE_NO_TAX(线下无票(无增值税发票))
+                    enum:
+                      - ONLINE
+                      - OFFLINE_HAS_TAX
+                      - OFFLINE_NO_TAX
+                  targetAmount:
+                    type: string
+                    description: 目标金额
+                  memo:
+                    type: string
+                    maxLength: 225
+                    description: 附言
+                  useObo:
+                    type: boolean
+                    description: '是否使用obo付款,obo支持的到账币种为USD,JPY,SGD,AUD,HKD,GBP,EUR,CNH,CAD'
+                    default: false
+                    format: boolean
+                  serviceName:
+                    type: string
+                    description: 服务名称</br>tradeCode 不为 E_BUSINESS时必填
+                    maxLength: 128
+            required:
+              - batchId
+              - verificationCode
+              - sourceCurrency
+              - targetCurrency
+              - list
+          x-examples:
+            application/json:
+              batchId: '202106083513522'
+              verificationCode: '538145'
+              sourceCurrency: CNH
+              targetCurrency: CNY
+              list:
+                - tradeCode: E_BUSINESS
+                  payeeBankAccountId: '202101196545256'
+                  payeeBankAccountNo: '6212261111121395849'
+                  paymentId: '202106083513522000001'
+                  tradeDate: '20210608'
+                  goodsName: '服装,鞋子等'
+                  goodsNumber: 1
+                  goodsPrice: 5000
+                  logistics: OFFLINE
+                  procurementType: ONLINE
+                  targetAmount: 5000
+                  memo: 测试付款备注1
+                - tradeCode: E_BUSINESS
+                  payeeBankAccountId: '202101196545280'
+                  payeeBankAccountNo: '6212261111121395849'
+                  paymentId: '202106083513522000002'
+                  tradeDate: '20210608'
+                  goodsName: '服装,鞋子等'
+                  goodsNumber: 1
+                  goodsPrice: 5200
+                  logistics: OFFLINE
+                  procurementType: ONLINE
+                  targetAmount: 5200
+                  memo: 测试付款备注2
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+  '/batch-payments/{batchId}/payments':
+    parameters:
+      - name: batchId
+        in: path
+        type: string
+        required: true
+    get:
+      summary: 查询付款明细
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    paymentId:
+                      type: string
+                      description: 外部流水号
+                    payeeBankAccountId:
+                      type: string
+                      description: 收款人id
+                    sourceCurrency:
+                      type: string
+                      description: 源币种
+                    sourceAmount:
+                      type: string
+                      description: 源金额
+                    targetCurrency:
+                      type: string
+                      description: 目标币种
+                    targetAmount:
+                      type: string
+                      description: 目标金额
+                    tradeCode:
+                      type: string
+                      description: 贸易类型
+                    tradeDate:
+                      type: string
+                      description: 交易时间
+                      example: '20200911'
+                    goodsName:
+                      type: string
+                      description: 商品名称
+                    goodsNumber:
+                      type: string
+                      description: 商品数量
+                    goodsPrice:
+                      type: string
+                      description: 商品单价
+                    logistics:
+                      type: string
+                      description: 物流方式
+                    procurementType:
+                      type: string
+                      description: 采购类型
+                    status:
+                      type: string
+                      description: |2-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            ON_GOING("付款中"),
+                            SUCCESS("付款成功"),
+                            FAILED("付款失败"),
+                            EXTERNAL_CHECKING("审核中")
+                      enum:
+                        - ON_GOING
+                        - SUCCESS
+                        - FAILED
+                        - EXTERNAL_CHECKING
+                    failedReason:
+                      type: string
+                      description: 失败原因
+                    refundAmount:
+                      type: string
+                      description: 退款金额（源币种，当退汇时有该金额）
+                    createTime:
+                      type: string
+                      description: 付款单创建时间
+                      example: '2020-09-11T04:03:57.000Z'
+                    memo:
+                      type: string
+                      description: 附言
+                    rate:
+                      type: string
+                      description: 汇率
+                    rateTime:
+                      type: string
+                      description: 汇率时间
+                    feeAmount:
+                      type: string
+                      description: 实收手续费（源币种）
+                    paymentFee:
+                      type: string
+                      description: 付款手续费；单位：元
+                    oboFee:
+                      type: string
+                      description: obo手续费；单位：元
+                    updateTime:
+                      type: string
+                      description: 更新时间
+              total:
+                type: integer
+          examples:
+            application/json:
+              list:
+                - paymentId: '20210062555553513522001'
+                  payeeBankAccountId: '202101196545256'
+                  sourceCurrency: CNH
+                  targetCurrency: CNY
+                  targetAmount: '5000.00'
+                  tradeCode: E_BUSINESS
+                  tradeDate: '20210608'
+                  goodsName: '服装,鞋子等'
+                  goodsNumber: '1'
+                  goodsPrice: '5000'
+                  logistics: OFFLINE
+                  procurementType: ONLINE
+                  status: FAILED
+                  failedReason: 收款人关系不存在
+                  refundAmount: '0.00'
+                  createTime: '2021-06-25T10:55:16.000Z'
+                  updateTime: '2022-06-26T03:17:18.000Z'
+                  memo: 测试付款备注1
+                - paymentId: '20210062555553513522002'
+                  payeeBankAccountId: '202101196545280'
+                  sourceCurrency: CNH
+                  sourceAmount: '5202.00'
+                  targetCurrency: CNY
+                  targetAmount: '5200.00'
+                  tradeCode: E_BUSINESS
+                  tradeDate: '20210608'
+                  goodsName: '服装,鞋子等'
+                  goodsNumber: '1'
+                  goodsPrice: '5200'
+                  logistics: OFFLINE
+                  procurementType: ONLINE
+                  status: SUCCESS
+                  rate: '1.00000000'
+                  rateTime: '2021-06-25T10:58:08.000Z'
+                  feeAmount: '2.00'
+                  refundAmount: '2.00'
+                  createTime: '2021-06-25T10:55:16.000Z'
+                  updateTime: '2022-06-26T03:17:18.000Z'
+                  memo: 测试付款备注2
+              total: 2
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | 例："[pageSize]min value is 1" | 请求参数有误 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '999995'
+              message: '[pageNum] pageNum can''t be null.'
+        '404':
+          description: 传入batchId不存在
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            application/json:
+              message: Resource not found.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      operationId: get-batch-pays-extBatchId
+      description: |
+        获取批量付款明细
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments/{batchId}/payments**  </br>
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments/{batchId}/payments**
+      tags:
+        - 接口
+      parameters:
+        - in: query
+          name: paymentId
+          type: string
+        - in: query
+          name: pageSize
+          type: string
+          required: true
+          description: 分页大小
+        - in: query
+          name: pageNum
+          type: string
+          required: true
+          description: 页码
+definitions:
+  bank-info-enum:
+    title: 收款银行编码
+    type: string
+    description: |-
+      | bankCode | bankName |
+      | ------- | ------- |
+      | 1030000 | 中国农业银行 |
+      | 4202220 | 大连市商业银行 |
+      | 1050000 | 中国建设银行 |
+      | 4145210 | 武汉市商业银行 |
+      | 25260344 | AEON信贷财务亚洲有限公司 |
+      | 14404900 | 河南省农村信用社联合社 |
+      | 14505800 | 广东省农村信用社联合社 |
+      | 3320000 | 南洋商业银行 |
+      | 5295280 | 襄樊市商业银行股份有限公司 |
+      | 3220000 | 渣打银行香港有限公司 |
+      | 3200000 | 东亚银行中国有限公司 |
+      | 5332740 | 七台河市城市信用社 |
+      | 5284630 | 泰安市商业银行 |
+      | 3260000 | 恒生银行 |
+      | 15566152 | 广西鹿寨渝农商村镇银行 |
+      | 14023052 | 昆山农信社 |
+      | 15277470 | 普洱民生村镇银行 |
+      | 3134500 | 济南市商业银行 |
+      | 4562230 | 鞍山市商业银行 |
+      | 4263380 | 金华市商业银行 |
+      | 4453020 | 无锡市商业银行 |
+      | 47980344 | 中国银行香港有限公司 |
+      | 14113030 | 徐州市市郊农村信用合作社 |
+      | 4803070 | 连云港市商业银行 |
+      | 4115010 | 焦作市商业银行 |
+      | 15214213 | 安义融兴村镇银行 |
+      | 15433613 | 安徽肥西石银村镇银行 |
+      | 15736610 | 广元包商贵民村镇银行 |
+      | 15003363 | 安吉交银村镇银行 |
+      | 15195377 | 松滋中银富登村镇银行 |
+      | 15402220 | 大连保税区珠江村镇银行 |
+      | 14012900 | 上海农信 |
+      | 4943030 | 徐州市商业银行 |
+      | 4392270 | 锦州市商业银行 |
+      | 14385500 | 湖南省农村信用社联合社 |
+      | 15136900 | 重庆农村商业银行 |
+      | 3320000 | 南洋商业银行（中国） |
+      | 3330001 | 法国兴业银行（中国） |
+      | 27090392 | 日本三菱信用卡公司 |
+      | 1020344 | 中国工商银行(亚洲)有限公司 |
+      | 14498500 | 青海省农村信用社联合社 |
+      | 15272929 | 嘉定民生村镇银行 |
+      | 29470608 | PVBCardCorporation |
+      | 14144520 | 青岛农信 |
+      | 5722280 | 营口沿海银行 |
+      | 5803320 | 宁波通商银行 |
+      | 28790784 | CommercialBankofDubai |
+      | 15033161 | 兴化苏南村镇银行 |
+      | 15142050 | 鄂尔多斯市东胜蒙银村镇银行 |
+      | 15214933 | 新安融兴村镇银行 |
+      | 15301750 | 晋中市榆次融信村镇银行 |
+      | 15584510 | 济南长清沪农商村镇银行 |
+      | 15584630 | 泰安沪农商村镇银行 |
+      | 15584631 | 宁阳沪农商村镇银行 |
+      | 15584633 | 东平沪农商村镇银行 |
+      | 15585525 | 醴陵沪农商村镇银行 |
+      | 15585624 | 双峰沪农商村镇银行 |
+      | 1020360 | 中国工商银行印尼分行 |
+      | 4462269 | 丹东银行 |
+      | 5406650 | 乐山市商业银行 |
+      | 15567513 | 云南祥云渝农商村镇银行 |
+      | 15567523 | 云南鹤庆渝农商村镇银行 |
+      | 5705500 | 华融湘江银行 |
+      | 28880840 | TheBancorpBank |
+      | 15587580 | 临沧临翔沪农商村镇银行 |
+      | 29010410 | 新韩卡公司 |
+      | 15696249 | 兴业柳银村镇银行 |
+      | 15696246 | 北流柳银村镇银行 |
+      | 5625081 | 周口银行 |
+      | 15273752 | 天长民生村镇银行 |
+      | 15072900 | 奉贤浦发村镇银行 |
+      | 15273774 | 宁国民生村镇银行 |
+      | 15195321 | 京山中银富登村镇银行 |
+      | 25180344 | 中银信用卡(国际)有限公司 |
+      | 1020446 | 中国工商银行（澳门） |
+      | 26620496 | 蒙古郭勒姆特银行 |
+      | 1020276 | 中国工商银行法兰克福分行 |
+      | 1020380 | 中国工商银行米兰分行 |
+      | 3190002 | 花旗中国 |
+      | 3290000 | 韩亚银行（中国） |
+      | 15083454 | 浙江温岭联合村镇银行 |
+      | 15283310 | 浙江萧山湖商村镇银行 |
+      | 15605053 | 灵宝融丰村镇银行 |
+      | 15403088 | 盱眙珠江村镇银行 |
+      | 15366310 | 钦州市钦南国民村镇银行 |
+      | 64484210 | 南昌银行 |
+      | 5870000 | 厦门国际银行 |
+      | 3020000 | 中信银行 |
+      | 4325260 | 宜昌市商业银行 |
+      | 65394200 | 江西省农村信用社联合社 |
+      | 14156020 | 东莞农村商业银行 |
+      | 26230446 | 大西洋银行股份有限公司 |
+      | 4512420 | 吉林市商业银行 |
+      | 3030000 | 光大银行 |
+      | 3080000 | 招商银行 |
+      | 14144500 | 山东省农村信用社联合社 |
+      | 14436100 | 广西农村信用社联合社 |
+      | 4233310 | 杭州银行 |
+      | 5264330 | 上饶市商业银行 |
+      | 3010344 | 交通银行香港分行 |
+      | 3310000 | 澳门永亨银行 |
+      | 4416900 | 重庆市商业银行 |
+      | 25250446 | 大丰银行有限公司 |
+      | 26330398 | 哈萨克斯坦国民储蓄银行 |
+      | 15406672 | 彭山珠江村镇银行 |
+      | 15915936 | 德庆华润村镇银行 |
+      | 15737012 | 息烽包商黔隆村镇银行 |
+      | 15735556 | 武冈包商村镇银行 |
+      | 15737090 | 毕节发展村镇银行 |
+      | 4192310 | 辽阳市商业银行 |
+      | 4462260 | 丹东市商业银行 |
+      | 25160344 | 中信嘉华银行有限公司 |
+      | 14181000 | 北京农村商业银行 |
+      | 5056020 | 东莞商行 |
+      | 5154680 | 德州市商业银行 |
+      | 15633632 | 安徽五河永泰村镇银行 |
+      | 15405545 | 常宁珠江村镇银行 |
+      | 15194616 | 嘉祥中银富登村镇银行 |
+      | 15203438 | 浙江景宁银座村镇银行 |
+      | 15215521 | 株洲县融兴村镇银行 |
+      | 15216922 | 重庆大渡口融兴村镇银行 |
+      | 5646710 | 宜宾市商业银行 |
+      | 14333051 | 太仓农村商业银行 |
+      | 14367000 | 贵州省农村信用社联合社 |
+      | 5197117 | 安顺市城市信用社 |
+      | 14505800 | 广东南海农村商业银行 |
+      | 26700860 | 丝绸之路银行 |
+      | 27130096 | Baiduri Bank Berhad |
+      | 28040586 | 巴基斯坦FAYSAL BANK |
+      | 1020586 | 中国工商银行卡拉奇分行 |
+      | 15211443 | 河间融惠村镇银行 |
+      | 15464520 | 青岛胶南海汇村镇银行 |
+      | 15033142 | 句容茅山村镇银行 |
+      | 15115893 | 广东恩平汇丰村镇银行 |
+      | 15195288 | 枣阳中银富登村镇银行 |
+      | 15203457 | 浙江三门银座村镇银行 |
+      | 15218242 | 会宁会师村镇银行 |
+      | 15335840 | 宝生村镇银行 |
+      | 15386423 | 文昌国民村镇银行 |
+      | 15438720 | 大武口石银村镇银行 |
+      | 15585511 | 长沙星沙沪农商村镇银行 |
+      | 4885050 | 三门峡银行 |
+      | 1040702 | 中行新加坡分行 |
+      | 64314730 | 临商银行 |
+      | 64916170 | 桂林银行 |
+      | 15587431 | 个旧沪农商村镇银行 |
+      | 15587435 | 建水沪农商村镇银行 |
+      | 29230268 | 格鲁吉亚InvestBank |
+      | 29460180 | RawbankS.a.r.l |
+      | 15455880 | 佛山高明顺银村镇银行 |
+      | 15401000 | 北京门头沟珠江村镇银行 |
+      | 15368841 | 哈密红星国民村镇银行 |
+      | 15273456 | 天台民生村镇银行 |
+      | 15273051 | 太仓民生村镇银行 |
+      | 15271329 | 宁晋民生村镇银行 |
+      | 15055411 | 恩施常农商村镇银行 |
+      | 15204280 | 江西赣州银座村镇银行 |
+      | 15206900 | 重庆渝北银座村镇银行 |
+      | 26530496 | 可汗银行 |
+      | 5197110 | 安顺市商业银行 |
+      | 5442320 | 盘锦市商业银行 |
+      | 5541310 | 邢台银行股份有限公司 |
+      | 4437010 | 贵阳银行股份有限公司 |
+      | 99999900 | 新网银行 |
+      | 27650860 | 乌兹别克斯坦INFINBANK |
+      | 65341770 | 临汾市尧都区农信社 |
+      | 5541310 | 邢台银行 |
+      | 1020360 | 中国工商银行（印度尼西亚） |
+      | 1020398 | 工行阿拉木图 |
+      | 1020458 | 工银马来西亚 |
+      | 1020528 | 中国工商银行阿姆斯特丹 |
+      | 1020826 | 工行伦敦 |
+      | 1040116 | 中国银行金边分行 |
+      | 1040458 | 中国银行(马来西亚 |
+      | 1040704 | 中国银行胡志明分行 |
+      | 3190001 | 花旗银行(中国)有限公司 |
+      | 3210000 | 汇丰银(中国)有限公司 |
+      | 15083387 | 浙江义乌联合村镇银行 |
+      | 15283361 | 浙江德清湖商村镇银行 |
+      | 5565040 | 漯河银行 |
+      | 15276914 | 潼南民生村镇银行 |
+      | 4053919 | 福建海峡银行 |
+      | 15731982 | 科尔沁包商村镇银行 |
+      | 15363321 | 象山国民村镇银行 |
+      | 5342050 | 鄂尔多斯银行股份有限公司 |
+      | 4956140 | 柳州市商业银行 |
+      | 3040000 | 华夏银行 |
+      | 3170000 | 渤海银行 |
+      | 4012900 | 上海银行 |
+      | 5238333 | 平凉市城市信用社 |
+      | 65012900 | 上海农村商业银行 |
+      | 3060000 | 广东发展银行 |
+      | 14411200 | 河北省农村信用社联合社 |
+      | 3310000 | 永亨银行 |
+      | 64922690 | 大庆市商业银行 |
+      | 5303380 | 浙江稠州商业银行 |
+      | 4302249 | 抚顺银行 |
+      | 15736510 | 新都桂城村镇银行 |
+      | 15277491 | 景洪民生村镇银行 |
+      | 14595210 | 武汉农村商业银行 |
+      | 15353117 | 江苏东台稠州村镇银行 |
+      | 16023031 | 江苏丰县民丰村镇银行 |
+      | 16023074 | 江苏灌南民丰村镇银行 |
+      | 3134730 | 临沂市商业银行 |
+      | 14123020 | 江阴市农村商业银行 |
+      | 4221210 | 石家庄市商业银行 |
+      | 25040344 | 大新银行有限公司 |
+      | 4703350 | 嘉兴市商业银行 |
+      | 4437010 | 贵阳市商业银行 |
+      | 4478210 | 兰州市商业银行 |
+      | 4721460 | 廊坊市商业银行 |
+      | 64741910 | 内蒙古银行 |
+      | 3134530 | 淄博市商业银行 |
+      | 14452400 | 吉林省农村信用社联合社 |
+      | 15283813 | 安徽利辛湖商村镇银行 |
+      | 64895910 | 广东南粤银行股份有限公司 |
+      | 15212629 | 延寿融兴村镇银行 |
+      | 15356900 | 重庆北碚稠州村镇银行 |
+      | 14315850 | 珠海农村信用合作社联社 |
+      | 17219924 | 安阳商业银行 |
+      | 27250608 | 菲律宾RCBC |
+      | 15604951 | 宝丰豫丰村镇银行 |
+      | 5417900 | 长安银行 |
+      | 5795020 | 濮阳银行 |
+      | 15195287 | 老河口中银富登村镇银行 |
+      | 15585514 | 宁乡沪农商行村镇银行 |
+      | 15572210 | 沈阳于洪永安村镇银行 |
+      | 15775985 | 东源泰业村镇银行 |
+      | 1020702 | 中国工商银行新加坡分行 |
+      | 15567511 | 云南大理渝农商村镇银行 |
+      | 5611480 | 衡水市商业银行 |
+      | 15587310 | 阿拉沪农商村镇银行 |
+      | 29440480 | CimFinanceLtd |
+      | 5556840 | 凉山州商业银行 |
+      | 15354353 | 吉安稠州村镇银行 |
+      | 14448800 | 新疆农村信用社联合社 |
+      | 14572600 | 黑龙江省农村信用社联合社 |
+      | 15173120 | 江苏邗江民泰村镇银行 |
+      | 15194737 | 沂水中银富登村镇银行 |
+      | 15211000 | 北京怀柔融兴村镇银行 |
+      | 15215840 | 深圳宝安融兴村镇银行 |
+      | 5374610 | 济宁银行股份有限公司 |
+      | 5591750 | 晋中市商业银行 |
+      | 5658880 | 库尔勒市商业银行 |
+      | 64094510 | 齐鲁银行股份有限公司 |
+      | 4901380 | 张家口市商业银行 |
+      | 1020116 | 中国工商银行金边分行 |
+      | 1020418 | 中国工商银行万象分行 |
+      | 1020442 | 中国工商银行卢森堡分行 |
+      | 1020704 | 工行河内 |
+      | 1020724 | 中国工商银行马德里分行 |
+      | 1040360 | 中国银行雅加达分行 |
+      | 1040410 | 中国银行首尔分行 |
+      | 1040764 | 中国银行曼谷分行 |
+      | 15009028 | 石河子交银村镇银行 |
+      | 15276900 | 綦江民生村镇银行 |
+      | 15476340 | 贺州八步东盈村镇银行 |
+      | 15276880 | 资阳民生村镇银行 |
+      | 15732030 | 集宁包商村镇银行 |
+      | 4966730 | 南充市商业银行 |
+      | 1040000 | 中国银行 |
+      | 14055810 | 广州农村商业银行 |
+      | 1020446 | 中国工商银行澳门分行 |
+      | 14468700 | 黄河农村商业银行 |
+      | 5181810 | 运城市农村信用合作社联合社 |
+      | 5247410 | 玉溪市商业银行 |
+      | 5131410 | 承德市商业银行 |
+      | 64296510 | 成都市商业银行 |
+      | 25090344 | 上海商业银行 |
+      | 4083320 | 宁波市商业银行 |
+      | 4422610 | 哈尔滨市银行 |
+      | 25210344 | 集友银行 |
+      | 5027360 | 曲靖市商业银行 |
+      | 4332350 | 葫芦岛市商业银行 |
+      | 4721460 | 廊坊银行 |
+      | 15278046 | 志丹民生村镇银行 |
+      | 15475950 | 惠州仲恺东盈村镇银行 |
+      | 15735320 | 掇刀包商村镇银行 |
+      | 5478820 | 昆仑银行股份有限公司 |
+      | 14097310 | 昆明农联社 |
+      | 4956140 | 柳州银行股份有限公司 |
+      | 25080344 | 星展银行香港有限公司 |
+      | 15278060 | 榆林榆阳民生村镇银行 |
+      | 14603040 | 江南农村商业银行 |
+      | 16013144 | 江苏丹阳保得村镇银行 |
+      | 16023073 | 江苏灌云民丰村镇银行 |
+      | 4856590 | 绵阳市商业银行 |
+      | 4643970 | 泉州市商业银行 |
+      | 3110000 | 恒丰银行 |
+      | 4053910 | 福州市商业银行 |
+      | 3134580 | 潍纺市商业银行 |
+      | 4302240 | 抚顺市商业银行 |
+      | 64135810 | 广州市商业银行 |
+      | 14283054 | 吴江农商行 |
+      | 3190001 | 花旗银行有限公司 |
+      | 4672290 | 阜新市商业银行 |
+      | 4733450 | 泰隆城市信用社 |
+      | 14163056 | 张家港市农村商业银行 |
+      | 4786110 | 南宁市商业银行 |
+      | 14203320 | 鄞州农村合作银行 |
+      | 25170344 | 创兴银行有限公司 |
+      | 15483023 | 宜兴阳羡村镇银行 |
+      | 1020554 | 工银新西兰 |
+      | 5785800 | 广东华兴银行 |
+      | 15183653 | 安徽和县新华村镇银行 |
+      | 15215373 | 洪湖融兴村镇银行 |
+      | 15315960 | 梅县客家村镇银行 |
+      | 65131410 | 承德银行 |
+      | 5824540 | 枣庄银行 |
+      | 65373020 | 无锡农村商业银行 |
+      | 14303050 | 江苏东吴农村商业银行 |
+      | 64422610 | 哈尔滨商行 |
+      | 14341770 | 尧都区农村信用合作社联社 |
+      | 4974634 | 莱芜银行 |
+      | 26040344 | Travelex |
+      | 26220446 | 澳门国际银行 |
+      | 5778981 | 新疆汇和银行 |
+      | 99900458 | BankofChina(Malaysia); |
+      | 5565040 | 漯河商行 |
+      | 26550704 | 越南Vietcombank |
+      | 28660410 | 韩国三星卡公司 |
+      | 15083333 | 浙江乐清联合村镇银行 |
+      | 15083351 | 浙江嘉善联合村镇银行 |
+      | 15195284 | 谷城中银富登村镇银行 |
+      | 15212411 | 榆树融兴村镇银行 |
+      | 15483052 | 昆山鹿城村镇银行 |
+      | 15585623 | 涟源沪农商村镇银行 |
+      | 15585635 | 永兴沪农商村镇银行 |
+      | 15776020 | 东莞长安村镇银行 |
+      | 15357313 | 云南安宁稠州村镇银行 |
+      | 64375850 | 珠海华润银行 |
+      | 48080001 | 中银通支付 |
+      | 15587530 | 保山隆阳沪农商村镇银行 |
+      | 27670643 | RussianStandardBank |
+      | 29120496 | CapitalBankofMongolia |
+      | 15733129 | 仪征包商村镇银行 |
+      | 5521340 | 保定银行 |
+      | 15494210 | 南昌大丰村镇银行 |
+      | 15403066 | 启东珠江村镇银行 |
+      | 15731922 | 固阳包商惠农村镇银行 |
+      | 15566761 | 大竹渝农商村镇银行 |
+      | 15641100 | 天津华明村镇银行 |
+      | 15511100 | 天津武清村镇银行 |
+      | 14511900 | 内蒙古农村信用社联合式 |
+      | 14538200 | 甘肃省农村信用社联合社 |
+      | 15025371 | 湖北仙桃北农商村镇银行 |
+      | 15036512 | 双流诚民村镇银行 |
+      | 15044015 | 福建建瓯石狮村镇银行 |
+      | 15103352 | 浙江平湖工银村镇银行 |
+      | 15106919 | 重庆璧山工银村镇银行 |
+      | 15116917 | 重庆大足汇丰村镇银行 |
+      | 15123181 | 江苏沭阳东吴村镇银行 |
+      | 15265130 | 南阳村镇银行 |
+      | 26070702 | 新加坡大华银行 |
+      | 5171270 | 邯郸市商业银行 |
+      | 5342050 | 鄂尔多斯银行 |
+      | 5365030 | 许昌市商业银行 |
+      | 5631650 | 阳泉市商业银行 |
+      | 64634280 | 赣州银行股份有限公司 |
+      | 15113961 | 福建永安汇丰村镇银行 |
+      | 1020250 | 中国工商银行巴黎分行 |
+      | 1020380 | 工行米兰 |
+      | 1020764 | 工银泰国 |
+      | 1020826 | 中国工商银行伦敦子行 |
+      | 1043320 | 中行宁波分行 |
+      | 3240000 | 星展银行 |
+      | 3280000 | 新韩银行 |
+      | 64221210 | 河北银行股份有限公司 |
+      | 14616410 | 海口联合农村商业银行 |
+      | 15277533 | 腾冲民生村镇银行 |
+      | 15643621 | 芜湖泰寿村镇银行 |
+      | 15947916 | 西安高陵阳光村镇银行 |
+      | 15275323 | 钟祥民生村镇银行 |
+      | 15366230 | 银海国民村镇银行 |
+      | 15404520 | 青岛城阳珠江村镇银行 |
+      | 4403600 | 徽商银行 |
+      | 4791920 | 包商银行 |
+      | 4634280 | 赣州市商业银行 |
+      | 3100000 | 上海浦东发展银行 |
+      | 3210000 | 香港上海汇丰银行有限公司 |
+      | 64135810 | 广州银行股份有限公司 |
+      | 15406584 | 广汉珠江村镇银行 |
+      | 14163056 | 张家港农村商业银行 |
+      | 15563056 | 张家港渝农商村镇银行 |
+      | 15624916 | 新密郑银村镇银行 |
+      | 15368851 | 昌吉国民村镇银行 |
+      | 15272454 | 梅河口民生村镇银行 |
+      | 15845013 | 武陟射阳村镇银行 |
+      | 14231430 | 沧州农信社 |
+      | 14326030 | 中山市农村信用合作社 |
+      | 4593450 | 台州市商业银行 |
+      | 4588510 | 西宁市商业银行 |
+      | 64733450 | 浙江泰隆商业银行 |
+      | 5484959 | 平顶山银行 |
+      | 15194752 | 曹县中银富登村镇银行 |
+      | 15195379 | 监利中银富登村镇银行 |
+      | 15212723 | 桦川融兴村镇银行 |
+      | 15214931 | 偃师融兴村镇银行 |
+      | 15215547 | 耒阳融兴村镇银行 |
+      | 15356926 | 忠县稠州村镇银行 |
+      | 15406030 | 中山东凤珠江村镇银行 |
+      | 4062410 | 长春市商业银行 |
+      | 4447910 | 西安市商业银行 |
+      | 4603110 | 盐城商行 |
+      | 14105200 | 湖北农信社 |
+      | 3340000 | 大华银行（中国） |
+      | 27200704 | 越南西贡商业银行 |
+      | 27520702 | 新加坡星网电子付款 |
+      | 27710418 | BCEL |
+      | 28030410 | 韩国乐天 |
+      | 1020124 | 中国工商银行加拿大分行 |
+      | 3360000 | 企业银行（中国） |
+      | 15438710 | 银川掌政石银村镇银行 |
+      | 15521463 | 永清吉银村镇银行 |
+      | 5755200 | 湖北银行 |
+      | 28530496 | MongoliaTradeDevelop.Bank |
+      | 15195375 | 潜江中银富登村镇银行 |
+      | 15206925 | 重庆黔江银座村镇银行 |
+      | 15405895 | 鹤山珠江村镇银行 |
+      | 15535367 | 湖北赤壁武弄商村镇银行 |
+      | 15584713 | 阳谷沪农商村镇银行 |
+      | 15476020 | 东莞大朗东盈村镇银行 |
+      | 25190344 | 中国银行（香港） |
+      | 15732057 | 乌审旗包商村镇银行 |
+      | 64895910 | 广东南粤银行 |
+      | 15581000 | 北京房山沪农商村镇银行 |
+      | 28020446 | 澳门通股份有限公司 |
+      | 15732053 | 准格尔旗包商村镇银行 |
+      | 15151000 | 北京大兴九银村镇银行 |
+      | 15731000 | 北京昌平兆丰村镇银行 |
+      | 15363323 | 宁波市鄞州国民村镇银行 |
+      | 15115270 | 湖北随州曾都汇丰村镇银行 |
+      | 15145840 | 深圳龙岗鼎业村镇银行 |
+      | 5503320 | 宁波东海银行 |
+      | 5516620 | 遂宁市商业银行 |
+      | 5625080 | 周口市商业银行 |
+      | 64384530 | 齐商银行 |
+      | 64392270 | 锦州银行 |
+      | 64624580 | 潍坊银行 |
+      | 25290344 | 中国银盛 |
+      | 1020076 | 中国工商银行（巴西） |
+      | 1020124 | 工行加拿大 |
+      | 1020360 | 中国工商银行(印尼 |
+      | 1020528 | 工行阿姆斯特丹 |
+      | 1040608 | 中国银行马尼拉分行 |
+      | 3270000 | 友利银行(中国)有限公司 |
+      | 15713386 | 浙江兰溪越商村镇银行 |
+      | 15776314 | 灵山泰业村镇银行 |
+      | 15916260 | 百色右江华润村镇银行 |
+      | 15404560 | 福山珠江村镇银行 |
+      | 15731966 | 莫力达瓦包商村镇银行 |
+      | 15805364 | 通城惠民村镇银行 |
+      | 15696247 | 陆川柳银村镇银行 |
+      | 26290840 | Discover Financial Services，Inc |
+      | 1020000 | 中国工商银行 |
+      | 3090000 | 兴业银行 |
+      | 5121660 | 长治市商业银行 |
+      | 25100344 | 永隆银行有限公司 |
+      | 5253450 | 浙江民泰商业银行 |
+      | 4031000 | 北京银行 |
+      | 14203323 | 宁波鄞州农村合作银行 |
+      | 14293300 | 浙江省农村信用社联合社 |
+      | 65243000 | 江苏省农村信用社联合社 |
+      | 26630410 | BC卡公司 |
+      | 3160000 | 浙商银行 |
+      | 5274550 | 东营市商业银行 |
+      | 5311930 | 乌海市商业银行 |
+      | 4991240 | 唐山市商业银行 |
+      | 14427900 | 陕西省农村信用社联合社 |
+      | 4491610 | 太原市商业银行 |
+      | 5007020 | 六盘水商行 |
+      | 4162640 | 齐齐哈尔市商业银行 |
+      | 4491610 | 晋商银行 |
+      | 15696141 | 柳江柳银村镇银行 |
+      | 15366170 | 桂林国民村镇银行 |
+      | 15275210 | 江夏民生村镇银行 |
+      | 14215881 | 佛山市三水区农村信用合作社 |
+      | 4184930 | 洛阳市商业银行 |
+      | 4170000 | 盛京银行 |
+      | 4270001 | 乌鲁木齐市商业银行 |
+      | 14045840 | 深圳农村商业银行 |
+      | 4504520 | 青岛市商业银行 |
+      | 4753360 | 湖州市商业银行 |
+      | 4256020 | 东莞市商业银行 |
+      | 16023757 | 安徽明光民丰村镇银行 |
+      | 15275251 | 宜都民生村镇银行 |
+      | 14551600 | 山西省农村信用社联合社 |
+      | 5484950 | 平顶山银行股份有限公司 |
+      | 15193754 | 全椒中银富登村镇银行 |
+      | 15194588 | 青州中银富登村镇银行 |
+      | 15194755 | 单县中银富登村镇银行 |
+      | 15216900 | 重庆沙坪坝融兴村镇银行 |
+      | 15216925 | 重庆市武隆融兴村镇银行 |
+      | 4916170 | 桂林市商业银行 |
+      | 3134732 | 日照市商业银行 |
+      | 4652280 | 营口市商业银行 |
+      | 14353041 | 武进农村商业银行 |
+      | 27240608 | 菲律宾BDO |
+      | 27550031 | RoyalBank |
+      | 28590410 | 韩国KB |
+      | 48100000 | 中银通商务支付有限公司 |
+      | 64554770 | 日照银行 |
+      | 15404988 | 辉县珠江村镇银行 |
+      | 15436901 | 重庆江津石银村镇银行 |
+      | 5818200 | 甘肃银行 |
+      | 28450643 | 俄罗斯ORIENTEXPRESSBANK |
+      | 15283315 | 浙江建德湖商村镇银行 |
+      | 15355810 | 广州花都稠州村镇银行 |
+      | 15446610 | 广元贵商村镇银行 |
+      | 15585586 | 石门沪农商村镇银行 |
+      | 15786020 | 东莞厚街华业村镇银行 |
+      | 15214221 | 乐平融兴村镇银行 |
+      | 65264330 | 上饶银行 |
+      | 65385500 | 湖南农村信用社联合社 |
+      | 29170480 | TheMauritiusCommercialBank |
+      | 15587432 | 开远沪农商村镇银行 |
+      | 15587433 | 蒙自沪农商村镇银行 |
+      | 15587437 | 弥勒沪农商村镇银行 |
+      | 15641442 | 任丘泰寿村镇银行 |
+      | 15438730 | 吴忠市滨河村镇银行 |
+      | 15845016 | 孟州射阳村镇银行 |
+      | 15738712 | 宁夏贺兰回商村镇银行 |
+      | 14542200 | 辽宁省农村信用社联合社 |
+      | 15006518 | 大邑交银兴民村镇银行 |
+      | 15036753 | 宣汉诚民村镇银行 |
+      | 15083362 | 浙江长兴联合村镇银行 |
+      | 15156030 | 中山小榄村镇银行 |
+      | 26290840 | Discover Financial Services，I |
+      | 26320446 | 澳门商业银行 |
+      | 5576750 | 达州市商业银行 |
+      | 5666770 | 雅安市商业银行 |
+      | 5675060 | 商丘商行 |
+      | 64786110 | 广西北部湾银行 |
+      | 15183772 | 郎溪新华村镇银行 |
+      | 65097300 | 云南省农村信用社 |
+      | 4761430 | 沧州银行 |
+      | 1020056 | 工行布鲁塞尔 |
+      | 1020056 | 中国工商银行布鲁塞尔分行 |
+      | 1020392 | 工行东京分行 |
+      | 1020458 | 工行马来西亚 |
+      | 1020704 | 工银河内 |
+      | 1033320 | 宁波市农业银行 |
+      | 15273790 | 池州贵池民生村镇银行 |
+      | 15515134 | 河南方城凤裕村镇银行 |
+      | 15731611 | 清徐惠民村镇银行 |
+      | 4375850 | 珠海华润银行股份有限公司 |
+      | 15563956 | 福建沙县渝农商村镇银行 |
+      | 4571260 | 秦皇岛银行股份有限公司 |
+      | 15404569 | 莱州珠江村镇银行 |
+      | 15404790 | 莱芜珠江村镇银行 |
+      | 15732017 | 西乌珠穆沁包商惠丰村镇银行 |
+      | 4447910 | 西安银行股份有限公司 |
+      | 15752281 | 辽宁大石桥隆丰村镇银行 |
+      | 15734759 | 鄄城包商村镇银行 |
+      | 15625033 | 鄢陵郑银村镇银行 |
+      | 15522410 | 长春双阳吉银村镇银行 |
+      | 15273113 | 阜宁民生村镇银行 |
+      | 4562239 | 鞍山银行 |
+      | 4986580 | 德阳市商业银行 |
+      | 14265930 | 肇庆农村信用社 |
+      | 14473600 | 安徽省农村信用社联合社 |
+      | 1040446 | 中国银行澳门分行 |
+      | 14486400 | 海南省农村信用社联合社 |
+      | 26690643 | 莫斯科人民储蓄银行 |
+      | 4123330 | 温州银行 |
+      | 14191100 | 天津市农村信用社 |
+      | 15776927 | 开县泰业村镇银行 |
+      | 15654924 | 开封新东方村镇银行 |
+      | 4836560 | 攀枝花市商业银行 |
+      | 15406522 | 新津珠江村镇银行 |
+      | 5734220 | 景德镇商业银行 |
+      | 15773683 | 枞阳泰业村镇银行 |
+      | 16023010 | 江苏溧水民丰村镇银行 |
+      | 65226510 | 成都农村商业银行 |
+      | 4871620 | 大同市商业银行 |
+      | 3134650 | 威海市商业银行 |
+      | 4523060 | 南通市商业银行 |
+      | 4341100 | 天津市商业银行 |
+      | 4885050 | 三门峡市城市信用社 |
+      | 14023052 | 昆山农村信用合作社联合社 |
+      | 4895910 | 湛江市商业银行 |
+      | 4283370 | 绍兴市商业银行 |
+      | 4243010 | 南京银行 |
+      | 4213050 | 苏州市商业银行 |
+      | 14275880 | 佛山市禅城区农村信用联社 |
+      | 65085883 | 佛山顺德农村商业银行 |
+      | 5031680 | 晋城商业银行 |
+      | 4484210 | 南昌市商业银行 |
+      | 15404960 | 安阳珠江村镇银行 |
+      | 14033055 | 常熟农村商业银行 |
+      | 15366264 | 平果国民村镇银行 |
+      | 15183687 | 望江新华村镇银行 |
+      | 15194689 | 临邑中银富登村镇银行 |
+      | 15215352 | 应城融兴村镇银行 |
+      | 15216620 | 遂宁安居融兴村镇银行 |
+      | 15216935 | 重庆市酋阳融兴村镇银行 |
+      | 15343116 | 江苏大丰江南村镇银行 |
+      | 3134560 | 烟台市商业银行 |
+      | 4023930 | 厦门银行股份有限公司 |
+      | 14561100 | 天津滨海农村商业银行 |
+      | 5767700 | 西藏银行 |
+      | 15514550 | 东营莱商村镇银行 |
+      | 15584712 | 临清沪农商村镇银行 |
+      | 15584715 | 茌平沪农商村镇银行 |
+      | 15585541 | 衡阳沪农商村镇银行 |
+      | 15585584 | 临澧沪农商村镇银行 |
+      | 15585634 | 桂阳沪农商村镇银行 |
+      | 5311930 | 乌海银行股份有限公司 |
+      | 15732415 | 九台龙嘉村镇银行 |
+      | 15567571 | 云南香格里拉渝农商村镇银行 |
+      | 15476061 | 云浮新兴东盈民生村镇银行 |
+      | 64588510 | 青海银行 |
+      | 15436900 | 重庆南川石银村镇银行 |
+      | 27860446 | 澳门BDA |
+      | 15695812 | 从化柳银村镇银行 |
+      | 15732036 | 化德包商村镇银行 |
+      | 15366110 | 南宁江南国民村镇银行 |
+      | 15366231 | 合浦国民村镇银行 |
+      | 15015363 | 湖北嘉鱼吴江村镇银行 |
+      | 15024521 | 青岛即墨北农商村镇银行 |
+      | 15036410 | 海口苏南村镇银行 |
+      | 15055416 | 咸丰常农商村镇银行 |
+      | 15195338 | 蕲春中银富登村镇银行 |
+      | 15201000 | 北京顺义银座村镇银行 |
+      | 25070344 | 建设银行亚洲公司 |
+      | 25270446 | 建设银行澳门公司 |
+      | 26350764 | Bangkok Bank Pcl |
+      | 5417930 | 宝鸡商行 |
+      | 5426900 | 重庆三峡银行 |
+      | 5584980 | 新乡市商业银行 |
+      | 64667310 | 富滇银行 |
+      | 64753360 | 湖州银行 |
+      | 65274550 | 东营银行 |
+      | 1020360 | 工银印尼 |
+      | 1020398 | 中国工商银行阿拉木图子行 |
+      | 1020724 | 工行马德里 |
+      | 1040036 | 中国银行（澳大利亚） |
+      | 1040392 | 中银东京分行 |
+      | 3220000 | 渣打银行中国有限公司 |
+      | 3300000 | 华侨银行（中国） |
+      | 3310000 | 永亨银行（中国）有限公司 |
+      | 15735040 | 漯河市郾城包商村镇银行 |
+      | 15369028 | 石河子国民村镇银行 |
+      | 15696158 | 融水柳银村镇银行 |
+      | 5516629 | 遂宁是商业银行 |
+      | 15731971 | 鄂温克旗包商村镇银行 |
+      | 15274986 | 长垣民生村镇银行 |
+      | 15655031 | 长葛轩辕村镇银行 |
+      | 5605128 | 驻马店银行 |
+      | 3070000 | 平安银行 |
+      | 5083000 | 江苏银行 |
+      | 14136530 | 重庆市农村信用社联合社 |
+      | 65173900 | 福建省农村信用社联合社 |
+      | 4360010 | 宁夏银行 |
+      | 3010000 | 交通银行 |
+      | 5167030 | 遵义市商业银行 |
+      | 4615510 | 长沙市商业银行 |
+      | 3050000 | 中国民生银行 |
+      | 26110392 | 日本三井住友卡公司 |
+      | 47980344 | 中国银行香港 |
+      | 14526500 | 四川省农村信用社联合社 |
+      | 1000000 | 中国邮政储蓄银行 |
+      | 65154680 | 德州银行 |
+      | 5492340 | 朝阳银行 |
+      | 15733062 | 江苏南通如皋包商村镇银行 |
+      | 15184299 | 江西兴国新华村镇银行 |
+      | 4866570 | 泸州市商业银行 |
+      | 3133930 | 厦门市商业银行 |
+      | 4073140 | 镇江市商业银行 |
+      | 14033055 | 常熟市农村商业银行 |
+      | 3260000 | 恒生银行有限公司 |
+      | 4544240 | 九江市商业银行 |
+      | 4667310 | 昆明商业银行 |
+      | 15283688 | 安徽粤西湖商村镇银行 |
+      | 15283812 | 安徽蒙城湖商村镇银行 |
+      | 15884583 | 山东临朐聚丰村镇银行 |
+      | 15181123 | 天津静海新华村镇银行 |
+      | 15193320 | 宁波镇海中银富登村镇银行 |
+      | 15193322 | 宁海中银富登村镇银行 |
+      | 15193753 | 来安中银富登村镇银行 |
+      | 15212625 | 巴彦融兴村镇银行 |
+      | 15213063 | 江苏如东融兴村镇银行 |
+      | 15273974 | 安溪民生村镇银行 |
+      | 15405150 | 信阳珠江村镇银行 |
+      | 4922600 | 龙江银行 |
+      | 5326560 | 自贡市商业银行 |
+      | 5748840 | 哈密市商业银行 |
+      | 5832250 | 本溪市商业银行 |
+      | 14024510 | 山东省农联社 |
+      | 14105210 | 武汉农信 |
+      | 4375850 | 珠海市商业银行 |
+      | 4354910 | 郑州市商业银行 |
+      | 4933120 | 靖江市长江城市信用社 |
+      | 3350000 | 大新银行（中国） |
+      | 14255890 | 江门新会农村商业银行 |
+      | 26780643 | 俄罗斯远东商业银行 |
+      | 26790422 | CSC |
+      | 26930608 | Allied Bank |
+      | 28720762 | CJSCFononbank |
+      | 65191100 | 天津农村商业银行 |
+      | 4571260 | 秦皇岛市商业银行 |
+      | 5438720 | 石嘴山银行 |
+      | 28550764 | KrungThajBankPublicCo.Ltd |
+      | 28990586 | 巴基斯坦HabibBank |
+      | 15185810 | 广州番禹新华村镇银行 |
+      | 15212652 | 拜泉融兴村镇银行 |
+      | 15216437 | 海南保亭融兴村镇银行 |
+      | 15386424 | 琼海国民村镇银行 |
+      | 15535360 | 湖北咸安武农商村镇银行 |
+      | 15535813 | 广州增城长江村镇银行 |
+      | 15584513 | 济南槐荫沪农商村镇银行 |
+      | 15584710 | 聊城东昌沪农商村镇银行 |
+      | 15584770 | 日照沪农商村镇银行 |
+      | 15585583 | 澧县沪农商村镇银行 |
+      | 15585591 | 慈利沪农商村镇银行 |
+      | 15587317 | 嵩明沪农商村镇银行 |
+      | 25020344 | 东亚银行有限公司 |
+      | 15366322 | 东兴国民村镇银行 |
+      | 4974790 | 莱商银行 |
+      | 15585840 | 深圳光明沪农商村镇银行 |
+      | 15587546 | 瑞丽沪农商村镇银行 |
+      | 5695150 | 信阳银行 |
+      | 15696248 | 博白柳银村镇银行 |
+      | 15732220 | 大连金州联丰村镇银行 |
+      | 15731100 | 天津津南村镇银行 |
+      | 15731948 | 宁城包商村镇银行 |
+      | 4083320 | 宁波银行 |
+      | 15111027 | 北京密云汇丰村镇银行 |
+      | 15142080 | 方大村镇银行 |
+      | 15183651 | 安徽当涂新华村镇银行 |
+      | 15205840 | 深圳福田银座村镇银行 |
+      | 5354970 | 鹤壁银行 |
+      | 5392330 | 铁岭银行 |
+      | 5605110 | 驻马店市商业银行 |
+      | 64544240 | 九江银行股份有限公司 |
+      | 65675060 | 商丘市商业银行 |
+      | 15272900 | 上海松江民生村镇银行 |
+      | 1020276 | 工银法兰克福 |
+      | 1020410 | 工行首尔 |
+      | 3010446 | 交通银行澳门分行 |
+      | 3080344 | 招商银行香港分行 |
+      | 15523120 | 江都吉银村镇银行 |
+      | 4184930 | 洛阳银行 |
+      | 15083412 | 浙江常山联合村镇银行 |
+      | 15404564 | 海阳珠江村镇银行 |
+      | 15273993 | 漳浦民生村镇银行 |
+      | 14303050 | 苏州银行股份有限公司 |
+      | 4652280 | 营口银行股份有限公司 |
+      | 15274561 | 蓬莱民生村镇银行 |
+      | 4192310 | 辽阳银行股份有限公司 |
+      | 15366320 | 防城港防城国民村镇银行 |
+      | 15948032 | 陕西洛南阳光村镇银行 |
+      | 4504520 | 青岛银行 |
+      | 4991240 | 唐山银行 |
+      | 14293300 | 杭州联合银行 |
+      | 4933160 | 江苏长江商业银行 |
+      | 3460000 | 重庆富民银行 |
+  tradeCode:
+    title: 贸易类型
+    type: string
+    description: |-
+      tradeCode | 贸易类型
+      ------- | -------
+      E_BUSINESS | 电商销售/货物贸易
+      LOGISTIC_FEE | 物流费
+      ADS | 广告费
+      OPERATING_EXPENSES | 运营费用
+      TAX_FEE | 税务费用
+      IP_FEE | 专利服务费
+      SALARY_FEE | 工资
+      ONLINE_PROMOTION_FEE | 网红推广费
+  region:
+    title: 地区
+    description: "|region\t  |描述\t    |\n|-------|-------------|\n|CN\t|中国大陆\t      |\n|US\t|美国\t      |\n|FR\t|法国\t      |\n|DE\t|德国\t      |\n|IT\t|意大利\t      |\n|ES\t|西班牙\t      |\n|GB\t|英国\t      |\n|HK\t|中国香港\t      |\n|AU\t|澳大利亚\t      |\n|TW\t|中国台湾\t      |\n|KR\t|韩国\t      |\n|JP\t|日本\t      |\n|SG\t|新加坡\t      |\n|CA\t|加拿大\t      |\n|NL\t|荷兰\t      |\n|CNF\t|大陆外币\t      |"
+    type: string
+  paymentstatuscallback:
+    type: object
+    x-examples:
+      success:
+        data:
+          batchId: '20220823111521'
+          errorMsg: ''
+          paymentId: '202208230271594'
+          status: success
+          updateTime: '2022-08-23T03:17:18.000Z'
+        event_name: payment.order.status.response
+      fail:
+        data:
+          batchId: '20220823002'
+          errorMsg: 该收款人不支持当前付款币种的支付。
+          paymentId: '202208230271582'
+          status: fail
+          updateTime: '2022-08-23T03:17:18.000Z'
+        event_name: payment.order.status.response
+    title: 付款交易状态更新回调通知
+    properties:
+      data:
+        type: object
+        properties:
+          batchId:
+            type: string
+          errorMsg:
+            type: string
+          paymentId:
+            type: string
+          status:
+            type: string
+            enum:
+              - success
+              - fail
+          updateTime:
+            type: string
+      event_name:
+        type: string
+    description: |
+      paymentId维度付款成功/失败时发送通知
+
+      如需接收通知，请先调用`通用服务API-注册WebHook`注册付款Event`payment.order.status.response`
+tags:
+  - name: 接口
+basePath: /supplier/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions: {}

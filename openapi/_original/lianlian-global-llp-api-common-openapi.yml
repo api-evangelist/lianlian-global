@@ -1,0 +1,1744 @@
+swagger: '2.0'
+info:
+  title: 通用服务 API
+  version: '1.0'
+  description: |-
+    联调域名 - **https://global-api-sandbox.lianlianpay-inc.com**</br>
+    生产地址 - **https://global-api.lianlianpay.com**
+  contact:
+    name: Technical Support
+    email: dev_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  '/dictionaries/district/{code}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 省市区编码
+                    name:
+                      type: string
+                      description: 省市区名称
+          examples:
+            application/json:
+              items:
+                - code: '110000'
+                  name: 北京
+                - code: '120000'
+                  name: 天津
+                - code: '130000'
+                  name: 河北省
+                - code: '140000'
+                  name: 山西省
+                - code: '150000'
+                  name: 内蒙古自治区
+                - code: '210000'
+                  name: 辽宁省
+                - code: '220000'
+                  name: 吉林省
+                - code: '230000'
+                  name: 黑龙江省
+                - code: '310000'
+                  name: 上海
+                - code: '320000'
+                  name: 江苏省
+                - code: '330000'
+                  name: 浙江省
+                - code: '340000'
+                  name: 安徽省
+                - code: '350000'
+                  name: 福建省
+                - code: '360000'
+                  name: 江西省
+                - code: '370000'
+                  name: 山东省
+                - code: '410000'
+                  name: 河南省
+                - code: '420000'
+                  name: 湖北省
+                - code: '430000'
+                  name: 湖南省
+                - code: '440000'
+                  name: 广东省
+                - code: '450000'
+                  name: 广西壮族自治区
+                - code: '460000'
+                  name: 海南省
+                - code: '500000'
+                  name: 重庆
+                - code: '510000'
+                  name: 四川省
+                - code: '520000'
+                  name: 贵州省
+                - code: '530000'
+                  name: 云南省
+                - code: '540000'
+                  name: 西藏自治区
+                - code: '610000'
+                  name: 陕西省
+                - code: '620000'
+                  name: 甘肃省
+                - code: '630000'
+                  name: 青海省
+                - code: '640000'
+                  name: 宁夏回族自治区
+                - code: '650000'
+                  name: 新疆维吾尔自治区
+                - code: '710000'
+                  name: 台湾省
+                - code: '810000'
+                  name: 香港特别行政区
+                - code: '820000'
+                  name: 澳门特别行政区
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400003'
+              message: Invalid signature time.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      summary: 省市字典接口
+      description: |-
+        获取provincecode时，{code}请填写 `CHN`
+
+        获取citycode时，code请填写对应provincecode
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/dictionaries/district/{code}** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/dictionaries/district/{code}**
+      operationId: get-dictionaries-district-code
+      tags:
+        - 接口
+      parameters:
+        - in: path
+          name: code
+          type: string
+          required: true
+          description: '获取provincecode时，{code}请填写 `CHN`'
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+    parameters:
+      - name: code
+        in: path
+        type: string
+        required: true
+  /documents:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 连连系统存储的attachmentId
+              name:
+                type: string
+                description: 文件名
+              createTime:
+                type: string
+                format: date-time
+                description: 文件上传时间 UTC+0
+            required:
+              - id
+              - name
+              - createTime
+          examples:
+            application/json:
+              id: '202105181010001'
+              name: 收款人材料.zip
+              createTime: '2021-05-18T07:48:22.000Z'
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400003'
+              message: Invalid signature time.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      summary: 上传附件
+      description: |-
+        本接口用于上传附件（例如贸易材料等）至连连系统. 目前支持的文件格式有 **PDF**, **JPG**,**JPEG**,**TIF**, **ZIP**,**RAR** 和 **PNG**.完成上传后，返回 `附件id`等信息。在其他接口中，如果需要用到附件，你需要传输对应的 `附件id`字段
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/documents** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/documents**
+      operationId: upload-document
+      tags:
+        - 接口
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: formData
+          name: file
+          type: file
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: multipart/form-data
+          description: multipart/form-data
+        - in: header
+          name: Idempotency-Key
+          type: string
+          description: 可以在http头加入Idempotency-Key以便让系统识别你的幂等请求
+      consumes:
+        - multipart/form-data
+  '/documents/{Id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties: {}
+          examples: {}
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+        '404':
+          description: 传入附件Id不存在
+          examples:
+            application/json:
+              message: Resource not found.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      parameters:
+        - in: path
+          name: Id
+          type: string
+          required: true
+          description: 上传附件接口返回的Id
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+      summary: 下载附件
+      description: |-
+        你可以通过上传附件接口返回的id进行附件文件的下载。
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/documents/{Id}** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/documents/{Id}**
+      operationId: download-document
+      tags:
+        - 接口
+      produces: []
+    parameters:
+      - name: Id
+        in: path
+        type: string
+        required: true
+  /verification-codes/SMS:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema: {}
+        '400':
+          description: |
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 110002 | Verification code send frequently. |每小时获取验证码上限10次 |
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | [verificationEnum]may not be null | 请求参数不合法 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '110002'
+              message: Verification code send frequently.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      summary: 获取短信验证码
+      description: |-
+        获取短信校验码，用于相关接口做二次验证，例如：币种账户提现、供应商付款等
+
+        验证码会发送至连连账户当前绑定手机号
+
+        每小时获取验证码上限10次
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/verification-codes/SMS** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/verification-codes/SMS**
+      operationId: post-verification-codes
+      tags:
+        - 接口
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              verificationEnum:
+                type: string
+                description: |-
+                  | Value | Description |
+                  |--------|------------|
+                  | WITHDRAW_COMBINE| 币种账户提现校验码 |
+                  | SUBMIT_PAYMENT | 供应商付款校验码 |
+                enum:
+                  - WITHDRAW_COMBINE
+                  - SUBMIT_PAYMENT
+            required:
+              - verificationEnum
+          x-examples:
+            application/json:
+              verificationEnum: SUBMIT_PAYMENT
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+          default: application/json
+  /webhooks:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            title: 注册WebHook结果
+            description: ''
+            x-tags:
+              - 对象
+            properties:
+              id:
+                type: string
+                description: 流水单号
+                maxLength: 32
+              url:
+                type: string
+                description: webhook url
+                maxLength: 64
+              topic:
+                type: string
+                title: Event-Topic枚举
+                description: |
+                  定义的Topic
+
+                  | Topic | Event-Data名称| 描述|
+                  |--------|------------|------------|
+                  | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+                  | payment.order.status.response | 付款Event|在付款成功、付款失败时触发相关事件|
+                x-tags:
+                  - 对象
+                enum:
+                  - withdraw.event.response
+                  - payment.order.status.response
+              createTime:
+                type: string
+                description: 创建时间
+                format: date-time
+            required:
+              - id
+              - url
+              - topic
+              - createTime
+          examples:
+            application/json:
+              id: 202103239016596&1138
+              url: www.baidu.com
+              createTime: '2021-03-23T10:46:19.000Z'
+              topic: withdraw.event.response
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 108012 | Duplicate Webhook Registration |重复注册Webhook |
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | [topic]can't be empty. | 请求参数不合法 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '108012'
+              message: Duplicate Webhook Registration
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      summary: 注册WebHook
+      description: |-
+        注册webHook，系统会自动推送事件。
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/webhooks** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/webhooks**
+      operationId: register-webhook
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              topic:
+                type: string
+                description: |-
+                  定义的Topic
+
+                  | Topic | Event-Data名称| 描述|
+                  |--------|------------|------------|
+                  | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+                  | payment.order.status.response | 付款Event|在付款成功、付款失败时触发相关事件|
+              url:
+                type: string
+                description: '回调接收地址："http://localhost"'
+            required:
+              - topic
+              - url
+          description: ''
+          x-examples:
+            application/json:
+              topic: withdraw.event.response
+              url: www.baidu.com
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: header
+          name: Content-Type
+          type: string
+          default: application/json
+          required: true
+      tags:
+        - 接口
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: 总数
+              list:
+                type: array
+                description: ''
+                items:
+                  type: object
+                  title: 注册WebHook结果
+                  description: ''
+                  x-tags:
+                    - 对象
+                  properties:
+                    id:
+                      type: string
+                      description: 流水单号
+                      maxLength: 32
+                    url:
+                      type: string
+                      description: webhook url
+                      maxLength: 64
+                    topic:
+                      type: string
+                      title: Event-Topic枚举
+                      description: |
+                        定义的Topic
+
+                        | Topic | Event-Data名称| 描述|
+                        |--------|------------|------------|
+                        | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+                      x-tags:
+                        - 对象
+                    createTime:
+                      type: string
+                      description: 创建时间
+                      format: date-time
+                  required:
+                    - id
+                    - url
+                    - topic
+                    - createTime
+            required:
+              - total
+              - list
+          examples:
+            application/json:
+              list:
+                - id: 202103239016596&1138
+                  url: www.baidu.com
+                  createTime: '2021-03-23T10:46:19.000Z'
+                  topic: withdraw.event.response
+              total: 1
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400006'
+              message: Signature validation failed. Contact Lianlian Pay for technical support.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      summary: 查询WebHook列表
+      description: |-
+        查询WebHook列表
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/webhooks** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/webhooks**
+      operationId: get-webhook-registration-list
+      tags:
+        - 接口
+      parameters:
+        - in: body
+          name: body
+          schema: {}
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+  '/webhooks/{webhookId}':
+    get:
+      summary: 查询WebHook
+      description: |-
+        通过webhookId查询WebHook
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/webhooks/{webhookId}** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/webhooks/{webhookId}**
+      operationId: get-webhook-registration
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            title: 注册WebHook结果
+            description: ''
+            x-tags:
+              - 对象
+            properties:
+              id:
+                type: string
+                description: 流水单号
+                maxLength: 32
+              url:
+                type: string
+                description: webhook url
+                maxLength: 64
+              topic:
+                type: string
+                title: Event-Topic枚举
+                description: |
+                  定义的Topic
+
+                  | Topic | Event-Data名称| 描述|
+                  |--------|------------|------------|
+                  | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+                x-tags:
+                  - 对象
+              createTime:
+                type: string
+                description: 创建时间
+                format: date-time
+            required:
+              - id
+              - url
+              - topic
+              - createTime
+          examples:
+            application/json:
+              id: 202103239016596&1138
+              url: www.baidu.com
+              createTime: '2021-03-23T10:46:19.000Z'
+              topic: withdraw.event.response
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400006'
+              message: Signature validation failed. Contact Lianlian Pay for technical support.
+        '404':
+          description: 传入webhookId不存在
+          examples:
+            application/json:
+              message: Resource not found.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      tags:
+        - 接口
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: path
+          name: webhookId
+          type: string
+          required: true
+          description: 即查询WebHook列表接口返回id
+    parameters:
+      - name: webhookId
+        in: path
+        type: string
+        required: true
+    delete:
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400006'
+              message: Signature validation failed. Contact Lianlian Pay for technical support.
+        '404':
+          description: 传入webhookId不存在
+          examples:
+            application/json:
+              message: Resource not found.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      summary: 删除WebHook
+      description: |-
+        删除已注册的WebHook
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/webhooks/{webhookId}** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/webhooks/{webhookId}**
+      operationId: delete-webhook-registration
+      tags:
+        - 接口
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+        - in: path
+          name: webhookId
+          type: string
+          required: true
+          description: 即查询WebHook列表接口返回id
+  /events:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: 总数
+              list:
+                type: array
+                description: ''
+                items:
+                  type: object
+                  title: Event
+                  description: 调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为SUCCESS。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为MAXIMUM_RETRIES_REACHED。
+                  x-tags:
+                    - 对象
+                  properties:
+                    id:
+                      type: string
+                      description: 流水单号
+                    topic:
+                      type: string
+                      title: Event-Topic枚举
+                      description: |
+                        定义的Topic
+
+                        | Topic | Event-Data名称| 描述|
+                        |--------|------------|------------|
+                        | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+                      x-tags:
+                        - 对象
+                    data:
+                      description: Event具体对象，例如提现Event
+                      type: string
+                    createTime:
+                      type: string
+                      description: 创建时间
+                      format: date-time
+                    status:
+                      type: string
+                      description: |-
+                        状态
+
+                        | status | description |
+                        |--------|-------------|
+                        | PROCESSING | 处理中 |
+                        | SUCCESS | 处理成功 |
+                        | MAXIMUM_RETRIES_REACHED | 处理失败 |
+                      enum:
+                        - PROCESSING
+                        - SUCCESS
+                        - MAXIMUM_RETRIES_REACHED
+                    webhookUrl:
+                      type: string
+                      description: webhook url
+                  required:
+                    - topic
+                    - data
+                    - createTime
+            required:
+              - total
+              - list
+          examples:
+            application/json:
+              list:
+                - data: '{"externalTransId":"2021032400000123","status":2}'
+                  createTime: '2021-03-24T08:53:18.897Z'
+                  topic: withdraw.event.response
+                  id: '202103249052452'
+                  webhookUrl: www.baidu.com
+                  status: MAXIMUM_RETRIES_REACHED
+                - data: '{"externalTransId":"2021032400000123","status":2}'
+                  createTime: '2021-03-24T08:53:19.587Z'
+                  topic: withdraw.event.response
+                  id: '202103249052449'
+                  webhookUrl: www.baidu.com
+                  status: SUCCESS
+              total: 2
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | [pageNum] pageNum can't be null. | 请求参数不合法 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              code: '999995'
+              message: '[pageNum]min value is 1'
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      summary: 查询事件列表
+      description: |-
+        查询回调事件列表
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/events** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/events**
+      operationId: get-event-list
+      parameters:
+        - in: query
+          name: topic
+          type: string
+          description: topic
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          allowEmptyValue: true
+          minimum: 1
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          allowEmptyValue: true
+          default: 20
+        - in: query
+          name: status
+          type: string
+          allowEmptyValue: true
+          description: |-
+            状态
+
+            | status | description |
+            |--------|-------------|
+            | PROCESSING | 处理中 |
+            | SUCCESS | 处理成功 |
+            | MAXIMUM_RETRIES_REACHED | 处理失败 |
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+      tags:
+        - 接口
+  '/events/{eventId}':
+    get:
+      summary: 查询事件
+      description: |-
+        根据eventId查询事件对象
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/events/{eventId}** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/events/{eventId}**
+      operationId: get-event
+      tags:
+        - 接口
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            title: Event
+            description: 调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为SUCCESS。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为MAXIMUM_RETRIES_REACHED。
+            x-tags:
+              - 对象
+            properties:
+              id:
+                type: string
+                description: 流水单号
+              topic:
+                type: string
+                title: Event-Topic枚举
+                description: |
+                  定义的Topic
+
+                  | Topic | Event-Data名称| 描述|
+                  |--------|------------|------------|
+                  | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+                x-tags:
+                  - 对象
+              data:
+                type: string
+                description: Event具体对象，例如提现Event
+              createTime:
+                type: string
+                description: 创建时间
+                format: date-time
+              status:
+                type: string
+                description: |-
+                  状态
+
+                  | status | description |
+                  |--------|-------------|
+                  | PROCESSING | 处理中 |
+                  | SUCCESS | 处理成功 |
+                  | MAXIMUM_RETRIES_REACHED | 处理失败 |
+                enum:
+                  - PROCESSING
+                  - SUCCESS
+                  - MAXIMUM_RETRIES_REACHED
+              webhookUrl:
+                type: string
+                description: webhook url
+            required:
+              - topic
+              - data
+              - createTime
+          examples:
+            application/json:
+              data: '{"externalTransId":"2021032400000123","status":2}'
+              createTime: '2021-03-24T08:53:18.897Z'
+              topic: withdraw.event.response
+              id: '202103249052452'
+              webhookUrl: www.baidu.com
+              status: MAXIMUM_RETRIES_REACHED
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+          examples:
+            application/json:
+              error: Bad request
+              code: '400006'
+              message: Signature validation failed. Contact Lianlian Pay for technical support.
+        '404':
+          description: 传入的eventId不存在
+          examples:
+            application/json:
+              message: Resource not found.
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+      parameters:
+        - in: path
+          name: eventId
+          type: string
+          required: true
+          description: 即查询时间列表接口返回id
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+        - in: header
+          name: LLPAY-Signature
+          type: string
+          required: true
+    parameters:
+      - name: eventId
+        in: path
+        type: string
+        required: true
+  /bank-code/search:
+    post:
+      summary: 大陆银行支行名称模糊查询
+      operationId: post-bank-code-search
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            x-examples:
+              example-1:
+                resultList:
+                  - bankCode: '05864910'
+                    cityCode: '411700'
+                    id: '313511422011'
+                    name: 中原银行股份有限公司遂平支行
+                  - bankCode: '05864910'
+                    cityCode: '411700'
+                    id: '313511428018'
+                    name: 中原银行股份有限公司遂平灈阳支行
+                  - bankCode: '05864910'
+                    cityCode: '410700'
+                    id: '313498072960'
+                    name: 中原银行股份有限公司新乡新元支行
+                  - bankCode: '05864910'
+                    cityCode: '410900'
+                    id: '313502001790'
+                    name: 中原银行股份有限公司濮阳中原油田支行
+                  - bankCode: '05864910'
+                    cityCode: '411700'
+                    id: '313511011016'
+                    name: 中原银行股份有限公司驻马店文明支行
+                  - bankCode: '14045840'
+                    cityCode: '411700'
+                    id: '320511400026'
+                    name: 遂平恒生村镇银行股份有限公司沈寨支行
+                  - bankCode: '14045840'
+                    cityCode: '411700'
+                    id: '320511400034'
+                    name: 遂平恒生村镇银行股份有限公司嵖岈山路支行
+                  - bankCode: '14045840'
+                    cityCode: '411700'
+                    id: '320511400042'
+                    name: 遂平恒生村镇银行股份有限公司花庄支行
+                  - bankCode: '01020000'
+                    cityCode: '410100'
+                    id: '102491022154'
+                    name: 中国工商银行股份有限公司郑州中原万达支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313513280965'
+                    name: 中原银行股份有限公司邓州支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313513400929'
+                    name: 中原银行股份有限公司方城支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313513500864'
+                    name: 中原银行股份有限公司西峡支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313513780919'
+                    name: 中原银行股份有限公司镇平支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313513888083'
+                    name: 中原银行股份有限公司内乡支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313513900875'
+                    name: 中原银行股份有限公司淅川支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313514180995'
+                    name: 中原银行股份有限公司社旗支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313514280900'
+                    name: 中原银行股份有限公司唐河支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313514300985'
+                    name: 中原银行股份有限公司新野支行
+                  - bankCode: '05864910'
+                    cityCode: '411300'
+                    id: '313514400017'
+                    name: 中原银行股份有限公司桐柏支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313515200332'
+                    name: 中原银行股份有限公司息县支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313515300309'
+                    name: 中原银行股份有限公司淮滨支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313515500310'
+                    name: 中原银行股份有限公司潢川支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313515600280'
+                    name: 中原银行股份有限公司光山支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313515700342'
+                    name: 中原银行股份有限公司固始支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313515800329'
+                    name: 中原银行股份有限公司商城支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313515900292'
+                    name: 中原银行股份有限公司罗山支行
+                  - bankCode: '05864910'
+                    cityCode: '411500'
+                    id: '313516100350'
+                    name: 中原银行股份有限公司新县支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508200331'
+                    name: 中原银行股份有限公司扶沟支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508300344'
+                    name: 中原银行股份有限公司西华支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508400351'
+                    name: 中原银行股份有限公司商水支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508500326'
+                    name: 中原银行股份有限公司太康支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508600312'
+                    name: 中原银行股份有限公司鹿邑支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508700225'
+                    name: 中原银行股份有限公司郸城支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508800291'
+                    name: 中原银行股份有限公司淮阳支行
+                  - bankCode: '05864910'
+                    cityCode: '411600'
+                    id: '313508900303'
+                    name: 中原银行股份有限公司沈丘支行
+                  - bankCode: '05864910'
+                    cityCode: '411000'
+                    id: '313503321015'
+                    name: 中原银行股份有限公司鄢陵支行
+                  - bankCode: '05864910'
+                    cityCode: '411400'
+                    id: '313506200314'
+                    name: 中原银行股份有限公司虞城支行
+                  - bankCode: '05864910'
+                    cityCode: '411400'
+                    id: '313506400324'
+                    name: 中原银行股份有限公司民权支行
+                  - bankCode: '05864910'
+                    cityCode: '411400'
+                    id: '313506600340'
+                    name: 中原银行股份有限公司睢县支行
+                  - bankCode: '05864910'
+                    cityCode: '411400'
+                    id: '313506700352'
+                    name: 中原银行股份有限公司夏邑支行
+                  - bankCode: '05864910'
+                    cityCode: '411400'
+                    id: '313506800335'
+                    name: 中原银行股份有限公司柘城支行
+                  - bankCode: '05864910'
+                    cityCode: '411400'
+                    id: '313506900300'
+                    name: 中原银行股份有限公司永城支行
+                  - bankCode: '05864910'
+                    cityCode: '410900'
+                    id: '313502101989'
+                    name: 中原银行股份有限公司清丰支行
+                  - bankCode: '05864910'
+                    cityCode: '410900'
+                    id: '313502300245'
+                    name: 中原银行股份有限公司范县支行
+                  - bankCode: '05864910'
+                    cityCode: '410900'
+                    id: '313502400289'
+                    name: 中原银行股份有限公司台前支行
+                  - bankCode: '05864910'
+                    cityCode: '410700'
+                    id: '313498271574'
+                    name: 中原银行股份有限公司获嘉支行
+                  - bankCode: '05864910'
+                    cityCode: '410700'
+                    id: '313498574405'
+                    name: 中原银行股份有限公司封丘支行
+                  - bankCode: '05864910'
+                    cityCode: '410700'
+                    id: '313498773900'
+                    name: 中原银行股份有限公司卫辉支行
+                  - bankCode: '05864910'
+                    cityCode: '410700'
+                    id: '313498873807'
+                    name: 中原银行股份有限公司辉县支行
+                  - bankCode: '05864910'
+                    cityCode: '410500'
+                    id: '313496400309'
+                    name: 中原银行股份有限公司滑县支行
+            properties:
+              resultList:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bankCode:
+                      type: string
+                      description: 开户银行编码
+                    cityCode:
+                      type: string
+                      description: 开户行所在城市编码
+                    id:
+                      type: string
+                      description: 联行号
+                    name:
+                      type: string
+                      description: 开户银行名称
+          examples:
+            中原银行股份有限公司:
+              resultList:
+                - bankCode: '05864910'
+                  cityCode: '411700'
+                  id: '313511422011'
+                  name: 中原银行股份有限公司遂平支行
+                - bankCode: '05864910'
+                  cityCode: '411700'
+                  id: '313511428018'
+                  name: 中原银行股份有限公司遂平灈阳支行
+                - bankCode: '05864910'
+                  cityCode: '410700'
+                  id: '313498072960'
+                  name: 中原银行股份有限公司新乡新元支行
+                - bankCode: '05864910'
+                  cityCode: '410900'
+                  id: '313502001790'
+                  name: 中原银行股份有限公司濮阳中原油田支行
+                - bankCode: '05864910'
+                  cityCode: '411700'
+                  id: '313511011016'
+                  name: 中原银行股份有限公司驻马店文明支行
+                - bankCode: '14045840'
+                  cityCode: '411700'
+                  id: '320511400026'
+                  name: 遂平恒生村镇银行股份有限公司沈寨支行
+                - bankCode: '14045840'
+                  cityCode: '411700'
+                  id: '320511400034'
+                  name: 遂平恒生村镇银行股份有限公司嵖岈山路支行
+                - bankCode: '14045840'
+                  cityCode: '411700'
+                  id: '320511400042'
+                  name: 遂平恒生村镇银行股份有限公司花庄支行
+                - bankCode: '01020000'
+                  cityCode: '410100'
+                  id: '102491022154'
+                  name: 中国工商银行股份有限公司郑州中原万达支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313513280965'
+                  name: 中原银行股份有限公司邓州支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313513400929'
+                  name: 中原银行股份有限公司方城支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313513500864'
+                  name: 中原银行股份有限公司西峡支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313513780919'
+                  name: 中原银行股份有限公司镇平支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313513888083'
+                  name: 中原银行股份有限公司内乡支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313513900875'
+                  name: 中原银行股份有限公司淅川支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313514180995'
+                  name: 中原银行股份有限公司社旗支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313514280900'
+                  name: 中原银行股份有限公司唐河支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313514300985'
+                  name: 中原银行股份有限公司新野支行
+                - bankCode: '05864910'
+                  cityCode: '411300'
+                  id: '313514400017'
+                  name: 中原银行股份有限公司桐柏支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313515200332'
+                  name: 中原银行股份有限公司息县支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313515300309'
+                  name: 中原银行股份有限公司淮滨支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313515500310'
+                  name: 中原银行股份有限公司潢川支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313515600280'
+                  name: 中原银行股份有限公司光山支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313515700342'
+                  name: 中原银行股份有限公司固始支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313515800329'
+                  name: 中原银行股份有限公司商城支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313515900292'
+                  name: 中原银行股份有限公司罗山支行
+                - bankCode: '05864910'
+                  cityCode: '411500'
+                  id: '313516100350'
+                  name: 中原银行股份有限公司新县支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508200331'
+                  name: 中原银行股份有限公司扶沟支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508300344'
+                  name: 中原银行股份有限公司西华支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508400351'
+                  name: 中原银行股份有限公司商水支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508500326'
+                  name: 中原银行股份有限公司太康支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508600312'
+                  name: 中原银行股份有限公司鹿邑支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508700225'
+                  name: 中原银行股份有限公司郸城支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508800291'
+                  name: 中原银行股份有限公司淮阳支行
+                - bankCode: '05864910'
+                  cityCode: '411600'
+                  id: '313508900303'
+                  name: 中原银行股份有限公司沈丘支行
+                - bankCode: '05864910'
+                  cityCode: '411000'
+                  id: '313503321015'
+                  name: 中原银行股份有限公司鄢陵支行
+                - bankCode: '05864910'
+                  cityCode: '411400'
+                  id: '313506200314'
+                  name: 中原银行股份有限公司虞城支行
+                - bankCode: '05864910'
+                  cityCode: '411400'
+                  id: '313506400324'
+                  name: 中原银行股份有限公司民权支行
+                - bankCode: '05864910'
+                  cityCode: '411400'
+                  id: '313506600340'
+                  name: 中原银行股份有限公司睢县支行
+                - bankCode: '05864910'
+                  cityCode: '411400'
+                  id: '313506700352'
+                  name: 中原银行股份有限公司夏邑支行
+                - bankCode: '05864910'
+                  cityCode: '411400'
+                  id: '313506800335'
+                  name: 中原银行股份有限公司柘城支行
+                - bankCode: '05864910'
+                  cityCode: '411400'
+                  id: '313506900300'
+                  name: 中原银行股份有限公司永城支行
+                - bankCode: '05864910'
+                  cityCode: '410900'
+                  id: '313502101989'
+                  name: 中原银行股份有限公司清丰支行
+                - bankCode: '05864910'
+                  cityCode: '410900'
+                  id: '313502300245'
+                  name: 中原银行股份有限公司范县支行
+                - bankCode: '05864910'
+                  cityCode: '410900'
+                  id: '313502400289'
+                  name: 中原银行股份有限公司台前支行
+                - bankCode: '05864910'
+                  cityCode: '410700'
+                  id: '313498271574'
+                  name: 中原银行股份有限公司获嘉支行
+                - bankCode: '05864910'
+                  cityCode: '410700'
+                  id: '313498574405'
+                  name: 中原银行股份有限公司封丘支行
+                - bankCode: '05864910'
+                  cityCode: '410700'
+                  id: '313498773900'
+                  name: 中原银行股份有限公司卫辉支行
+                - bankCode: '05864910'
+                  cityCode: '410700'
+                  id: '313498873807'
+                  name: 中原银行股份有限公司辉县支行
+                - bankCode: '05864910'
+                  cityCode: '410500'
+                  id: '313496400309'
+                  name: 中原银行股份有限公司滑县支行
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | branchBankName can not be null. |参数不能为空 |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            x-examples:
+              example-1:
+                branchBankName: '234'
+            properties:
+              branchBankName:
+                type: string
+                description: 开户银行名称
+          description: ''
+        - type: string
+          in: header
+          name: Authorization
+          required: true
+        - type: string
+          in: header
+          name: LLPAY-Signature
+          required: true
+        - type: string
+          in: header
+          name: Content-Type
+          required: true
+      tags:
+        - 接口
+      description: |-
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/bank-code/search** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/bank-code/search**
+    parameters: []
+  /receipt/download:
+    post:
+      summary: 交易记录回执文件下载
+      operationId: post-receipt-download
+      responses:
+        '200':
+          description: 响应为PDF数据流
+          examples: {}
+          headers: {}
+        '400':
+          description: |-
+            | Code | Message | Description |
+            |------|-------------|-------------|
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+            | 999995 | language can not be null |请求参数不合法 |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: |-
+            | Code | Message |
+            |------|-------------|
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|
+          schema:
+            type: object
+            properties: {}
+      description: |-
+        交易记录回执文件下载接口，响应为PDF数据流
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/receipt/download** </br>
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/receipt/download**
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            x-examples:
+              example-1:
+                extOrderId: fake_data
+                statementType: 49
+                language: 19
+            properties:
+              extOrderId:
+                type: string
+                description: 外部交易单号
+              statementType:
+                type: integer
+                description: 交易类型
+                enum:
+                  - 1
+                example: '1:付款'
+              language:
+                type: integer
+                description: 生成回执文件语言
+                enum:
+                  - 0
+                  - 1
+                example: '0: 中文; 1: 英文'
+                default: 1
+            required:
+              - extOrderId
+              - statementType
+              - language
+          description: ''
+          x-examples:
+            付款交易记录:
+              extOrderId: '202208050314464'
+              statementType: 1
+              language: 0
+        - type: string
+          in: header
+          name: Authorization
+          required: true
+        - type: string
+          in: header
+          name: LLPAY-Signature
+          required: true
+        - type: string
+          in: header
+          name: Content-Type
+          required: true
+      tags:
+        - 接口
+definitions: {}
+basePath: /common/v1
+tags:
+  - name: 接口
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Authorization:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |-
+      LianLian Pay API uses an API key to authenticate requests. To request Lianlian Pay developer account, send the following two information to `fx_support@lianlianpay.com`:
+      <!-- theme: info -->
+      >**developer_name**
+      >
+      >**developer_public_key**
+
+      After process, Lianlian Pay will replay with:
+      <!-- theme: info -->
+      >**developer_master_token** - api authentication
+      >
+      >**developer_refresh_token** - refresh developer master token, valid for a year. Can be updated by sending request to `fx_support@lianlianpay.com`
+      >
+      >**LianlianPay_public_key**
+
+      The `Authorization` header must be included in all requests with the following format:
+
+      ```
+      Authorization: Basic {master_token}
+      ```
+  LLPAY-Signature:
+    type: apiKey
+    name: LLPAY-Signature
+    in: header
+    description: |
+      The LLPAY-Signature header contains a timestamp and one signature. The timestamp is prefixed by t=, and each signature is prefixed by a scheme. Schemes start with v, potentially followed by an integer.
+
+      ```
+      LLPAY-Signature: t=1492774577, v=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+      ```
+
+      Note that newlines have been added in the example above for clarity, but a real LLPAY-Signature header will be all one line.
+
+      Lianlian Pay and clients shall exchange each party’s public key.  The LLPAY-Signature will be signed by with the RSA private key.
+
+      **Step 1:** Determine the signature payload
+
+      Create a `payload` string with the following formula:
+
+      **HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD[&QUERY_STRING]**
+
+      * HTTP_METHOD: The actual method defined for specific API endpoint `POST`
+      * URI: The request's URL Path, such as `/profiles/{profileId}`
+      * REQUEST_EPOCH: The seconds elapsed since 1970/1/1 00:00:00 GMT, same as value of `t`
+      * REQUEST_PAYLOAD: The contents of request body in JSON format. 
+      * QUERY_STRING: The query string of the URL, URL Encoded, such as `attr1%3Dvalue1%26attr2%3Dvalue2`
+
+      <!-- theme: info -->
+      >Case 1: QUERY_STRING is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD
+      >
+      >---
+      >Case 2: REQUEST_PAYLOAD is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&&QUERY_STRING
+      >
+      >---
+      >Case 3: REQUEST_PAYLOAD and QUERY_STRING both are empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&
+
+
+      Put typical GET and POST examples here.
+
+      Example POST `payload`:
+      ```
+      POST&/kyc/v1/profiles&19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      Example GET `payload`:
+      ```
+      GET&/events/v1&19879234&&status%3DMAXIMUM_RETRIES_REACHED
+      ```
+
+
+
+      **Step 2:** Prepare the `LLPAY-Signature` string
+
+      Achieve this by concatenating:
+      * The timestamp (Seconds elapsed since 1970/1/1 00:00:00 GMT as a string)
+      * Use your RSA private key and calculate the string `BASE64(RSAwithSHA256(STEP_1_RESULT)))` from Step 1
+
+      ### Result Signature
+
+      LianLian Pay result headers also contain the `LLPAY-Signature` header as described above but signed with Lianlian Pay's private RSA key.  You may verify the signature corresponds to the Result body by calculating the signature and comparing it to the unencrypted version of `LLPAY-Signature` using the Lianlian Pay's public RSA key.  Here are the steps:
+
+      **Step 1:** Determine the signature `payload`
+
+      Create a `payload` string which is the following separated by `&`
+
+      * Response Timestamp: Extract t from LLPay-Signature and use it as timestamp
+      * Response Payload: The contents of response body in JSON format
+
+      Example `payload`:
+      ```
+      19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      **Step 2:** Use RSA Verify to compare signatures
+
+      Compare the LLPay-Signature received with the `payload` calculated in Step 1 using the Lianlian Pay's Public Key using the following algorithm:
+
+      ```
+      RSA.verify( LLPAY-Signature, 
+                  '19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}', 
+                  Lianlian Pay Public Key )
+      ```
+security:
+  - authorization: []
+  - llpay-signature: []

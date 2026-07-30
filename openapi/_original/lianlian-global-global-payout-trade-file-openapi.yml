@@ -1,0 +1,729 @@
+swagger: '2.0'
+info:
+  title: tradefile
+  version: '1.0'
+  description: ''
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /tradefile:
+    post:
+      summary: Create Trade File
+      operationId: post-tradefile
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/trade-file'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 156005 | The Payee does not exist |
+            | 156006| Payee verification failed |
+            | 156007| Payee verification processing|
+            | 158001 | tradeFileId duplicate |
+            | 158002 | trade file number over limit |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - tradeFileId
+              - tradeOrderId
+              - transactionId
+              - payeeId
+              - payerName
+              - payerCountryCode
+              - tradeType
+              - tradeTime
+              - tradeCurrency
+              - tradeAmount
+              - tradeName
+              - tradeCount
+            properties:
+              tradeFileId:
+                type: string
+                description: Unique Trade File ID in Merchant's System
+                maxLength: 32
+              tradeOrderId:
+                type: string
+                description: Order/Contract/Invoice reference number
+                maxLength: 64
+              transactionId:
+                type: string
+                maxLength: 32
+                description: Unique Transaction ID From Merchant's System that refers to this trade file
+              payeeId:
+                type: string
+                description: Unique Payee ID in Merchant's System
+                maxLength: 32
+              payerName:
+                type: string
+                maxLength: 64
+                description: 'Name of the Payer, corporate name or name of an individual'
+              payerCountryCode:
+                type: string
+                description: 'Residence country/region code of payer, referring to column “code” in Appendix Country Code'
+                minLength: 3
+                maxLength: 3
+              tradePlatformName:
+                type: string
+                description: |-
+                  Platform on which the transaction took place,
+                  Mandatory if trade code is 122030
+                maxLength: 128
+              tradePlatformCountry:
+                type: string
+                description: Platform Country on which the transaction took place
+                maxLength: 128
+              tradePaymentChannel:
+                type: string
+                description: Payment Channel used for the transaction
+                maxLength: 128
+              tradeType:
+                type: string
+                description: |-
+                  Trade Type, one of 
+
+                  |Code|Description|
+                  |---|---|
+                  |0|Goods|
+                  |1|Services|
+                enum:
+                  - 0
+                  - 1
+              tradeTime:
+                type: string
+                description: Trade Time
+                maxLength: 25
+              tradeCurrency:
+                type: string
+                description: Trade Currency
+                minLength: 3
+                maxLength: 3
+              tradeAmount:
+                type: string
+                description: Trade Amount
+                maxLength: 10
+              tradeName:
+                type: string
+                description: |
+                  Trade Name
+
+                  |TradeType|Description|
+                  |---|---|
+                  |0|Name of goods|
+                  |1|Type of service, referring to column “Type of Service” of Appendix Requirement for Service Details of Service Trade|
+                maxLength: 512
+              tradeCount:
+                type: string
+                description: |
+                  Trade Count
+
+                  |TradeType|Description|
+                  |---|---|
+                  |0|Quantity of goods|
+                  |1|Quantiry of service|
+                maxLength: 64
+              goodsCarrier:
+                type: string
+                description: 'Carrier for goods trade, mandatory if tradeType=0'
+                maxLength: 512
+              serviceDetail:
+                type: string
+                description: 'Details of service provided, mandatory if tradeType=1'
+                maxLength: 512
+              serviceTime:
+                type: string
+                description: 'Time of service provided, mandatory if tradeType=1'
+                maxLength: 25
+              tradeCode:
+                type: string
+                description: 'Code for trade type, referring to the Appendix Trade Code'
+                maxLength: 8
+              attachment:
+                type: string
+                description: |-
+                  Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most.
+                  Sample：2018072227039320,2018072227039320
+                maxLength: 256
+              additionalInfo:
+                type: object
+                description: Addition info related to this trade file
+                properties:
+                  isInstallment:
+                    type: boolean
+                    description: Wether the order is installed
+                  isFinalPay:
+                    type: boolean
+                    description: Wether the payment is final pay or not
+                  totalOrderAmount:
+                    type: string
+                    description: 'If installments are involved, enter the total amount of the order'
+              eduInfo:
+                $ref: '#/definitions/edu-info'
+              hsCode:
+                type: string
+                x-stoplight:
+                  id: ovikuzdpumi72
+                description: HS Code
+          description: ''
+      tags:
+        - Operations
+      description: |-
+        Create Trade File request
+
+        Interface Maximum Concurrency：300
+  '/tradefile/{tradeFileId}':
+    parameters:
+      - type: string
+        name: tradeFileId
+        in: path
+        required: true
+        description: Unique Trade File ID in Merchant's System
+        maxLength: 32
+    get:
+      summary: Get Trade File Info
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/trade-file'
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties: {}
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: ''
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-tradefile-tradeFileId
+      description: |-
+        Get Trade File Info Request, `trade-file` object will be returned
+
+        Interface Maximum Concurrency：300
+  /underlytradefile:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+        '400':
+          description: ''
+        '500':
+          description: ''
+      summary: Create Underlying Trade File
+      tags:
+        - Operations
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Underlying Trade File
+            type: object
+            description: Underlying Trade File info record object in Lianlian Pay's system
+            x-tags:
+              - Models
+            properties:
+              underlyTradeFileId:
+                type: string
+                description: Underlying Trade File ID
+              tradeFileId:
+                type: string
+                description: Unique Trade File ID in Merchant's System
+                maxLength: 64
+              payeeId:
+                type: string
+                description: Unique Payee ID in Merchant's System
+                maxLength: 64
+              payerId:
+                type: string
+                description: Payer ID in Merchant's System
+                maxLength: 64
+              payerName:
+                type: string
+                maxLength: 64
+                description: 'Name of the Payer, corporate name or name of an individual'
+              payerCountryCode:
+                type: string
+                description: 'Residence country/region code of payer, referring to column “code” in Appendix Country Code'
+                minLength: 3
+                maxLength: 3
+              tradeType:
+                type: string
+                description: |-
+                  Trade Type, one of 
+
+                  |Code|Description|
+                  |---|---|
+                  |0|Goods|
+                  |1|Services|
+                enum:
+                  - 0
+                  - 1
+              tradeTime:
+                type: string
+                description: Trade Time
+                maxLength: 25
+              tradeCurrency:
+                type: string
+                description: Trade Currency
+                minLength: 3
+                maxLength: 3
+              tradeAmount:
+                type: string
+                description: Trade Amount
+                maxLength: 10
+              tradeName:
+                type: string
+                description: |
+                  Trade Name
+
+                  |TradeType|Description|
+                  |---|---|
+                  |0|Name of goods|
+                  |1|Type of service, referring to column “Type of Service” of Appendix Requirement for Service Details of Service Trade|
+                maxLength: 512
+              tradeCount:
+                type: string
+                description: |
+                  Trade Count
+
+                  |TradeType|Description|
+                  |---|---|
+                  |0|Quantity of goods|
+                  |1|Quantiry of service|
+                maxLength: 64
+              goodsCarrier:
+                type: string
+                description: Carrier for goods trade
+                maxLength: 512
+              serviceDetail:
+                type: string
+                description: Details of service provided
+                maxLength: 512
+              serviceTime:
+                type: string
+                description: Time of service provided
+                maxLength: 25
+              attachment:
+                type: string
+                description: |-
+                  Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most.
+                  Sample：2018072227039320,2018072227039320
+                maxLength: 256
+            required:
+              - underlyTradeFileId
+              - tradeFileId
+              - payeeId
+              - payerId
+              - payerName
+              - payerCountryCode
+              - tradeType
+              - tradeTime
+              - tradeCurrency
+              - tradeAmount
+              - tradeName
+              - tradeCount
+  '/underlytradefile/{underlyTradeFileId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+        '404':
+          description: ''
+        '500':
+          description: ''
+      summary: Get Underlying Trade File
+      tags:
+        - Operations
+      produces:
+        - application/json
+      consumes:
+        - application/json
+    parameters:
+      - name: underlyTradeFileId
+        in: path
+        type: string
+        required: true
+definitions:
+  trade-file:
+    title: Trade File
+    type: object
+    description: Trade File info record object in Lianlian Pay's system
+    x-tags:
+      - Models
+    required:
+      - tradeFileId
+      - tradeOrderId
+      - transactionId
+      - payeeId
+      - payerName
+      - payerCountryCode
+      - tradeType
+      - tradeTime
+      - tradeCurrency
+      - tradeAmount
+      - tradeName
+      - tradeCount
+    properties:
+      tradeFileId:
+        type: string
+        description: Unique Trade File ID in Merchant's System
+        maxLength: 32
+      tradeOrderId:
+        type: string
+        description: Order/Contract/Invoice reference number
+        maxLength: 64
+      transactionId:
+        type: string
+        maxLength: 32
+        description: Unique Transaction ID From Merchant's System that refers to this trade file
+      payeeId:
+        type: string
+        description: Unique Payee ID in Merchant's System
+        maxLength: 32
+      payerName:
+        type: string
+        maxLength: 64
+        description: 'Name of the Payer, corporate name or name of an individual'
+      payerCountryCode:
+        type: string
+        description: 'Residence country/region code of payer, referring to column “code” in Appendix Country Code'
+        minLength: 3
+        maxLength: 3
+      tradePlatformName:
+        type: string
+        description: |-
+          Platform on which the transaction took place,
+          Mandatory if trade code is 122030
+        maxLength: 128
+      tradePlatformCountry:
+        type: string
+        description: Platform Country on which the transaction took place
+        maxLength: 128
+      tradePaymentChannel:
+        type: string
+        description: Payment Channel used for the transaction
+        maxLength: 128
+      tradeType:
+        type: string
+        description: |-
+          Trade Type, one of 
+
+          |Code|Description|
+          |---|---|
+          |0|Goods|
+          |1|Services|
+        enum:
+          - 0
+          - 1
+      tradeTime:
+        type: string
+        description: Trade Time
+        maxLength: 25
+      tradeCurrency:
+        type: string
+        description: Trade Currency
+        minLength: 3
+        maxLength: 3
+      tradeAmount:
+        type: string
+        description: Trade Amount
+        maxLength: 10
+      tradeName:
+        type: string
+        description: |
+          Trade Name
+
+          |TradeType|Description|
+          |---|---|
+          |0|Name of goods|
+          |1|Type of service, referring to column “Type of Service” of Appendix Requirement for Service Details of Service Trade|
+        maxLength: 512
+      tradeCount:
+        type: string
+        description: |
+          Trade Count
+
+          |TradeType|Description|
+          |---|---|
+          |0|Quantity of goods|
+          |1|Quantiry of service|
+        maxLength: 64
+      goodsCarrier:
+        type: string
+        description: 'Carrier for goods trade, mandatory if tradeType=0'
+        maxLength: 512
+      serviceDetail:
+        type: string
+        description: Details of service provided
+        maxLength: 512
+      serviceTime:
+        type: string
+        description: Time of service provided
+        maxLength: 25
+      tradeCode:
+        type: string
+        description: 'Code for trade type, referring to the Appendix Trade Code'
+        maxLength: 8
+      attachment:
+        type: string
+        description: |-
+          Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most.
+          Sample：2018072227039320,2018072227039320
+        maxLength: 256
+      status:
+        type: string
+        description: |-
+          Status, one of 
+
+          |Code|Description|
+          |----|-----|
+          |Processing|processing|
+          |Successed|audit successed|
+          |Failed|audit failed|
+      failedReason:
+        type: string
+        description: Failed Reason
+        maxLength: 128
+      additionalInfo:
+        type: object
+        description: Addition info related to this trade file
+        properties:
+          isInstallment:
+            type: boolean
+            description: Wether the order is installed
+          isFinalPay:
+            type: boolean
+            description: Wether the payment is final pay or not
+          totalOrderAmount:
+            type: string
+            description: 'If installments are involved, enter the total amount of the order'
+      eduInfo:
+        $ref: '#/definitions/edu-info'
+      hsCode:
+        type: string
+        x-stoplight:
+          id: uf66oceq60k30
+        description: HS Code
+  Underlying-trade-file:
+    title: Underlying Trade File
+    type: object
+    description: Underlying Trade File info record object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      underlyTradeFileId:
+        type: string
+        description: Underlying Trade File ID
+      tradeFileId:
+        type: string
+        description: Unique Trade File ID in Merchant's System
+        maxLength: 64
+      payeeId:
+        type: string
+        description: Unique Payee ID in Merchant's System
+        maxLength: 64
+      payerId:
+        type: string
+        description: Payer ID in Merchant's System
+        maxLength: 64
+      payerName:
+        type: string
+        maxLength: 64
+        description: 'Name of the Payer, corporate name or name of an individual'
+      payerCountryCode:
+        type: string
+        description: 'Residence country/region code of payer, referring to column “code” in Appendix Country Code'
+        minLength: 3
+        maxLength: 3
+      tradeType:
+        type: string
+        description: |-
+          Trade Type, one of 
+
+          |Code|Description|
+          |---|---|
+          |0|Goods|
+          |1|Services|
+        enum:
+          - 0
+          - 1
+      tradeTime:
+        type: string
+        description: Trade Time
+        maxLength: 25
+      tradeCurrency:
+        type: string
+        description: Trade Currency
+        minLength: 3
+        maxLength: 3
+      tradeAmount:
+        type: string
+        description: Trade Amount
+        maxLength: 10
+      tradeName:
+        type: string
+        description: |
+          Trade Name
+
+          |TradeType|Description|
+          |---|---|
+          |0|Name of goods|
+          |1|Type of service, referring to column “Type of Service” of Appendix Requirement for Service Details of Service Trade|
+        maxLength: 512
+      tradeCount:
+        type: string
+        description: |
+          Trade Count
+
+          |TradeType|Description|
+          |---|---|
+          |0|Quantity of goods|
+          |1|Quantiry of service|
+        maxLength: 64
+      goodsCarrier:
+        type: string
+        description: Carrier for goods trade
+        maxLength: 512
+      serviceDetail:
+        type: string
+        description: Details of service provided
+        maxLength: 512
+      serviceTime:
+        type: string
+        description: Time of service provided
+        maxLength: 25
+      attachment:
+        type: string
+        description: |-
+          Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most.
+          Sample：2018072227039320,2018072227039320
+        maxLength: 256
+      status:
+        type: string
+        description: |-
+          Status, one of 
+
+          |Code|Description|
+          |----|-----|
+          |Processing|processing|
+          |Successed|audit successed|
+          |Failed|audit failed|
+      failedReason:
+        type: string
+        description: Failed Reason
+        maxLength: 128
+    required:
+      - tradeFileId
+      - payeeId
+      - payerId
+      - payerName
+      - payerCountryCode
+      - tradeType
+      - tradeTime
+      - tradeCurrency
+      - tradeAmount
+      - tradeName
+      - tradeCount
+  edu-info:
+    title: edu-info
+    x-stoplight:
+      id: 143jsr4j6f6u9
+    type: object
+    x-internal: false
+    description: |-
+      Educational payment trade material model.It is required when tradeCode in "223022", "223021", "229030"
+      Trade Code, one of 
+      |Code|Description|
+      |---|----|
+      |223022|Study Abroad Related|
+      |223021|Going Abroad for medical treatment|
+      |229030|Telemedicine|
+    properties:
+      beneficiaryName:
+        type: string
+        x-stoplight:
+          id: c07yobyc0ms5m
+        description: 'The payee or an individual or enterprise related to the payee.For example, schools, educational institutions, etc'
+      beneficiaryIdNo:
+        type: string
+        x-stoplight:
+          id: 9s32mkszdgmja
+        description: beneficiary IdNo
+      beneficiaryAddress:
+        type: string
+        x-stoplight:
+          id: izha60mqwtra8
+        description: 'beneficiary address '
+      relationship:
+        type: string
+        x-stoplight:
+          id: razmoh4z3to2g
+        description: "Payee and beneficiary relationship, one of:\r\n\r\nIf payee type is \"INDIVIDUAL\"\r\n\r\n| value | description |\r\n|--------|-------------|\r\n|SELF| payee is beneficiary |\r\n|FAMILY| Payee is the family member of beneficiary|\r\n|IMMEDIATE FAMILY| Parents, children, spouse|\r\n|OTHER RELATIVES|Any relative other than \"Parents, children, spouse\"|\r\n|FRIEND|Friends|\r\n|OTHER |other relationship|\r\n\r\nIf payee type is \"CORPORATE\" \r\n\r\n| value | description |\r\n|--------|-------------|\r\n|ORGANIZATION|The company/school to which the student belongs|\r\n|INTERMEDIARY|Student commissioned agency|\r\n|OTHER |other relationship|"
+      tradeBackground:
+        type: string
+        x-stoplight:
+          id: fdaun4tc460s7
+        description: "trade background, one of\r\n\r\n|Code|Description|\r\n|----|----|\r\n|GLOBAL_TUITION|tuition fee|"
+      directToBeneficiary:
+        type: string
+        x-stoplight:
+          id: wg722ljuc4o3a
+        description: "Whether the fee is paid directly to the beneficiary, one of \r\n\r\n|Code|Description|\r\n|----|-----|\r\n|N|N0|\r\n|Y|YES|"
+      payChannel:
+        type: string
+        x-stoplight:
+          id: cmvj652225dvj
+        description: Payment channel， mandatory if `directToBeneficiary = N`
+    required:
+      - beneficiaryName
+      - relationship
+      - tradeBackground
+    x-tags:
+      - Models
+basePath: /global/payout/v1
+tags:
+  - name: Operations

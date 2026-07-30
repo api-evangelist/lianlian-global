@@ -1,0 +1,383 @@
+swagger: '2.0'
+info:
+  title: Transaction
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /transaction:
+    post:
+      summary: Create a transaction
+      operationId: post-transaction
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/transaction'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 156005| The payeeId does not exist |
+            | 156006| Payee verification failed |
+            | 156007| Payee verification processing |
+            | 159001| Duplicate transactionId |
+            | 159002| payeeBankAccount is not supported |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Transaction
+            type: object
+            description: Transaction info record object in Lianlian Pay's system
+            x-tags:
+              - Models
+            properties:
+              transactionId:
+                type: string
+                description: Unique Transaction ID From Merchant's System
+                maxLength: 32
+              pricingCurrency:
+                type: string
+                description: Pricing Currency
+                minLength: 3
+                maxLength: 3
+              sourceCurrency:
+                type: string
+                description: Orginal Currency
+                minLength: 3
+                maxLength: 3
+              sourceAmount:
+                type: string
+                description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+                maxLength: 10
+              targetCurrency:
+                type: string
+                description: Distribute Currency
+                minLength: 3
+                maxLength: 3
+              targetAmount:
+                type: string
+                description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+                maxLength: 10
+              rateId:
+                type: string
+                description: 'Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Create LockFX Rate` API.'
+              payeeId:
+                type: string
+                description: Unique Payee ID in Merchant's Syetem
+                maxLength: 64
+              payeeName:
+                type: string
+                description: Payee Name
+              payeeType:
+                type: string
+                description: |-
+                  Payee Type, one of
+
+                  |Code|Description|
+                  |----|-----|
+                  |INDIVIDUAL|individual payee|
+                  |CORPORATE|corporate payee|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+                maxLength: 16
+              payeeCountryCode:
+                type: string
+                description: 'Payee''s country code,referring to column “code” in Appendix Country Code'
+              bankAccountNumber:
+                type: string
+                maxLength: 64
+                description: Payee Bank Account Number
+              bankCountryCode:
+                type: string
+                description: 'Bank Country Code, referring to column “code” in Appendix Country Code'
+                enum:
+                  - CHN
+                  - HKG
+                  - NZL
+                  - JPN
+                  - USA
+                  - FRA
+                  - GBR
+                  - AUS
+                  - KOR
+                  - THA
+                  - DEU
+                  - ESP
+                minLength: 3
+              paymentMethod:
+                type: string
+                description: |-
+                  Payment methods, mandatory if `targetCurrency` ≠ `CNY` , one of 
+
+                  |Code|Description|
+                  |----|----|
+                  |SWIFT|payment through swift|
+                  |LOCAL|payment through local method|
+                enum:
+                  - SWIFT
+                  - LOCAL
+              accountRoutingType:
+                type: string
+                description: |-
+                  Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of 
+                  |Code|Description|
+                  |---|---|
+                  |ABA|USA local payment routing number|
+                enum:
+                  - ABA
+                maxLength: 16
+              routingNumber:
+                type: string
+                description: 'Routing number, mandatory if `paymentMethod` = `LOCAL`'
+                maxLength: 32
+              swiftCode:
+                type: string
+                description: 'Bank swift code, mandatory if `targetCurrency` ≠ `CNY`'
+                maxLength: 11
+              bankName:
+                type: string
+                description: Bank name of payee's bank account
+                maxLength: 64
+              rfb:
+                type: string
+                description: Reference for Beneficiary
+                maxLength: 40
+            required:
+              - transactionId
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+              - bankAccountNumber
+              - bankCountryCode
+              - bankName
+          description: ''
+      description: |-
+        Create transaction request, result will be return via webhook. Merchant can also use `Get Transaction Info` API to retrieve coresponding request results.
+
+        Interface Maximum Concurrency：300
+      tags:
+        - Operations
+  '/transaction/{transactionId}':
+    parameters:
+      - type: string
+        name: transactionId
+        in: path
+        required: true
+        description: Unique Transaction ID From Merchant's System
+        maxLength: 32
+    get:
+      summary: Get Transaction Info
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/transaction'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-transaction-transactionId
+      description: |-
+        Get Transaction Info Request, `transaction` object will be returned
+
+        Interface Maximum Concurrency：300
+definitions:
+  transaction:
+    title: Transaction
+    type: object
+    description: Transaction info record object in Lianlian Pay's system
+    x-tags:
+      - Models
+    properties:
+      transactionId:
+        type: string
+        description: Unique Transaction ID From Merchant's System
+        maxLength: 32
+      pricingCurrency:
+        type: string
+        description: Pricing Currency
+        minLength: 3
+        maxLength: 3
+      sourceCurrency:
+        type: string
+        description: Orginal Currency
+        minLength: 3
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: 'Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`'
+        maxLength: 10
+      targetCurrency:
+        type: string
+        description: Distribute Currency
+        minLength: 3
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: 'Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`'
+        maxLength: 10
+      rateId:
+        type: string
+        description: 'Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Create LockFX Rate` API.'
+      rate:
+        type: string
+        description: FX rate
+        maxLength: 16
+      refundCurrency:
+        type: string
+        description: Refund Currency
+        minLength: 3
+        maxLength: 3
+      refundAmount:
+        type: string
+        description: Refund Amount
+        maxLength: 10
+      payeeId:
+        type: string
+        description: Unique Payee ID in Merchant's Syetem
+        maxLength: 32
+      payeeName:
+        type: string
+        description: Payee Name
+      payeeType:
+        type: string
+        description: |-
+          Payee Type, one of
+
+          |Code|Description|
+          |----|-----|
+          |INDIVIDUAL|individual payee|
+          |CORPORATE|corporate payee|
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+        maxLength: 16
+      payeeCountryCode:
+        type: string
+        description: 'Payee''s country code,referring to column “code” in Appendix Country Code'
+      bankAccountNumber:
+        type: string
+        maxLength: 64
+        description: Payee Bank Account Number
+      bankCountryCode:
+        type: string
+        description: 'Bank Country Code, referring to column “code” in Appendix Country Code'
+        enum:
+          - CHN
+          - HKG
+          - NZL
+          - JPN
+          - USA
+          - FRA
+          - GBR
+          - AUS
+          - KOR
+          - THA
+          - DEU
+          - ESP
+        minLength: 3
+      paymentMethod:
+        type: string
+        description: |-
+          Payment methods, mandatory if `targetCurrency` ≠ `CNY` , one of 
+
+          |Code|Description|
+          |----|----|
+          |SWIFT|payment through swift|
+          |LOCAL|payment through local method|
+        enum:
+          - SWIFT
+          - LOCAL
+      accountRoutingType:
+        type: string
+        description: |-
+          Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of 
+          |Code|Description|
+          |---|---|
+          |ABA|USA local payment routing number|
+        enum:
+          - ABA
+        maxLength: 16
+      routingNumber:
+        type: string
+        description: 'Routing number, mandatory if `paymentMethod` = `LOCAL`'
+        maxLength: 32
+      swiftCode:
+        type: string
+        description: 'Bank swift code, mandatory if `targetCurrency` ≠ `CNY`'
+        maxLength: 11
+      bankName:
+        type: string
+        description: Bank name of payee's bank account
+        maxLength: 64
+      rfb:
+        type: string
+        description: Reference for Beneficiary
+        maxLength: 40
+      status:
+        type: string
+        description: |
+          Transaction Status, one of
+          |Code|Description|
+          |---|---|
+          |Processing|Transaction Under Processing|
+          |Failed|Transaction Failed|
+          |Successed|Transaction Success|
+          |Hedged|Transaction failed after Success|
+        enum:
+          - Processing
+          - Failed
+          - Successed
+          - Hedged
+        maxLength: 64
+      failedReason:
+        type: string
+        maxLength: 256
+        description: Failed Reason
+    required:
+      - transactionId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - bankAccountNumber
+      - bankCountryCode
+      - bankName
+      - status
+basePath: /global/payout/v1

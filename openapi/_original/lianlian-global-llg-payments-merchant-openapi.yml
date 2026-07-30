@@ -1,0 +1,277 @@
+swagger: '2.0'
+info:
+  title: Merchant API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: |
+    Production Endpoint - global-api.lianlianpay.com/payments/v2  <br>
+    Sandbox Endpoint - global-api-sandbox.lianlianpay-inc.com/payments/v2
+    test
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /merchants:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/merchant-model'
+        '400':
+          description: |-
+            Codes:
+
+            | Code | Description |Client Action | LianLian Action |
+            |------|------------|---------|---------|
+            |999995 | Invalid Parameter |Client updates request body values according to error code returned by Lianlian.|Waits for a new request |
+          schema:
+            $ref: ./error.oas2.yml#/definitions/error-model
+      description: |-
+        Starts asynchronous process of registering a new merchant with LianLian.  
+
+        On successful return, if `registration_complete` is `false`, platform shall use `registration_url` to redirect the merchant to in order to begin the LianLian Registration Experience.  
+
+        When registration is successfully completed the merchant will be redirected to the passed in `redirect_url`
+      summary: Start New Merchant Registration
+      operationId: create-merchant
+      tags:
+        - Operations
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              store_name:
+                type: string
+                description: Store name as known by the calling platform
+              redirect_url:
+                type: string
+                description: 'URL Lianlian will redirect to at the end of a successful registration process.  '
+              shop_url:
+                type: string
+                description: shop_url is required if it can’t be algorithmically produced from merchant_client_id
+              merchant_client_id:
+                type: string
+                description: '**Unique identity ID** for a specific seller on e-commerce platform'
+              note:
+                type: string
+                description: Note to be used by customer support if needed
+            required:
+              - redirect_url
+              - merchant_client_id
+  '/merchants/merchant_client_id/{merchant_client_id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/merchant-model'
+        '404':
+          description: |
+            "message":"Resource not found." 
+            The merchant client ID is not existed in the system.
+      summary: Get Merchant
+      description: Get information about the merchant - in particular their status on the LianLian platform.
+      operationId: get-merchant
+      tags:
+        - Operations
+    parameters:
+      - name: merchant_client_id
+        in: path
+        type: string
+        required: true
+definitions:
+  merchant-model:
+    type: object
+    title: Merchant Object
+    description: Merchant object today focused on registration status
+    properties:
+      id:
+        type: string
+        description: |-
+          LianLian payee_account_id.
+
+          Non-existant if `registration_complete` is false.
+      merchant_client_id:
+        type: string
+        description: '**Unique identity ID** for a specific seller on e-commerce platform'
+      login_id:
+        type: string
+        description: 'Merchant''s login ID at LianLian Global, could be mobile number or email.'
+      status:
+        type: string
+        description: |-
+          State of merchant registration process.  Will be NULL for brand new merchant that hasn't started registration process.
+
+          In the send payment to merchant scenario, the sub-status will help to instruct the send payment actions:
+          - Ongoing, can initiate send payment, but due to the account is still ongoing the completion, the payment will not be arrived immediately
+          - Success, payment will be arrived immediately
+          - Blocked, merchant has been stopped receiving payments
+
+
+          One of:
+
+          | Value | Description |
+          |--------|------------|
+          | ongoing | Merchant information is incomplete|
+          | success | Merchant status is active |
+          | blocked | Merchant account is not availbale to be used |
+        enum:
+          - ongoing
+          - success
+          - blocked
+      registration_url:
+        type: string
+        description: |-
+          URL to redirect merchant to in order to start registration on LianLian platform. 
+          1) Valid for 30 minutes. Platform needs to call this interface again to get a new registration_url if merchant didn't complete registration with previous one within 30 mins.
+          2) Non-existent if `registration_complete` is true.
+      store_name:
+        type: string
+        description: Store name as known by the calling platform
+      shop_url:
+        type: string
+        description: URL of Merchant's shop.  For some clients this URL is auto-generated from `client_id`
+      'append_info ':
+        type: string
+        description: Additional information
+      note:
+        type: string
+        description: Human readable description of Merchant
+      registration_complete:
+        type: boolean
+        description: |-
+          State of merchant registration process.  One of:
+
+          | Value | Description |
+          |--------|------------|
+          | true| Merchant registration complete |
+          | false| Merchant registration not complete yet |
+    required:
+      - merchant_client_id
+      - status
+      - registration_complete
+tags:
+  - name: Operations
+securityDefinitions:
+  authorization:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |-
+      LianLian Pay API uses an API key to authenticate requests. To request Lianlian Pay developer account, send the following two information to `fx_support@lianlianpay.com`:
+      <!-- theme: info -->
+      >**developer_name**
+      >
+      >**developer_public_key**
+
+      After process, Lianlian Pay will replay with:
+      <!-- theme: info -->
+      >**developer_master_token** - api authentication
+      >
+      >**LianlianPay_public_key**
+
+      The `Authorization` header must be included in all requests with the following format:
+
+      ```
+      Authorization: Basic {master_token}
+      ```
+  llp-signature:
+    type: apiKey
+    name: LLPAY-Signature
+    in: header
+    description: |
+      The LLPAY-Signature header contains a timestamp and one signature. The timestamp is prefixed by t=, and each signature is prefixed by a scheme. Schemes start with v, potentially followed by an integer.
+
+      ```
+      LLPAY-Signature: t=1492774577, v=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd
+      ```
+
+      Note that newlines have been added in the example above for clarity, but a real LLPAY-Signature header will be all one line.
+
+      Lianlian Pay and clients shall exchange each party’s public key.  The LLPAY-Signature will be signed by with the RSA private key.
+
+      **Step 1:** Determine the signature payload
+
+      Create a `payload` string with the following formula:
+
+      **HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD[&QUERY_STRING]**
+
+      * HTTP_METHOD: The actual method defined for specific API endpoint `POST`
+      * URI: The request's URL Path, such as `/profiles/{profileId}`
+      * REQUEST_EPOCH: The seconds elapsed since 1970/1/1 00:00:00 GMT, same as value of `t`
+      * REQUEST_PAYLOAD: The contents of request body in JSON format. 
+      * QUERY_STRING: The query string of the URL, URL Encoded, such as `attr1%3Dvalue1%26attr2%3Dvalue2`
+
+      <!-- theme: info -->
+      >Case 1: QUERY_STRING is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD
+      >
+      >---
+      >Case 2: REQUEST_PAYLOAD is empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&&QUERY_STRING
+      >
+      >---
+      >Case 3: REQUEST_PAYLOAD and QUERY_STRING both are empty:
+      >
+      >**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&
+
+
+      Put typical GET and POST examples here.
+
+      Example POST `payload`:
+      ```
+      POST&/kyc/v1/profiles&19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      Example GET `payload`:
+      ```
+      GET&/events/v1&19879234&&status%3DMAXIMUM_RETRIES_REACHED
+      ```
+
+
+
+      **Step 2:** Prepare the `LLPAY-Signature` string
+
+      Achieve this by concatenating:
+      * The timestamp (Seconds elapsed since 1970/1/1 00:00:00 GMT as a string)
+      * Use your RSA private key and calculate the string `BASE64(RSAwithSHA256(STEP_1_RESULT)))` from Step 1
+
+      ### Result Signature
+
+      LianLian Pay result headers also contain the `LLPAY-Signature` header as described above but signed with Lianlian Pay's private RSA key.  You may verify the signature corresponds to the Result body by calculating the signature and comparing it to the unencrypted version of `LLPAY-Signature` using the Lianlian Pay's public RSA key.  Here are the steps:
+
+      **Step 1:** Determine the signature `payload`
+
+      Create a `payload` string which is the following separated by `&`
+
+      * Response Timestamp: Extract t from LLPay-Signature and use it as timestamp
+      * Response Payload: The contents of response body in JSON format
+
+      Example `payload`:
+      ```
+      19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}
+      ```
+
+      **Step 2:** Use RSA Verify to compare signatures
+
+      Compare the LLPay-Signature received with the `payload` calculated in Step 1 using the Lianlian Pay's Public Key using the following algorithm:
+
+      ```
+      RSA.verify( LLPAY-Signature, 
+                  '19879234&{"profileId":"string","countryOfOrigin":"CN","type":"COMPANY","email":"abc@xyz.com","mobile":"string","indicator":"string","kyc":{"name":"string","idNumber":"string","idFrontCopy":"string","idBackCopy":"string","address":{"lineOne":"string","lineTwo":"string","city":"string","province":"string","region":"string","postalCode":"string"}}}', 
+                  Lianlian Pay Public Key )
+      ```
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+security:
+  - authorization: []
+  - llp-signature: []
+basePath: /payments/v2

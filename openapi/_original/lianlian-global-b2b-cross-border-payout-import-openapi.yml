@@ -1,0 +1,302 @@
+swagger: '2.0'
+info:
+  title: Payout API
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /payout:
+    post:
+      summary: 提交分发指令
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            title: 分发
+            description: 连连侧分发指令对象
+            properties:
+              payoutId:
+                type: string
+                description: 商户侧分发指令唯一编号
+                maxLength: 64
+              tradeFileInfo:
+                type: array
+                description: 平台侧订单信息
+                items:
+                  type: object
+                  properties:
+                    tradeFileId:
+                      type: string
+                      description: 平台侧订单唯一编号
+                      maxLength: 64
+              pricingCurrency:
+                type: string
+                description: 定价币种，参考附录币种代码
+                minLength: 3
+                maxLength: 3
+              sourceCurrency:
+                type: string
+                description: 源币种，默认为CNY
+                minLength: 3
+                maxLength: 3
+              sourceAmount:
+                type: string
+                description: 源币种金额，若 pricingCurrency = sourceCurrency，则该字段必填
+                maxLength: 10
+              targetCurrency:
+                type: string
+                description: 目的币种，请参考附录币种代码
+                minLength: 3
+                maxLength: 3
+              targetAmount:
+                type: string
+                description: 目的币种金额，若 pricingCurrency = targetCurrency，则该字段必填
+                maxLength: 10
+              payeeName:
+                type: string
+                description: 收款人名称
+                maxLength: 128
+              payeeBankName:
+                type: string
+                description: 收款银行名称
+                maxLength: 256
+              payeeBankAddress:
+                type: string
+                maxLength: 256
+                description: 收款银行地址
+              payeeBankAcctType:
+                type: string
+                description: |-
+                  收款银行账户类型，填写方式如下
+
+                  |传输值|解释|
+                  |----|----|
+                  |INDIVIDUAL|个人银行账户|
+                  |CORPORATE|企业银行账户|
+              payeeBankAcctNo:
+                type: string
+                description: 收款银行账号
+                maxLength: 32
+              payeeBankDistrict:
+                type: string
+                description: 收人银行所在国家或地区，请参考附录国家huo
+                minLength: 3
+                maxLength: 3
+              payeeBankSwiftCode:
+                type: string
+                description: 收款银行SwiftCode
+                maxLength: 32
+              payeeBankType:
+                type: string
+                description: |-
+                  收款银行国际编码，填写方式如下
+
+                  |传输值|解释|
+                  |---|---|
+                  |IBAN|如果银行账户为欧洲地区国际银行账户，而且需要走欧洲本地分发|
+                  |SORT|如果银行账户是英国地区银行账户，而且需要走英国本地分发|
+                maxLength: 8
+              payeeBankCode:
+                type: string
+                description: 收款银行国际编码，若payeeBankType已填写，则该字段填写相应的IBAN、SORTCODEzhi
+                maxLength: 16
+              tradeCode:
+                type: string
+                description: 交易编码
+                maxLength: 8
+              memo:
+                type: string
+                description: 打款备注
+                maxLength: 40
+            required:
+              - payoutId
+              - tradeFileInfo
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+              - payeeName
+              - payeeBankName
+              - payeeBankAddress
+              - payeeBankAcctType
+              - payeeBankAcctNo
+              - payeeBankDistrict
+              - payeeBankSwiftCode
+              - tradeCode
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      tags:
+        - 接口
+  '/payout/{payoutId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/new-model'
+      summary: 查询分发指令信息
+      tags:
+        - 接口
+    parameters:
+      - name: payoutId
+        in: path
+        type: string
+        required: true
+        description: 商户侧分发指令唯一编号
+        maxLength: 64
+definitions:
+  new-model:
+    type: object
+    title: 分发
+    description: 连连侧分发指令对象
+    properties:
+      payoutId:
+        type: string
+        description: 商户侧分发指令唯一编号
+        maxLength: 64
+      tradeFileInfo:
+        type: array
+        description: 平台侧订单信息
+        items:
+          type: object
+          properties:
+            tradeFileId:
+              type: string
+              description: 平台侧订单唯一编号
+              maxLength: 64
+      pricingCurrency:
+        type: string
+        description: 定价币种，参考附录币种代码
+        minLength: 3
+        maxLength: 3
+      sourceCurrency:
+        type: string
+        description: 源币种，默认为CNY
+        minLength: 3
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: 源币种金额，若 pricingCurrency = sourceCurrency，则该字段必填
+        maxLength: 10
+      targetCurrency:
+        type: string
+        description: 目的币种，请参考附录币种代码
+        minLength: 3
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: 目的币种金额，若 pricingCurrency = targetCurrency，则该字段必填
+        maxLength: 10
+      rate:
+        type: string
+        description: |
+          汇兑汇率，若分发成功，则显示汇兑汇率
+        maxLength: 8
+      payeeName:
+        type: string
+        description: 收款人名称
+        maxLength: 128
+      payeeBankName:
+        type: string
+        description: 收款银行名称
+        maxLength: 256
+      payeeBankAddress:
+        type: string
+        maxLength: 256
+        description: 收款银行地址
+      payeeBankAcctType:
+        type: string
+        description: |-
+          收款银行账户类型，填写方式如下
+
+          |传输值|解释|
+          |----|----|
+          |INDIVIDUAL|个人银行账户|
+          |CORPORATE|企业银行账户|
+      payeeBankAcctNo:
+        type: string
+        description: 收款银行账号
+        maxLength: 32
+      payeeBankDistrict:
+        type: string
+        description: 收人银行所在国家或地区，请参考附录国家huo
+        minLength: 3
+        maxLength: 3
+      payeeBankSwiftCode:
+        type: string
+        description: 收款银行SwiftCode
+        maxLength: 32
+      payeeBankType:
+        type: string
+        description: |-
+          收款银行国际编码，填写方式如下
+
+          |传输值|解释|
+          |---|---|
+          |IBAN|如果银行账户为欧洲地区国际银行账户，而且需要走欧洲本地分发|
+          |SORT|如果银行账户是英国地区银行账户，而且需要走英国本地分发|
+        maxLength: 8
+      payeeBankCode:
+        type: string
+        description: 收款银行国际编码，若payeeBankType已填写，则该字段填写相应的IBAN、SORTCODEzhi
+        maxLength: 16
+      tradeCode:
+        type: string
+        description: 交易编码
+        maxLength: 8
+      memo:
+        type: string
+        description: 打款备注
+        maxLength: 40
+      createTime:
+        type: string
+        description: '创建时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+      updateTime:
+        type: string
+        description: '状态更新时间，格式：yyyy-MM-dd''T''HH:mm:ss''Z'
+      status:
+        type: string
+        description: |-
+          分发指令处理状态，状态如下
+
+          |值|解释|
+          |----|----|
+          |Processing|处理中|
+          |Successed|处理成功|
+          |Failed|处理失败|
+        enum:
+          - Processing
+          - Successed
+          - Failed
+      failedReason:
+        type: string
+        description: 失败原因，若分发失败，则该字段显示失败原因
+        maxLength: 128
+    required:
+      - payoutId
+      - tradeFileInfo
+      - sourceCurrency
+      - targetCurrency
+      - payeeName
+      - payeeBankName
+      - payeeBankAddress
+      - payeeBankAcctNo
+      - payeeBankDistrict
+      - payeeBankSwiftCode
+      - payeeBankType
+      - tradeCode
+      - createTime
+      - updateTime
+      - status
+tags:
+  - name: Operations
+  - name: 接口
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /b2b-import

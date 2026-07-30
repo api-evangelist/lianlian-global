@@ -1,0 +1,357 @@
+swagger: '2.0'
+x-stoplight:
+  id: a516170e72d6e
+info:
+  title: Trade File API
+  version: '1.0'
+  description: |-
+    Upon successfully providing bill information, the corresponding materials will be reviewed by LianLian Pay. 
+
+    It’s allowed to re-provide the materials with respect to the bill being rejected. 
+
+    Please firstly use Document Api to upload materials. Note: if the document name is replicated, the previous old document will be replaced by the new one.
+host: global-api.lianlianpay.com/
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /service-tradeFile:
+    post:
+      summary: Create Trade File
+      operationId: post-tuitionevidences
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Trade-File-Info'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020102|Payer is auditing|
+            | 020103|Payer is rejected|
+            | 020301|trading material already exist |
+            | 020302|trading meterial document amount exceed limit|
+            | 020401|bill not exist or invalid |
+            | 020303|bill amount does not match with tuition amount|
+            | 020501|payer does not exist|
+            | 020305|student name rejected by blacklist|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: TuitionInfo
+            type: object
+            x-tags:
+              - Models
+            properties:
+              tradeFileId:
+                type: string
+                description: Unique Id for this Trade Information
+                maxLength: 32
+              payerId:
+                type: string
+                description: Unique Payer ID in Merchant's System
+                x-stoplight:
+                  id: lms4rjlprv76h
+              tradeOrderId:
+                type: string
+                x-stoplight:
+                  id: trqodqdes8in0
+                maxLength: 32
+                description: Order/Contract/Invoice reference number
+              tradePlatformName:
+                type: string
+                x-stoplight:
+                  id: gwz7frmxayu6g
+                maxLength: 256
+                description: Platform on which the transaction took place
+              tradePlatformCountry:
+                type: string
+                x-stoplight:
+                  id: ovo580gh3r5h4
+                minLength: 3
+                maxLength: 3
+                description: Platform Country on which the transaction took place
+              tradePaymentChannel:
+                type: string
+                x-stoplight:
+                  id: 1x41se1rokea7
+                maxLength: 256
+                description: Payment Channel used for the transaction
+              counterpartyCountry:
+                type: string
+                x-stoplight:
+                  id: sbevy115789i6
+                description: Country of counterparty
+                maxLength: 3
+                minLength: 3
+              counterpartyName:
+                type: string
+                x-stoplight:
+                  id: zibts26njyww6
+                maxLength: 128
+                description: Name of counterparty
+              tradeTime:
+                type: string
+                x-stoplight:
+                  id: zjja0rub29z4d
+                description: 'Trade Time, yyyyMMdd'
+                minLength: 8
+                maxLength: 8
+              tradeCurrency:
+                type: string
+                x-stoplight:
+                  id: emvaw65qe9nkm
+                minLength: 3
+                maxLength: 3
+                description: Trade Currency
+              tradeAmount:
+                type: string
+                x-stoplight:
+                  id: xd0fmx6knvze2
+                maxLength: 10
+                description: Trade Amount
+              tradeName:
+                type: string
+                x-stoplight:
+                  id: a7k5ei4wji27h
+                maxLength: 128
+                description: Trade name
+              tradeCount:
+                type: string
+                x-stoplight:
+                  id: kdzdtbwrdimdh
+                description: Trade Count
+                maxLength: 10
+              serviceDetail:
+                type: string
+                x-stoplight:
+                  id: 948n1xx9g4gec
+                description: Details of service provided
+                maxLength: 128
+              serviceTime:
+                type: string
+                x-stoplight:
+                  id: i6bpdiudwnufv
+                maxLength: 64
+                description: Time of service provided
+              tradeCode:
+                type: string
+                x-stoplight:
+                  id: onylivarr63sv
+                maxLength: 8
+                description: Code for trade type
+              attachment:
+                type: string
+                x-stoplight:
+                  id: 0te84qczf9fkc
+                description: 'Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most. Sample：2018072227039320,2018072227039320'
+            required:
+              - tradeFileId
+              - tradeOrderId
+              - counterpartyCountry
+              - counterpartyName
+              - tradeTime
+              - tradeCurrency
+              - tradeAmount
+              - tradeName
+              - tradeCount
+              - serviceDetail
+              - serviceTime
+              - tradeCode
+          description: ''
+      tags:
+        - Operations
+      description: |
+        Submit trading material documents. Before making a request, supporting documents should be uploaded into Lianlian Pay's file system first. Supporting document reviewing results will be returned via webhook 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+    parameters: []
+  '/service-tradeFile/{tradeFileId}':
+    parameters:
+      - name: tradeFileId
+        in: path
+        type: string
+        required: true
+    get:
+      summary: Get Trade File by trade file ID
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Trade-File-Info'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-tuitionevidences-billid
+      description: Get Trade File by trade file ID
+      consumes:
+        - application/json
+      produces:
+        - application/json
+definitions:
+  Trade-File-Info:
+    title: Trade-File-Info
+    type: object
+    x-tags:
+      - Models
+    x-stoplight:
+      id: 87tybhgo569sw
+    properties:
+      tradeFileId:
+        type: string
+        x-stoplight:
+          id: 6ns7jvvvjedbb
+        description: Unique Trade File ID in Merchant's System
+        minLength: 10
+        maxLength: 32
+      payerId:
+        type: string
+        x-stoplight:
+          id: hyca6nz83ippv
+        description: Unique Payer ID in Merchant's System
+      tradeOrderId:
+        type: string
+        x-stoplight:
+          id: zjx5mnpx5ovuj
+        description: Order/Contract/Invoice reference number
+        maxLength: 32
+      tradePlatformName:
+        type: string
+        x-stoplight:
+          id: mr76zqz0f4su9
+        description: Platform on which the transaction took place
+        maxLength: 256
+      tradePlatformCountry:
+        type: string
+        x-stoplight:
+          id: w92mrm0ezdl1d
+        description: Platform Country on which the transaction took place
+        minLength: 3
+        maxLength: 3
+      tradePaymentChannel:
+        type: string
+        x-stoplight:
+          id: sfinq4tyq1r8e
+        description: Payment Channel used for the transaction
+        maxLength: 256
+      counterpartyCountry:
+        type: string
+        x-stoplight:
+          id: 1ezh9ku9tiajs
+        description: Country of counterparty
+        minLength: 3
+        maxLength: 3
+      counterpartyName:
+        type: string
+        x-stoplight:
+          id: lzwuoq17jldeb
+        description: Name of counterparty
+      tradeTime:
+        type: string
+        x-stoplight:
+          id: 5h29gx6fz7wiw
+        description: 'Trade Time,yyyyMMdd'
+        minLength: 8
+        maxLength: 8
+      tradeCurrency:
+        type: string
+        x-stoplight:
+          id: lxxyoapm7fc8h
+        description: Trade Currency
+        minLength: 3
+        maxLength: 3
+      tradeAmount:
+        type: string
+        x-stoplight:
+          id: zc9lx2qg8729a
+        description: Trade Amount
+        maxLength: 10
+      tradeName:
+        type: string
+        x-stoplight:
+          id: dybzdrtflmrzo
+        description: Trade Name
+        maxLength: 128
+      tradeCount:
+        type: string
+        x-stoplight:
+          id: z7j3f7cfjsnbp
+        description: Trade Count
+        maxLength: 10
+      serviceDetail:
+        type: string
+        x-stoplight:
+          id: lymukiz201otj
+        description: Details of service provided
+        maxLength: 128
+      serviceTime:
+        type: string
+        x-stoplight:
+          id: s3pq9gx1ftztx
+        description: Time of service provided
+        maxLength: 64
+      tradeCode:
+        type: string
+        x-stoplight:
+          id: ipsw1hlfncog2
+        description: 'Code for trade type, referring to the Appendix Trade Code'
+        maxLength: 8
+      attachment:
+        type: string
+        x-stoplight:
+          id: r91wksn1x6xby
+        description: 'Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most. Sample：2018072227039320,2018072227039320'
+    required:
+      - tradeFileId
+      - tradeOrderId
+      - counterpartyCountry
+      - counterpartyName
+      - tradeTime
+      - tradeCurrency
+      - tradeAmount
+      - tradeName
+      - tradeCount
+      - serviceDetail
+      - serviceTime
+      - tradeCode
+basePath: outbound/card/v1/

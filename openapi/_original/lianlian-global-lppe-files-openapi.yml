@@ -1,0 +1,143 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 9vumejt80k6sk
+info:
+  title: File
+  version: '1.0'
+servers:
+  - url: 'https://global-api.lianlian.com/api/v1'
+paths:
+  /files/upload:
+    parameters: []
+    post:
+      summary: Upload a file
+      operationId: upload-files
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    x-stoplight:
+                      id: 9qyao8rwbcs1d
+                    description: 文件id
+              examples:
+                Example 1:
+                  value:
+                    id: string
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nFILE_UPLOAD_EMPTY|The file stream cannot be empty.\r\nPURPOSE_IS_BLANK|Required parameters are missing.\r\nFILE_UPLOAD_EXCEED_MAX_SIZE|File upload exceeds the maximum value.\r\nMD5_MISMATCH|File md5 mismatch.\r\nINVALID_CLIENT|Client invalid.\r\nFILE_FREQUENCY_LIMIT_EXCEED|File upload or download  exceeds the limit,try again later.\r\nFILE_FREQUENCY_USER_LIMIT_EXCEED|File upload or download exceeds the limit,try again later.\r\nFILE_SERVER_REMOTE_ERROR|A system or application error occurred.\r\n"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      parameters:
+        - $ref: ./Webhooks.yaml#/components/parameters/header-Authorization
+      description: "### 功能说明\r\n上传文件，返回文件ID\r\n### 幂等说明\r\n不支持幂等，每次请求都会创建新的资源，并返回新的ID\r\n### 限制\r\n- 文件大小最大不能超过20M\r\n- 支持的文件类型：jpg、png、jpeg、bmp、pdf、csv、xls、xlsx\r\n- 限流说明：每日200次"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: ../models/FilesRequest.yaml
+        description: ''
+      security:
+        - 客户端凭据授权: []
+  /files/download:
+    parameters: []
+    post:
+      summary: Download a file by ID
+      operationId: get-file
+      responses:
+        '200':
+          description: 返回文件流信息
+          content: {}
+        '400':
+          description: "**code**|**message**\r\n---|---\r\nMISSING_REQUIRED_PARAMETER|Required parameters are missing.\r\nFILE_FREQUENCY_USER_LIMIT_EXCEED|File upload or download exceeds the limit,try again later.\r\nFILE_SERVER_REMOTE_ERROR|A system or application error occurred.\r\n"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      parameters:
+        - $ref: ./Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ./Webhooks.yaml#/components/parameters/header-Authorization
+      description: 下载文件
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  x-stoplight:
+                    id: o8uteiuqavvu9
+                  description: 文件id
+        description: ''
+      security:
+        - 客户端凭据授权: []
+components:
+  schemas:
+    Files:
+      title: Files
+      x-stoplight:
+        id: qpqcmv7l49rod
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: q8p39oisyja5r
+          description: 文件ID
+        file:
+          type: file
+          description: file类型，二进制文件流
+          x-stoplight:
+            id: ilriqa0uyaia4
+        purpose:
+          type: string
+          description: 上传文件的目的
+          x-stoplight:
+            id: 5bjcbedlejhnd
+        md5:
+          type: string
+          description: 生成16位MD5摘要
+          x-stoplight:
+            id: 4kkw2mz1n278y
+      required:
+        - id
+        - file
+        - purpose
+  parameters:
+    header-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+      description: multipart/form-data
+    header-Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: Bearer Access-Token
+  securitySchemes:
+    客户端凭据授权:
+      type: oauth2
+      description: '详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权'
+      flows:
+        clientCredentials:
+          scopes: {}
+          refreshUrl: /oauth2/token
+          tokenUrl: /oauth2/token

@@ -1,0 +1,544 @@
+openapi: 3.1.0
+x-stoplight:
+  id: y8nkwa7v19jow
+info:
+  title: Webhook
+  version: '1.0'
+  description: 加签方式请参考 **Getting Started - 请求结果签名验证** 部分
+servers:
+  - url: 'http://localhost:3000'
+paths: {}
+components:
+  schemas:
+    CARD_LIMIT_CHANGED:
+      type: object
+      x-examples:
+        Example 1:
+          data:
+            cardId: string
+          topic: string
+      title: 交易限额更新通知
+      properties:
+        topic:
+          type: string
+          description: CARD_LIMIT_CHANGED
+        data:
+          type: object
+          properties:
+            cardId:
+              type: string
+              description: 卡唯一识别号
+      examples:
+        - data:
+            cardId: '2025060533923532'
+          topic: CARD_LIMIT_CHANGED
+    CARD_STATUS_CHANGED:
+      type: object
+      x-examples:
+        Example 1:
+          data:
+            thirdUserId: 202108061000001-2022072600525014
+            transactionCurrency: USD
+            vccUserId: '2022072620335185'
+            merchantId: '202202140029013'
+            cardId: '2023022343939506'
+            transactionAmount: '10.0'
+            otp: '656332'
+            cardNo: 4383-66xx-xxxx-7383
+            cardNumber: 4383-66xx-xxxx-7383
+            merchantName: TIKTOK ADS
+          topic: CARD_3DS_OTP
+      title: 卡状态变更通知
+      examples:
+        - data:
+            cardId: '2025060835000677'
+          topic: CARD_STATUS_CHANGED
+      properties:
+        topic:
+          type: string
+          description: CARD_STATUS_CHANGED
+        data:
+          type: object
+          properties:
+            cardId:
+              type: string
+              x-stoplight:
+                id: etm6d6grv60uc
+              description: 卡唯一识别号
+            rechargeApplyId:
+              type: string
+              x-stoplight:
+                id: x0rulwqxaxwto
+              description: "卡充值外部申请单号</br>\r\n仅涉及卡BIN:000000"
+    CARD_3DS_OTP:
+      title: 3DS OTP通知
+      x-stoplight:
+        id: s6augqgh5b5dn
+      type: object
+      examples:
+        - data:
+            transactionCurrency: USD
+            cardId: '2022120830003049'
+            transactionAmount: '200.0'
+            otp: '600003'
+            cardNumber: 4777-77xx-xxxx-7777
+            merchantName: TEST MERCHANT
+          topic: CARD_3DS_OTP
+      properties:
+        topic:
+          type: string
+          x-stoplight:
+            id: 98ps2wq36l4h4
+          description: CARD_3DS_OTP
+        data:
+          type: object
+          x-stoplight:
+            id: k8sttu020oxof
+          properties:
+            otp:
+              type: string
+              x-stoplight:
+                id: nlv8j1u6zpevh
+              description: 3DS验证码
+            cardId:
+              type: string
+              x-stoplight:
+                id: 2ke2vxbw9ln3l
+              description: 卡唯一识别号
+            cardNumber:
+              type: string
+              x-stoplight:
+                id: 87ymr79oigvhl
+              description: 脱敏卡号，如4931-93xx-xxxx-1111
+            transactionCurrency:
+              type: string
+              x-stoplight:
+                id: pri8bqxvov04m
+              description: 交易币种，参考ISO currency code
+            transactionAmount:
+              type: string
+              x-stoplight:
+                id: r11l9djcrghbe
+              description: 交易金额，单位：元
+            'merchantName  ':
+              type: string
+              x-stoplight:
+                id: a1k30evtv2tlw
+              description: 商户名称
+      description: |-
+        如有配置WEBHOOK URL，3DS OTP默认仅通过此API WEBHOOK发送。
+
+        如果仍然希望通过邮箱/短信接收，请联系业务申请配置
+    TOPUP_FINISHED:
+      title: 充值交易通知
+      x-stoplight:
+        id: csr10cmpve1yl
+      type: object
+      properties:
+        topic:
+          type: string
+          x-stoplight:
+            id: wujar8qidgfc8
+          description: TOPUP_FINISHED
+        data:
+          type: object
+          x-stoplight:
+            id: fpeww50a20u6e
+          properties:
+            transactionId:
+              type: string
+              x-stoplight:
+                id: 3uls3t8exjy17
+              description: 充值交易单号
+            billId:
+              type: string
+              x-stoplight:
+                id: sbijaje2x0egd
+              description: 充值交易单号
+      examples:
+        - data:
+            billId: '2025061130000561'
+            transactionId: '2025061130000561'
+          topic: TOPUP_FINISHED
+    AUTH_EVENT:
+      type: object
+      x-examples:
+        Example 1:
+          data:
+            thirdUserId: '2022021728838493'
+            transactionCurrency: GBP
+            bizType: 1
+            cardName: ThomasRoland
+            last4CardNum: '4467'
+            merchantTerminalId: RGK6BLKDGV44ZCS
+            transactionTime: '2024-11-01 00:00:01'
+            mcc: '7311'
+            type: AUTH
+            transactionId: '2024110100888015'
+            merchantName: TIKTOK ADS
+            errorMsg: 其他
+            merchantId: RGK6BLKDGV44ZCS
+            transactionAmount: '51.97'
+            cardId: '2024082470575171'
+            transactionCurrencyCode: GBP
+            errorMsgCode: '0008'
+            status: FAIL
+          topic: AUTH_EVENT
+      title: 授权交易通知
+      examples:
+        - data:
+            cardName: testcardname
+            merchantCountryCode: IRL
+            last4CardNum: '2428'
+            transactionTime: '2025-06-11 00:00:03'
+            mcc: '4444'
+            type: AUTH
+            merchantName: TESTMERCHANT
+            originalTransactionId: '2025061600005551'
+            billingCurrency: USD
+            merchantId: '3300005769'
+            transactionAmount: '124.50'
+            afterBalance: '315386.84'
+            transactionCurrency: USD
+            billingAmount: '124.50'
+            transactionId: '2025061100008115'
+            cardId: '2025061000003261'
+            status: SUCCESS
+          topic: AUTH_EVENT
+        - data:
+            cardName: test
+            last4CardNum: '5863'
+            transactionTime: '2025-07-03 14:21:56'
+            mcc: '5734'
+            type: AUTH_REVERSAL
+            merchantName: AMAZON PAY INDIA PRIVA BA
+            originalTransactionId: '2025070352541041'
+            billingCurrency: USD
+            merchantId: '784959000762203'
+            transactionAmount: '10.00'
+            afterBalance: '49996.94'
+            transactionCurrency: HKD
+            billingAmount: '1.27'
+            transactionId: '2025070352546459'
+            cardId: '2025070252241911'
+            status: SUCCESS
+          topic: AUTH_EVENT
+      properties:
+        topic:
+          type: string
+          description: AUTH_EVENT
+        data:
+          type: object
+          properties:
+            transactionCurrency:
+              type: string
+              description: 交易币种，参考ISO currency code
+            cardName:
+              type: string
+              description: 卡片名称
+            last4CardNum:
+              type: string
+              description: 卡片尾号
+            transactionTime:
+              type: string
+              description: '授权交易时间，格式yyyy-MM-dd HH:mm:ss'
+            mcc:
+              type: string
+              description: '商户类别编码（Merchant Category Code），参考：https://www.citibank.com/tts/solutions/commercial-cards/assets/docs/govt/Merchant-Category-Codes.pdf'
+            type:
+              type: string
+              description: "类型枚举：\r\n- 授权（AUTH）\r\n- 授权撤销（AUTH_REVERSAL）"
+            transactionId:
+              type: string
+              description: 授权交易单号
+            merchantName:
+              type: string
+              description: 商户名称
+            errorMsg:
+              type: string
+              description: 见授权交易错误码列表
+            merchantId:
+              type: string
+              description: 卡网络商户唯一识别号
+            transactionAmount:
+              type: string
+              description: 交易金额，单位：元
+            cardId:
+              type: string
+              description: 卡唯一识别号
+            errorMsgCode:
+              type: string
+              description: 见授权交易错误码列表
+            status:
+              type: string
+              description: "状态枚举：\r\n- 成功 (SUCCESS)\r\n- 失败 (FAIL)"
+            originalTransactionId:
+              type: string
+              x-stoplight:
+                id: 147bzp30dn00v
+              description: "原预授权交易单单号。代表同一笔交易\r\n如果是预授权，则为空"
+            billingCurrency:
+              type: string
+              x-stoplight:
+                id: nhdsaii5v1a94
+              description: 账单币种，参考ISO currency code
+            billingAmount:
+              type: string
+              x-stoplight:
+                id: 5yx4955xmmruw
+              description: 账单金额，单位：元
+            afterBalance:
+              type: string
+              x-stoplight:
+                id: t24cw1r0sgpxw
+              description: 变动后余额（账单币种），单位：元
+            merchantCountryCode:
+              type: string
+              x-stoplight:
+                id: 3ku1jxjbcuvmx
+              description: 商户国家
+            accountType:
+              type: string
+              x-stoplight:
+                id: 2b92welm0cuj3
+              description: "账户类型枚举(仅开启子账户模式用户有此字段)\r\n- 主资金账户(VCC_ACCOUNT)\r\n- 子资金账户(SUB_ACCOUNT)"
+            subAccountId:
+              type: string
+              x-stoplight:
+                id: 2t0nhlks9zk91
+              description: 子账户id，开通了子账户模式的用户传
+    CARD_VERIFY_EVENT:
+      type: object
+      examples:
+        - data:
+            transactionCurrency: HKD
+            cardName: test
+            merchantCountryCode: IRL
+            last4CardNum: '1234'
+            transactionTime: '2025-07-29 11:55:17'
+            mcc: '1111'
+            transactionId: '2025072900000701'
+            merchantName: TEST
+            merchantId: '200000000000004'
+            transactionAmount: '0.00'
+            cardId: '2025000000065585'
+            transactionCurrencyCode: HKD
+            status: SUCCESS
+          topic: CARD_VERIFY_EVENT
+      description: '**如需要接收验卡交易WEBHOOK通知，请联系客户经理申请配置**'
+      title: 验卡交易通知
+      properties:
+        topic:
+          type: string
+          description: CARD_VERIFY_EVENT
+        data:
+          type: object
+          properties:
+            transactionCurrency:
+              type: string
+              description: 交易币种，参考ISO currency code
+            cardName:
+              type: string
+              description: 卡片名称
+            merchantCountryCode:
+              type: string
+              description: 商户国家编码
+            last4CardNum:
+              type: string
+              description: 卡片尾号
+            transactionTime:
+              type: string
+              description: '交易时间，格式yyyy-MM-dd HH:mm:ss'
+            mcc:
+              type: string
+              description: '商户类别编码（Merchant Category Code），参考：https://www.citibank.com/tts/solutions/commercial-cards/assets/docs/govt/Merchant-Category-Codes.pdf'
+            transactionId:
+              type: string
+              description: 验卡交易单号
+            merchantName:
+              type: string
+              description: 商户名称
+            merchantId:
+              type: string
+              description: 卡网络商户唯一识别号
+            transactionAmount:
+              type: string
+              description: 交易金额，单位：元
+            cardId:
+              type: string
+              description: 卡唯一识别号
+            status:
+              type: string
+              description: "状态枚举：\r\n- 成功(SUCCESS)\r\n- 失败）(FAIL)"
+            accountType:
+              type: string
+              x-stoplight:
+                id: zio5wxu3n8y01
+              description: "账户类型枚举(仅开启子账户模式用户有此字段)\r\n- 主资金账户(VCC_ACCOUNT)\r\n- 子资金账户(SUB_ACCOUNT)"
+            subAccountId:
+              type: string
+              x-stoplight:
+                id: y31rvqzfdq8co
+              description: 子账户id，开通了子账户模式的用户传
+    CARD_RECHARGE_FINISHED:
+      type: object
+      x-examples:
+        Example 1:
+          data:
+            cardId: '2025090903050629'
+            rechargeApplyId: '20250917154324'
+            transactionId: '2025091705410978'
+            status: SUCCESS
+          topic: CARD_RECHARGE_FINISHED
+      examples:
+        - data:
+            cardId: '2025090903050629'
+            rechargeApplyId: '20250917154324'
+            transactionId: '2025091705410978'
+            status: SUCCESS
+          topic: CARD_RECHARGE_FINISHED
+      title: 卡充值申请变更通知
+      properties:
+        data:
+          type: object
+          properties:
+            cardId:
+              type: string
+              description: 卡唯一识别号
+            rechargeApplyId:
+              type: string
+              description: 外部申请单号
+            transactionId:
+              type: string
+              description: 交易单号
+            status:
+              type: string
+              description: "到终态才会通知，状态枚举：\r\n- 充值失败-FAIL\r\n- 充值成功-SUCCESS"
+        topic:
+          type: string
+          description: CARD_RECHARGE_FINISHED
+    SUB_USER_TRANSFER_RESULT:
+      type: object
+      x-examples:
+        Example 1:
+          data:
+            amount: '1000.00'
+            bizType: VCC_ACCOUNT_TOPUP
+            subAccountId: '2025111833892363'
+            createTime: '2025-11-19 13:27:23'
+            currency: USD
+            updateTime: '2025-11-19 13:27:23'
+            rechargeApplyId: '20251119132722'
+            transactionId: '20251119343066512'
+            status: SUCCESS
+          topic: SUB_USER_TRANSFER_RESULT
+      examples:
+        - data:
+            amount: '1000.00'
+            bizType: VCC_ACCOUNT_TOPUP
+            subAccountId: '2025111833892363'
+            createTime: '2025-11-19 13:27:23'
+            currency: USD
+            updateTime: '2025-11-19 13:27:23'
+            rechargeApplyId: '20251119132722'
+            transactionId: '20251119343066512'
+            status: SUCCESS
+          topic: SUB_USER_TRANSFER_RESULT
+      properties:
+        topic:
+          type: string
+          description: SUB_USER_TRANSFER_RESULT
+        data:
+          type: object
+          properties:
+            amount:
+              type: string
+              description: 转账金额
+            bizType:
+              type: string
+              description: "转账单类型\r\n- 子账户转回（SUB_ACCOUNT_REFUND）\r\n- 主账户转入（VCC_ACCOUNT_TOPUP）"
+            subAccountId:
+              type: string
+              description: 子账户ID
+            currency:
+              type: string
+              description: 转账币种
+            rechargeApplyId:
+              type: string
+              description: 外部单号
+            transactionId:
+              type: string
+              description: "交易单号</br>\r\nstatus=SUCCESS 时有值</br>\r\nstatus=FAIL 时为空"
+            status:
+              type: string
+              description: "单据状态\r\n- SUCCESS 成功\r\n- FAIL 失败"
+      title: 子用户转账结果通知
+    CARD_RECHARGE:
+      title: 卡充值交易通知
+      x-stoplight:
+        id: xtukj63b8ldi2
+      type: object
+      description: |-
+        ### 通知场景说明
+
+        - **用户主动充值**：充值完毕后会收到两个通知
+          1. **充值任务完成通知**（`CARD_RECHARGE_FINISHED`）
+          2. **资金单流水变动通知**（`CARD_RECHARGE`）
+
+        - **后台补足**（卡余额 < 0 自动补足）：仅收到资金单流水变动通知（`CARD_RECHARGE`）
+      properties:
+        topic:
+          type: string
+          x-stoplight:
+            id: x0y7uc3i600c5
+          description: CARD_RECHARGE
+        data:
+          type: object
+          x-stoplight:
+            id: o7rlh7yahszla
+          properties:
+            merchantId:
+              type: string
+              x-stoplight:
+                id: y92bpk06z3o8y
+              description: 外部商户ID
+            userId:
+              type: string
+              x-stoplight:
+                id: 5umijspndd5rc
+              description: 外部用户ID
+            cardId:
+              type: string
+              x-stoplight:
+                id: ikuucxlf26i60
+              description: 卡唯一识别号
+            vccUserId:
+              type: string
+              x-stoplight:
+                id: jcqqm9vfl6hs8
+              description: VCC用户ID
+            thirdUserId:
+              type: string
+              x-stoplight:
+                id: xpj2n4ykosmnd
+              description: 第三方用户ID
+            transactionId:
+              type: string
+              x-stoplight:
+                id: wzjj072lavjks
+              description: 资金单号
+            currencyCode:
+              type: string
+              x-stoplight:
+                id: n7j1rxgxd0fbe
+              description: 币种代码
+            amount:
+              type: string
+              x-stoplight:
+                id: ii1aelmjx5r5l
+              description: 金额，单位：元
+            type:
+              type: string
+              x-stoplight:
+                id: ott18imi0fdk6
+              description: "类型枚举：\r\n卡充值扣款（CARD_RECHARGE）\r\n卡充值退款（CARD_RECHARGE_REVERSE）"

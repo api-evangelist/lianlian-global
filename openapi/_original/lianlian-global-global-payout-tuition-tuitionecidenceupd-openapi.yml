@@ -1,0 +1,431 @@
+swagger: '2.0'
+info:
+  title: Trade File API
+  version: '1.0'
+  description: |-
+    Upon successfully providing bill information, the corresponding materials will be reviewed by LianLian Pay. 
+
+    It’s allowed to re-provide the materials with respect to the bill being rejected. 
+
+    Please firstly use Document Api to upload materials. Note: if the document name is replicated, the previous old document will be replaced by the new one.
+host: global-api.lianlianpay.com/
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /tradeFile:
+    post:
+      summary: Create Trade File
+      operationId: post-tuitionevidences
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Trade-File-Info'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 020102|Payer is auditing|
+            | 020103|Payer is rejected|
+            | 020301|trading material already exist |
+            | 020302|trading meterial document amount exceed limit|
+            | 020401|bill not exist or invalid |
+            | 020303|bill amount does not match with tuition amount|
+            | 020501|payer does not exist|
+            | 020305|student name rejected by blacklist|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: TuitionInfo
+            type: object
+            description: Tuition information defined in Lianlian Pay's system
+            x-tags:
+              - Models
+            properties:
+              tradeFileId:
+                type: string
+                description: Unique Id for this Trade Information
+                maxLength: 32
+              payerInfo:
+                type: object
+                properties:
+                  payerId:
+                    type: string
+                    maxLength: 32
+                    description: unique payer ID from client
+                  payerName:
+                    type: string
+                    description: payer name in Chinese
+                    maxLength: 128
+                  payerIdNo:
+                    type: string
+                    description: payer identification number
+                    maxLength: 64
+              relationship:
+                type: string
+                description: |-
+                  Payer and beneficiary relationship, one of:
+
+                  If payer type is "INDIVIDUAL"
+
+                  | value | description |
+                  |--------|-------------|
+                  |SELF| payer is beneficiary |
+                  |FAMILY| Payer is the family member of beneficiary|
+                  |IMMEDIATE FAMILY| Parents, children, spouse|
+                  |OTHER RELATIVES|Any relative other than "Parents, children, spouse"|
+                  |FRIEND|Friends|
+                  |OTHER |other relationship|
+
+                  If payer type is "CORPORATE" 
+
+                  | value | description |
+                  |--------|-------------|
+                  |ORGANIZATION|The company/school to which the student belongs|
+                  |INTERMEDIARY|Student commissioned agency|
+                  |OTHER |other relationship|
+                enum:
+                  - SELF
+                  - IMMEDIATE FAMILY
+                  - OTHER RELATIVES
+                  - FRIEND
+                  - ORGANIZATION
+                  - INTERMEDIARY
+                  - OTHER
+              fundingId:
+                type: array
+                description: Unique funding ID in Lianlian Pay's system
+                items:
+                  type: string
+                  maxLength: 64
+              institutionName:
+                type: string
+                description: |-
+                  Institution Name,one of 
+                  |trade background|Institution|
+                  |----|-----|
+                  |Medical Related|Hosptial|
+                  |Study Abroad Related|University|
+                maxLength: 128
+              institutionCountry:
+                type: string
+                description: |-
+                  Institution country/country code， see Appendix-Country Code
+                                                                                    
+                maxLength: 3
+              tradeCurrency:
+                type: string
+                description: 'Trade currency, reference to the appendix Currency Code'
+                maxLength: 3
+              tradeAmount:
+                type: string
+                description: Trade amount
+                maxLength: 24
+              beneficiaryName:
+                type: string
+                description: |-
+                  beneficiary name，one of 
+                  |trade background|beneficiary|
+                  |----|-----|
+                  |Medical Care|Patient|
+                  |Study Abroad Related|Student|
+                maxLength: 128
+              beneficiaryIdNo:
+                type: string
+                description: Beneficiary identification number
+                maxLength: 64
+              beneficiaryAddress:
+                type: string
+                maxLength: 256
+                description: Beneficiary address
+              attachment:
+                type: string
+                description: 'Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most.'
+                maxLength: 256
+              tradeBackground:
+                type: string
+                description: |-
+                  trade background, one of
+
+                  |Code|Description|
+                  |----|----|
+                  |tuition|tuition fee|
+                  |quarterage|quarterage fee|
+                  |insurance|insurance|
+                  |custodyFee|student custody fee|
+                  |guarantee|guarantee fee|
+                  |medical|medical related fee|
+                  |other|other|
+                enum:
+                  - tuition
+                  - quarterage
+                  - insurance
+                  - custodyFee
+                  - guarantee
+                  - other
+              directToBeneficiary:
+                type: string
+                description: |-
+                  Whether the fee is paid directly to the beneficiary, one of 
+
+                  |Code|Description|
+                  |----|-----|
+                  |N|N0|
+                  |Y|YES|
+                enum:
+                  - 'Y'
+                  - 'N'
+              payChannel:
+                type: string
+                description: Payment channel， mandatory if directToBeneficiary = N
+            required:
+              - tradeFileId
+              - fundingId
+              - institutionName
+              - institutionCountry
+              - tradeCurrency
+              - tradeAmount
+              - beneficiaryName
+              - attachment
+              - tradeBackground
+              - directToBeneficiary
+          description: ''
+      tags:
+        - Operations
+      description: |
+        Submit trading material documents. Before making a request, supporting documents should be uploaded into Lianlian Pay's file system first. Supporting document reviewing results will be returned via webhook 
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  '/tradeFile/{tradeFileId}':
+    parameters:
+      - name: tradeFileId
+        in: path
+        type: string
+        required: true
+    get:
+      summary: Get Trade File by trade file ID
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Trade-File-Info'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-tuitionevidences-billid
+      description: Get Trade File by trade file ID
+      consumes:
+        - application/json
+      produces:
+        - application/json
+definitions:
+  Trade-File-Info:
+    title: Trade-File-Info
+    type: object
+    x-tags:
+      - Models
+    properties:
+      tradefileId:
+        type: string
+        description: Unique Id for this Trade Information
+        maxLength: 32
+      payerInfo:
+        type: object
+        description: 'Payer Information, mandatory if payerId is empty'
+        properties:
+          payerId:
+            type: string
+            maxLength: 32
+            description: unique payer ID from client
+          payerName:
+            type: string
+            description: payer name in Chinese
+            maxLength: 128
+          payerIdNo:
+            type: string
+            description: payer identification number
+            maxLength: 64
+      relationship:
+        type: string
+        description: |-
+          Payer and beneficiary relationship, one of:
+
+          If payer type is "INDIVIDUAL"
+
+          | value | description |
+          |--------|-------------|
+          |SELF| payer is beneficiary |
+          |FAMILY| Payer is the family member of beneficiary|
+          |IMMEDIATE FAMILY| Parents, children, spouse|
+          |OTHER RELATIVES|Any relative other than "Parents, children, spouse"|
+          |FRIEND|Friends|
+          |OTHER |other relationship|
+
+          If payer type is "CORPORATE" 
+
+          | value | description |
+          |--------|-------------|
+          |ORGANIZATION|The company/school to which the student belongs|
+          |INTERMEDIARY|Student commissioned agency|
+          |OTHER |other relationship|
+        enum:
+          - SELF
+          - IMMEDIATE FAMILY
+          - OTHER RELATIVES
+          - FRIEND
+          - ORGANIZATION
+          - INTERMEDIARY
+          - OTHER
+      fundingId:
+        type: array
+        description: Unique funding ID in Lianlian Pay's system
+        items:
+          type: string
+          maxLength: 64
+      institutionName:
+        type: string
+        description: |-
+          Institution Name,one of 
+          |trade background|Institution|
+          |----|-----|
+          |Medical Related|Hosptial|
+          |Study Abroad Related|University|
+        maxLength: 128
+      institutionCountry:
+        type: string
+        description: |-
+          Institution country/country code， see Appendix-Country Code
+                                                                            
+        maxLength: 3
+      tradeCurrency:
+        type: string
+        description: 'Trade currency, reference to the appendix Currency Code'
+        maxLength: 3
+      tradeAmount:
+        type: string
+        description: Trade amount
+        maxLength: 24
+      beneficiaryName:
+        type: string
+        description: |-
+          beneficiary name，one of 
+          |trade background|beneficiary|
+          |----|-----|
+          |Medical Care|Patient|
+          |Study Abroad Related|Student|
+        maxLength: 128
+      beneficiaryIdNo:
+        type: string
+        description: Beneficiary identification number
+        maxLength: 64
+      beneficiaryAddress:
+        type: string
+        maxLength: 256
+        description: Beneficiary address
+      attachment:
+        type: string
+        description: 'Document id, supported file extensions are PDF, JPG, GIF. 5 documents at most.'
+        maxLength: 256
+      tradeBackground:
+        type: string
+        description: |-
+          trade background, one of
+
+          |Code|Description|
+          |----|----|
+          |tuition|tuition fee|
+          |quarterage|quarterage fee|
+          |insurance|insurance|
+          |custodyFee|student custody fee|
+          |guarantee|guarantee fee|
+          |medical|medical related fee|
+          |other|other|
+        enum:
+          - tuition
+          - quarterage
+          - insurance
+          - custodyFee
+          - guarantee
+          - other
+      directToBeneficiary:
+        type: string
+        description: |-
+          Whether the fee is paid directly to the beneficiary, one of 
+
+          |Code|Description|
+          |----|-----|
+          |N|N0|
+          |Y|YES|
+        enum:
+          - 'Y'
+          - 'N'
+      payChannel:
+        type: string
+        description: Payment channel， mandatory if directToBeneficiary = N
+      status:
+        type: string
+        description: |-
+          Tuition evidence status, one of
+
+          |value|descrption|
+          |------|-------------|
+          |AUDITING|Under review|
+          |APPROVED|Approved|
+          |REJECT|Rejected|
+        enum:
+          - AUDITING
+          - APPROVED
+          - REJECT
+      failReason:
+        type: string
+        description: Failure reason
+        maxLength: 128
+      createTime:
+        type: string
+        format: date-time
+        description: 'create time, UTC+0'
+      modifyTime:
+        type: string
+        format: date-time
+        description: 'Modify time, UTC+0'
+basePath: /global/payout/v1

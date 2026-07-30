@@ -1,0 +1,197 @@
+swagger: '2.0'
+info:
+  title: EVENT API
+  version: '1.0'
+  description: |-
+    本部分包含了通知系统的操作和模型。 调用url为客户提供附加信息，以更好地处理系统生成的事件。
+
+    客户端应通过Webhook服务注册事件回调，以接收任何事件。
+
+    线上环境地址 - https://global-api.lianlianpay.com
+  contact:
+    email: fx_support@lianlianpay.com
+host: global-api-sandbox.lianlianpay-inc.com
+paths:
+  /events:
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: 总数
+              list:
+                type: array
+                description: 事件对象列表
+                items:
+                  $ref: '#/definitions/Event'
+            required:
+              - total
+              - list
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: ''
+      summary: 查询事件列表
+      description: 查询事件列表
+      operationId: get-event-list
+      tags:
+        - 接口
+      parameters:
+        - in: query
+          name: topic
+          type: string
+          description: 连连定义的Event topic
+        - in: query
+          name: pageNum
+          type: integer
+          allowEmptyValue: true
+          minimum: 1
+          default: 1
+          description: 页码
+        - in: query
+          name: pageSize
+          type: integer
+          allowEmptyValue: true
+          default: 20
+          description: 分页大小
+  '/events/{eventId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Event'
+        '404':
+          description: ''
+        '500':
+          description: ''
+      summary: 查询事件
+      description: 根据eventId查询事件对象
+      tags:
+        - 接口
+      operationId: get-event
+    parameters:
+      - name: eventId
+        in: path
+        type: string
+        required: true
+tags:
+  - name: Operations
+  - name: 接口
+definitions:
+  Event:
+    type: object
+    description: |
+      调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为`SUCCESS`。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为`MAXIMUM_RETRIES_REACHED`。
+    title: 事件
+    x-tags:
+      - 对象
+    properties:
+      id:
+        type: string
+        description: Event ID
+      topic:
+        type: string
+        description: |-
+          连连定义的Topic
+          | Topic | Description |
+          |--------|------------| 
+          | connect.member. active| 会员创建成功 |
+          | connect.account. enabled| 会员账户创建成功 |
+          |connect.funding.successed| 加款成功 | 
+          |connectfunding.hedged| 红冲成功 | 
+          |connect.funding.refunded| 退款成功|
+          |connect.payout.successed | 分发成功 | 
+          |connect.payout.failed | 分发失败 | 
+          |connect.payout.hedged|分发红冲|
+        enum:
+          - connect.member. active
+          - connect.account. enabled
+          - connect.funding.successed
+          - connectfunding.hedged
+          - connect.funding.refunded
+          - connect.payout.successed
+          - connect.payout.failed
+          - connect.payout.hedged
+      createTime:
+        type: string
+        description: '创建时间, UTC+0'
+        format: date-time
+      data:
+        type: object
+        description: Event 详情
+        required:
+          - objectType
+          - objectId
+        properties:
+          objectType:
+            type: string
+            description: |-
+              对象类型 
+
+              | type | description |
+              |------|-------------|
+              |member| 会员|
+              account|会员账户
+              |funding|加款对象|
+              |
+            enum:
+              - member
+              - account
+              - funding
+              - payout
+          objectId:
+            type: string
+            description: Event对象对应的唯一编号
+          url:
+            type: string
+            description: |
+              Event对应的对象的获取地址，可以通过该地址获取到Event对应的对象
+      status:
+        type: string
+        description: |-
+          Event 状态.:
+
+          | status | description |
+          |--------|-------------|
+          | PROCESSING | Event 在处理中 |
+          | SUCCESS | Event通知成功，已收到对接方的200 HTTP状态代码. |
+          | MAXIMUM_RETRIES_REACHED | Event通知失败，多次重试均为成功 |
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - MAXIMUM_RETRIES_REACHED
+      webhookURL:
+        type: string
+        description: Registered webhook url for this event
+    required:
+      - id
+      - topic
+      - createTime
+      - data
+      - status
+      - webhookURL
+responses: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /common/v1
+securityDefinitions: {}
+security:
+  - authorization: []
+  - llpay-signature: []

@@ -1,0 +1,297 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 6nupi989gi7zl
+info:
+  title: 贸易材料3.0
+  version: '1.0'
+servers:
+  - url: 'https://global-api.lianlian.com/api/v3'
+paths:
+  /documents:
+    parameters: []
+    post:
+      summary: Create transaction documents
+      operationId: post-transaction_documents-create
+      responses:
+        '200':
+          description: "**failure_code** | **failure_reason** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nINTERNAL_SERVER_ERROR | An internal server error has occurred.\r\nDOCUMENT_IS_EXIST | document is exist\r\nPAYER_NOT_EXIST | payer is not exist\r\nPAYEE_NOT_EXITS | payee not exits\r\nPURPOSE_NOT_UNIQUE | purpose is not unique\r\nBUSINESS_TYPE_NOT_UNIQUE | business_type is not unique\r\nOWNER_TYPE_NOT_UNIQUE | owner_type is not unique\r\n"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ../models/TransactionDocumentCreateResponseV3.yaml
+                  x-stoplight:
+                    id: x7g4babopxvi2
+        '400':
+          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nMATERIAL_REJECT_DUE_TO_DUPLICATION | Reject to submit due to duplication"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      description: "### 功能说明：\r\n创建贸易材料信息，同步受理，webhook通知材料审核结果。\r\n### webhook说明：\r\n[webhook概览](https://developer.lianlianglobal.com/docs/lppe/branches/main/8u4o96gz8w7bq-webhook-overview)，事件名：lppe.transaction_document.completed，[消息报文说明](https://developer.lianlianglobal.com/docs/lppe/branches/main/d08iey3vt3ml6-transaction-document-v3)\r\n### 幂等说明：\r\n- original_order_id相同，资源相同，重复提交，幂等返回上次的结果。\r\n- original_order_id相同，资源不相同，重复提交，返回单号重复。\r\n- 对于受理失败的original_order_id，可以再次重新提交。\r\n### 业务逻辑说明：\r\n- 接口会同步返回受理结果，异步通知材料审核结果。\r\n- 单次调用，可以同时传多个批次号（transaction_document_batch_id）的贸易材料数据。\r\n- 单次调用支持贸易材料（original_order_id）数最大500条，如果单个批次号内材料明细条数超过500条，可以拆分为多次调用。"
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_document_details:
+                  type: array
+                  x-stoplight:
+                    id: hwp52jbl6e7hr
+                  items:
+                    $ref: ../models/TransactionDocumentCreateRequestV3.yaml
+                    x-stoplight:
+                      id: 47wrvcatf2j4w
+        description: ''
+      tags:
+        - Transaction Documents
+      x-stoplight:
+        id: adtrqk4m4ksaj
+    get:
+      summary: Get list of transaction documents
+      tags:
+        - Transaction Documents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_size:
+                    type: string
+                    x-stoplight:
+                      id: 1i95sgx09xb5b
+                    description: 每页条数
+                  page:
+                    type: string
+                    x-stoplight:
+                      id: 8w777z5x2n5ej
+                    description: 当前页码
+                  total_count:
+                    type: string
+                    x-stoplight:
+                      id: 3rg7q95qwu1k6
+                    description: 总条数
+                  total_page:
+                    type: string
+                    x-stoplight:
+                      id: r8m192241278b
+                    description: 总页数
+                  page_list:
+                    $ref: ../models/TransactionDocumentQueryResponseV3.yaml
+                    x-stoplight:
+                      id: 6jh84h2gq97eu
+        '400':
+          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nDATE_RANGE_TOO_BIG | The time interval exceeds 3 months"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: get-documents
+      x-stoplight:
+        id: 3sti0h6i02nmf
+      description: 查询贸易材料列表信息
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: business_type
+          description: 业务类型
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: purpose
+          description: 用途
+        - schema:
+            type: string
+          in: query
+          name: owner_id
+          description: 贸易材料所属方ID
+        - schema:
+            type: string
+          in: query
+          name: owner_type
+          description: 贸易材料所属方
+        - schema:
+            type: string
+          in: query
+          name: original_order_id
+          description: 客户侧订单号
+        - schema:
+            type: string
+          in: query
+          name: transaction_document_batch_id
+          description: 批次号
+        - schema:
+            type: string
+          in: query
+          name: status
+          description: 贸易材料审核状态
+        - schema:
+            type: string
+          in: query
+          name: 'start_time '
+          description: 材料创建开始时间(含)，时间间隔不大于3个月
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: end_time
+          description: 材料创建结束时间(含)，时间间隔不大于3个月
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: page
+          description: '页码,默认值为1'
+        - schema:
+            type: string
+          in: query
+          name: page_size
+          description: '每页查询数量,默认值20，不大于1000'
+        - schema:
+            type: string
+          in: query
+          name: transaction_document_id
+          description: 连连生成的贸易材料唯一编号
+      requestBody:
+        content: {}
+  /documents/update:
+    post:
+      summary: Update transaction documents
+      tags:
+        - Transaction Documents
+      responses:
+        '200':
+          description: "**failure_code** | **failure_reason** \r\n---------|----------\r\nMATERIAL_UPDATE_REJECT_DUE_TO_EXISTED_BATCH | Reject to update batch due to existed\r\nPURPOSE_NOT_UNIQUE | purpose is not unique\r\nBUSINESS_TYPE_NOT_UNIQUE | business_type is not unique\r\nOWNER_TYPE_NOT_UNIQUE | owner_type is not unique\r\nOWNER_ID_NOT_UNIQUE | owner_id is not unique\r\nRESOURCE_NOT_FOUND | The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  x-stoplight:
+                    id: aepx8v33c12ej
+                  type: object
+                  properties:
+                    original_order_id:
+                      type: string
+                      x-stoplight:
+                        id: m2ffbxs565dal
+                    transaction_document_batch_id:
+                      type: string
+                      x-stoplight:
+                        id: 8toqoz7jafoa1
+                    result:
+                      type: boolean
+                      x-stoplight:
+                        id: bn7np1ga6htog
+                      description: 更新结果
+                    failure_code:
+                      type: string
+                      x-stoplight:
+                        id: 7ilrv0o9qeyd0
+                    failure_reason:
+                      type: string
+                      x-stoplight:
+                        id: 01ubho25t2atj
+        '400':
+          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nMATERIAL_REJECT_DUE_TO_DUPLICATION | Reject to submit due to duplication"
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      operationId: post-documents-update
+      x-stoplight:
+        id: terf36s63mqln
+      security:
+        - 客户端凭据授权: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_document_details:
+                  type: array
+                  x-stoplight:
+                    id: sbe0m3wycg4sd
+                  items:
+                    x-stoplight:
+                      id: 9x79j6tk11gkn
+                    type: object
+                    properties:
+                      original_order_id:
+                        type: string
+                        x-stoplight:
+                          id: cauklkajxq1ec
+                        description: 客户侧订单号
+                      transaction_document_batch_id:
+                        type: string
+                        x-stoplight:
+                          id: xti7c3z1uqgb2
+                        description: 批次号
+      description: 更新批次号
+  '/documents/{original_order_id}':
+    parameters:
+      - schema:
+          type: string
+        name: original_order_id
+        in: path
+        required: true
+        description: 客户侧订单号
+    get:
+      summary: Get transaction document by ID
+      tags:
+        - Transaction Documents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/TransactionDocumentQueryResponseV3.yaml
+        '400':
+          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+        '404':
+          description: "**code** | **message** \r\n---------|----------\r\nRESOURCE_NOT_FOUND | The specified resource does not exist."
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
+      operationId: get-documents-id
+      x-stoplight:
+        id: elgncce6c1n8j
+      description: 查询单条订单材料
+      security:
+        - 客户端凭据授权: []
+components:
+  schemas:
+    TransactionDocumentV3:
+      $ref: ../models/TransactionDocumentV3.yaml
+      x-stoplight:
+        id: d08iey3vt3ml6
+  securitySchemes:
+    客户端凭据授权:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: '详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权'

@@ -1,0 +1,54 @@
+generated: '2026-07-19'
+method: searched
+source: https://developer.lianlianglobal.com/docs/llp-api/b570a3051179f-version, https://developer.lianlianglobal.com/docs/llp-api/0d6cdb84fd83c-version
+scheme: dated change table per API product (document version + change history)
+current_version: 20220812 (B2C Services API document version)
+scope: B2C Services API (llp-api) — the product that publishes a dated change history. Other products carry a document
+  version but no dated table.
+entries:
+- date: '2026-06-17'
+  highlights:
+  - Added the AI Integration Guide / Docs Search & Integration Skill
+  breaking: false
+- date: '2023-09-05'
+  highlights:
+  - Added per-transaction upper-limit error codes for user withdrawal and currency-account withdrawal
+  breaking: false
+- date: '2023-06-12'
+  highlights:
+  - Updated platform, region (site), currency, platform-site currency and fund-flow business-type enums on the regular
+    user function API
+  breaking: false
+- date: '2023-03-08'
+  highlights:
+  - Shop/account queries now return an authorization-status field
+  breaking: false
+- date: '2023-01-10'
+  highlights:
+  - Updated platform, region and currency enums on the user function API
+  breaking: false
+- date: '2022-12-14'
+  highlights:
+  - Added a currency-account fund-flow query endpoint
+  breaking: false
+- date: '2022-10-28'
+  highlights:
+  - Fund-flow and settlement queries now return Amazon settlement original-currency amounts
+  breaking: false
+- date: '2022-08-12'
+  highlights:
+  - Added mainland bank branch fuzzy-name search and receipt-file download
+  - Adjusted supplier-payment endpoints and added callback notifications
+  breaking: false
+- date: '2022-07-20'
+  highlights:
+  - Fund-flow responses now include Amazon inbound sub-site information
+  breaking: false
+- date: '2021-11-22'
+  highlights:
+  - Added a user KYC query endpoint
+  breaking: false
+- date: '2021-03-01'
+  highlights:
+  - Document created
+  breaking: false

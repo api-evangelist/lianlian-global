@@ -1,0 +1,198 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/ paths and schema definitions across 173 specs; object semantics from https://developer.lianlianglobal.com/docs/lppe
+notes: The entity graph below is the LPPE platform core model, the product with the most complete object reference.
+  Other products (payout, B2B, cards) reuse the same payer/beneficiary/transaction shapes under product-specific
+  paths.
+entities:
+- name: Account
+  description: 'A LianLian Global customer account. Lifecycle: created -> authorized -> submitted -> ACTIVE; can
+    become SUSPENDED (outbound rejected) or CLOSED.'
+  paths:
+  - /accounts
+  - /accounts/detail
+  - /accounts/authorize
+  - /accounts/submit
+  states:
+  - ACTIVE
+  - SUSPENDED
+  - CLOSED
+  - REQUIRE_ACTION
+  events:
+  - lppe.account.active
+  - lppe.account.closed
+  - lppe.account.suspended
+  - lppe.accounts.status.active
+  - lppe.accounts.status.closed
+  - lppe.accounts.status.require_action
+  - lppe.accounts.status.suspended
+- name: ReceivingAccount
+  description: A global collection account opened under an Account for inbound funds.
+  paths:
+  - /receiving_accounts
+  - /receiving_accounts/channel
+  states:
+  - ACTIVE
+  - INACTIVE
+  events:
+  - lppe.receiving_accounts.succeeded
+  - lppe.receiving_accounts.failed
+- name: Deposit
+  description: An inbound crediting instruction against a ReceivingAccount, sometimes requiring confirmation or
+    a RELEASE action.
+  paths:
+  - /deposits
+  - /deposits/{deposit_id}
+  states:
+  - PENDING
+  - SUCCEEDED
+  - REQUIRES_ACTION
+  - ONWAY
+  - REFUND
+  events:
+  - lppe.receiving_accounts.deposit.pending
+  - lppe.receiving_accounts.deposit.succeeded
+  - lppe.receiving_accounts.deposit.requires_action
+  - lppe.receiving_accounts.deposit.onway
+  - lppe.receiving_accounts.deposit.refund
+- name: Beneficiary
+  description: 'An external payee: bank details, address, payment methods and metadata.'
+  paths:
+  - /beneficiaries
+  - /beneficiaries/{id}
+  states:
+  - SUCCEEDED
+  - FAILED
+  - BLOCKED
+  events:
+  - lppe.beneficiary.succeeded
+  - lppe.beneficiary.failed
+  - lppe.beneficiary.blocked
+- name: Payer
+  description: The remitting party, required for declaration and compliance on outbound flows.
+  paths:
+  - /payers
+  - /payers/{payer_id}
+  states:
+  - SUCCEEDED
+  - FAILED
+  - BLOCKED
+  events:
+  - lppe.payer.succeeded
+  - lppe.payer.failed
+  - lppe.payer.blocked
+- name: Quote
+  description: An indicative reference rate or a bookable conversion rate.
+  paths:
+  - /quotes/get_reference_rate
+  - /quotes/get_conversion_rate
+- name: Conversion
+  description: A booked FX conversion between two currency balances.
+  paths:
+  - /conversions
+  states:
+  - SUCCEEDED
+  - FAILED
+  events:
+  - lppe.conversion.result
+- name: Payout
+  description: An outbound disbursement to a Beneficiary.
+  paths:
+  - /payouts
+  - /payouts/{id}
+  states:
+  - SUCCEEDED
+  - FAILED
+  - RETURNED
+  events:
+  - lppe.payout.succeeded
+  - lppe.payout.failed
+  - lppe.payout.returned
+- name: TransactionDocument
+  description: Trade materials submitted to substantiate a transaction.
+  paths:
+  - /transaction_documents
+  events:
+  - lppe.transaction_document.completed
+  - lppe.document.supplement.audit.succeeded
+  - lppe.document.supplement.audit.failed
+- name: Compliance
+  description: A compliance review request raised against a transaction or party.
+  paths:
+  - /compliances
+  - /compliances/{requestId}
+  states:
+  - SUCCEEDED
+  - FAILED
+  - REQUIRES_ACTION
+  events:
+  - lppe.compliance.succeeded
+  - lppe.compliance.failed
+  - lppe.compliance.requires_action
+- name: Agreement
+  description: A stored payment agreement used by the accept-payments surface.
+  states:
+  - ACTIVE
+  - CANCELED
+  - EXPIRED
+  events:
+  - lppe.accept_payment.agreement.active
+  - lppe.accept_payment.agreement.canceled
+  - lppe.accept_payment.agreement.expired
+relationships:
+- from: ReceivingAccount
+  to: Account
+  type: belongs_to
+  via: account_id
+- from: Deposit
+  to: ReceivingAccount
+  type: belongs_to
+  via: receiving_account_id
+- from: Account
+  to: ReceivingAccount
+  type: has_many
+  via: account_id
+- from: Payout
+  to: Beneficiary
+  type: belongs_to
+  via: beneficiary_id
+- from: Payout
+  to: Payer
+  type: belongs_to
+  via: payer_id
+- from: Payout
+  to: Account
+  type: belongs_to
+  via: account_id
+- from: Conversion
+  to: Quote
+  type: belongs_to
+  via: quote_id
+- from: Conversion
+  to: Account
+  type: belongs_to
+  via: account_id
+- from: Compliance
+  to: Payout
+  type: has_one
+  via: request_id
+- from: TransactionDocument
+  to: Payout
+  type: has_many
+  via: transaction_id
+- from: Beneficiary
+  to: Payout
+  type: has_many
+  via: beneficiary_id
+common_fields:
+- field: request_id
+  description: Caller-supplied unique request identifier, echoed on responses
+- field: metadata
+  description: Caller key-value map, max 20 keys
+- field: create_time / update_time
+  description: Unix epoch milliseconds
+- field: status
+  description: Uppercase state enum, per entity
+- field: failure_code / failure_reason
+  description: Populated on FAILED states
+schema_count: 137

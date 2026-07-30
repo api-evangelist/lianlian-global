@@ -1,0 +1,297 @@
+openapi: 3.1.0
+x-stoplight:
+  id: hnmqm0djnevd0
+info:
+  title: api
+  version: '1.0'
+servers:
+  - url: 'https://global-api-sandbox.lianlianpay-inc.com/connect/v1'
+paths:
+  '/payout/{payoutId}':
+    parameters:
+      - schema:
+          type: string
+        name: payoutId
+        in: path
+        required: true
+    get:
+      summary: 查询分发指令
+      tags:
+        - 接口
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payout'
+              examples:
+                Get User Alice Smith:
+                  value:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    signUpDate: '2019-08-24'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      operationId: ''
+      description: ''
+  /payout:
+    post:
+      summary: 提交分发指令
+      operationId: ''
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payout'
+              examples:
+                New User Bob Fellow:
+                  value:
+                    id: 12
+                    firstName: Bob
+                    lastName: Fellow
+                    email: bob.fellow@gmail.com
+                    dateOfBirth: '1996-08-24'
+                    emailVerified: false
+                    createDate: '2020-11-18'
+        '400':
+          description: Missing Required Information
+        '500':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payoutId:
+                  type: string
+                  maxLength: 64
+                  description: 商户侧分发指令唯一编号
+                ' payoutType':
+                  type: string
+                  enum:
+                    - WITHDRAW
+                    - PAYMENT
+                  description: 交易类型
+                memberId:
+                  type: string
+                  maxLength: 32
+                  description: 出账会员Id
+                ' pricingCurrency':
+                  type: string
+                  minLength: 3
+                  maxLength: 3
+                  description: ' 定价币种'
+                sourceCurrency:
+                  type: string
+                  minLength: 3
+                  maxLength: 3
+                  description: 出账币种
+                sourceAmount:
+                  type: string
+                  maxLength: 16
+                  description: 出账金额，如果pricingCurrency= sourceCurrency则必填
+                'targetCurrency:':
+                  type: string
+                  minLength: 3
+                  maxLength: 3
+                  description: 入账币种
+                targetAmount:
+                  type: string
+                  maxLength: 16
+                  description: 入账金额，如果pricingCurrency= targetCurrency则必填
+                bankCountryCode:
+                  type: string
+                  maxLength: 3
+                  minLength: 3
+                  description: 收款银行所在国家或地区
+                paymentMethod:
+                  type: string
+                  description: |-
+                    付款方式填写方式如下：
+                      |传输值|解释|
+                      |---|---|
+                      |SWIFT|通过SWIFT进行付款|
+                      |LOCAL|通过本地分发方式进行付款|
+                                  
+                accountRoutingType:
+                  type: string
+                  maxLength: 16
+                  description: 路由号类型，若paymentMethod = LOCAL则必填
+                routingNumber:
+                  type: string
+                  maxLength: 32
+                  description: ' 路由号，若paymentMethod = LOCAL则必填'
+                'swiftCode:':
+                  type: string
+                  maxLength: 11
+                  description: Swift Code，paymentMethod = SWIFT则必填
+                payeeBankName:
+                  type: string
+                  description: 收款银行名称
+                  maxLength: 64
+                payeeBankAcctNo:
+                  type: string
+                  maxLength: 32
+                  description: 收款银行账号
+                payeeBankAcctName:
+                  type: string
+                  maxLength: 128
+                  description: 收款银行账户名称
+                memo:
+                  type: string
+                  maxLength: 128
+                  description: 交易附言
+              required:
+                - payoutId
+                - ' payoutType'
+                - memberId
+                - ' pricingCurrency'
+                - sourceCurrency
+                - 'targetCurrency:'
+                - bankCountryCode
+                - paymentMethod
+                - payeeBankName
+                - payeeBankAcctNo
+                - payeeBankAcctName
+            examples: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      description: ''
+      tags:
+        - 接口
+    parameters: []
+components:
+  schemas:
+    payout:
+      title: User
+      type: object
+      examples: []
+      x-stoplight:
+        id: f7337f17f355f
+      x-tags:
+        - 对象
+      properties:
+        payoutId:
+          type: string
+          description: 商户侧分发指令唯一编号
+          maxLength: 64
+        payoutType:
+          type: string
+          enum:
+            - WITHDRAW
+            - PAYMENT
+          description: 交易类型
+        memberId:
+          type: string
+          maxLength: 32
+          description: 出账会员Id
+        pricingCurrency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: 定价币种
+        sourceCurrency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: 出账币种
+        ' sourceAmount:':
+          type: string
+          maxLength: 16
+          description: 出账金额，如果pricingCurrency= sourceCurrency则必填
+        'targetCurrency ':
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: 入账币种
+        targetAmount:
+          type: string
+          maxLength: 16
+          description: 入账金额，如果pricingCurrency= targetCurrency则必填
+        bankCountryCode:
+          type: string
+          minLength: 3
+          description: 收款银行所在国家或地区
+        paymentMethod:
+          type: string
+          description: |-
+            付款方式填写方式如下：
+              |传输值|解释|
+              |---|---|
+              |SWIFT|通过SWIFT进行付款|
+              |LOCAL|通过本地分发方式进行付款|
+                          
+        accountRoutingType:
+          type: string
+          maxLength: 16
+          description: 路由号类型，若paymentMethod = LOCAL则必填
+        routingNumber:
+          type: string
+          maxLength: 32
+          description: 路由号，若paymentMethod = LOCAL则必填
+        swiftCode:
+          type: string
+          description: Swift Code，paymentMethod = SWIFT则必填
+          maxLength: 11
+        payeeBankName:
+          type: string
+          maxLength: 64
+          description: ' 收款银行名称'
+        payeeBankAcctNo:
+          type: string
+          maxLength: 32
+          description: 收款银行账号
+        payeeBankAcctName:
+          type: string
+          maxLength: 128
+          description: 收款银行账户名称
+        memo:
+          type: string
+          maxLength: 128
+          description: 交易附言
+        rate:
+          type: string
+          maxLength: 8
+          description: 汇兑汇率，若分发成功，则显示汇兑汇率
+        status:
+          type: string
+          description: |-
+            分发指令处理状态，状态如下
+
+            |值|解释|
+            |----|----|
+            |Processing|处理中|
+            |Successed|处理成功|
+            |Failed|处理失败|
+            |Hedged|红冲成功|
+        createTime:
+          type: string
+          description: '创建时间，格式：yyyy-MM-dd HH:mm:ss'
+        modifyTime:
+          type: string
+          description: '更新时间，格式：yyyy-MM-dd HH:mm:ss'
+        failedReason:
+          type: string
+          maxLength: 128
+          description: 失败原因，若分发失败，则该字段显示失败原因

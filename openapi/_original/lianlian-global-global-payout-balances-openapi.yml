@@ -1,0 +1,131 @@
+swagger: '2.0'
+x-stoplight:
+  id: 3l3lcc0jseu99
+info:
+  title: Currency Balance
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - http
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /global/common/v1/account:
+    post:
+      summary: Query Currency Account Available Balance
+      operationId: post-user
+      responses:
+        '200':
+          description: currency balance
+          schema:
+            $ref: '#/definitions/Balance'
+        '400':
+          description: Missing Required Information
+          schema:
+            type: 'null'
+        '409':
+          description: Email Already Taken
+          schema:
+            type: 'null'
+      description: query currency balance
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              currency:
+                type: string
+            required:
+              - currency
+          description: Post the necessary fields for the API to query balance.
+          x-examples:
+            Query Currency Balance Fellow:
+              currency: USD
+      x-stoplight:
+        id: shbz1own9p89n
+      tags:
+        - Operations
+  /global/common/v1/account/list:
+    post:
+      summary: Retrieve all balances
+      responses:
+        '200':
+          description: currency balance
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                availableBalance:
+                  type: string
+                  description: 'Unit is Yuan. For example, the value is 1.11CNY.'
+                currency:
+                  type: string
+            x-examples:
+              Example 1:
+                - availableBalance: string
+                  currency: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: Missing Required Information
+          schema:
+            type: 'null'
+        '409':
+          description: Email Already Taken
+          schema:
+            type: 'null'
+      operationId: post-user-2
+      x-stoplight:
+        id: g4o1gdm9c1n8w
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              currency:
+                x-stoplight:
+                  id: 2h9cjjcl2eb1z
+                example: USD
+                type: string
+                description: 'if not transferred currency filed, query all currencies'
+                x-nullable: true
+            description: 'if not transferred currency filed, query all currencies'
+          x-examples:
+            Example 1: {}
+            Example 2:
+              currency: USD
+      description: Retrieve all balances
+      tags:
+        - Operations
+definitions:
+  Balance:
+    title: Balance
+    type: array
+    x-stoplight:
+      id: 4b885tja98fm1
+    properties:
+      availableBalance:
+        type: string
+        description: 'Unit is Yuan. For example, the value is 1.11CNY.'
+        x-stoplight:
+          id: y39ni3t11gh32
+      currency:
+        type: string
+        x-stoplight:
+          id: 1bezephwtjm2p
+    required:
+      - availableBalance
+      - currency
+    x-tags:
+      - Models
+x-internal: false
+tags:
+  - name: Operations

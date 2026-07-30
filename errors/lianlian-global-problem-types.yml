@@ -1,0 +1,84 @@
+generated: '2026-07-19'
+method: searched
+source: https://developer.lianlianglobal.com/docs/lppe/fbedb06f358ad-errors
+format: custom-json
+format_note: LianLian Global does not use RFC 9457 application/problem+json. Non-200 responses carry a JSON body
+  with code, message, param and trace_id.
+envelope:
+  fields:
+  - field: code
+    description: Unique code identifying the reason for the error
+  - field: message
+    description: Detailed explanation of the error
+  - field: param
+    description: The specific request parameter at fault, dotted for nested fields (e.g. beneficiary.address.country_code)
+  - field: trace_id
+    description: Trace identifier for LianLian support to locate debug logs; valid for 15 days
+http_statuses:
+- status: 200
+  title: OK
+  description: Request succeeded
+- status: 400
+  title: Bad Request
+  description: Client error
+- status: 401
+  title: Unauthorized
+  description: Not authenticated
+- status: 403
+  title: Forbidden
+  description: No access rights to the requested content
+- status: 404
+  title: Not Found
+  description: Server cannot find the requested resource
+- status: 409
+  title: Conflict
+  description: The requested resource is in conflict
+- status: 429
+  title: Too Many Requests
+  description: Too many requests in a given period
+- status: 500
+  title: Internal Server Error
+  description: Unknown, unhandleable server error
+- status: 503
+  title: Service Unavailable
+  description: Server down for maintenance or overloaded
+problems:
+- code: PARAM_ERROR
+  title: Parameter verification fails. For details, see the returned message.
+  status: 400
+- code: MISSING_REQUIRED_PARAMETER
+  title: '{param} is missing.'
+  status: 400
+- code: REQUEST_CONFLICT
+  title: The request cannot be processed as another request is being processed.
+  status: 400
+- code: NOT_AUTHORIZED
+  title: Lacks valid authentication credentials or insufficient permissions.
+  status: 401
+- code: AUTHENTICATION_FAILURE
+  title: The authorication access token is invalid.
+  status: 401
+- code: SIGNATURE_ERROR
+  title: Signature verification faild.
+  status: 401
+- code: SIGNATURE_MISSING_ERROR
+  title: The signature is missing.
+  status: 401
+- code: FORBIDDEN_ERROR
+  title: Authorization failed due to insufficient permissions
+  status: 403
+- code: RESOURCE_NOT_FOUND
+  title: The specified resource dose not exist.
+  status: 404
+- code: RESOURCE_CONFLICT
+  title: Request cannot be processed as it conflicts with another request.
+  status: 409
+- code: LIMIT_ERROR
+  title: Too many requests. Blocked due to rate limiting.
+  status: 429
+- code: INTERNAL_SERVER_ERROR
+  title: An internal server error has occurred.
+  status: 500
+- code: SERVICE_UNAVAILABLE
+  title: The server cannot handle the request for a service due to temporary maintenance.
+  status: 503

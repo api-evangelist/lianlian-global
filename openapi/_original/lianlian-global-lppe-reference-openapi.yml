@@ -1,0 +1,100 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 2k4ydcq8zqnxb
+info:
+  title: 材料
+  version: '1.0'
+servers:
+  - url: 'https://global-api.lianlian.com/api/v1'
+paths:
+  /documents:
+    parameters: []
+    post:
+      summary: Create a transaction document
+      operationId: post-transaction_documents-create
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_document_batch_id:
+                    type: string
+                    x-stoplight:
+                      id: hk2obm8h5vnj2
+                  status:
+                    x-stoplight:
+                      id: bcuz5nkku22a9
+                    enum:
+                      - PROCESSING
+                      - COMPLETED
+                    description: "状态。\r\n\r\n如果您的材料涉及审核流程，返回结果中status为PROCESSING，此时我们将由异步消息结果通知您（可通过webhook监听材料相关结果）\r\n【注】材料是否涉及审核请咨询对应客户经理。\r\n\r\n枚举|说明\r\n---|---\r\nPROCESSING|处理中\r\nCOMPLETED|处理完成"
+                  create_time:
+                    type: number
+                    x-stoplight:
+                      id: d3bclwwaq2296
+                    description: 材料批次创建时间，13位时间戳
+      description: 创建贸易材料信息。
+      security:
+        - 客户端凭据授权: []
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../models/TransactionDocumentsRequest.yaml
+        description: ''
+      tags:
+        - Transaction Documents
+  '/documents/{transaction_document_batch_id}':
+    get:
+      summary: Get transaction document by ID
+      tags:
+        - Transaction Documents
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../models/TransactionDocumentsResponse - copy.yaml
+      operationId: get-transaction_documents
+      security:
+        - 客户端凭据授权: []
+      requestBody:
+        content: {}
+      parameters:
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
+        - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+      description: |-
+        此接口将返回批次内所有明细的处理结果。
+        如明细总条数、处理成功条数、处理失败条数。
+        需要注意的是，当批次内明细数据小于等于500条时，可通过此接口查看详情。
+        如果批次明细大于500条，建议您使用Get list of transaction document接口分页查询详细信息。
+    parameters:
+      - schema:
+          type: string
+        name: transaction_document_batch_id
+        in: path
+        required: true
+        description: 材料批次ID，长度64
+components:
+  schemas:
+    TransactionDocument:
+      $ref: ../models/TransactionDocumentsCallback.yaml
+      x-stoplight:
+        id: olj9wywvyeavz
+      title: ''
+  securitySchemes:
+    客户端凭据授权:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: '详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权'

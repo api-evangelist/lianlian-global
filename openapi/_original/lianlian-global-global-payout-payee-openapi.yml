@@ -1,0 +1,492 @@
+swagger: '2.0'
+x-stoplight:
+  id: 6be8eq4iat331
+info:
+  title: payee
+  version: '1.0'
+host: global-api-sandbox.lianlianpay-inc.com
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /payee:
+    post:
+      summary: Create Payee
+      operationId: post-payee
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/payee'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 156002 |payeeId duplicate|
+            | 156001 | payee rejected by blacklist |
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      tags:
+        - Operations
+      description: |
+        Create Payee request, result will be return via webhook. Merchant can also use `Get Payee Info` API to retrieve coresponding request results.
+
+        Interface Maximum Concurrency：300
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Payee
+            type: object
+            x-tags:
+              - Models
+            description: Payee info record object in Lianlian Pay's system
+            required:
+              - payeeId
+              - payeeType
+              - payeeCountryCode
+              - payeeName
+            properties:
+              payeeId:
+                type: string
+                description: Unique Payee ID in Merchant's System
+                maxLength: 32
+              payeeType:
+                type: string
+                description: |-
+                  Payee Type, one of
+
+                  |Code|Description|
+                  |----|-----|
+                  |INDIVIDUAL|individual payee|
+                  |CORPORATE|corporate payee|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+                maxLength: 16
+              payeeCountryCode:
+                type: string
+                description: 'Payee''s country code,referring to column “code” in Appendix Country Code'
+                enum:
+                  - CHN
+                  - HKG
+                  - NZL
+                  - JPN
+                  - USA
+                  - FRA
+                  - GBR
+                  - AUS
+                  - KOR
+                  - THA
+                  - DEU
+                  - ESP
+                minLength: 3
+                maxLength: 3
+              payeeAddress:
+                type: object
+                description: payee's payee detail
+                required:
+                  - city
+                properties:
+                  city:
+                    type: string
+                    description: Payee's city
+                    maxLength: 32
+                  streetAddress:
+                    type: string
+                    description: 'Payee''s street address, mandatory if `payeeCountryCode` ≠ `CHN` and `targetCurrency` ≠`CNY`'
+                    maxLength: 256
+              payeeName:
+                type: string
+                description: Payee Name
+                maxLength: 128
+              payeeIdType:
+                type: string
+                description: |-
+                  Payee ID Type, mandatory if `countryCode` = `CHN` and `targetCurrency` = `CNY`, one of
+
+                  |Code|Description|
+                  |---|---|
+                  |ID_CARD|ID card for individual payee|
+                  |BUSINESS_REGISTRATION_CERT|business registration certificate for corporate payee|
+                enum:
+                  - ID_CARD
+                  - BUSINESS_REGISTRATION_CERT
+                maxLength: 32
+              payeeIdNo:
+                type: string
+                maxLength: 64
+                description: |
+                  Payee ID Number, mandatory if `countryCode` = `CHN` and `targetCurrency` = `CNY`
+              payeeContactName:
+                type: string
+                description: Payee Contact Name
+                maxLength: 64
+              payeeContactNumber:
+                type: string
+                maxLength: 32
+                description: 'Payee Contact Number, Mandatory if `payeeType` = `CORPORATE` and `payeeCountryCode` = `CHN` and `targetCurrency` = `CNY`'
+              payeeEmailAddress:
+                type: string
+                maxLength: 48
+                description: Payee Email Address
+              payeeBirthDay:
+                type: string
+                description: 'Payee date of birth, format : yyyyMMdd'
+                minLength: 8
+                maxLength: 8
+              payeePhone:
+                type: string
+                x-stoplight:
+                  id: 2n7vci5eu8d54
+                description: "mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN` \r\nand `targetCurrency` = `KRW`or`JPY`\r\nformat in accordance with the international standard format and carry the international area code"
+              payeeFirstName:
+                type: string
+                x-stoplight:
+                  id: 3p1b1esxcx53l
+                description: "mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN`\r\nand `payeeType`= `INDIVIDUAL` and `targetCurrency` = `BRL`"
+                maxLength: 64
+              payeeLastName:
+                type: string
+                x-stoplight:
+                  id: s3ozjrd0ylf13
+                maxLength: 64
+                description: "mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN`\r\nand `payeeType`= `INDIVIDUAL` and `targetCurrency` = `BRL`"
+              payeeTaxId:
+                type: string
+                x-stoplight:
+                  id: dcqlzpjz1hne6
+                description: "enterprise tax number,mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN`\r\nand `payeeType`= `CORPORATE` and `targetCurrency` = `BRL`"
+          description: ''
+  '/payee/{payeeId}':
+    parameters:
+      - type: string
+        name: payeeId
+        in: path
+        required: true
+        description: Unique Payee ID in Merchant's System
+        maxLength: 32
+    get:
+      summary: Get Payee Info
+      tags:
+        - Operations
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/payee'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+          schema:
+            type: object
+            properties: {}
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      operationId: get-payee-payeeId
+      description: |-
+        Get Payee Info Request, `payee` object will be returned
+
+        Interface Maximum Concurrency：300
+    put:
+      summary: Update the Payee Info
+      operationId: put-payee-payeeId
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/payee'
+        '400':
+          description: |-
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 | \[PARAMETER\] ERROR_MESSAGE |
+            | 156003 |payeeType cannot be changed|
+            | 156004 | Payee status should be 'FAILED' or 'ACCEPTED' |
+          schema:
+            $ref: '#/definitions/payee'
+        '404':
+          description: Not Found
+          schema:
+            type: object
+            properties: {}
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties: {}
+      description: |-
+        Update the payeeId Infomation if the audit status of the payee is failed.
+
+        Interface Maximum Concurrency：300
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Payee
+            type: object
+            x-tags:
+              - Models
+            description: Payee info record object in Lianlian Pay's system
+            required:
+              - payeeType
+              - payeeCountryCode
+              - payeeName
+            properties:
+              payeeType:
+                type: string
+                description: |-
+                  Payee Type, one of
+
+                  |Code|Description|
+                  |----|-----|
+                  |INDIVIDUAL|individual payee|
+                  |CORPORATE|corporate payee|
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+                maxLength: 16
+              payeeCountryCode:
+                type: string
+                description: 'Payee''s country code,referring to column “code” in Appendix Country Code'
+                enum:
+                  - CHN
+                  - HKG
+                  - NZL
+                  - JPN
+                  - USA
+                  - FRA
+                  - GBR
+                  - AUS
+                  - KOR
+                  - THA
+                  - DEU
+                  - ESP
+                minLength: 3
+                maxLength: 3
+              payeeAddress:
+                type: object
+                description: payee's payee detail
+                required:
+                  - city
+                properties:
+                  city:
+                    type: string
+                    description: Payee's city
+                    maxLength: 32
+                  streetAddress:
+                    type: string
+                    description: 'Payee''s street address, mandatory if `payeeCountryCode` ≠ `CHN` and `targetCurrency` ≠`CNY`'
+                    maxLength: 256
+              payeeName:
+                type: string
+                description: Payee Name
+                maxLength: 64
+              payeeIdType:
+                type: string
+                description: |-
+                  Payee ID Type, mandatory if `countryCode` = `CHN` and `targetCurrency` = `CNY`, one of
+
+                  |Code|Description|
+                  |---|---|
+                  |ID_CARD|ID card for individual payee|
+                  |BUSINESS_REGISTRATION_CERT|business registration certificate for corporate payee|
+                enum:
+                  - ID_CARD
+                  - BUSINESS_REGISTRATION_CERT
+                maxLength: 32
+              payeeIdNo:
+                type: string
+                maxLength: 64
+                description: |
+                  Payee ID Number, mandatory if `countryCode` = `CHN` and `targetCurrency` = `CNY`
+              payeeContactName:
+                type: string
+                description: Payee Contact Name
+                maxLength: 64
+              payeeContactNumber:
+                type: string
+                maxLength: 32
+                description: 'Payee Contact Number, Mandatory if `payeeType` = `CORPORATE` and `payeeCountryCode` = `CHN` and `targetCurrency` = `CNY`'
+              payeeEmailAddress:
+                type: string
+                maxLength: 48
+                description: Payee Email Address
+              payeeBirthDay:
+                type: string
+                description: 'Payee date of birth, format : yyyyMMdd'
+                minLength: 8
+                maxLength: 8
+          description: ''
+      tags:
+        - Operations
+definitions:
+  payee:
+    title: Payee
+    type: object
+    x-tags:
+      - Models
+    description: Payee info record object in Lianlian Pay's system
+    properties:
+      payeeId:
+        type: string
+        description: Unique Payee ID in Merchant's System
+        maxLength: 32
+      payeeType:
+        type: string
+        description: |-
+          Payee Type, one of
+
+          |Code|Description|
+          |----|-----|
+          |INDIVIDUAL|individual payee|
+          |CORPORATE|corporate payee|
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+        maxLength: 16
+      payeeCountryCode:
+        type: string
+        description: 'Payee''s country code,referring to column “code” in Appendix Country Code'
+        enum:
+          - CHN
+          - HKG
+          - NZL
+          - JPN
+          - USA
+          - FRA
+          - GBR
+          - AUS
+          - KOR
+          - THA
+          - DEU
+          - ESP
+        minLength: 3
+        maxLength: 3
+      payeeAddress:
+        type: object
+        description: payee's payee detail
+        properties:
+          city:
+            type: string
+            description: Payee's city
+            maxLength: 32
+          streetAddress:
+            type: string
+            description: 'Payee''s street address, mandatory if `payeeCountryCode` ≠ `CHN` and `targetCurrency` ≠`CNY`'
+            maxLength: 256
+      payeeName:
+        type: string
+        description: Payee Name
+        maxLength: 128
+      payeeIdType:
+        type: string
+        description: |-
+          Payee ID Type, mandatory if `countryCode` = `CHN` and `targetCurrency` = `CNY`, one of
+
+          |Code|Description|
+          |---|---|
+          |ID_CARD|ID card for individual payee|
+          |BUSINESS_REGISTRATION_CERT|business registration certificate for corporate payee|
+        enum:
+          - ID_CARD
+          - BUSINESS_REGISTRATION_CERT
+        maxLength: 32
+      payeeIdNo:
+        type: string
+        maxLength: 64
+        description: |
+          Payee ID Number, mandatory if `countryCode` = `CHN` and `targetCurrency` = `CNY`
+      payeeContactName:
+        type: string
+        description: Payee Contact Name
+        maxLength: 64
+      payeeContactNumber:
+        type: string
+        maxLength: 32
+        description: 'Payee Contact Number, Mandatory if `payeeType` = `CORPORATE` and `payeeCountryCode` = `CHN` and `targetCurrency` = `CNY`'
+      payeeEmailAddress:
+        type: string
+        maxLength: 48
+        description: Payee Email Address
+      payeeBirthDay:
+        type: string
+        description: 'Payee date of birth, format : yyyyMMdd'
+        minLength: 8
+        maxLength: 8
+      payeePhone:
+        type: string
+        x-stoplight:
+          id: 2gr3b27q51gt5
+        description: "mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN` \r\nand `targetCurrency` = `KRW`or`JPY`\r\nformat in accordance with the international standard format and carry the international area code"
+      payeeFirstName:
+        type: string
+        x-stoplight:
+          id: hnqg7x97ae4b5
+        maxLength: 64
+        description: "mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN`\r\nand `payeeType`= `INDIVIDUAL` and `targetCurrency` = `BRL`"
+      payeeLastName:
+        type: string
+        x-stoplight:
+          id: ybuqnopoealu8
+        maxLength: 64
+        description: "mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN`\r\nand `payeeType`= `INDIVIDUAL` and `targetCurrency` = `BRL`"
+      payeeTaxId:
+        type: string
+        x-stoplight:
+          id: 0meabc2ky69x0
+        description: "enterprise tax number,mandatory if transaction go through `Thunes` channel and `payeeCountryCode` ≠ `CHN`\r\nand `payeeType`= `CORPORATE` and `targetCurrency` = `BRL`"
+      status:
+        type: string
+        description: |-
+          Payee Audit Status, one of 
+
+          |Code|Description|
+          |---|---|
+          |Successed|Payee audit successed|
+          |Processing|Payee under processing|
+          |Failed|Payee audit failed|
+          |Accepted|Payee Info Accepted|
+        enum:
+          - Successed
+          - Failed
+          - Processing
+          - Accepted
+        maxLength: 12
+      failedReason:
+        type: string
+        description: Failed reason
+        maxLength: 256
+    required:
+      - payeeId
+      - payeeType
+      - payeeCountryCode
+      - payeeName
+      - status
+basePath: /global/payout/v1

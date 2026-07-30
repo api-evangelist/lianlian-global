@@ -1,0 +1,195 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "eq9nb59dhpbmh"
+    },
+    "info": {
+        "title": "Add Funds",
+        "version": "1.0",
+        "description": "Top up your Balance Account through a bank transfer from your bank account to your top-up account."
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-recharges/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "transaction ID"
+                }
+            ],
+            "get": {
+                "summary": "Get Recharge by ID",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Recharge"
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Not Found"
+                    }
+                },
+                "operationId": "get-AddFunds-Id",
+                "description": "Retrieve the information of the Recharge transaction with the matching ID.",
+                "security": [
+                    {
+                        "Authorization": []
+                    },
+                    {
+                        "LLPAY-Signature": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Recharge": {
+                "type": "object",
+                "x-tags": [
+                    "Models"
+                ],
+                "x-examples": {
+                    "example-1": {
+                        "creditor_name": "LIANLIAN INTERNATIONAL COMPANY LTD",
+                        "creditor_acct_no": "7000086793",
+                        "receive_currency": "USD",
+                        "receive_amount": "1400.00",
+                        "pay_way": "OFFLINE",
+                        "trans_way": "WIRE",
+                        "pay_currency": "USD",
+                        "ref": "from test-gtc-soa",
+                        "account_id": "0201002850109",
+                        "pay_amount": "1400.00",
+                        "id": "220600781510",
+                        "fee": "0.00",
+                        "userId": "2022053012868186",
+                        "create_time": 1650879380000,
+                        "rechargeReceiveAmount": 1400000,
+                        "name": "Bell Markets",
+                        "receiving_account_no": "71100000000000133",
+                        "status": "COMPLETED"
+                    }
+                },
+                "title": "Recharge",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique ID created by the LianLian Global."
+                    },
+                    "business_order_id": {
+                        "type": "string",
+                        "description": "Business Order ID."
+                    },
+                    "creditor_name": {
+                        "type": "string",
+                        "description": "Name of creditor."
+                    },
+                    "creditor_account_no": {
+                        "type": "string",
+                        "description": "Account NO of creditor."
+                    },
+                    "receive_amount": {
+                        "type": "string",
+                        "description": "The received amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "receive_currency": {
+                        "type": "string",
+                        "description": "The receive currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "pay_amount": {
+                        "type": "string",
+                        "description": "The amount actually paid, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "pay_currency": {
+                        "type": "string",
+                        "description": "The currency actually paid (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "reference": {
+                        "type": "string",
+                        "description": "This is the postscript information."
+                    },
+                    "account_id": {
+                        "type": "string",
+                        "description": "Balance Account ID."
+                    },
+                    "fee": {
+                        "type": "string",
+                        "description": "The Recharge fee amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the User."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of User."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status of Recharge.",
+                        "enum": [
+                            "PROCESSING",
+                            "FAILED",
+                            "CANCELLED",
+                            "REFUNDING",
+                            "REFUNDED",
+                            "COMPLETED"
+                        ]
+                    },
+                    "create_time": {
+                        "type": "integer",
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch."
+                    },
+                    "top_up_account_info": {
+                        "$ref": "./CommonModel.json#/components/schemas/Bank"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "Authorization": {
+                "type": "http",
+                "scheme": "basic"
+            },
+            "LLPAY-Signature": {
+                "name": "t=timestamp, v=signature",
+                "type": "apiKey",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "Authorization": []
+        },
+        {
+            "LLPAY-Signature": []
+        }
+    ]
+}

@@ -1,0 +1,83 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/LLGlobal + https://www.npmjs.com
+notes: First-party client libraries are published from the LLGlobal GitHub organization; two TypeScript SDKs are
+  also on npm under the llg-ewallet account. The Java SDKs are distributed as source/Maven modules from GitHub and
+  are not published to Maven Central (searched 2026-07-19, 0 results for "lianlian").
+packages:
+- language: java
+  registry: github
+  name: com.lianlianglobal:llosc-gateway-client
+  url: https://github.com/LLGlobal/java-sdk
+  install: git clone https://github.com/LLGlobal/java-sdk && mvn install
+  official: true
+  license: MIT
+  description: LianLian Global OSC gateway Java client SDK, with request-signing client, demo application and webhook-receiver
+    demo.
+- language: java
+  registry: github
+  name: com.lianlianpay.global:lianlian-global-ew-openapi-sdk
+  url: https://github.com/LLGlobal/lgas-openapi-sdk
+  install: git clone https://github.com/LLGlobal/lgas-openapi-sdk && mvn install
+  official: true
+  description: LGAS / e-Wallet OpenAPI Java SDK (api, client, service and example modules).
+- language: typescript
+  registry: npm
+  name: llg-sdk-onboarding
+  url: https://www.npmjs.com/package/llg-sdk-onboarding
+  install: npm install llg-sdk-onboarding
+  official: true
+  license: MIT
+  version: 1.0.7
+  source: https://github.com/LLGlobal/kyc-sdk
+  description: LianLian Global onboarding / KYC SDK.
+- language: typescript
+  registry: npm
+  name: llg-sdk-contact
+  url: https://www.npmjs.com/package/llg-sdk-contact
+  install: npm install llg-sdk-contact
+  official: true
+  version: 0.0.3
+  source: https://github.com/LLGlobal/contact-sdk
+  description: LianLian Global contact (beneficiary/payee) SDK.
+- language: javascript
+  registry: github
+  name: js_sign
+  url: https://github.com/LLGlobal/js_sign
+  official: true
+  description: Reference JavaScript implementation of the LLPAY-Signature RSA SHA-256 request signature.
+- language: php
+  registry: github
+  name: php_generate_sign
+  url: https://github.com/LLGlobal/php_generate_sign
+  official: true
+  description: Reference PHP implementation of the LLPAY-Signature RSA SHA-256 request signature.
+- language: python
+  registry: github
+  name: lianlian-devtool
+  url: https://github.com/LLGlobal/lianlian-devtool
+  install: pip install requests cryptography
+  official: true
+  description: EW DevTool CLI for sandbox account registration, KYC submission and developer activation.
+not_official:
+- registry: npm
+  name: lianlianpay
+  url: https://www.npmjs.com/package/lianlianpay
+  reason: community package maintained by nswbmw (github.com/nswbmw/lianlianpay-node), not LianLian
+- registry: npm
+  name: llpay
+  url: https://www.npmjs.com/package/llpay
+  reason: community package maintained by zaraguo
+- registry: npm
+  name: lianlian
+  url: https://www.npmjs.com/package/lianlian
+  reason: unrelated package, no repository metadata
+registries_searched:
+  npm: hit
+  pypi: none
+  maven-central: none
+  nuget: not-listed
+  rubygems: not-listed
+  packagist: not-listed
+  crates.io: not-listed
+  pkg.go.dev: not-listed

@@ -1,0 +1,70 @@
+openapi: 3.1.0
+x-stoplight:
+  id: ztrytr7ruzey9
+info:
+  title: Balance API
+  version: '1.0'
+  contact:
+    email: fx_support@lianlianpay.com
+  description: This section contains the operations and models of LianLian Global fx rate service.
+servers:
+  - url: 'https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1'
+    description: Live Server
+paths:
+  '/balance/{currency}':
+    get:
+      summary: Get Currency Account Balance
+      operationId: get-balance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency:
+                    type: string
+                    x-stoplight:
+                      id: ds1oqhlw38tzi
+                    description: "Account currency\r\n\r\n"
+                    maxLength: 3
+                  balance:
+                    type: string
+                    x-stoplight:
+                      id: jn5gfg7ta6nkp
+                    description: "Account balance\r\n\r\n"
+                    maxLength: 15
+                required:
+                  - currency
+                  - balance
+              examples:
+                Example 1:
+                  value:
+                    currency: USD
+                    balance: '5004320.33'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content: {}
+        description: ''
+      description: Query currency account balance<br>查询币种账户余额
+      x-stoplight:
+        id: 3wg9pivf3rjgm
+    parameters:
+      - schema:
+          type: string
+        name: currency
+        in: path
+        required: true
+components:
+  schemas: {}

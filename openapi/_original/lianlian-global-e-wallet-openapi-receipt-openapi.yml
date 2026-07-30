@@ -1,0 +1,170 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "rctblt0g4hrjv"
+    },
+    "info": {
+        "title": "Receipt",
+        "version": "1.0",
+        "description": " The amount received from payer."
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-receipts/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "Transaction ID"
+                }
+            ],
+            "get": {
+                "summary": "Get Receipt Info by ID",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Receipt"
+                                },
+                                "examples": {
+                                    "example-1": {
+                                        "value": {
+                                            "fee": "string",
+                                            "receive_amount": "string",
+                                            "receive_currency": "string",
+                                            "payer_source_id_type": "EMAIL",
+                                            "payer_source_id": "string",
+                                            "account_no": "string",
+                                            "context": "string",
+                                            "payer_name": "string",
+                                            "payee_source_id": "string",
+                                            "id": "string",
+                                            "message": "string",
+                                            "user_id": "string",
+                                            "create_time": "string",
+                                            "name": "string",
+                                            "status": "PROCESSING"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Transaction Not Found"
+                    }
+                },
+                "operationId": "get-receipt-by-id",
+                "description": "Get Receipt by transaction ID."
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Receipt": {
+                "type": "object",
+                "x-tags": [
+                    "Models"
+                ],
+                "title": "Receipt",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique ID created by the LianLian Global."
+                    },
+                    "business_order_id": {
+                        "type": "string",
+                        "description": "Business Order ID."
+                    },
+                    "account_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the LianLian Global account."
+                    },
+                    "receive_amount": {
+                        "type": "string",
+                        "description": "The receive amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "receive_currency": {
+                        "type": "string",
+                        "description": "The receive currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "payer_name": {
+                        "type": "string",
+                        "description": "Name of payer."
+                    },
+                    "payer_source_id_type": {
+                        "type": "string",
+                        "description": "Payer's email or mobile.",
+                        "enum": [
+                            "EMAIL",
+                            "MOBILE"
+                        ]
+                    },
+                    "payer_source_id": {
+                        "type": "string",
+                        "description": "Payer's email or mobile."
+                    },
+                    "fee": {
+                        "type": "string",
+                        "description": "The Receipt fee amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "context": {
+                        "type": "string"
+                    },
+                    "payee_source_id": {
+                        "type": "string",
+                        "description": "Payee's email or mobile."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of receipt from."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "This is the postscript information from payer."
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the User."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status of Receipt.",
+                        "enum": [
+                            "PROCESSING",
+                            "FAILED",
+                            "CANCELLED",
+                            "REFUNDING",
+                            "REFUNDED",
+                            "COMPLETED"
+                        ]
+                    },
+                    "create_time": {
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch. It's a `long` type number. ",
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}

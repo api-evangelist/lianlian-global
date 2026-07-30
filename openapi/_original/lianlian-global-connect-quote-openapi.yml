@@ -1,0 +1,69 @@
+openapi: 3.1.0
+x-stoplight:
+  id: hxzhwuf62pjoe
+info:
+  title: Rate
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /v1/quote:
+    get:
+      summary: 汇率查询
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+      operationId: get-v1-quote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target_currency:
+                  type: string
+                  description: |-
+                    目的币种，3位，参考：
+                    https://www.iso.org/iso-4217-currency-codes.html
+                source_currency:
+                  type: string
+                  description: |-
+                    源币种，3位，参考：
+                    https://www.iso.org/iso-4217-currency-codes.html
+              required:
+                - target_currency
+                - source_currency
+    parameters: []
+components:
+  schemas:
+    Quote:
+      title: Quote
+      x-stoplight:
+        id: 0oawlhjox7l2p
+      type: object
+      properties:
+        rate:
+          type: string
+          description: 汇率
+          maxLength: 16
+        rate_id:
+          type: string
+          description: 汇率id
+          maxLength: 32
+        source_currency:
+          type: string
+          description: '目的币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html'
+        base_currency:
+          type: string
+          description: '基础币种，3位，参考https://www.iso.org/iso-4217-currency-codes.html'
+        start_time:
+          type: string
+          description: 汇率有效开始时间，10位 秒级时间戳
+        end_time:
+          type: string
+          description: 汇率有效结束时间，10位 秒级时间戳

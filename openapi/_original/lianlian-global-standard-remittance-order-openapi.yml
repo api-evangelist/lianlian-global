@@ -1,0 +1,472 @@
+swagger: '2.0'
+x-stoplight:
+  id: 9yrv1ubz6a7ck
+info:
+  title: Transaction API
+  description: |-
+    Through the **Create a Transaction** interface, the CNY balance in the counterparty's account can be converted into foreign currency and then remitted to the designated bank account.
+    If the remittance is successful, the bank initiates a refund, *LianLian Global* will automatically process the refund. The refund result will be notified through a webhook message, and the status of the remittance instruction will change to **PAYMENT_REVERSED_AFTER_SUCCESS**, you can also proactively query results through the **Get Transaction Details** interface.<br>通过**Create a Transaction**接口可将对接方账户中的人民币余额汇兑成外币，再汇出至指定银行账户。
+    如汇兑汇出成功后，银行发起退汇，*连连国际*会自动进行退汇处理，退汇结果通过webhook消息通知，汇出指令状态变更为 **PAYMENT_REVERSED_AFTER_SUCCESS**，您也可以通过 **Get Transaction Details** 接口主动查询结果。
+  contact:
+    email: fx_support@lianlianpay.com
+  version: '1.0'
+host: gtest-open-api.lianlianpay-inc.com
+basePath: /remittance/outward/v2/order
+schemes:
+  - https
+paths:
+  /apply:
+    post:
+      tags:
+        - Operations
+      summary: Create a Transaction
+      description: |-
+        Transfer the CNY balance in the counterparty's account to foreign currency and then transfer it to the designated bank account.<br>
+        将对接方账户中的人民币余额汇兑成外币，再汇出至指定银行账户。
+      operationId: post-order
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            description: Transaction request params
+            properties:
+              transactionId:
+                type: string
+                description: Transaction request id from client
+                maxLength: 32
+                x-stoplight:
+                  id: pzbzraohd26xn
+              pricingCurrency:
+                type: string
+                description: "Pricing currency:\r\nif pricing currency is source currency, the targetAmount is calculated according to sourceAmount and exchange rate"
+                maxLength: 3
+                x-stoplight:
+                  id: ju72sk7mwfgtf
+                minLength: 3
+              sourceCurrency:
+                description: 'Source currency, can only be `CNY`'
+                x-stoplight:
+                  id: 8jzfpxlz8hw8d
+                type: string
+                minLength: 3
+                maxLength: 3
+                example: CNY
+              sourceAmount:
+                description: 'Source amount, mandatory if target currency is pricing currency'
+                x-stoplight:
+                  id: pekx6af2x72ak
+                type: string
+                maxLength: 15
+              targetCurrency:
+                type: string
+                description: 'Target currency, one of USD|EUR|GBP|CAD|JPY|THB|AED|CNH|HKD|SGD|AUD|NZD'
+                maxLength: 3
+                x-stoplight:
+                  id: 6vagwywig3iev
+                minLength: 3
+              targetAmount:
+                type: string
+                description: 'Target amount, mandatory if target currency is pricing currency'
+                maxLength: 15
+                x-stoplight:
+                  id: d5rm68swbrhyf
+              paymentMethod:
+                x-stoplight:
+                  id: pwckyiwo841yr
+                enum:
+                  - LOCAL
+                  - SWIFT
+                description: 'Payment method, one of SWIFT, LOCAL'
+              payeeType:
+                description: "Payee type, one of \r\n\r\nColumn A | Column B \r\n----|-------\r\n BANK_ACCOUNT | Overseas bank account \r\n LL_ACCOUNT | LianLian Global account "
+                x-stoplight:
+                  id: x95m8izoufz4i
+                enum:
+                  - BANK_ACCOUNT
+                  - LL_ACCOUNT
+              payeeAccount:
+                type: string
+                description: Beneficiary account number
+                maxLength: 64
+                x-stoplight:
+                  id: 9jwmn1vdg6dix
+              payeeName:
+                type: string
+                x-stoplight:
+                  id: blys383mg5ssm
+                description: 'Beneficiary name,  mandatory if `payeeType = BANK_ACCOUNT`'
+                maxLength: 128
+              payeeAddress:
+                type: string
+                x-stoplight:
+                  id: bh17ht4fvyjie
+                description: 'Payee name,  mandatory if `payeeType = BANK_ACCOUNT`'
+                maxLength: 256
+              payeeBankAccountType:
+                x-stoplight:
+                  id: t2njxjxb1nloc
+                description: 'Payee bank account type, mandatory if `payeeType = BANK_ACCOUNT`'
+                enum:
+                  - INDIVIDUAL
+                  - CORPORATE
+              payeeCountryCode:
+                type: string
+                x-stoplight:
+                  id: i7l5dxrpe8056
+                description: 'Beneficiary country code, ISO 3166 Alpha-3 code,  mandatory if `payeeType = BANK_ACCOUNT`'
+                maxLength: 3
+                minLength: 3
+              payeeBankName:
+                type: string
+                x-stoplight:
+                  id: ipg3cbsghzbdl
+                description: 'Beneficiary bank name,  mandatory if `payeeType = BANK_ACCOUNT`'
+                maxLength: 128
+              payeeBankAddress:
+                type: string
+                x-stoplight:
+                  id: 1lxtalds8jxun
+                description: 'Beneficiary bank address,  mandatory if `payeeType = BANK_ACCOUNT`'
+                maxLength: 236
+              payeeBankDistrict:
+                type: string
+                x-stoplight:
+                  id: jjj6eei4up0nq
+                description: 'Beneficiary bank account region, ISO 3166 Alpha-2,  mandatory if `payeeType = BANK_ACCOUNT`'
+                maxLength: 2
+                minLength: 2
+              payeeBankSwiftCode:
+                type: string
+                x-stoplight:
+                  id: xb8b5c95rrk46
+                description: 'Beneficiary bank SWIFT code,  mandatory if `payeeType = BANK_ACCOUNT`'
+                maxLength: 32
+              payeeBankType:
+                x-stoplight:
+                  id: x6qhaqmpnqykb
+                description: "Beneficiary bank account type, please refer to appendix [Local Payout Rules](https://developer.lianlianglobal.com/docs/standard-remittance/o5ga4341u9yav-local-payout-rules).\r\nOne of:\r\n|PAYEE BANK TYPE|DESCRIPTION|\r\n|---|---|\r\n|IBAN|Payout EUR through local channels|\r\n|SORT|Payout GBP through local channels|\r\n|ABA|Payout USD through local channels|\r\n|CC|Payout CAD through local channels|\r\n|BSB|Payout NZD、AUD through local channels|\r\n|ZENGIN|Payout JPY through local channels|\r\n|BILLERCODE|Payout AUD through Bpay|\r\n|BC|Payout GBP、EUR through local channels|\r\n\t"
+                enum:
+                  - IBAN
+                  - SORT
+                  - BSB
+                  - CC
+                  - ZENGIN
+                  - BILLERCODE
+                  - BC
+              payeeBankCode:
+                type: string
+                x-stoplight:
+                  id: c9yjjp7jns8ml
+                description: 'Beneficiary bank code, please refer to the appendix [Local Payout Rules](https://developer.lianlianglobal.com/docs/standard-remittance/o5ga4341u9yav-local-payout-rules) for the filling rules'
+                maxLength: 16
+              referenceForBeneficiary:
+                type: string
+                x-stoplight:
+                  id: in86qt4f9uu9g
+                description: Reference for benificiary
+                maxLength: 512
+            required:
+              - transactionId
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+              - payeeType
+              - payeeAccount
+          description: ''
+          x-examples:
+            Example 1:
+              transactionId: Pay2023010100001
+              pricingCurrency: CNY
+              sourceCurrency: CNY
+              sourceAmount: '2300.00'
+              targetCurrency: USD
+              targetAmount: '343.43'
+              paymentMethod: LOCAL
+              payeeType: BANK_ACCOUNT
+              payeeAccount: ES320067503627
+              payeeName: David Moreno
+              payeeAddress: '288 Lygon st,Carlton,VIC 3053'
+              payeeBankAccountType: INDIVIDUAL
+              payeeCountryCode: USA
+              payeeBankName: National Australia Bank
+              payeeBankAddress: AUS
+              payeeBankDistrict: AU
+              payeeBankSwiftCode: NATAAU3303M
+              payeeBankType: IBAN
+              payeeBankCode: FR9730002004070000009577J45
+              referenceForBeneficiary: pay to Leo
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+                x-stoplight:
+                  id: x2vvw04ebrjl7
+                maxLength: 32
+                description: Transaction request id from client
+              status:
+                x-stoplight:
+                  id: xw1xaao2e3c24
+                enum:
+                  - WAIT_PAYMENT
+                  - PAYMENT_PROCESSING
+                  - PAYMENT_SUCCESS
+                  - PAYMENT_REVERSED_AFTER_SUCCESS
+                  - PAYMENT_REVERSED_AFTER_SUCCESS
+                description: "Transaction creation results, one of \r\n\r\nstatus | description\r\n---------|------\r\n WAIT_PAYMENT | 等待付款 \r\n PAYMENT_PROCESSING | 付款中 \r\n PAYMENT_SUCCESS | 付款成功\r\n PAYMENT_REVERSED_AFTER_SUCCESS|红冲\r\n PAYMENT_FAILED|付款失败"
+            required:
+              - transactionId
+              - status
+          examples:
+            Example 1:
+              transactionId: Pay202301010001
+              status: WAIT_PAYMENT
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 180400|指令已存在|
+            | 180401|指令对应的申报材料不存在|
+            |180402|指令存在kyc未通过的申报材料|
+            |180403|指令与申报材料目标币种不一致|
+            |180404|指令金额与申报材料金额不一致|
+            | 999995|参数校验不通过 |
+          schema:
+            type: object
+            description: Failed object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '180400'
+              message: 指令已存在
+              httpCode: '400'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact Lianlian Pay for technical support'
+              httpCode: '500'
+      x-stoplight:
+        id: uji84jq5r55b1
+    parameters: []
+  /get:
+    post:
+      tags:
+        - Operations
+      summary: Get Transaction Details
+      description: Get transaction details in LianLian Global's system by `transactionId`.<br>通过`transactionId`查询连连国际系统中的付款交易详细信息。
+      operationId: get-order
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+                description: Transaction ID from client
+                maxLength: 32
+                x-stoplight:
+                  id: iivx6qp4cvgrx
+            required:
+              - transactionId
+          description: ''
+          x-examples:
+            Example 1:
+              transactionId: Pay2023010100001
+      schemes:
+        - https
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+                description: Transaction request id from client
+                maxLength: 32
+                x-stoplight:
+                  id: pzbzraohd26xn
+              pricingCurrency:
+                type: string
+                description: "Pricing currency:\r\nif pricing currency is source currency, the targetAmount is calculated according to sourceAmount and exchange rate"
+                maxLength: 3
+                x-stoplight:
+                  id: ju72sk7mwfgtf
+                minLength: 3
+              sourceCurrency:
+                description: 'Source currency, can only be `CNY`'
+                x-stoplight:
+                  id: 8jzfpxlz8hw8d
+                type: string
+                minLength: 3
+                maxLength: 3
+                example: CNY
+              sourceAmount:
+                description: 'Source amount, mandatory if target currency is pricing currency'
+                x-stoplight:
+                  id: pekx6af2x72ak
+                type: string
+                maxLength: 15
+              targetCurrency:
+                type: string
+                description: 'Target currency, one of USD|EUR|GBP|CAD|JPY|THB|AED|CNH|HKD|SGD|AUD|NZD'
+                maxLength: 3
+                x-stoplight:
+                  id: 6vagwywig3iev
+                minLength: 3
+              targetAmount:
+                type: string
+                description: 'Target amount, mandatory if target currency is pricing currency'
+                maxLength: 15
+                x-stoplight:
+                  id: d5rm68swbrhyf
+              fxRate:
+                type: string
+                x-stoplight:
+                  id: j56hcxi1xvvsg
+                maxLength: 16
+                description: Exchange rate
+              status:
+                type: string
+                x-stoplight:
+                  id: pdvh1k4skg0fp
+                description: "Transaction creation results, one of \r\n\r\nstatus | description\r\n---------|------\r\n WAIT_PAYMENT | 等待付款 \r\n PAYMENT_PROCESSING | 付款中 \r\n PAYMENT_SUCCESS | 付款成功\r\n PAYMENT_REVERSED_AFTER_SUCCESS|红冲\r\n PAYMENT_FAILED|付款失败"
+              failReason:
+                type: string
+                x-stoplight:
+                  id: 924ekx7qjxlny
+                description: Failure reason
+                maxLength: 128
+              refundCurrency:
+                type: string
+                x-stoplight:
+                  id: d7u6x739tpn5q
+                minLength: 3
+                maxLength: 3
+                description: 'Refund currency, return on refund'
+              refundAmount:
+                type: string
+                x-stoplight:
+                  id: riocb7smoese7
+                maxLength: 15
+                description: 'Refund amount, return on refund'
+            required:
+              - transactionId
+              - status
+          examples:
+            Example 1:
+              transactionId: Pay2023010100001
+              pricingCurrency: CNY
+              sourceCurrency: CNY
+              sourceAmount: '2300.00'
+              targetCurrency: USD
+              targetAmount: '343.43'
+              fxRate: '7.239574'
+              status: PAYMENT_SUCCESS
+              failReason: 付款成功
+              refundCurrency: USD
+              refundAmount: '200.00'
+        '400':
+          description: |-
+            Bad Request
+
+            Possible error codes:
+
+            | Code | Description |
+            |------|-------------|
+            | 999995 |Parameter is error. |
+          schema:
+            type: object
+            description: Failed object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '999995'
+              message: Parameter is error
+              httpCode: '400'
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            description: Error object in Lianlian Global's system
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+              httpCode:
+                type: string
+            required:
+              - code
+              - message
+              - httpCode
+          examples:
+            Example 1:
+              code: '500000'
+              message: 'Internal Server Error, Contact LianLian Global for technical support'
+              httpCode: '500'
+      x-stoplight:
+        id: ngr9a53836ill
+    parameters: []
+tags:
+  - name: Operations
+definitions: {}
+produces:
+  - application/json
+consumes:
+  - application/json

@@ -1,0 +1,119 @@
+swagger: '2.0'
+info:
+  title: Receipt API
+  version: '1.0'
+  description: ''
+host: global-api.lianlianpay.com/
+paths:
+  /receipt:
+    post:
+      summary: Create Receipt
+      operationId: post-receipt
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Receipt'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: string
+              receiptType:
+                type: string
+                enum:
+                  - RECEIPT
+                  - VOUCHER
+                  - VCC_AUTH_RECEIPT
+                description: |
+                  Receipt type,one of:
+
+                  |RECEIPTTYPE|DESCRIPTION|
+                  |---|---|
+                  |RECEIPT|Payment processing notice|
+                  |VOUCHER|Payment invoice|
+                  |VCC_AUTH_RECEIPT|VCC payment processing notice|
+      tags:
+        - OPERATIONS
+  '/receipt/{transactionId}':
+    parameters:
+      - type: string
+        name: transactionId
+        in: path
+        required: true
+    get:
+      summary: Get Receipt Info
+      operationId: get-receipt-transactionId
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Receipt'
+      tags:
+        - OPERATIONS
+basePath: outbound/card/v1/
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  Receipt:
+    title: Receipt
+    type: object
+    description: |
+      Payout object defined in Lianlian Pay system.
+    x-tags:
+      - Models
+    x-examples: {}
+    properties:
+      transacionId:
+        type: string
+        description: Payout request id from client
+        maxLength: 32
+      documentId:
+        type: string
+      receiptType:
+        type: string
+        enum:
+          - RECEIPT
+          - VOUCHER
+          - VCC_AUTH_RECEIPT
+        description: |-
+          Receipt type,one of:
+
+          |RECEIPTTYPE|DESCRIPTION|
+          |---|---|
+          |RECEIPT|Payment processing notice|
+          |VOUCHER|Payment invoice|
+          |VCC_AUTH_RECEIPT|VCC payment processing notice|
+      createTime:
+        type: string
+        description: 'create time, UTC+0'
+        maxLength: 24
+      modifyTime:
+        type: string
+        description: 'Modify Time, UTC+0'
+        maxLength: 24
+      status:
+        type: string
+        description: |-
+          Receipt creation status, one of 
+
+          |Code|Description|
+          |--|--|
+          |CREATING|receipt creation request processing|
+          |CREATED|receipt created|
+          |FAILED|receipt creation failed|
+        enum:
+          - CREATING
+          - CREATED
+          - FAILED
+    required:
+      - transacionId
+tags:
+  - name: OPERATIONS

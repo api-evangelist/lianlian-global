@@ -1,0 +1,165 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "6mpkrljtm6vro"
+    },
+    "info": {
+        "title": "Withdrawal",
+        "version": "1.0",
+        "description": "Transfer funds from your Balance Account to your bank account."
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-withdrawals/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "transaction ID"
+                }
+            ],
+            "get": {
+                "summary": "Get Withdrawal Info by ID",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Withdrawal"
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "operationId": "get-withdrawals-ID",
+                "description": "Retrieve the information of the Withdrawal transaction with the matching ID."
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Withdrawal": {
+                "type": "object",
+                "x-examples": {
+                    "example-1": {
+                        "id": "220500731206",
+                        "business_order_id": "220500731206",
+                        "user_id": "2022042512674869",
+                        "fee": "0.00",
+                        "receive_currency": "USD",
+                        "receive_amount": "111.00",
+                        "pay_currency": "USD",
+                        "pay_amount": "111.00",
+                        "account_no": "0201002580250",
+                        "estimate": false,
+                        "name": "Franklin Music",
+                        "fail_code": "",
+                        "fail_reason": "",
+                        "create_time": 1650879380000,
+                        "modify_time": 1650879380000,
+                        "status": "COMPLETE"
+                    }
+                },
+                "x-tags": [
+                    "Models"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique ID created by the LianLian Global."
+                    },
+                    "business_order_id": {
+                        "type": "string",
+                        "description": "Business Order ID."
+                    },
+                    "account_id": {
+                        "type": "string",
+                        "description": "The Balance Account ID actually paid by."
+                    },
+                    "receive_currency": {
+                        "type": "string",
+                        "description": "The receive currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "receive_amount": {
+                        "type": "string",
+                        "description": "The received amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "pay_currency": {
+                        "type": "string",
+                        "description": "The currency actually paid (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "pay_amount": {
+                        "type": "string",
+                        "description": "The amount actually paid, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "fee": {
+                        "type": "string",
+                        "description": "The fee amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "estimate": {
+                        "type": "boolean",
+                        "description": "Whether it is an estimated amount."
+                    },
+                    "failure_code": {
+                        "type": "string",
+                        "description": "This field occurs when an error occurs during withdrawal."
+                    },
+                    "failure_reason": {
+                        "type": "string",
+                        "description": "This field occurs when an error occurs during withdrawal."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "The withdrawal status.",
+                        "enum": [
+                            "PROCESSING",
+                            "FAILED",
+                            "CANCELLED",
+                            "REFUNDING",
+                            "REFUNDED",
+                            "COMPLETED"
+                        ]
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the User."
+                    },
+                    "create_time": {
+                        "type": "integer",
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch."
+                    },
+                    "bank_info": {
+                        "$ref": "./CommonModel.json#/components/schemas/Bank"
+                    },
+                    "conversion": {
+                        "$ref": "./CommonModel.json#/components/schemas/ConversionBasicInfo"
+                    }
+                },
+                "title": "Withdrawal"
+            }
+        }
+    }
+}

@@ -1,0 +1,460 @@
+swagger: '2.0'
+info:
+  title: Payout API
+  version: '1.0'
+host: global-api.lianlianpay.com
+paths:
+  /payout:
+    post:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Payout'
+      summary: Create Payout
+      tags:
+        - OPERATIONS
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            title: Payout
+            type: object
+            x-tags:
+              - Models
+            x-examples: {}
+            properties:
+              payoutId:
+                type: string
+                description: Payout request id from client
+                maxLength: 32
+              billId:
+                type: string
+                description: Bill id from client
+                maxLength: 32
+              pricingCurrency:
+                type: string
+                description: |-
+                  Pricing currency:
+                  ISO 3166 Alpha-3，if pricing currency is sourcing currency, the targetAmount is calculated according to sourceAmount and exchange rate
+                maxLength: 3
+              sourceCurrency:
+                type: string
+                description: sourcing currency
+                maxLength: 3
+              sourceAmount:
+                type: string
+                description: 'sourcing currency, mandatory if targeting currency is pricing currency'
+                maxLength: 24
+              targetCurrency:
+                type: string
+                description: targeting currency
+                maxLength: 3
+              targetAmount:
+                type: string
+                description: 'targeting amount, mandatory if targeting currency is pricing currency'
+                maxLength: 24
+              poboPayerInfo:
+                type: object
+                description: 'Payer Info, mandatory if you want to pay on behalf of another entity (POBO)'
+                properties:
+                  payerId:
+                    type: string
+                    maxLength: 64
+                    description: Payer unique ID
+                  payerName:
+                    type: string
+                    maxLength: 64
+                    description: Payer Name
+                  payerAddress:
+                    type: string
+                    maxLength: 256
+                    description: Payer Address
+                  payerRegion:
+                    type: string
+                    x-stoplight:
+                      id: 6yvpr3tni3om6
+                    minLength: 3
+                    maxLength: 3
+                    description: 'Payer country, ISO 3166 code'
+              payeeBankAccount:
+                type: object
+                description: Beneficiary bank account information
+                properties:
+                  payeeCountryCode:
+                    type: string
+                    description: 'Beneficiary account country, ISO 3166 code'
+                    maxLength: 3
+                  payeeName:
+                    type: string
+                    description: beneficiary name
+                    maxLength: 72
+                  payeeAddress:
+                    type: string
+                    description: beneficiary address
+                    maxLength: 256
+                  payeeBankDistrict:
+                    type: string
+                    description: beneficiary bank account region
+                    maxLength: 128
+                  payeeBankAccountType:
+                    type: string
+                    description: |
+                      |payeeBankAccountType| description |
+                      |--------|-------------|
+                      |INDIVIDUAL|个人|
+                      |CORPORATE|企业|
+                    enum:
+                      - INDIVIDUAL
+                      - CORPORATE
+                  payeeBankName:
+                    type: string
+                    description: Beneficiary bank name
+                    maxLength: 128
+                  payeeBankType:
+                    type: string
+                    description: |-
+                      beneficiary bank account type, one of:
+                      |payeeBankType| description |
+                      |--------|-------------|
+                      |IBAN|IBAN |
+                      |SORT|SORT |
+                    enum:
+                      - IBAN
+                      - SORT
+                  payeeBankCode:
+                    type: string
+                    description: Beneficiary bank code
+                    maxLength: 128
+                  payeeBankAddress:
+                    type: string
+                    description: beneficiary bank address
+                    maxLength: 256
+                  payeeBankSwiftCode:
+                    type: string
+                    description: Beneficiary bank SWIFT code
+                    maxLength: 128
+                  payeeAccountNo:
+                    type: string
+                    description: Beneficiary account number
+                    maxLength: 72
+                required:
+                  - payeeCountryCode
+                  - payeeName
+                  - payeeBankName
+                  - payeeBankAddress
+                  - payeeBankSwiftCode
+                  - payeeAccountNo
+              swiftChargeOption:
+                type: string
+                description: |-
+                  (For SWIFT payments only), specify who should bear SWIFT charges， one of
+                  |Code|Description|
+                  |----|---|
+                  |PAYER|Payer bear the charges|
+                  |SHARED|Share the charges|
+                  |PAYEE|Payee bear the charges|
+              rfb:
+                type: string
+                description: rfb
+                maxLength: 40
+            required:
+              - payoutId
+              - billId
+              - pricingCurrency
+              - sourceCurrency
+              - targetCurrency
+  '/payout/{payoutId}':
+    get:
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Payout'
+      tags:
+        - OPERATIONS
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      summary: Get Payout Detail
+    parameters:
+      - name: payoutId
+        in: path
+        type: string
+        required: true
+        description: Payout request id from client
+basePath: /outbound/bill/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+definitions:
+  Payout:
+    title: Payout
+    type: object
+    description: |
+      Payout object defined in Lianlian Pay system.
+    x-tags:
+      - Models
+    x-examples: {}
+    properties:
+      payoutId:
+        type: string
+        description: Payout request id from client
+        maxLength: 32
+      billId:
+        type: string
+        description: Bill id from client
+        maxLength: 32
+      pricingCurrency:
+        type: string
+        description: |-
+          Pricing currency:
+          ISO 3166 Alpha-3，if pricing currency is sourcing currency, the targetAmount is calculated according to sourceAmount and exchange rate
+        maxLength: 3
+      sourceCurrency:
+        type: string
+        description: sourcing currency
+        maxLength: 3
+      sourceAmount:
+        type: string
+        description: 'sourcing currency, mandatory if targeting currency is pricing currency'
+        maxLength: 24
+      targetCurrency:
+        type: string
+        description: targeting currency
+        maxLength: 3
+      targetAmount:
+        type: string
+        description: 'targeting amount, mandatory if targeting currency is pricing currency'
+        maxLength: 24
+      refundCurrency:
+        type: string
+        description: Refund Currency
+        maxLength: 3
+        minLength: 3
+      refundAmount:
+        type: string
+        description: Refund Amount
+        maxLength: 24
+      poboPayerInfo:
+        type: object
+        description: 'Payer Info, mandatory if you want to pay on behalf of another entity (POBO)'
+        properties:
+          payerId:
+            type: string
+            maxLength: 64
+            description: Payer unique ID
+          payerName:
+            type: string
+            maxLength: 64
+            description: Payer Name
+          payerAddress:
+            type: string
+            maxLength: 256
+            description: Payer Address
+          payerRegion:
+            type: string
+            x-stoplight:
+              id: sh34i07d1hmyi
+            description: 'Payer country, ISO 3166 code'
+            minLength: 3
+            maxLength: 3
+      payeeBankAccount:
+        type: object
+        properties:
+          payeeCountryCode:
+            type: string
+            description: 'Beneficiary account country, ISO 3166 code'
+            maxLength: 3
+          payeeName:
+            type: string
+            description: beneficiary name
+            maxLength: 72
+          payeeAddress:
+            type: string
+            description: beneficiary address
+            maxLength: 256
+          payeeBankDistrict:
+            type: string
+            description: beneficiary bank account region
+            maxLength: 128
+          payeeBankAccountType:
+            type: string
+            description: |
+              |payeeBankAccountType| description |
+              |--------|-------------|
+              |INDIVIDUAL|个人|
+              |CORPORATE|企业|
+            enum:
+              - INDIVIDUAL
+              - CORPORATE
+          payeeBankName:
+            type: string
+            description: Beneficiary bank name
+            maxLength: 128
+          payeeBankType:
+            type: string
+            description: |-
+              beneficiary bank account type, one of:
+              |payeeBankType| description |
+              |--------|-------------|
+              |IBAN|IBAN |
+              |SORT|SORT |
+            enum:
+              - IBAN
+              - SORT
+          payeeBankCode:
+            type: string
+            description: Beneficiary bank code
+            maxLength: 128
+          payeeBankAddress:
+            type: string
+            description: beneficiary bank address
+            maxLength: 256
+          payeeBankSwiftCode:
+            type: string
+            description: Beneficiary bank SWIFT code
+            maxLength: 128
+          payeeAccountNo:
+            type: string
+            description: Beneficiary account number
+            maxLength: 72
+        required:
+          - payeeCountryCode
+          - payeeName
+          - payeeBankName
+          - payeeBankAddress
+          - payeeBankSwiftCode
+          - payeeAccountNo
+      swiftChargeOption:
+        type: string
+        description: |-
+          (For SWIFT payments only), specify who should bear SWIFT charges， one of
+          |Code|Description|
+          |----|---|
+          |PAYER|Payer bear the charges|
+          |SHARED|Share the charges|
+          |PAYEE|Payee bear the charges|
+      rfb:
+        type: string
+        description: rfb
+        maxLength: 40
+      status:
+        type: string
+        description: |
+          request status, one of:
+
+          | value | description |
+          |--------|-------------|
+          |PROCESSING|Processing|
+          |SUCCESS|Success|
+          |FAILED|Failed|
+          |HEDGED|Hedged|
+        enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+      failReason:
+        type: string
+        description: request failure reason
+        maxLength: 128
+      createTime:
+        type: string
+        description: 'create time, UTC+0'
+        maxLength: 24
+      rate:
+        type: string
+        description: FX rate
+        maxLength: 12
+      modifyTime:
+        type: string
+        description: 'Modify Time, UTC+0'
+        maxLength: 24
+    required:
+      - payoutId
+      - billId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - status
+  Payee Bank Account:
+    title: Payee Bank Account
+    type: object
+    description: Beneficiary bank account information
+    x-tags:
+      - Models
+    properties:
+      payeeCountryCode:
+        type: string
+        description: 'Beneficiary account country, ISO 3166 code'
+        maxLength: 3
+      payeeName:
+        type: string
+        description: beneficiary name
+        maxLength: 72
+      payeeAddress:
+        type: string
+        description: beneficiary address
+        maxLength: 256
+      payeeBankDistrict:
+        type: string
+        description: beneficiary bank account region
+        maxLength: 128
+      payeeBankAccountType:
+        type: string
+        description: |
+          |payeeBankAccountType| description |
+          |--------|-------------|
+          |INDIVIDUAL|个人|
+          |CORPORATE|企业|
+        enum:
+          - INDIVIDUAL
+          - CORPORATE
+      payeeBankName:
+        type: string
+        description: Beneficiary bank name
+        maxLength: 128
+      payeeBankType:
+        type: string
+        description: |-
+          beneficiary bank account type, one of:
+          |payeeBankType| description |
+          |--------|-------------|
+          |IBAN|IBAN |
+          |SORT|SORT |
+        enum:
+          - IBAN
+          - SORT
+      payeeBankCode:
+        type: string
+        description: Beneficiary bank code
+        maxLength: 128
+      payeeBankAddress:
+        type: string
+        description: beneficiary bank address
+        maxLength: 256
+      payeeBankSwiftCode:
+        type: string
+        description: Beneficiary bank SWIFT code
+        maxLength: 128
+      payeeAccountNo:
+        type: string
+        description: Beneficiary account number
+        maxLength: 72
+    required:
+      - payeeCountryCode
+      - payeeName
+      - payeeBankName
+      - payeeBankAddress
+      - payeeBankSwiftCode
+      - payeeAccountNo
+tags:
+  - name: OPERATIONS

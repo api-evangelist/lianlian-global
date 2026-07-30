@@ -1,0 +1,258 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "drmdm24yuutvg"
+    },
+    "info": {
+        "title": "Receiving",
+        "version": "1.0",
+        "description": "Receiving Accounts are accounts that function as local bank accounts. \nThey can be used to collect funds from around the world. You get account details that enable you to collect funds from various platforms such as Amazon, Etsy, etc. \n\nYou can apply Receiving Accounts on LianLian Global's website, and by using Receiving API you could query your Receiving accounts and Receiving transactions detail information.\n\n![Wallet.png](https://stoplight.io/api/v1/projects/cHJqOjEyMDg0Ng/images/ooe1JpNsV1Q)"
+    },
+    "servers": [
+        {
+            "url": "https://test-global-api.lianlianpay-inc.com/gateway/v1/",
+            "description": "SANDBOX"
+        },
+        {
+            "url": "https://uk-api.lianlianglobal.com/gateway/v1/",
+            "description": "UK PRD"
+        },
+        {
+            "url": "https://us-api.lianlianglobal.com/gateway/v1/",
+            "description": "US PRD"
+        }
+    ],
+    "paths": {
+        "/ew-receivings/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true
+                }
+            ],
+            "get": {
+                "summary": "Get Receiving Info by ID",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Receiving"
+                                },
+                                "examples": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "operationId": "get-receivings-ID",
+                "description": "Retrieve the information of the Receiving with the matching transaction ID."
+            }
+        },
+        "/ew-receiving/accounts": {
+            "get": {
+                "summary": "Get Receiving Account list",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReceivingAccount"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-receivings-accounts",
+                "description": "Get list of receiving accounts created by your LianLian Global account.\n",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": []
+        },
+        "/ew-receiving/accounts/{id}": {
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "id",
+                    "in": "path",
+                    "required": true
+                }
+            ],
+            "get": {
+                "summary": "Get Receiving Account Info by ID",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReceivingAccount"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-receivings-accounts-id",
+                "description": "Retrieve the information of the Receiving Account with the matching ID."
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ReceivingAccount": {
+                "type": "object",
+                "x-tags": [
+                    "Models"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique ID created by the LianLian Global."
+                    },
+                    "nickname": {
+                        "type": "string",
+                        "description": "Nickname of `ReceivingAccount`"
+                    },
+                    "receiving_account_info": {
+                        "$ref": "./CommonModel.json#/components/schemas/VbaBankInfo"
+                    },
+                    "shops": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "./CommonModel.json#/components/schemas/UserShop"
+                        }
+                    }
+                }
+            },
+            "Receiving": {
+                "type": "object",
+                "x-tags": [
+                    "Models"
+                ],
+                "x-examples": {
+                    "example-1": {
+                        "id": "string",
+                        "user_id": "string",
+                        "creditor_name": "string",
+                        "creditor_account_no": "string",
+                        "receive_currency": "string",
+                        "receive_amount": "string",
+                        "entry_source": "string",
+                        "entry_amount": "string",
+                        "entry_currency": "string",
+                        "fee": "string",
+                        "memo": "string",
+                        "remind": "string",
+                        "ref": "string",
+                        "account_no": "string",
+                        "receive_account_no": "string",
+                        "status": "string",
+                        "create_time": 0
+                    }
+                },
+                "title": "Receiving",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique ID created by the LianLian Global."
+                    },
+                    "business_order_id": {
+                        "type": "string",
+                        "description": "Business Order ID."
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the User."
+                    },
+                    "creditor_name": {
+                        "type": "string",
+                        "description": "Name of creditor."
+                    },
+                    "creditor_account_no": {
+                        "type": "string",
+                        "description": "Account NO of creditor."
+                    },
+                    "receive_currency": {
+                        "type": "string",
+                        "description": "The receive currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "receive_amount": {
+                        "type": "string",
+                        "description": "The received amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "entry_platform_name": {
+                        "type": "string",
+                        "description": "Name of entry platform (e.g., Amazon)."
+                    },
+                    "entry_amount": {
+                        "type": "string",
+                        "description": "The entry amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "entry_currency": {
+                        "type": "string",
+                        "description": "The entry currency (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+                    },
+                    "fee": {
+                        "type": "string",
+                        "description": "The Receiving fee amount, main currency unit, rounded up to 2 decimal places."
+                    },
+                    "memo": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string",
+                        "description": "This is the postscript information."
+                    },
+                    "account_id": {
+                        "type": "string",
+                        "description": "Balance account ID."
+                    },
+                    "receive_account_no": {
+                        "type": "string",
+                        "description": "The Receiving Account NO."
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PROCESSING",
+                            "FAILED",
+                            "CANCELLED",
+                            "REFUNDING",
+                            "REFUNDED",
+                            "COMPLETED"
+                        ],
+                        "description": "Status of Receiving."
+                    },
+                    "create_time": {
+                        "type": "integer",
+                        "description": "The object creation time. Measured in milliseconds since the Unix epoch."
+                    }
+                }
+            }
+        }
+    }
+}

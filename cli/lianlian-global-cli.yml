@@ -1,0 +1,45 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/LLGlobal/lianlian-devtool
+name: EW DevTool
+repository: https://github.com/LLGlobal/lianlian-devtool
+language: python
+description: 'First-party Python CLI that provisions a LianLian Global e-Wallet sandbox: it registers a test account,
+  submits KYC, and activates the developer account to mint API credentials.'
+requirements:
+- Python 3.7 or above
+install:
+- method: source
+  command: git clone https://github.com/LLGlobal/lianlian-devtool
+- method: pip
+  command: pip install requests cryptography
+commands:
+- command: python main.py register
+  description: Register a sandbox account and submit KYC materials.
+- command: python main.py developer
+  description: Activate the developer account and retrieve API credentials once KYC is approved.
+- command: python main.py developer your@email.com
+  description: Activate a specific registered account by email.
+configuration:
+  file: config/config.json
+  fields:
+  - field: email
+    description: Registration email
+    auto_default: '{country}{timestamp}@chacuo.net'
+  - field: password
+    description: Login password
+    auto_default: test12345678
+  - field: country
+    description: Country code (HK/CN)
+    auto_default: HK
+  - field: kyc_name
+    description: Company name
+    auto_default: '{country} AUTO XXX INC'
+  - field: cert_no
+    description: Business certificate number
+    auto_default: Random 5-digit number
+  notes: Set any field to "auto" for auto-generation. Registered accounts are written to config/accounts/.
+flow:
+- register
+- wait for KYC approval (contact the LianLian dev team)
+- developer
