@@ -1,27 +1,2587 @@
 aid: lianlian-global
 name: LianLian Global
-description: 'LianLian Global is a company surfaced as a portfolio company of hongshan and added to the
-  API Evangelist network as a stub for enrichment. Sector: technology. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: LianLian Global (连连国际) is the cross-border payments arm of LianLian DigiTech, providing licensed collection,
+  disbursement, foreign exchange and card issuing rails for e-commerce sellers, marketplaces, travel platforms and
+  B2B traders moving money between China and the rest of the world. Its developer platform publishes 18 distinct
+  API products on a Stoplight portal at developer.lianlianglobal.com — covering B2C marketplace collection, multi-currency
+  e-wallets, global payout, B2B import/export settlement, standard remittance, tuition and travel payments, embedded
+  Connect accounts, virtual and physical card issuing, and the OAuth 2.0 LPPE platform surface — backed by 173 published
+  OpenAPI/Swagger specifications describing more than 550 operations. LianLian authenticates with API keys and OAuth
+  2.0, signs every request and webhook with RSA SHA-256 via the LLPAY-Signature header, and ships first-party Java
+  and TypeScript SDKs, a Python sandbox CLI and three published AI agent skills from its LLGlobal GitHub organization.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cb-img.lianlianpay.com/cb_static/images/logo/lianlianglobal@2x.png
 url: https://raw.githubusercontent.com/api-evangelist/lianlian-global/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - hongshan
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
-- Company
-- Technology
-apis: []
+- Payments
+- Cross-Border Payments
+- Foreign Exchange
+- E-Commerce
+- Card Issuing
+- Remittance
+- Financial Services
+- B2B Payments
+- Digital Wallet
+- China
+apis:
+- aid: lianlian-global:lianlian-global-account-api
+  name: LianLian Global Account API
+  description: The Account API from LianLian Global — 2 operation(s) for account.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-account-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-accounts-api
+  name: LianLian Global Accounts API
+  description: The Accounts API from LianLian Global — 6 operation(s) for accounts.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-accounts-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-agreement-api
+  name: LianLian Global Agreement API
+  description: The Agreement API from LianLian Global — 2 operation(s) for agreement.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Agreement
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-agreement-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-balance-api
+  name: LianLian Global Balance API
+  description: The Balance API from LianLian Global — 3 operation(s) for balance.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Balance
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-balance-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-beneficiaries-api
+  name: LianLian Global Beneficiaries API
+  description: The Beneficiaries API from LianLian Global — 2 operation(s) for beneficiaries.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Beneficiaries
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-beneficiaries-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-captchas-api
+  name: LianLian Global Captchas API
+  description: The Captchas API from LianLian Global — 1 operation(s) for captchas.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Captchas
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-captchas-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-card-payouts-api
+  name: LianLian Global Card Payouts API
+  description: The Card Payouts API from LianLian Global — 1 operation(s) for card payouts.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Card Payouts
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-card-payouts-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-checkout-api
+  name: LianLian Global Checkout API
+  description: The Checkout API from LianLian Global — 1 operation(s) for checkout.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Checkout
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-checkout-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-compliances-api
+  name: LianLian Global Compliances API
+  description: The Compliances API from LianLian Global — 2 operation(s) for compliances.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Compliances
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-compliances-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-conversion-api
+  name: LianLian Global Conversion API
+  description: The Conversion API from LianLian Global — 2 operation(s) for conversion.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Conversion
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-conversion-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-conversions-api
+  name: LianLian Global Conversions API
+  description: The Conversions API from LianLian Global — 2 operation(s) for conversions.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Conversions
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-conversions-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-default-api
+  name: LianLian Global 接口 API
+  description: The 接口 API from LianLian Global — 63 operation(s) for 接口.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - 接口
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-default-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-deposits-api
+  name: LianLian Global Deposits API
+  description: The Deposits API from LianLian Global — 2 operation(s) for deposits.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Deposits
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-deposits-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-ew-oauth2-api
+  name: LianLian Global Ew Oauth2 API
+  description: The Ew Oauth2 API from LianLian Global — 1 operation(s) for ew oauth2.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Ew Oauth2
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-ew-oauth2-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-ew-receipts-api
+  name: LianLian Global Ew Receipts API
+  description: The Ew Receipts API from LianLian Global — 1 operation(s) for ew receipts.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Ew Receipts
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-ew-receipts-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-ew-receiving-api
+  name: LianLian Global Ew Receiving API
+  description: The Ew Receiving API from LianLian Global — 2 operation(s) for ew receiving.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Ew Receiving
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-ew-receiving-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-ew-receivings-api
+  name: LianLian Global Ew Receivings API
+  description: The Ew Receivings API from LianLian Global — 1 operation(s) for ew receivings.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Ew Receivings
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-ew-receivings-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-ew-recharges-api
+  name: LianLian Global Ew Recharges API
+  description: The Ew Recharges API from LianLian Global — 1 operation(s) for ew recharges.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Ew Recharges
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-ew-recharges-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-ew-transactions-api
+  name: LianLian Global Ew Transactions API
+  description: The Ew Transactions API from LianLian Global — 1 operation(s) for ew transactions.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Ew Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-ew-transactions-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-ew-withdrawals-api
+  name: LianLian Global Ew Withdrawals API
+  description: The Ew Withdrawals API from LianLian Global — 1 operation(s) for ew withdrawals.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Ew Withdrawals
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-ew-withdrawals-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-files-api
+  name: LianLian Global Files API
+  description: The Files API from LianLian Global — 2 operation(s) for files.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-files-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-gateway-api
+  name: LianLian Global Gateway API
+  description: The Gateway API from LianLian Global — 24 operation(s) for gateway.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Gateway
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-gateway-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-get-api
+  name: LianLian Global Get API
+  description: The Get API from LianLian Global — 1 operation(s) for get.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Get
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-get-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-kyc-api
+  name: LianLian Global Kyc API
+  description: The Kyc API from LianLian Global — 5 operation(s) for kyc.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Kyc
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-kyc-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-member-api
+  name: LianLian Global Member API
+  description: The Member API from LianLian Global — 1 operation(s) for member.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Member
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-member-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-oauth2-api
+  name: LianLian Global Oauth2 API
+  description: The Oauth2 API from LianLian Global — 1 operation(s) for oauth2.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Oauth2
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-oauth2-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-operations-api
+  name: LianLian Global Operations API
+  description: The Operations API from LianLian Global — 117 operation(s) for operations.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-operations-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-payers-api
+  name: LianLian Global Payers API
+  description: The Payers API from LianLian Global — 2 operation(s) for payers.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Payers
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-payers-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-payment-api
+  name: LianLian Global Payment API
+  description: The Payment API from LianLian Global — 4 operation(s) for payment.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Payment
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-payment-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-payout-api
+  name: LianLian Global Payout API
+  description: The Payout API from LianLian Global — 2 operation(s) for payout.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Payout
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-payout-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-payouts-api
+  name: LianLian Global Payouts API
+  description: The Payouts API from LianLian Global — 7 operation(s) for payouts.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Payouts
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-payouts-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-query-api
+  name: LianLian Global Query API
+  description: The Query API from LianLian Global — 1 operation(s) for query.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Query
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-query-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-quote-api
+  name: LianLian Global Quote API
+  description: The Quote API from LianLian Global — 1 operation(s) for quote.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Quote
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-quote-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-quotes-api
+  name: LianLian Global Quotes API
+  description: The Quotes API from LianLian Global — 2 operation(s) for quotes.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-quotes-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-receipts-api
+  name: LianLian Global Receipts API
+  description: The Receipts API from LianLian Global — 3 operation(s) for receipts.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Receipts
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-receipts-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-receiving-accounts-api
+  name: LianLian Global Receiving Accounts API
+  description: The Receiving Accounts API from LianLian Global — 4 operation(s) for receiving accounts.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Receiving Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-receiving-accounts-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-refund-api
+  name: LianLian Global Refund API
+  description: The Refund API from LianLian Global — 2 operation(s) for refund.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Refund
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-refund-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-reports-api
+  name: LianLian Global Reports API
+  description: The Reports API from LianLian Global — 3 operation(s) for reports.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-reports-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-statement-api
+  name: LianLian Global Statement API
+  description: The Statement API from LianLian Global — 1 operation(s) for statement.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Statement
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-statement-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-topup-api
+  name: LianLian Global Topup API
+  description: The Topup API from LianLian Global — 2 operation(s) for topup.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Topup
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-topup-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-transaction-api
+  name: LianLian Global Transaction API
+  description: The Transaction API from LianLian Global — 2 operation(s) for transaction.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Transaction
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-transaction-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-transaction-documents-api
+  name: LianLian Global Transaction Documents API
+  description: >-
+    The Transaction Documents API from LianLian Global — 5 operation(s) for transaction documents.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Transaction Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-transaction-documents-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-transfer-api
+  name: LianLian Global Transfer API
+  description: The Transfer API from LianLian Global — 2 operation(s) for transfer.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Transfer
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-transfer-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-user-api
+  name: LianLian Global User API
+  description: The User API from LianLian Global — 1 operation(s) for user.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-user-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-users-api
+  name: LianLian Global Users API
+  description: The Users API from LianLian Global — 1 operation(s) for users.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-users-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-verifications-api
+  name: LianLian Global Verifications API
+  description: The Verifications API from LianLian Global — 2 operation(s) for verifications.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Verifications
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-verifications-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
+- aid: lianlian-global:lianlian-global-webhooks-api
+  name: LianLian Global Webhooks API
+  description: The Webhooks API from LianLian Global — 2 operation(s) for webhooks.
+  humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  baseURL: https://global-api.lianlianpay.com/b2b-export/v1
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/lianlian-global-webhooks-api-openapi.yml
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: >-
+      https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-
+  - type: DeveloperPortal
+    url: https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/lianlian-global-agentic-access.yml
+- type: DomainSecurity
+  url: security/lianlian-global-domain-security.yml
+- type: OAuthScopes
+  url: scopes/lianlian-global-scopes.yml
+- type: Authentication
+  url: authentication/lianlian-global-authentication.yml
 - type: Website
-  url: https://lianlianglobal.com
+  url: https://www.lianlianglobal.com
+- type: DeveloperPortal
+  url: https://developer.lianlianglobal.com
+- type: Documentation
+  url: https://developer.lianlianglobal.com
+- type: APIReference
+  url: https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction
+- type: GettingStarted
+  url: https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication
+- type: Support
+  url: https://support.us.lianlianglobal.com/hc/en-us
+- type: Blog
+  url: https://www.lianlianglobal.com/in-the-news
+- type: GitHubOrganization
+  url: https://github.com/LLGlobal
+- type: SignUp
+  url: https://account.lianlianglobal.com/signupguide
+- type: Login
+  url: https://global.lianlian.com/console
+- type: TermsOfService
+  url: https://us.lianlianglobal.com/legal/terms
+- type: PrivacyPolicy
+  url: https://us.lianlianglobal.com/legal/privacy-policy
+- type: Packages
+  url: packages/lianlian-global-packages.yml
+- type: SDKs
+  url: packages/lianlian-global-packages.yml
+- type: CLI
+  url: cli/lianlian-global-cli.yml
+- type: Sandbox
+  url: sandbox/lianlian-global-sandbox.yml
+- type: Conventions
+  url: conventions/lianlian-global-conventions.yml
+- type: Idempotency
+  url: conventions/lianlian-global-conventions.yml
+- type: ErrorCatalog
+  url: errors/lianlian-global-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/lianlian-global-lifecycle.yml
+- type: ChangeLog
+  url: changelog/lianlian-global-changelog.yml
+- type: Webhooks
+  url: asyncapi/lianlian-global-webhooks.yml
+- type: Conformance
+  url: conformance/lianlian-global-conformance.yml
+- type: WellKnown
+  url: well-known/lianlian-global-well-known.yml
+- type: MCPServer
+  url: mcp/lianlian-global-mcp.yml
+- type: LLMsTxt
+  url: llms/lianlian-global-llms.txt
+- type: DataModel
+  url: data-model/lianlian-global-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+  name: LianLian Global Agent Skills
+- type: AgentSkill
+  url: skills/lianlian-global-b2c-openapi-integration.md
+  name: LianLian B2C OpenAPI — Docs Search & Integration Skill
+- type: AgentSkill
+  url: skills/lianlian-global-vcc-openapi-integration.md
+  name: LianLian VCC OpenAPI Integration Skill
+- type: AgentSkill
+  url: skills/lianlian-global-lppe-payout.md
+  name: Create and track a cross-border payout
+- type: AgentSkill
+  url: skills/lianlian-global-lppe-receive.md
+  name: Open a receiving account and settle a deposit
+- type: AgentSkill
+  url: skills/lianlian-global-b2c-collection.md
+  name: Collect marketplace settlements and withdraw (B2C Services API)
+- type: Overlay
+  url: overlays/lianlian-global-b2b-inflow-payout-overlay.yaml
+  name: API Evangelist enhancements for B2B-inflow-payout
+- type: Overlay
+  url: overlays/lianlian-global-b2b-cross-border-overlay.yaml
+  name: API Evangelist enhancements for b2b-cross-border
+- type: Overlay
+  url: overlays/lianlian-global-cards-open-api-overlay.yaml
+  name: API Evangelist enhancements for cards-open-api
+- type: Overlay
+  url: overlays/lianlian-global-connect-overlay.yaml
+  name: API Evangelist enhancements for connect
+- type: Overlay
+  url: overlays/lianlian-global-connect-ota-overlay.yaml
+  name: API Evangelist enhancements for connect-ota
+- type: Overlay
+  url: overlays/lianlian-global-e-wallet-openapi-overlay.yaml
+  name: API Evangelist enhancements for e-wallet-openapi
+- type: Overlay
+  url: overlays/lianlian-global-global-payout-overlay.yaml
+  name: API Evangelist enhancements for global-payout
+- type: Overlay
+  url: overlays/lianlian-global-global-payout-fx-overlay.yaml
+  name: API Evangelist enhancements for global-payout-fx
+- type: Overlay
+  url: overlays/lianlian-global-global-payout-tuition-overlay.yaml
+  name: API Evangelist enhancements for global-payout-tuition
+- type: Overlay
+  url: overlays/lianlian-global-llg-payments-overlay.yaml
+  name: API Evangelist enhancements for llg-payments
+- type: Overlay
+  url: overlays/lianlian-global-llp-api-overlay.yaml
+  name: API Evangelist enhancements for llp-api
+- type: Overlay
+  url: overlays/lianlian-global-lppe-overlay.yaml
+  name: API Evangelist enhancements for lppe
+- type: Overlay
+  url: overlays/lianlian-global-outbound-payout-overlay.yaml
+  name: API Evangelist enhancements for outbound-payout
+- type: Overlay
+  url: overlays/lianlian-global-outbound-payout-ka-overlay.yaml
+  name: API Evangelist enhancements for outbound-payout-ka
+- type: Overlay
+  url: overlays/lianlian-global-outbound-payout-service-overlay.yaml
+  name: API Evangelist enhancements for outbound-payout-service
+- type: Overlay
+  url: overlays/lianlian-global-outbound-payout-verification-overlay.yaml
+  name: API Evangelist enhancements for outbound-payout-verification
+- type: Overlay
+  url: overlays/lianlian-global-standard-remittance-overlay.yaml
+  name: API Evangelist enhancements for standard-remittance
+- type: Overlay
+  url: overlays/lianlian-global-triplink-overlay.yaml
+  name: API Evangelist enhancements for triplink
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
