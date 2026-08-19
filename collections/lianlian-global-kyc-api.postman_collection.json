@@ -1,0 +1,491 @@
+{
+  "item": [
+    {
+      "id": "9f03abfb-24b7-44a4-ab0f-385a4cd2d230",
+      "name": "Kyc",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2547ac89-f7fe-42d1-a114-177c1aecac01",
+          "name": "创建企业 KYC",
+          "request": {
+            "name": "创建企业 KYC",
+            "description": {
+              "content": "创建企业KYC",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "kyc",
+                "corporate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"member_id\": \"<string>\",\n  \"region\": \"<string>\",\n  \"name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"email\": \"<string>\",\n  \"register_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"business_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"enterprise_property\": \"<string>\",\n  \"business_nature\": \"<string>\",\n  \"corporate_cert\": {\n    \"value\": \"reference #/components/schemas/CorporateCert not found in the OpenAPI spec\"\n  },\n  \"staffs\": [\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  ],\n  \"name_en\": \"<string>\",\n  \"register_date\": \"<string>\",\n  \"website\": \"<string>\",\n  \"business_scope\": \"<string>\",\n  \"ubo\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"legalperson\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"director\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"authorized_user\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "625a0694-64c4-41d3-a197-e3ceb6ce4e38",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "kyc",
+                    "corporate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"member_id\": \"<string>\",\n  \"region\": \"<string>\",\n  \"name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"email\": \"<string>\",\n  \"register_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"business_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"enterprise_property\": \"<string>\",\n  \"business_nature\": \"<string>\",\n  \"corporate_cert\": {\n    \"value\": \"reference #/components/schemas/CorporateCert not found in the OpenAPI spec\"\n  },\n  \"staffs\": [\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  ],\n  \"name_en\": \"<string>\",\n  \"register_date\": \"<string>\",\n  \"website\": \"<string>\",\n  \"business_scope\": \"<string>\",\n  \"ubo\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"legalperson\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"director\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"authorized_user\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"\": {\n    \"value\": \"reference #/components/schemas/CorporateKycInfo not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31edbdaf-7306-48e3-88f7-44fcf318b823",
+          "name": "修改企业 KYC",
+          "request": {
+            "name": "修改企业 KYC",
+            "description": {
+              "content": "修改企业KYC",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "kyc",
+                "corporate",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"region\": \"<string>\",\n  \"name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"email\": \"<string>\",\n  \"register_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"business_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"enterprise_property\": \"<string>\",\n  \"business_nature\": \"<string>\",\n  \"corporate_cert\": {\n    \"value\": \"reference #/components/schemas/CorporateCert not found in the OpenAPI spec\"\n  },\n  \"staffs\": [\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  ],\n  \"name_en\": \"<string>\",\n  \"register_date\": \"<string>\",\n  \"website\": \"<string>\",\n  \"business_scope\": \"<string>\",\n  \"ubo\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"legalperson\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"director\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"authorized_user\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74987523-02ab-474f-b8c0-b3df1c687232",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "kyc",
+                    "corporate",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"region\": \"<string>\",\n  \"name\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"email\": \"<string>\",\n  \"register_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"business_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"enterprise_property\": \"<string>\",\n  \"business_nature\": \"<string>\",\n  \"corporate_cert\": {\n    \"value\": \"reference #/components/schemas/CorporateCert not found in the OpenAPI spec\"\n  },\n  \"staffs\": [\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  ],\n  \"name_en\": \"<string>\",\n  \"register_date\": \"<string>\",\n  \"website\": \"<string>\",\n  \"business_scope\": \"<string>\",\n  \"ubo\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"legalperson\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"director\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"authorized_user\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/CorporateStaffInfo not found in the OpenAPI spec\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"\": {\n    \"value\": \"reference #/components/schemas/CorporateKycInfo not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04861ec2-aed8-4456-9531-8e2eb6c0ce38",
+          "name": "创建个人KYC",
+          "request": {
+            "name": "创建个人KYC",
+            "description": {
+              "content": "创建个人kyc",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "kyc",
+                "individual"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"member_id\": \"<string>\",\n  \"region\": \"<string>\",\n  \"name\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"contact_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"phone\": \"<string>\",\n  \"email\": \"<string>\",\n  \"business_nature\": \"<string>\",\n  \" individual_cert  \": {\n    \"value\": \"reference #/components/schemas/IndividualCert not found in the OpenAPI spec\"\n  },\n  \"telephone\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28835b7e-6bb4-49b6-9206-845fd1426093",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "kyc",
+                    "individual"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9b0e25fe-7af2-4e84-aa6f-be7d0c03435a",
+          "name": "修改个人KYC",
+          "request": {
+            "name": "修改个人KYC",
+            "description": {
+              "content": "修改个人kyc",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "kyc",
+                "individual",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"member_id\": \"<string>\",\n  \"region\": \"<string>\",\n  \"name\": \"<string>\",\n  \"birthday\": \"<string>\",\n  \"contact_address\": {\n    \"\": {\n      \"value\": \"reference #/components/schemas/AddressInfo not found in the OpenAPI spec\"\n    }\n  },\n  \"phone\": \"<string>\",\n  \"email\": \"<string>\",\n  \"business_nature\": \"<string>\",\n  \" individual_cert  \": {\n    \"value\": \"reference #/components/schemas/IndividualCert not found in the OpenAPI spec\"\n  },\n  \"telephone\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d4b5dd1-2ed1-4735-8dc6-4e7b14cdcb92",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "kyc",
+                    "individual",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a5c043a-f785-4171-82b4-819c0214fc7a",
+          "name": "查询KYC信息",
+          "request": {
+            "name": "查询KYC信息",
+            "description": {
+              "content": "查询KYC信息",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "kyc",
+                ":member_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "member_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cacea2cd-c3e4-4513-a523-4a058b31db1a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "kyc",
+                    ":member_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "member_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"individual\": {\n    \"value\": \"reference #/components/schemas/IndividualKycInfo not found in the OpenAPI spec\"\n  },\n  \"corporate\": {\n    \"value\": \"reference #/components/schemas/CorporateKycInfo not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3337ac0d-d2c2-4283-927b-65ada88034f7",
+    "name": "Distribution Account Kyc API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

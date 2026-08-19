@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Compliances API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Compliances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a compliance material",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/compliances",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a compliance material"
+        },
+        {
+          "info": {
+            "name": "Get a compliance material by request_id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/compliances/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "客户端唯一请求ID"
+              }
+            ]
+          },
+          "docs": "Get a compliance material by request_id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Conversion API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conversion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "发起汇兑",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/conversion",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "发起汇兑"
+        },
+        {
+          "info": {
+            "name": "查询汇兑信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/conversion/:conversion_id",
+            "params": [
+              {
+                "name": "conversion_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "查询汇兑信息"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

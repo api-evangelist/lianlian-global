@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Deposits API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deposits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Receiving account deposit confirm",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/deposits/:deposit_id",
+            "params": [
+              {
+                "name": "deposit_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "收款账户入金确认。\r\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为PROCESSING。该接口不允许同一deposit_id并发提交，会返回REQUEST_CONFLICT\r\n对于接口超时情况，可使用deposit_id查询Get list of deposits接口获取处理结果"
+        },
+        {
+          "info": {
+            "name": "Get list of deposits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/deposits",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码,默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量,默认值20"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户ID"
+              },
+              {
+                "name": "account_number",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户账号"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "加款单币种"
+              },
+              {
+                "name": "deposit_id",
+                "value": "",
+                "type": "query",
+                "description": "加款单ID"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "加款单查询的开始日期，13位时间戳毫秒"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "加款单查询的截止日期，13位时间戳毫秒"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "加款单状态"
+              }
+            ]
+          },
+          "docs": "获取入金列表信息。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

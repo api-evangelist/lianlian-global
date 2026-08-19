@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Balance API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Balance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/balance",
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              }
+            ]
+          },
+          "docs": "获取账户当前余额信息。"
+        },
+        {
+          "info": {
+            "name": "Get history balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/balance/history",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "格式yyyyMMdd，东八区时区"
+              }
+            ]
+          },
+          "docs": "### 功能说明：\r\n获取账户历史日终余额\r\n### 日期date传参说明：\r\n- 每天10:00 AM（UTC+8）生成前一天的日终余额信息。\r\n### 日期date传参举例：\r\n- 在2025-04-07 10:00 AM查询date=20250407的内容，查无记录；\r\n- 在2025-04-08 8:00 AM查询date=20250407的内容，查无记录；\r\n- 在2025-04-08 10:00 AM查询date=20250407的内容，可正常查询20250407的日终余额内容。"
+        },
+        {
+          "info": {
+            "name": "Get Currency Account Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/balance/:currency",
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Query currency account balance<br>查询币种账户余额"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

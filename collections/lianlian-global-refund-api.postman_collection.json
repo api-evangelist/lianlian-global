@@ -1,0 +1,390 @@
+{
+  "item": [
+    {
+      "id": "1c6315be-f6c9-45da-8e99-1b47aa536190",
+      "name": "Refund",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33b1e1d3-b1f6-4abc-9106-f070417b12c2",
+          "name": "Get a refund detail by ID",
+          "request": {
+            "name": "Get a refund detail by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "accept_payments",
+                "refunds",
+                "request_id",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) 商户系统中该笔退款的唯一编码"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "9d20383e-858f-4e74-8494-652b200b2d64",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "refunds",
+                    "request_id",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 商户系统中该笔退款的唯一编码"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a820e417-aea8-48d7-a379-7c92c59c69ea",
+              "name": "code | message \r\n---------|----------\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.\r\nMERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\nMERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "refunds",
+                    "request_id",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 商户系统中该笔退款的唯一编码"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd9cbce6-d4cf-424b-ace2-a5d01c7f0c6c",
+              "name": "code | message \r\n---------|----------\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "refunds",
+                    "request_id",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 商户系统中该笔退款的唯一编码"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c592e408-2b72-4f7b-a9da-a4a1435b2c18",
+          "name": "Create a refund",
+          "request": {
+            "name": "Create a refund",
+            "description": {
+              "content": "### 功能说明：\r\n对指定的支付订单进行退款，支持多次部分退款。\r\n### 幂等说明：不支持幂等\r\n- request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id不同，业务字段相同时，按全新交易处理，创建新的Refund交易。\r\n### 超时方案：\r\n如果调用Create a refund接口超时，可使用request_id调用Get a refund detail by ID接口获取结果。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accept_payments",
+                "refunds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"payment_request_id\": \"<string>\",\n  \"amount_details\": {\n    \"product_money_amount\": \"<string>\",\n    \"fee_money_amount\": \"<string>\"\n  },\n  \"reason\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8554fa70-574b-4a42-b711-e9ee1ac97bf3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"payment_request_id\": \"<string>\",\n  \"amount_details\": {\n    \"product_money_amount\": \"<string>\",\n    \"fee_money_amount\": \"<string>\"\n  },\n  \"reason\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40796174-045f-4ddb-b670-2d2fef13ac5e",
+              "name": "code | message \r\n---------|----------\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.\r\nAMOUNT_NOT_EQUAL|The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\nMERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\r\nMERCHANT_ACCT_NOT_EXIST|The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\nPAYMENT_NOT_EXIST|Payment does not exist.\r\nPAYMENT_NOT_SUCCEED|Payment has not been successfully paid.\r\nREFUND_EXPIRED|Refund has expired.\r\nREFUND_AMOUNT_EXCEEDED|The refund amount cannot be greater than the paid amount.\r\nREQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID|The merchant account status is invalid.\r\nACCOUNT_BALANCE_INSUFFICIENT|Account balance insufficient.\r\nREFUND_NOT_SUPPORTED|Refunds are not supported.\r\nREQUEST_CONFLICT|The request cannot be processed as another request is being processed.\r\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "refunds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"payment_request_id\": \"<string>\",\n  \"amount_details\": {\n    \"product_money_amount\": \"<string>\",\n    \"fee_money_amount\": \"<string>\"\n  },\n  \"reason\": \"<string>\",\n  \"metadata\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a7d0e760-85b8-4d55-b8cf-4501475d5478",
+    "name": "Distribution Account Refund API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Files API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/files/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "### 功能说明\r\n上传文件，返回文件ID\r\n### 幂等说明\r\n不支持幂等，每次请求都会创建新的资源，并返回新的ID\r\n### 限制\r\n- 文件大小最大不能超过20M\r\n- 支持的文件类型：jpg、png、jpeg、bmp、pdf、csv、xls、xlsx\r\n- 限流说明：每日200次"
+        },
+        {
+          "info": {
+            "name": "Download a file by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/files/download",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "下载文件"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

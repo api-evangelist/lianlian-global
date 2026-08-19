@@ -1,0 +1,910 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Gateway API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gateway",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "查询账户余额",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/account",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n账户余额指的是单用户的各币种余额情况，包含以下几种类型：\r\n- Pending：授权但尚未被结算的交易总金额，余额处于冻结状态\r\n- Available：实际可用金额\r\n"
+        },
+        {
+          "info": {
+            "name": "查询资金明细",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/account/flow",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "新建子账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/subaccount/add",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n如需开通子用户模式，请联系客户经理申请配置"
+        },
+        {
+          "info": {
+            "name": "编辑子账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/subaccount/update",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "查询子账户列表",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/subaccount/list",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "注销子账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/subaccount/cancel",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "申请卡",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card POST",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n异步处理申卡请求，申卡成功CARD_STATUS_CHANGED Webhook通知，建议定时查询初始化状态的卡以获取最新状态。\r\n"
+        },
+        {
+          "info": {
+            "name": "申请卡(同步)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/apply/sync",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n同步处理申卡请求，申卡处理成功返回状态为VALID;申卡处理失败返回状态APPLYING,异步补偿申卡成功后发送webhook通知\r\n"
+        },
+        {
+          "info": {
+            "name": "查询卡详情",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/:cardId",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "卡唯一识别号"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "更新卡信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/:cardId",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "卡唯一识别号"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "注销卡",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/:cardId",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "卡唯一识别号"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "更新卡信息(新)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/:cardId/update",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "查询安全码",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/cvv2/:cardId",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "卡唯一识别号"
+              },
+              {
+                "name": "cardNo",
+                "value": "",
+                "type": "query",
+                "description": "16位完整卡号"
+              },
+              {
+                "name": "expiryDate",
+                "value": "",
+                "type": "query",
+                "description": "卡有效期"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "查询卡列表",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/card  GET",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardName",
+                "value": "",
+                "type": "query",
+                "description": "卡片名称"
+              },
+              {
+                "name": "pageNo",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "subAccountId",
+                "value": "",
+                "type": "query",
+                "description": "子账户id</br>开通了子账户模式的用户传"
+              },
+              {
+                "name": "timeStart",
+                "value": "",
+                "type": "query",
+                "description": "起始时间，格式yyyy-MM-dd</br>当queryMode=RECENT时，timeStart必填，且为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04\t"
+              },
+              {
+                "name": "timeEnd",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，格式yyyy-MM-dd</br>当queryMode=RECENT，timeEnd必填，且为近三内（包含今天）；"
+              },
+              {
+                "name": "queryMode",
+                "value": "",
+                "type": "query",
+                "description": "查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)</br>不传默认HISTORY;"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "冻结卡",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/freeze/:cardId",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "卡唯一识别号"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "解冻卡",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/unfreeze/:cardId",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path",
+                "description": "卡唯一识别号"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "卡充值申请",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/recharge/apply",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n仅供卡BIN:000000使用。</br>\r\n卡充值申请接口，单卡支持多次充值。如有使用Webhook，充值成功或失败会发送Webhook通知。"
+        },
+        {
+          "info": {
+            "name": "查询卡交易限额",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/:cardId/limit",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "更新卡交易限额",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/card/:cardId/limit",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "查询充值交易",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/transactions/topup",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "基础币种，默认USD"
+              },
+              {
+                "name": "timeStart",
+                "value": "",
+                "type": "query",
+                "description": "起始时间，格式yyyy-MM-dd HH:mm:ss"
+              },
+              {
+                "name": "timeEnd",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，格式yyyy-MM-dd HH:mm:ss"
+              },
+              {
+                "name": "pageNo",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小，至多200"
+              }
+            ]
+          },
+          "docs": "\r\n"
+        },
+        {
+          "info": {
+            "name": "查询授权交易",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/transactions/auth",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "timeStart",
+                "value": "",
+                "type": "query",
+                "description": "起始时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传时，timeStart为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04"
+              },
+              {
+                "name": "timeEnd",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传，timeEnd必须为近三天内（包含今天）"
+              },
+              {
+                "name": "pageNo",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小，至多200"
+              },
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "query",
+                "description": "卡唯一识别号"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "query",
+                "description": "交易单号"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "类型枚举： </br>- 授权（AUTH） </br>- 授权撤销（AUTH_REVERSAL） </br>- 验卡（CARD_VERIFY）</br>**如需要通过API查询验卡交易，请联系客户经理申请配置**"
+              },
+              {
+                "name": "bizType",
+                "value": "",
+                "type": "query",
+                "description": "类型枚举： </br>- 授权（1） </br>- 授权撤销（2） </br>- 验卡（12）</br>**如需要通过API查询验卡交易，请联系客户经理申请配置**"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "状态枚举： </br>- 成功（SUCCESS） </br>- 失败（FAIL）"
+              },
+              {
+                "name": "subAccountId",
+                "value": "",
+                "type": "query",
+                "description": "子账户id</br>开通了子账户模式的用户传"
+              },
+              {
+                "name": "queryMode",
+                "value": "",
+                "type": "query",
+                "description": "查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)<br>不传默认RECENT"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "查询账单明细",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/gateway/vcc-api/transactions/settle",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "timeStart",
+                "value": "",
+                "type": "query",
+                "description": "起始时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传时，timeStart为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04"
+              },
+              {
+                "name": "timeEnd",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传，timeEnd必须为近三天内（包含今天）"
+              },
+              {
+                "name": "pageNo",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小，至多200"
+              },
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "query",
+                "description": "卡唯一识别号"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "query",
+                "description": "交易单号(这里不是授权单号，是内部流水号)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "类型枚举： </br>- 消费（SETTLE） </br>- 退款（SETTLE_REVERSE） </br>- 提现（WITHDRAWAL） </br>- 卡充值扣款（CARD_RECHARGE） </br>- 卡充值退款（CARD_RECHARGE_REVERSE）</br>- 争议退款（DISPUTE_REFUND）"
+              },
+              {
+                "name": "subAccountId",
+                "value": "",
+                "type": "query",
+                "description": "子账户id</br>开通了子账户模式的用户传"
+              },
+              {
+                "name": "queryMode",
+                "value": "",
+                "type": "query",
+                "description": "查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)<br>不传默认RECENT"
+              }
+            ]
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n按需定时查询该接口获取账单明细"
+        },
+        {
+          "info": {
+            "name": "查询卡充值申请",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/transactions/card/recharge",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "子账户资金划转明细查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/sub-user/transfer/list",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "分配额度到子账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/sub-user/transfer/topup",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "子账户额度转回主账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/vcc-api/sub-user/transfer/refund",
+            "headers": [
+              {
+                "name": "Authorization:",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature:",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com"
+        },
+        {
+          "info": {
+            "name": "文件上传",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/gateway/v1/file/upload",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "文件上传"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

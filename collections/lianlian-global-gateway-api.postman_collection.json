@@ -1,0 +1,4606 @@
+{
+  "item": [
+    {
+      "id": "37c2418c-51c0-4810-b0c4-0fc86d03711c",
+      "name": "Gateway",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "16a793ab-acac-4a59-9293-fe83dce374da",
+          "name": "查询账户余额",
+          "request": {
+            "name": "查询账户余额",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n账户余额指的是单用户的各币种余额情况，包含以下几种类型：\r\n- Pending：授权但尚未被结算的交易总金额，余额处于冻结状态\r\n- Available：实际可用金额\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "084d7c2f-1129-427d-8275-199f097348bc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"accountList\": [\n      {\n        \"amount\": \"99800.00\",\n        \"currency\": \"GBP\",\n        \"frozenAmount\": \"4414.52\"\n      },\n      {\n        \"amount\": \"0.00\",\n        \"currency\": \"SGD\",\n        \"frozenAmount\": \"0.00\"\n      },\n      {\n        \"amount\": \"999980.00\",\n        \"currency\": \"EUR\",\n        \"frozenAmount\": \"20.00\"\n      }\n    ],\n    \"userId\": \"2023020766827854\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b8840c4-d751-44b7-b305-17adae58003d",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2513be06-fb4e-4d17-9d1b-82a9db9bc0b7",
+          "name": "查询资金明细",
+          "request": {
+            "name": "查询资金明细",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "account",
+                "flow"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pageNo\": \"<integer>\",\n  \"pageSize\": \"<integer>\",\n  \"acctDateTimeStart\": \"<string>\",\n  \"acctDateTimeEnd\": \"<string>\",\n  \"vccUserId\": \"<string>\",\n  \"serialNo\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"cardId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"transactionType\": {\n    \"value\": \"reference #/components/schemas/transactionType not found in the OpenAPI spec\"\n  },\n  \"accountType\": {\n    \"value\": \"reference #/components/schemas/accountType not found in the OpenAPI spec\"\n  },\n  \"subAccountName\": \"<string>\",\n  \"subAccountId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1960bb6e-5d88-4307-9547-e9c1146ab0ff",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "account",
+                    "flow"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageNo\": 1,\n  \"pageSize\": 10,\n  \"acctDateTimeStart\": \"2025-01-01\",\n  \"acctDateTimeEnd\": \"2025-02-27\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"total\": 3,\n    \"list\": [\n      {\n        \"amount\": \"10.00\",\n        \"cardName\": \"305879222977541\",\n        \"accountType\": \"VCC_ACCOUNT\",\n        \"debitOrCredit\": \"DEBIT\",\n        \"transactionId\": \"2025012092930317\",\n        \"serialNo\": \"20250120190501978130\",\n        \"remainAcctBalance\": \"9980.00\",\n        \"transactionType\": \"SETTLE\",\n        \"acctDateTime\": \"2025-01-20 19:05:01\",\n        \"last4digits\": \"4047\",\n        \"acctNo\": \"20241107000012\",\n        \"cardId\": \"2025012092871304\",\n        \"currency\": \"USD\"\n      },\n      {\n        \"amount\": \"10.00\",\n        \"cardName\": \"305879222977541\",\n        \"accountType\": \"VCC_ACCOUNT\",\n        \"debitOrCredit\": \"DEBIT\",\n        \"transactionId\": \"2025012092930398\",\n        \"serialNo\": \"20250120190501768303\",\n        \"remainAcctBalance\": \"9990.00\",\n        \"transactionType\": \"SETTLE\",\n        \"acctDateTime\": \"2025-01-20 19:05:01\",\n        \"last4digits\": \"4047\",\n        \"acctNo\": \"20241107000012\",\n        \"cardId\": \"2025012092871304\",\n        \"currency\": \"USD\"\n      },\n      {\n        \"amount\": \"10.50\",\n        \"cardName\": \"282924061885445\",\n        \"accountType\": \"VCC_ACCOUNT\",\n        \"debitOrCredit\": \"DEBIT\",\n        \"transactionId\": \"2025011686664964\",\n        \"serialNo\": \"20250116193005846236\",\n        \"remainAcctBalance\": \"-0.50\",\n        \"transactionType\": \"3DS_OTP_FEE\",\n        \"acctDateTime\": \"2025-01-16 19:30:05\",\n        \"last4digits\": \"8902\",\n        \"acctNo\": \"20241107000012\",\n        \"cardId\": \"2025011686540614\",\n        \"currency\": \"USD\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee1f8be6-f4d9-4947-82e3-3f1036e4e002",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "account",
+                    "flow"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pageNo\": 1,\n  \"pageSize\": 10,\n  \"acctDateTimeStart\": \"2025-01-01\",\n  \"acctDateTimeEnd\": \"2025-02-27\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1147ce8c-dec9-4794-a033-b43ea3236851",
+          "name": "新建子账户",
+          "request": {
+            "name": "新建子账户",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n如需开通子用户模式，请联系客户经理申请配置",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "subaccount",
+                "add"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subAccountName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cbc41d28-c7fb-4785-ac1f-e44591871199",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "subaccount",
+                    "add"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subAccountName\": \"test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"subAccountName\": \"test\",\n    \"subAccountId\": \"2025111833865777\",\n    \"status\": \"VALID\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4b70556-b4dd-4caf-9a33-926a24e957be",
+          "name": "编辑子账户",
+          "request": {
+            "name": "编辑子账户",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "subaccount",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subAccountId\": \"<string>\",\n  \"subAccountName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b6af6b35-d6c4-431e-93ed-8db51ef34e9a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "subaccount",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subAccountId\": \"2025111833785290\",\n  \"subAccountName\": \"test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9fa77686-94c4-4b60-b1da-ebd9276190ec",
+          "name": "查询子账户列表",
+          "request": {
+            "name": "查询子账户列表",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "subaccount",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subAccountId\": \"<string>\",\n  \"subAccountName\": \"<string>\",\n  \"pageNo\": \"<string>\",\n  \"pageSize\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "14cee782-9291-48e9-be92-ef6284e7b904",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "subaccount",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subAccountId\": \"2025111833785290\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "header-0",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"total\": 1,\n    \"list\": [\n      {\n        \"subAccountName\": \"test\",\n        \"subAccountId\": \"2025111833785290\",\n        \"accountList\": [\n          {\n            \"amount\": \"0.00\",\n            \"currency\": \"USD\",\n            \"frozenAmount\": \"0.00\"\n          }\n        ],\n        \"status\": \"VALID\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fe33953-3165-4a8f-b4ca-949caf5861d9",
+          "name": "注销子账户",
+          "request": {
+            "name": "注销子账户",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "subaccount",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subAccountId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b192f429-94fd-4166-aea2-6772d0412f54",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "subaccount",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subAccountId\": \"2025111833785290\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4abca63e-878d-46f5-9e40-eab375f58330",
+          "name": "申请卡",
+          "request": {
+            "name": "申请卡",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n异步处理申卡请求，申卡成功CARD_STATUS_CHANGED Webhook通知，建议定时查询初始化状态的卡以获取最新状态。\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card POST"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"<string>\",\n  \"cardName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"settleCurrencyCode\": \"<string>\",\n  \"cardBinName\": \"<string>\",\n  \"expiryDate\": \"<string>\",\n  \"tradeSceneCode\": \"<string>\",\n  \"cardLimitRules\": {\n    \"enableTransactionCurrencyControl\": \"<boolean>\",\n    \"enableTransactionCountControl\": \"<boolean>\",\n    \"limitTransactionCount\": \"<integer>\",\n    \"mccCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fuzzyMerchantNames\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"cardTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mode3ds\": \"<string>\",\n  \"rechargeApplyId\": \"<string>\",\n  \"subAccountId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7437c06-7efe-4359-b884-6ed72b2b19dc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card POST"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardName\": \"API Test Card\",\n  \"expiryDate\": \"0125\",\n  \"cardBinName\": \"522981\",\n  \"currency\": \"GBP\",\n  \"settleCurrencyCode\": \"GBP\",\n  \"email\": \"zhouxd@lianlianpay.com\",\n  \"cardLimitRules\": {\n    \"enableTransactionCurrencyControl\": true,\n    \"limitTransactionCurrencies\": [\n      \"HKD\",\n      \"USD\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"cardId\": \"2023092284439339\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab91f97c-c589-45c5-a51f-f40dcf0f8fb6",
+              "name": "Missing Required Information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card POST"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardName\": \"API Test Card\",\n  \"expiryDate\": \"0125\",\n  \"cardBinName\": \"522981\",\n  \"currency\": \"GBP\",\n  \"settleCurrencyCode\": \"GBP\",\n  \"email\": \"zhouxd@lianlianpay.com\",\n  \"cardLimitRules\": {\n    \"enableTransactionCurrencyControl\": true,\n    \"limitTransactionCurrencies\": [\n      \"HKD\",\n      \"USD\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "34ec9a82-5d3a-4e52-bab0-e835b8b29a67",
+              "name": "Email Already Taken",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card POST"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardName\": \"API Test Card\",\n  \"expiryDate\": \"0125\",\n  \"cardBinName\": \"522981\",\n  \"currency\": \"GBP\",\n  \"settleCurrencyCode\": \"GBP\",\n  \"email\": \"zhouxd@lianlianpay.com\",\n  \"cardLimitRules\": {\n    \"enableTransactionCurrencyControl\": true,\n    \"limitTransactionCurrencies\": [\n      \"HKD\",\n      \"USD\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f27041ae-8794-44b8-87c7-e2b9600d42bc",
+          "name": "申请卡(同步)",
+          "request": {
+            "name": "申请卡(同步)",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n同步处理申卡请求，申卡处理成功返回状态为VALID;申卡处理失败返回状态APPLYING,异步补偿申卡成功后发送webhook通知\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                "apply",
+                "sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"<string>\",\n  \"cardName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"settleCurrencyCode\": \"<string>\",\n  \"cardBinName\": \"<string>\",\n  \"singleLimit\": \"<string>\",\n  \"singleDayLimit\": \"<string>\",\n  \"singleMonthLimit\": \"<string>\",\n  \"lifeTimeLimit\": \"<string>\",\n  \"expiryDate\": \"<string>\",\n  \"tradeSceneCode\": \"<string>\",\n  \"cardLimitRules\": {\n    \"enableTransactionCurrencyControl\": \"<boolean>\",\n    \"limitTransactionCurrencies\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"enableTransactionCountControl\": \"<boolean>\",\n    \"limitTransactionCount\": \"<integer>\",\n    \"mccCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fuzzyMerchantNames\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"cardTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mode3ds\": \"<string>\",\n  \"transactionCurrencyLimitList\": \"<array>\",\n  \"subAccountId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4f9149c-7a4f-4878-9b65-63c3552eadf3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "apply",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardBinName\": \"522981\",\n  \"settleCurrencyCode\": \"USD\",\n  \"currency\": \"USD\",\n  \"cardName\": \"zhengwytest0003\",\n  \"email\": \"zhengwy@lianlianpay.com\",\n  \"cardLimitRules\": {\n    \"limitTransactionCount\": 1,\n    \"enableTransactionCountControl\": true\n  },\n  \"expiryDate\": \"0625\",\n  \"singleLimit\": \"1000\",\n  \"singleDayLimit\": \"5000\",\n  \"singleMonthLimit\": \"10000\",\n  \"lifeTimeLimit\": \"10000\",\n  \"transactionCurrencyLimitList\": [\n    {\n      \"currency\": \"KRW\",\n      \"singleLimit\": \"1300000\",\n      \"singleDayLimit\": \"6800000\",\n      \"singleMonthLimit\": \"13000000\",\n      \"lifeTimeLimit\": \"13000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"cardName\": \"zhengwytest0003\",\n    \"singleLimit\": \"1000.00\",\n    \"singleMonthLimit\": \"10000.00\",\n    \"transactionCurrencyLimitList\": [\n      {\n        \"singleLimit\": \"1300000.00\",\n        \"singleMonthLimitRemaining\": \"13000000\",\n        \"singleMonthLimit\": \"13000000.00\",\n        \"singleDayLimitRemaining\": \"6800000\",\n        \"currency\": \"KRW\",\n        \"singleDayLimit\": \"6800000.00\",\n        \"lifeTimeLimitRemaining\": \"13000000\",\n        \"lifeTimeLimit\": \"13000000.00\"\n      }\n    ],\n    \"cardNo\": \"5229815750557287\",\n    \"cardOrganization\": \"VISA\",\n    \"lifeTimeLimitRemaining\": \"10000.00\",\n    \"expiryDate\": \"0625\",\n    \"singleMonthLimitRemaining\": \"10000.00\",\n    \"singleDayLimitRemaining\": \"5000.00\",\n    \"cardId\": \"2025052944576845\",\n    \"cardLimitRules\": {\n      \"enableTransactionCountControl\": true,\n      \"limitTransactionCount\": 1\n    },\n    \"currency\": \"USD\",\n    \"singleDayLimit\": \"5000.00\",\n    \"email\": \"zhengwy@lianlianpay.com\",\n    \"status\": \"VALID\",\n    \"lifeTimeLimit\": \"10000.00\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "298f66f7-1cdc-4dfa-b8f8-4263deafe762",
+              "name": "Missing Required Information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "apply",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardBinName\": \"522981\",\n  \"settleCurrencyCode\": \"USD\",\n  \"currency\": \"USD\",\n  \"cardName\": \"zhengwytest0003\",\n  \"email\": \"zhengwy@lianlianpay.com\",\n  \"cardLimitRules\": {\n    \"limitTransactionCount\": 1,\n    \"enableTransactionCountControl\": true\n  },\n  \"expiryDate\": \"0625\",\n  \"singleLimit\": \"1000\",\n  \"singleDayLimit\": \"5000\",\n  \"singleMonthLimit\": \"10000\",\n  \"lifeTimeLimit\": \"10000\",\n  \"transactionCurrencyLimitList\": [\n    {\n      \"currency\": \"KRW\",\n      \"singleLimit\": \"1300000\",\n      \"singleDayLimit\": \"6800000\",\n      \"singleMonthLimit\": \"13000000\",\n      \"lifeTimeLimit\": \"13000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "42811f65-760d-429b-81ec-b6c13dd82a8f",
+              "name": "Email Already Taken",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "apply",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardBinName\": \"522981\",\n  \"settleCurrencyCode\": \"USD\",\n  \"currency\": \"USD\",\n  \"cardName\": \"zhengwytest0003\",\n  \"email\": \"zhengwy@lianlianpay.com\",\n  \"cardLimitRules\": {\n    \"limitTransactionCount\": 1,\n    \"enableTransactionCountControl\": true\n  },\n  \"expiryDate\": \"0625\",\n  \"singleLimit\": \"1000\",\n  \"singleDayLimit\": \"5000\",\n  \"singleMonthLimit\": \"10000\",\n  \"lifeTimeLimit\": \"10000\",\n  \"transactionCurrencyLimitList\": [\n    {\n      \"currency\": \"KRW\",\n      \"singleLimit\": \"1300000\",\n      \"singleDayLimit\": \"6800000\",\n      \"singleMonthLimit\": \"13000000\",\n      \"lifeTimeLimit\": \"13000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b18722a-081d-41c4-b843-5118edbf0896",
+          "name": "查询卡详情",
+          "request": {
+            "name": "查询卡详情",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                ":cardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) 卡唯一识别号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5cc41c5b-474d-400e-b092-afda07fc1ff1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"tradeSceneCode\": \"\",\n    \"cardName\": \"API Test Card\",\n    \"singleLimit\": \"5000.00\",\n    \"singleMonthLimit\": \"100000.00\",\n    \"cardNo\": \"5229811497618839\",\n    \"cardOrganization\": \"MasterCard\",\n    \"expiryDate\": \"0125\",\n    \"singleMonthLimitRemaining\": \"100000.00\",\n    \"singleDayLimitRemaining\": \"10000.00\",\n    \"cardId\": \"2023072780304742\",\n    \"currency\": \"USD\",\n    \"singleDayLimit\": \"10000.00\",\n    \"email\": \"zhouxd@lianlianpay.com\",\n    \"status\": \"VALID\",\n    \"transactionCurrencyLimitList\": [\n      {\n        \"singleLimit\": \"200.00\",\n        \"singleDayLimitRemaining\": \"200.00\",\n        \"currency\": \"AUD\",\n        \"singleDayLimit\": \"200.00\"\n      },\n      {\n        \"singleLimit\": \"100.00\",\n        \"singleDayLimitRemaining\": \"5000.00\",\n        \"currency\": \"PLN\",\n        \"singleDayLimit\": \"5000.00\",\n        \"lifeTimeLimitRemaining\": \"9999999.88\",\n        \"lifeTimeLimit\": \"10000000.00\"\n      }\n    ],\n    \"cardLimitRules\": {\n      \"enableTransactionCurrencyControl\": true,\n      \"limitTransactionCurrencies\": [\n        \"HKD\",\n        \"USD\"\n      ]\n    }\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6db49ce6-975e-4dda-a94a-7bfedb491beb",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a69c3539-50b7-4d86-bf9a-5eac3a20868d",
+          "name": "注销卡",
+          "request": {
+            "name": "注销卡",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                ":cardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) 卡唯一识别号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99ca5a0f-2a2e-4ea9-abfe-1012d162c50b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3821,\n  \"success\": false,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7cc6854-12d5-4266-bbf2-69229115df42",
+          "name": "更新卡信息",
+          "request": {
+            "name": "更新卡信息",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                ":cardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) 卡唯一识别号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cardName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cardLimitRules\": {\n    \"enableTransactionCurrencyControl\": \"<boolean>\",\n    \"enableTransactionCountControl\": \"<boolean>\",\n    \"limitTransactionCount\": \"<integer>\",\n    \"mccCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fuzzyMerchantNames\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bee887e4-e448-4d1d-8481-1ab3be57f181",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cardLimitRules\": {\n    \"enableTransactionCurrencyControl\": \"<boolean>\",\n    \"enableTransactionCountControl\": \"<boolean>\",\n    \"limitTransactionCount\": \"<integer>\",\n    \"mccCodes\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fuzzyMerchantNames\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9000,\n  \"message\": \"string\",\n  \"success\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3bb6d68-9fc4-45bf-bffe-14c8c5ffc676",
+          "name": "更新卡信息(新)",
+          "request": {
+            "name": "更新卡信息(新)",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                ":cardId",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cardName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"cardTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"cardControlRules\": {\n    \"perBillAmtLimit\": \"<string>\",\n    \"dailyBillAmtLimit\": \"<string>\",\n    \"monthlyBillAmtLimit\": \"<string>\",\n    \"lifeTimeBillAmtLimit\": \"<string>\",\n    \"transactionAmtLimitRules\": [\n      {\n        \"currency\": \"<string>\",\n        \"perLimit\": \"<string>\",\n        \"dailyLimit\": \"<string>\",\n        \"monthlyLimit\": \"<string>\",\n        \"lifeTimeLimit\": \"<string>\"\n      },\n      {\n        \"currency\": \"<string>\",\n        \"perLimit\": \"<string>\",\n        \"dailyLimit\": \"<string>\",\n        \"monthlyLimit\": \"<string>\",\n        \"lifeTimeLimit\": \"<string>\"\n      }\n    ],\n    \"transactionControlRules\": {\n      \"enableTransactionCountControl\": \"<boolean>\",\n      \"limitTransactionCurrencies\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"limitTransactionCount\": \"<integer>\",\n      \"enableTransactionCurrencyControl\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e03ea70-6227-4ac3-b0ff-3c570d7e00b1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cardName\": \"20250626update\",\n  \"cardControlRules\": {\n    \"perBillAmtLimit\": \"1000.00\",\n    \"dailyBillAmtLimit\": \"1.8\",\n    \"monthlyBillAmtLimit\": \"3.33\",\n    \"lifeTimeBillAmtLimit\": \"1000.00\",\n    \"transactionAmtLimitRules\": [\n      {\n        \"currency\": \"AUD\",\n        \"perLimit\": \"1.11\",\n        \"dailyLimit\": \"2.22\",\n        \"monthlyLimit\": \"3.33\",\n        \"lifeTimeLimit\": \"4.44\"\n      },\n      {\n        \"currency\": \"USD\",\n        \"perLimit\": \"1.11\",\n        \"dailyLimit\": \"2.22\",\n        \"monthlyLimit\": \"3.33\",\n        \"lifeTimeLimit\": \"4.44\"\n      }\n    ],\n    \"transactionControlRules\": {\n      \"enableTransactionCountControl\": true,\n      \"limitTransactionCurrencies\": [\n        \"GBP\"\n      ],\n      \"limitTransactionCount\": 10,\n      \"enableTransactionCurrencyControl\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": true,\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b391ab2-e3a8-430b-9a39-198e83fee1c2",
+          "name": "查询安全码",
+          "request": {
+            "name": "查询安全码",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                "cvv2",
+                ":cardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cardNo",
+                  "value": "<string>",
+                  "description": "(Required) 16位完整卡号"
+                },
+                {
+                  "disabled": false,
+                  "key": "expiryDate",
+                  "value": "<string>",
+                  "description": "(Required) 卡有效期"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) 卡唯一识别号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "98b51fbb-eda3-4822-a6e0-6eed76f3c73c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "cvv2",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cardNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expiryDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"cardId\": \"2023112169195309\",\n    \"securityCode\": \"ODYy\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2caf6327-22f8-4799-b682-970071f98ee9",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "cvv2",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cardNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expiryDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cbb77acc-0dee-4d92-8a58-9c4a37f4ee5f",
+          "name": "查询卡列表",
+          "request": {
+            "name": "查询卡列表",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card  GET"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cardName",
+                  "value": "<string>",
+                  "description": "卡片名称"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNo",
+                  "value": "<string>",
+                  "description": "(Required) 页码"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<string>",
+                  "description": "(Required) 分页大小"
+                },
+                {
+                  "disabled": false,
+                  "key": "subAccountId",
+                  "value": "<string>",
+                  "description": "子账户id</br>开通了子账户模式的用户传"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeStart",
+                  "value": "<string>",
+                  "description": "起始时间，格式yyyy-MM-dd</br>当queryMode=RECENT时，timeStart必填，且为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04\t"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeEnd",
+                  "value": "<string>",
+                  "description": "结束时间，格式yyyy-MM-dd</br>当queryMode=RECENT，timeEnd必填，且为近三内（包含今天）；"
+                },
+                {
+                  "disabled": false,
+                  "key": "queryMode",
+                  "value": "<string>",
+                  "description": "查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)</br>不传默认HISTORY;"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "413f953c-12d7-4505-9e6b-06433c03bc99",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card  GET"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cardName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeStart",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryMode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"message\": \"SUCCESS\",\n  \"data\": {\n    \"totalSize\": 5392,\n    \"resultList\": [\n      {\n        \"last4digits\": \"\",\n        \"cardName\": \"API Test Card\",\n        \"cardId\": \"2023111667606287\",\n        \"cardTailNo\": \"\",\n        \"cardOrganization\": \"VISA\",\n        \"status\": \"APPLYING\"\n      },\n      {\n        \"last4digits\": \"4439\",\n        \"cardName\": \"API Test Card\",\n        \"cardId\": \"2023111767890129\",\n        \"cardTailNo\": \"4439\",\n        \"cardOrganization\": \"MasterCard\",\n        \"status\": \"VALID\"\n      }\n    ]\n  },\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5b9a796-5b28-4ace-aeef-4390b201dd44",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card  GET"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cardName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeStart",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryMode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86a97d03-8c53-4525-90f6-44ec60ec32f8",
+          "name": "冻结卡",
+          "request": {
+            "name": "冻结卡",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                "freeze",
+                ":cardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) 卡唯一识别号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "c243cd10-f21b-4850-80ec-595c79b792f2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "freeze",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9229,\n  \"success\": true,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96c38791-d6d7-4f1a-b7c4-30fc106c91cd",
+              "name": "Missing Required Information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "freeze",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "de62d479-1861-4864-9c92-1d3a8e976de7",
+              "name": "Email Already Taken",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "freeze",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bfbee1d8-7b69-4c0c-93c6-524b61a63f43",
+          "name": "解冻卡",
+          "request": {
+            "name": "解冻卡",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                "unfreeze",
+                ":cardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) 卡唯一识别号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "d00cedf6-dd2f-432a-a566-063275a86830",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "unfreeze",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9494,\n  \"success\": false,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2696aab-9395-4bfe-bcfc-0ba8fbd718ea",
+              "name": "Missing Required Information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "unfreeze",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cdeee568-6548-47ae-861a-6fcda2e90349",
+              "name": "Email Already Taken",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "unfreeze",
+                    ":cardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) 卡唯一识别号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b238794-d04c-4975-aee6-f0075da57408",
+          "name": "卡充值申请",
+          "request": {
+            "name": "卡充值申请",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n仅供卡BIN:000000使用。</br>\r\n卡充值申请接口，单卡支持多次充值。如有使用Webhook，充值成功或失败会发送Webhook通知。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                "recharge",
+                "apply"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rechargeApplyId\": \"<string>\",\n  \"cardId\": \"<string>\",\n  \"rechargeAmount\": \"<string>\",\n  \"memo\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f716bd14-c0e3-4095-bdd8-0ec24941ee9e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    "recharge",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rechargeApplyId\": \"20250909000001\",\n  \"cardId\": \"2025090903050629\",\n  \"rechargeAmount\": \"6900.00\",\n  \"memo\": \"test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"cardId\": \"2025090903050629\",\n    \"rechargeApplyId\": \"20250909000001\",\n    \"transactionId\": \"2025090903050629\",\n    \"status\": \"SUCCESS\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9be021be-5b9c-4ecc-89e2-728abede1d51",
+          "name": "更新卡交易限额",
+          "request": {
+            "name": "更新卡交易限额",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                ":cardId",
+                "limit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currency\": \"<string>\",\n  \"singleLimit\": \"<string>\",\n  \"singleDayLimit\": \"<string>\",\n  \"singleMonthLimit\": \"<string>\",\n  \"lifeTimeLimit\": \"<string>\",\n  \"transactionCurrencyLimitList\": [\n    {\n      \"currency\": \"<string>\",\n      \"singleLimit\": \"<string>\",\n      \"singleDayLimit\": \"<string>\",\n      \"singleMonthLimit\": \"<string>\",\n      \"lifeTimeLimit\": \"<string>\"\n    },\n    {\n      \"currency\": \"<string>\",\n      \"singleLimit\": \"<string>\",\n      \"singleDayLimit\": \"<string>\",\n      \"singleMonthLimit\": \"<string>\",\n      \"lifeTimeLimit\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1fd4721e-74a1-429a-ab2b-2a216c0bc31a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId",
+                    "limit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"lifeTimeLimit\": \"500000.0\",\n  \"transactionCurrencyLimitList\": [\n    {\n      \"currency\": \"KRW\",\n      \"lifeTimeLimit\": \"100000.0\",\n      \"singleMonthLimit\": \"10000.0\",\n      \"singleDayLimit\": \"1000.0\",\n      \"singleLimit\": \"100.0\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9494,\n  \"success\": false,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76f63d9e-8bfd-4681-a172-c75ae1f9fce8",
+              "name": "Missing Required Information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId",
+                    "limit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currency\": \"USD\",\n  \"lifeTimeLimit\": \"500000.0\",\n  \"transactionCurrencyLimitList\": [\n    {\n      \"currency\": \"KRW\",\n      \"lifeTimeLimit\": \"100000.0\",\n      \"singleMonthLimit\": \"10000.0\",\n      \"singleDayLimit\": \"1000.0\",\n      \"singleLimit\": \"100.0\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12cbe44a-7d07-4aa1-a00b-6967787a01d6",
+          "name": "查询卡交易限额",
+          "request": {
+            "name": "查询卡交易限额",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "card",
+                ":cardId",
+                "limit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22b4d399-0c4d-4b79-b76f-15d55fd30fa2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "card",
+                    ":cardId",
+                    "limit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"message\": \"SUCCESS\",\n  \"data\": {\n    \"cardId\": \"2023111367505835\",\n    \"currency\": \"USD\",\n    \"singleLimit\": \"50000.00\",\n    \"singleDayLimit\": \"1000.00\",\n    \"singleDayLimitRemaining\": \"1000.00\",\n    \"transactionCurrencyLimitList\": [\n      {\n        \"singleLimit\": \"22222.00\",\n        \"singleDayLimitRemaining\": \"1000.00\",\n        \"currency\": \"EUR\",\n        \"singleDayLimit\": \"1000.00\"\n      },\n      {\n        \"singleMonthLimitRemaining\": \"3000.00\",\n        \"singleLimit\": \"1000.00\",\n        \"singleMonthLimit\": \"3000.00\",\n        \"singleDayLimitRemaining\": \"2000.00\",\n        \"currency\": \"GBP\",\n        \"singleDayLimit\": \"2000.00\",\n        \"lifeTimeLimitRemaining\": \"4000.00\",\n        \"lifeTimeLimit\": \"4000.00\"\n      }\n    ]\n  },\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c61b7df-61c0-4dd4-8aef-5c5e07b2dafc",
+          "name": "查询充值交易",
+          "request": {
+            "name": "查询充值交易",
+            "description": {
+              "content": "\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "gateway",
+                "vcc-api",
+                "transactions",
+                "topup"
+              ],
+              "host": [
+                "global-api-sandbox",
+                "lianlianpay-inc",
+                "com"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "(Required) 基础币种，默认USD"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeStart",
+                  "value": "<string>",
+                  "description": "(Required) 起始时间，格式yyyy-MM-dd HH:mm:ss"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeEnd",
+                  "value": "<string>",
+                  "description": "(Required) 结束时间，格式yyyy-MM-dd HH:mm:ss"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNo",
+                  "value": "<string>",
+                  "description": "(Required) 页码"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<string>",
+                  "description": "(Required) 分页大小，至多200"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9cfc4d9c-432b-40e6-a692-3bb865200f59",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "transactions",
+                    "topup"
+                  ],
+                  "host": [
+                    "global-api-sandbox",
+                    "lianlianpay-inc",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeStart",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"total\": 56,\n    \"list\": [\n      {\n        \"prefundAmount\": \"4.00\",\n        \"rechargeAmount\": \"4.00\",\n        \"createTime\": \"2021-08-12 17:32:39\",\n        \"updateTime\": \"2021-08-12 17:32:39\",\n        \"currency\": \"GBP\",\n        \"transactionTime\": \"2021-08-12 17:32:39\",\n        \"type\": \"REFUND\",\n        \"transactionId\": \"2021081216617242\",\n        \"status\": \"SUCCESS\"\n      },\n      {\n        \"prefundAmount\": \"5.00\",\n        \"bizType\": \"COLLECTION_BALANCE\",\n        \"feeCurrency\": \"USD\",\n        \"updateTime\": \"2022-08-29 15:27:44\",\n        \"transactionTime\": \"2021-08-12 17:04:18\",\n        \"type\": \"TOPUP\",\n        \"transactionId\": \"2021081216145933\",\n        \"feeAmount\": \"1.00\",\n        \"rechargeAmount\": \"5.00\",\n        \"balance\": \"911.00\",\n        \"createTime\": \"2021-08-12 17:04:07\",\n        \"currency\": \"GBP\",\n        \"afterBalance\": \"911.00\",\n        \"status\": \"SUCCESS\"\n      },\n      {\n        \"prefundAmount\": \"1.00\",\n        \"rechargeAmount\": \"1.00\",\n        \"createTime\": \"2021-08-12 16:55:07\",\n        \"updateTime\": \"2021-08-12 16:55:07\",\n        \"currency\": \"GBP\",\n        \"transactionTime\": \"2021-08-12 16:55:07\",\n        \"type\": \"REFUND\",\n        \"transactionId\": \"2021081215569426\",\n        \"status\": \"SUCCESS\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b20d8ee9-3c5b-4fb1-9a2c-42ce0ddbaade",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "transactions",
+                    "topup"
+                  ],
+                  "host": [
+                    "global-api-sandbox",
+                    "lianlianpay-inc",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeStart",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aecabc61-b7b8-4e9f-8f80-ce21800ae9b7",
+          "name": "查询授权交易",
+          "request": {
+            "name": "查询授权交易",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "gateway",
+                "vcc-api",
+                "transactions",
+                "auth"
+              ],
+              "host": [
+                "global-api-sandbox",
+                "lianlianpay-inc",
+                "com"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "timeStart",
+                  "value": "<string>",
+                  "description": "(Required) 起始时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传时，timeStart为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeEnd",
+                  "value": "<string>",
+                  "description": "(Required) 结束时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传，timeEnd必须为近三天内（包含今天）"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNo",
+                  "value": "<string>",
+                  "description": "(Required) 页码"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<string>",
+                  "description": "(Required) 分页大小，至多200"
+                },
+                {
+                  "disabled": false,
+                  "key": "cardId",
+                  "value": "<string>",
+                  "description": "卡唯一识别号"
+                },
+                {
+                  "disabled": false,
+                  "key": "transactionId",
+                  "value": "<string>",
+                  "description": "交易单号"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "类型枚举： </br>- 授权（AUTH） </br>- 授权撤销（AUTH_REVERSAL） </br>- 验卡（CARD_VERIFY）</br>**如需要通过API查询验卡交易，请联系客户经理申请配置**"
+                },
+                {
+                  "disabled": false,
+                  "key": "bizType",
+                  "value": "<string>",
+                  "description": "类型枚举： </br>- 授权（1） </br>- 授权撤销（2） </br>- 验卡（12）</br>**如需要通过API查询验卡交易，请联系客户经理申请配置**"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "状态枚举： </br>- 成功（SUCCESS） </br>- 失败（FAIL）"
+                },
+                {
+                  "disabled": false,
+                  "key": "subAccountId",
+                  "value": "<string>",
+                  "description": "子账户id</br>开通了子账户模式的用户传"
+                },
+                {
+                  "disabled": false,
+                  "key": "queryMode",
+                  "value": "<string>",
+                  "description": "查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)<br>不传默认RECENT"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "27ac9b29-2884-467d-89f4-60c785d19292",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "transactions",
+                    "auth"
+                  ],
+                  "host": [
+                    "global-api-sandbox",
+                    "lianlianpay-inc",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "timeStart",
+                      "value": "2025-07-18"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transactionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bizType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryMode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"total\": 3,\n    \"list\": [\n      {\n        \"transactionCurrency\": \"EUR\",\n        \"billingAmount\": \"10.00\",\n        \"bizType\": 1,\n        \"cardName\": \"QQQQ\",\n        \"last4CardNum\": \"1713\",\n        \"merchantTerminalId\": 80000100003,\n        \"mcc\": \"789\",\n        \"transactionTime\": \"2023-01-16 10:25:00\",\n        \"type\": \"AUTH\",\n        \"transactionId\": \"2023011665472319\",\n        \"merchantName\": \"AMAZON PAY INDIA PRIVA BANGALORE\",\n        \"billingCurrency\": \"EUR\",\n        \"cardId\": \"2023010565065966\",\n        \"transactionAmount\": \"10.00\",\n        \"afterBalance\": \"9933.99\",\n        \"status\": \"SUCCESS\"\n      },\n      {\n        \"transactionCurrency\": \"GBP\",\n        \"billingAmount\": \"10.00\",\n        \"bizType\": 1,\n        \"cardName\": \"QQQQ\",\n        \"last4CardNum\": \"1713\",\n        \"merchantTerminalId\": 80000100003,\n        \"mcc\": \"789\",\n        \"transactionTime\": \"2023-01-16 10:13:35\",\n        \"type\": \"AUTH\",\n        \"transactionId\": \"2023011665472142\",\n        \"merchantName\": \"AMAZON PAY INDIA PRIVA BANGALORE\",\n        \"billingCurrency\": \"GBP\",\n        \"cardId\": \"2023010565065966\",\n        \"transactionAmount\": \"10.00\",\n        \"afterBalance\": \"996761.45\",\n        \"status\": \"SUCCESS\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d756f33b-b6bf-4ac6-9e88-af51504d09a3",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "transactions",
+                    "auth"
+                  ],
+                  "host": [
+                    "global-api-sandbox",
+                    "lianlianpay-inc",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "timeStart",
+                      "value": "2025-07-18"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transactionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "bizType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryMode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef3498bf-2333-4eab-9b3d-029e6fe21003",
+          "name": "查询账单明细",
+          "request": {
+            "name": "查询账单明细",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com\r\n\r\n按需定时查询该接口获取账单明细",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "gateway",
+                "vcc-api",
+                "transactions",
+                "settle"
+              ],
+              "host": [
+                "global-api-sandbox",
+                "lianlianpay-inc",
+                "com"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "timeStart",
+                  "value": "<string>",
+                  "description": "(Required) 起始时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传时，timeStart为近三天内（包含今天）；<br>示例：如今天为2026-03-06，则timeStart必须大于等于2026-03-04"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeEnd",
+                  "value": "<string>",
+                  "description": "(Required) 结束时间，格式yyyy-MM-dd<br>当queryMode=RECENT或不传，timeEnd必须为近三天内（包含今天）"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageNo",
+                  "value": "<string>",
+                  "description": "(Required) 页码"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<string>",
+                  "description": "(Required) 分页大小，至多200"
+                },
+                {
+                  "disabled": false,
+                  "key": "cardId",
+                  "value": "<string>",
+                  "description": "卡唯一识别号"
+                },
+                {
+                  "disabled": false,
+                  "key": "transactionId",
+                  "value": "<string>",
+                  "description": "交易单号(这里不是授权单号，是内部流水号)"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "类型枚举： </br>- 消费（SETTLE） </br>- 退款（SETTLE_REVERSE） </br>- 提现（WITHDRAWAL） </br>- 卡充值扣款（CARD_RECHARGE） </br>- 卡充值退款（CARD_RECHARGE_REVERSE）</br>- 争议退款（DISPUTE_REFUND）"
+                },
+                {
+                  "disabled": false,
+                  "key": "subAccountId",
+                  "value": "<string>",
+                  "description": "子账户id</br>开通了子账户模式的用户传"
+                },
+                {
+                  "disabled": false,
+                  "key": "queryMode",
+                  "value": "<string>",
+                  "description": "查询方式枚举：<br>RECENT：近期数据(实时数据)<br>HISTORY：历史数据(数据存在一定延时)<br>不传默认RECENT"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6d662d5f-81f8-4f94-a529-860ff36fc5ac",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "transactions",
+                    "settle"
+                  ],
+                  "host": [
+                    "global-api-sandbox",
+                    "lianlianpay-inc",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "timeStart",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transactionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryMode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"total\": 2,\n    \"list\": [\n      {\n        \"transactionCurrency\": \"GBP\",\n        \"billingAmount\": \"10.00\",\n        \"cardName\": \"QQQQ\",\n        \"last4CardNum\": \"1713\",\n        \"merchantTerminalId\": 80000100003,\n        \"mcc\": \"789\",\n        \"type\": \"SETTLE_REVERSE\",\n        \"transactionId\": \"2023011365338297\",\n        \"merchantName\": \"AMAZON PAY INDIA PRIVA BANGALORE\",\n        \"transactionType\": \"4\",\n        \"last4digits\": \"1713\",\n        \"settlementTime\": \"2023-01-13 10:16:00\",\n        \"billingCurrency\": \"GBP\",\n        \"transactionAmount\": \"10.00\",\n        \"cardId\": \"2023010565065966\",\n        \"afterBalance\": \"996835.97\"\n      },\n      {\n        \"transactionCurrency\": \"GBP\",\n        \"billingAmount\": \"10.00\",\n        \"cardName\": \"QQQQ\",\n        \"last4CardNum\": \"1713\",\n        \"merchantTerminalId\": 80000100003,\n        \"mcc\": \"789\",\n        \"type\": \"SETTLE\",\n        \"transactionId\": \"2023011365338147\",\n        \"merchantName\": \"AMAZON PAY INDIA PRIVA BANGALORE\",\n        \"transactionType\": \"3\",\n        \"originalTransactionId\": \"2023011365338129\",\n        \"last4digits\": \"1713\",\n        \"settlementTime\": \"2023-01-13 10:04:00\",\n        \"billingCurrency\": \"GBP\",\n        \"transactionAmount\": \"10.00\",\n        \"cardId\": \"2023010565065966\",\n        \"afterBalance\": \"996825.97\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c229726c-cd2d-465a-92e0-f5d0f1e15a78",
+              "name": "User Not Found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "transactions",
+                    "settle"
+                  ],
+                  "host": [
+                    "global-api-sandbox",
+                    "lianlianpay-inc",
+                    "com"
+                  ],
+                  "query": [
+                    {
+                      "key": "timeStart",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeEnd",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageNo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cardId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transactionId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "queryMode",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f0d269c-ced9-4d44-886d-2adda7bcd836",
+          "name": "查询卡充值申请",
+          "request": {
+            "name": "查询卡充值申请",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "transactions",
+                "card",
+                "recharge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"timeStart\": \"<string>\",\n  \"timeEnd\": \"<string>\",\n  \"pageNo\": \"<integer>\",\n  \"pageSize\": \"<integer>\",\n  \"cardId\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"rechargeApplyId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"vccUserId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74398e8a-b225-44af-abab-5a13df92e22e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "transactions",
+                    "card",
+                    "recharge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timeStart\": \"2025-09-01 00:00:00\",\n  \"timeEnd\": \"2025-09-09 16:45:04\",\n  \"pageNo\": 1,\n  \"pageSize\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"total\": 1,\n    \"list\": [\n      {\n        \"rechargeAmount\": \"10.00\",\n        \"createTime\": \"2025-09-09 16:44:35\",\n        \"rechargeCurrency\": \"USD\",\n        \"cardId\": \"2025090903050629\",\n        \"updateTime\": \"2025-09-09 16:45:04\",\n        \"rechargeApplyId\": \"20250909000001\",\n        \"transactionId\": \"2025090903050629\",\n        \"status\": \"SUCCESS\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47b1e6f7-9fa4-4226-88e7-8683e8ba31cb",
+          "name": "子账户资金划转明细查询",
+          "request": {
+            "name": "子账户资金划转明细查询",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "sub-user",
+                "transfer",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"timeStart\": \"<string>\",\n  \"timeEnd\": \"<string>\",\n  \"subAccountId\": \"<string>\",\n  \"bizType\": \"<string>\",\n  \"transactionId\": \"<string>\",\n  \"pageNo\": \"<string>\",\n  \"pageSize\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "03883c78-f7ad-404f-8455-e3fc61428fc0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "sub-user",
+                    "transfer",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timeStart\": \"2025-11-17\",\n  \"timeEnd\": \"2025-11-18\",\n  \"subAccountId\": \"2025111833785290\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"total\": 2,\n    \"list\": [\n      {\n        \"amount\": \"5000.00\",\n        \"bizType\": \"SUB_ACCOUNT_REFUND\",\n        \"createTime\": \"2025-11-18 14:51:21\",\n        \"currency\": \"USD\",\n        \"updateTime\": \"2025-11-18 14:51:21\",\n        \"transactionId\": \"20251118338734421\",\n        \"status\": \"SUCCESS\"\n      },\n      {\n        \"amount\": \"5000.00\",\n        \"bizType\": \"VCC_ACCOUNT_TOPUP\",\n        \"createTime\": \"2025-11-18 14:50:11\",\n        \"currency\": \"USD\",\n        \"updateTime\": \"2025-11-18 14:50:11\",\n        \"transactionId\": \"20251118338730252\",\n        \"status\": \"SUCCESS\"\n      }\n    ]\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8db2895d-bb43-48b1-b87b-b3466f23271c",
+          "name": "分配额度到子账户",
+          "request": {
+            "name": "分配额度到子账户",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "sub-user",
+                "transfer",
+                "topup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subAccountId\": \"<string>\",\n  \"rechargeApplyId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29f53a03-7ac5-4215-9eb9-8fe067d1d158",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "sub-user",
+                    "transfer",
+                    "topup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subAccountId\": \"2025111833892363\",\n  \"rechargeApplyId\": \"20251118154018\",\n  \"currency\": \"USD\",\n  \"amount\": \"46000.00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"rechargeApplyId\": \"20251118154018\",\n    \"transactionId\": \"20251118338927412\",\n    \"status\": \"PROCESSED\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "edb34dcf-2a0b-4ab5-8f4f-8f3877e0a0af",
+          "name": "子账户额度转回主账户",
+          "request": {
+            "name": "子账户额度转回主账户",
+            "description": {
+              "content": "Sandbox : https://test-global-api.lianlianpay-inc.com\r\n\r\nProd    : https://global-api.lianlian.com",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "vcc-api",
+                "sub-user",
+                "transfer",
+                "refund"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Basic {token}",
+                "key": "Authorization:",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "t={REQUEST_EPOCH},v={payload}",
+                "key": "LLPAY-Signature:",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subAccountId\": \"<string>\",\n  \"rechargeApplyId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"amount\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e1bdce62-7932-43cb-9823-f07cc7783d28",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "vcc-api",
+                    "sub-user",
+                    "transfer",
+                    "refund"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Basic {token}",
+                    "key": "Authorization:",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "t={REQUEST_EPOCH},v={payload}",
+                    "key": "LLPAY-Signature:",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subAccountId\": \"2025111833892363\",\n  \"rechargeApplyId\": \"20251118154055\",\n  \"currency\": \"USD\",\n  \"amount\": \"43000.00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 100001,\n  \"data\": {\n    \"rechargeApplyId\": \"20251118154055\",\n    \"transactionId\": \"20251118338928071\",\n    \"status\": \"PROCESSED\"\n  },\n  \"success\": true,\n  \"message\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd9d01ac-641b-4a56-9f99-cb692389e82a",
+          "name": "文件上传",
+          "request": {
+            "name": "文件上传",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gateway",
+                "v1",
+                "file",
+                "upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "purpose",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Connect"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1bf9bf97-89df-4509-9e58-c1ee12dcd537",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gateway",
+                    "v1",
+                    "file",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "Connect",
+                        "type": "text/plain"
+                      },
+                      "key": "purpose",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"file_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6a9ddc5c-d4e9-4d78-9e84-718ec1d60725",
+    "name": "Distribution Account Gateway API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

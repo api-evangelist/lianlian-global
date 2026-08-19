@@ -1,0 +1,437 @@
+{
+  "item": [
+    {
+      "id": "3445763e-224c-4458-864d-d384dc930cfb",
+      "name": "Deposits",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "18faf3f8-5534-4bd7-a334-0a6a57acb0f1",
+          "name": "Receiving account deposit confirm",
+          "request": {
+            "name": "Receiving account deposit confirm",
+            "description": {
+              "content": "收款账户入金确认。\r\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为PROCESSING。该接口不允许同一deposit_id并发提交，会返回REQUEST_CONFLICT\r\n对于接口超时情况，可使用deposit_id查询Get list of deposits接口获取处理结果",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deposits",
+                ":deposit_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "deposit_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deposit_id\": \"<string>\",\n  \"business_type\": \"<string>\",\n  \"action\": \"<string>\",\n  \"transaction_document_batch_id\": \"<string>\",\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3c50ea81-d3d6-4c4c-9251-f0776d8f881d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deposits",
+                    ":deposit_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deposit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"deposit_id\": \"<string>\",\n  \"business_type\": \"<string>\",\n  \"action\": \"<string>\",\n  \"transaction_document_batch_id\": \"<string>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"action_type\": \"string\",\n  \"action_time\": \"string\",\n  \"deposit_id\": \"string\",\n  \"status\": \"string\",\n  \"global_account_number\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12181427-c43f-4ea8-88e3-6091e05f92cb",
+              "name": "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nREASON_REQUIRED|REASON_REQUIRED\r\nFAILURE|An error occurred while processing the request.  e.g. The payer's account does not exist \r\nABNORMAL|System error, please retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deposits",
+                    ":deposit_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "deposit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"deposit_id\": \"<string>\",\n  \"business_type\": \"<string>\",\n  \"action\": \"<string>\",\n  \"transaction_document_batch_id\": \"<string>\",\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0798fcc-dd1e-4b6f-9763-a296e69d938d",
+          "name": "Get list of deposits",
+          "request": {
+            "name": "Get list of deposits",
+            "description": {
+              "content": "获取入金列表信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deposits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "页码,默认值为1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<string>",
+                  "description": "每页查询数量,默认值20"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "全球收款账户ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "account_number",
+                  "value": "<string>",
+                  "description": "全球收款账户账号"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "加款单币种"
+                },
+                {
+                  "disabled": false,
+                  "key": "deposit_id",
+                  "value": "<string>",
+                  "description": "加款单ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<string>",
+                  "description": "加款单查询的开始日期，13位时间戳毫秒"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<string>",
+                  "description": "加款单查询的截止日期，13位时间戳毫秒"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "加款单状态"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "32011db7-c4a6-47ac-bf97-25cbd689f0a2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deposits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deposit_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_size\": \"string\",\n  \"page_size\": \"string\",\n  \"page\": \"string\",\n  \"total_count\": \"string\",\n  \"total_page\": \"string\",\n  \"page_list\": [\n    {\n      \"value\": \"reference #/components/schemas/Deposit - copy not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/Deposit - copy not found in the OpenAPI spec\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21a2f726-f76f-425b-94b8-0ac0b144e3d3",
+              "name": "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing   e.g:clientId is null\r\nILLEGAL_ARGUMENT_EXCEPTION|Parameter check failure. e.g.user_id and sso_user_id cannot be empty at the same\r\nINVALID_PARAMETER_VALUE| A parameter value is not valid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deposits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "account_number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "deposit_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7e666479-1142-42b4-ae69-05095197f634",
+    "name": "Distribution Account Deposits API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

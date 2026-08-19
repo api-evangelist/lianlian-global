@@ -1,0 +1,1863 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account 接口 API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "接口",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "提交分账指令",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/distribute"
+          },
+          "docs": "提交分账指令"
+        },
+        {
+          "info": {
+            "name": "查询分账指令信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/distribute/:distributeId",
+            "params": [
+              {
+                "name": "distributeId",
+                "value": "",
+                "type": "path",
+                "description": "商户侧分账指令唯一编号"
+              }
+            ]
+          },
+          "docs": "查询分账指令信息"
+        },
+        {
+          "info": {
+            "name": "上传文件",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/documents",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "上传文件至连连，连连会返回`Document.id`用以标识对接方上传的文件\n"
+        },
+        {
+          "info": {
+            "name": "下载文件",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/documents/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "使用`dcoumentId` 下载文件\n\n"
+        },
+        {
+          "info": {
+            "name": "查询事件列表",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/events",
+            "params": [
+              {
+                "name": "topic",
+                "value": "",
+                "type": "query",
+                "description": "连连定义的Event topic"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              }
+            ]
+          },
+          "docs": "查询事件列表"
+        },
+        {
+          "info": {
+            "name": "查询事件",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "根据eventId查询事件对象"
+        },
+        {
+          "info": {
+            "name": "查询加款信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/funding/:fundingId",
+            "params": [
+              {
+                "name": "fundingId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "查询加款信息"
+        },
+        {
+          "info": {
+            "name": "发起红冲",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/funding/:fundingId",
+            "params": [
+              {
+                "name": "fundingId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "将已加款成功的资金退回"
+        },
+        {
+          "info": {
+            "name": "批量查询加款信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fundings",
+            "params": [
+              {
+                "name": "receivingAcctNo",
+                "value": "",
+                "type": "query",
+                "description": "收款虚拟卡号"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "查询页码\n\n若返回数据为多条，可以将数据进行分页，将该字段与`pageSize` 配合使用\n"
+              },
+              {
+                "name": "pagSize",
+                "value": "",
+                "type": "query",
+                "description": "单页展示数据条数\n\n若返回数据为多条，需要将该字段与`pageNum`联合使用，单页做多数据展示条数为20条\n"
+              }
+            ]
+          },
+          "docs": "批量查询加款信息"
+        },
+        {
+          "info": {
+            "name": "查询汇率",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/rate/:rateType/:sourceCurrency/:targetCurrency",
+            "params": [
+              {
+                "name": "sourceCurrency",
+                "value": "",
+                "type": "path",
+                "description": "源币种"
+              },
+              {
+                "name": "targetCurrency",
+                "value": "",
+                "type": "path",
+                "description": "目的币种"
+              },
+              {
+                "name": "rateType",
+                "value": "",
+                "type": "path",
+                "description": "汇率类型, 传输方式如下 \n|传输值|解释|\n|----|-----|\n|reference|参考汇率|"
+              }
+            ]
+          },
+          "docs": "查询汇率"
+        },
+        {
+          "info": {
+            "name": "创建收款人",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payee"
+          },
+          "docs": "创建收款人"
+        },
+        {
+          "info": {
+            "name": "查询收款人",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payee/:payeeId",
+            "params": [
+              {
+                "name": "payeeId",
+                "value": "",
+                "type": "path",
+                "description": "商户侧收款人唯一编号"
+              }
+            ]
+          },
+          "docs": "查询收款人信息"
+        },
+        {
+          "info": {
+            "name": "修改收款人信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/payee/:payeeId",
+            "params": [
+              {
+                "name": "payeeId",
+                "value": "",
+                "type": "path",
+                "description": "商户侧收款人唯一编号"
+              }
+            ]
+          },
+          "docs": "修改收款人信息"
+        },
+        {
+          "info": {
+            "name": "创建付款人",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payer"
+          },
+          "docs": "创建付款人"
+        },
+        {
+          "info": {
+            "name": "查询付款人",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payer/:payerId",
+            "params": [
+              {
+                "name": "payerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "查询收款人信息"
+        },
+        {
+          "info": {
+            "name": "修改付款人信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/payer/:payerId",
+            "params": [
+              {
+                "name": "payerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "修改付款人信息"
+        },
+        {
+          "info": {
+            "name": "提交分发指令",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payout"
+          },
+          "docs": "提交分发指令"
+        },
+        {
+          "info": {
+            "name": "查询分发指令信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payout/:payoutId",
+            "params": [
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "商户侧分发指令唯一编号"
+              }
+            ]
+          },
+          "docs": "查询分发指令信息"
+        },
+        {
+          "info": {
+            "name": "创建店铺",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/shop"
+          },
+          "docs": "创建店铺"
+        },
+        {
+          "info": {
+            "name": " 查询店铺信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/shop/:shopId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": " 查询店铺信息"
+        },
+        {
+          "info": {
+            "name": "修改店铺信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/shop/:shopId",
+            "params": [
+              {
+                "name": "shopId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "在店铺审核失败的情况下，可以修改店铺信息（店铺经营类别、店铺链接）"
+        },
+        {
+          "info": {
+            "name": "提交贸易材料",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tradefile"
+          },
+          "docs": "提交贸易材料"
+        },
+        {
+          "info": {
+            "name": "查询贸易材料信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tradefile/:materialId",
+            "params": [
+              {
+                "name": "materialId",
+                "value": "",
+                "type": "path",
+                "description": "商户侧指令唯一编号"
+              }
+            ]
+          },
+          "docs": "查询贸易材料信息"
+        },
+        {
+          "info": {
+            "name": "创建虚拟卡",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/virtualaccount"
+          },
+          "docs": "为一对新的买卖关系创建虚拟卡"
+        },
+        {
+          "info": {
+            "name": "查询虚拟卡号",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/virtualaccount/:receivingAccountNo",
+            "params": [
+              {
+                "name": "receivingAccountNo",
+                "value": "",
+                "type": "path",
+                "description": "收款虚拟卡号"
+              }
+            ]
+          },
+          "docs": "查询虚拟卡号"
+        },
+        {
+          "info": {
+            "name": "批量查询虚拟卡号",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/virtualaccounts",
+            "params": [
+              {
+                "name": "payeeId",
+                "value": "",
+                "type": "query",
+                "description": "商户侧收款人唯一编号"
+              },
+              {
+                "name": "payerId",
+                "value": "",
+                "type": "query",
+                "description": "商户侧付款人唯一编号"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "\n\n查询页码\n\n若返回数据为多条，可以将数据进行分页，将该字段与`pageSize` 配合使用\n"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "单页展示数据条数\n\n若返回数据为多条，需要将该字段与`pageNum`联合使用，单页做多数据展示条数为20条\n"
+              }
+            ]
+          },
+          "docs": "批量查询虚拟卡号"
+        },
+        {
+          "info": {
+            "name": "查询WebHook列表",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/webhooks"
+          },
+          "docs": "查询WebHook列表"
+        },
+        {
+          "info": {
+            "name": "注册WebHook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/webhooks"
+          },
+          "docs": "注册webHook，系统会自动推送事件。"
+        },
+        {
+          "info": {
+            "name": "查询Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/webhook/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "通过webhookId查询WebHook"
+        },
+        {
+          "info": {
+            "name": "删除Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/webhook/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "删除WebHook"
+        },
+        {
+          "info": {
+            "name": "查询Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "通过webhookId查询WebHook"
+        },
+        {
+          "info": {
+            "name": "删除Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "删除WebHook"
+        },
+        {
+          "info": {
+            "name": "创建会员账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建会员账户"
+        },
+        {
+          "info": {
+            "name": "会员账户信息查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/account/:memberId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "会员账户信息查询"
+        },
+        {
+          "info": {
+            "name": "账户资金流水查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/statement",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "query",
+                "description": "会员ID"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              },
+              {
+                "name": "beginTime",
+                "value": "",
+                "type": "query",
+                "description": "开始时间，格式：yyyy-MM-dd HH:mm:ss"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，格式：yyyy-MM-dd HH:mm:ss"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码，默认为1"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量，单页最多20条"
+              }
+            ]
+          },
+          "docs": "账户资金流水查询"
+        },
+        {
+          "info": {
+            "name": "账户余额查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/balance",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "query",
+                "description": "会员Id"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              }
+            ]
+          },
+          "docs": "账户余额查询"
+        },
+        {
+          "info": {
+            "name": "创建会员",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/member/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建会员"
+        },
+        {
+          "info": {
+            "name": "修改会员信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/member/ :memberId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "修改会员信息"
+        },
+        {
+          "info": {
+            "name": "查询会员信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/member/:memberId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "查询会员信息"
+        },
+        {
+          "info": {
+            "name": "省市字典接口",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/dictionaries/district/:code",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "获取provincecode时，{code}请填写 `CHN`\n\n获取citycode时，code请填写对应provincecode\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/dictionaries/district/{code}** </br>\n生产地址 - **https://global-api.lianlianpay.com/common/v1/dictionaries/district/{code}**"
+        },
+        {
+          "info": {
+            "name": "下载附件",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/documents/:Id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "Id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "你可以通过上传附件接口返回的id进行附件文件的下载。\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/documents/{Id}** </br>\n生产地址 - **https://global-api.lianlianpay.com/common/v1/documents/{Id}**"
+        },
+        {
+          "info": {
+            "name": "获取短信验证码",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/verification-codes/SMS",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "获取短信校验码，用于相关接口做二次验证，例如：币种账户提现、供应商付款等\n\n验证码会发送至连连账户当前绑定手机号\n\n每小时获取验证码上限10次\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/verification-codes/SMS** </br>\n生产地址 - **https://global-api.lianlianpay.com/common/v1/verification-codes/SMS**"
+        },
+        {
+          "info": {
+            "name": "大陆银行支行名称模糊查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/bank-code/search",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/bank-code/search** </br>\n生产地址 - **https://global-api.lianlianpay.com/common/v1/bank-code/search**"
+        },
+        {
+          "info": {
+            "name": "交易记录回执文件下载",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/receipt/download",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "交易记录回执文件下载接口，响应为PDF数据流\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/receipt/download** </br>\n生产地址 - **https://global-api.lianlianpay.com/common/v1/receipt/download**"
+        },
+        {
+          "info": {
+            "name": "申请境外收款账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vcard/apply",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "申请境外收款账户\n\n目前API接口仅支持以下平台地区申卡\n|平台|地区|对应币种\n|-|-|-|\n|Amazon|AE|AED|\n|Amazon|AU|AUD|\n|Amazon|CA|CAD|\n|Amazon|EU|EUR|\n|Amazon|IN|USD|\n|Amazon|JP|JPY|\n|Amazon|SG|SGD|\n|Amazon|UK|GBP|\n|Amazon|US|USD|\n|CDiscount|EU|EUR|\n|Rakuten|EU|EUR|\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/vcard/apply** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/vcard/apply**"
+        },
+        {
+          "info": {
+            "name": "持有人查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/holder/query/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "返回有效持有人列表\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/holder/query/list** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/holder/query/list**"
+        },
+        {
+          "info": {
+            "name": "查询店铺列表",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/collection/v1/shop/accounts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query",
+                "description": "平台类型</br>参照`MODELS-店铺平台`"
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "站点</br>参照`MODELS-店铺地区（站点）`"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "`Allower value`USD,CAD,EUR,GBP,JPY,AUD,IDR,SGD,AED,CNY,CNH,HKD,PLN,MXN,THB,PHP"
+              },
+              {
+                "name": "shopStatus",
+                "value": "",
+                "type": "query",
+                "description": "店铺状态</br>参照`MODEL-店铺状态`"
+              },
+              {
+                "name": "holderId",
+                "value": "",
+                "type": "query",
+                "description": "持有人ID"
+              }
+            ]
+          },
+          "docs": "查询收款账户详情\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/shop/accounts**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/shop/accounts**"
+        },
+        {
+          "info": {
+            "name": "用户收款账户余额查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account/balance/query",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询用户收款账户余额\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/balance/query** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/account/balance/query**"
+        },
+        {
+          "info": {
+            "name": "用户账户详情查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/account/query",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询收款账户详情\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/query** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/account/query**"
+        },
+        {
+          "info": {
+            "name": "资金流水查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/myshop/transaction",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询用户境外收款账户资金流水\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/myshop/transaction** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/myshop/transaction**"
+        },
+        {
+          "info": {
+            "name": "实时汇率查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/exchangeRate/query",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询中国银行的实时牌价， 这里的汇率只是参考费率，实际以成交为准。\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/exchangeRate/query** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/exchangeRate/query**"
+        },
+        {
+          "info": {
+            "name": "入账交易查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transaction/entry/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询用户加款记录\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/transaction/entry/list** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/transaction/entry/list**"
+        },
+        {
+          "info": {
+            "name": "提现交易查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/withdraw/record/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询店铺提现交易记录\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/record/list** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/withdraw/record/list**"
+        },
+        {
+          "info": {
+            "name": "提现银行卡查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/bankcard/query/list",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询已绑定提现银行卡\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/bankcard/query/list** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/bankcard/query/list**"
+        },
+        {
+          "info": {
+            "name": "用户资金操作-发送验证码",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/captcha/mobile/withdraw/combine",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "验证码发送至连连账户当前绑定手机号</br>短信验证码获取上限：每小时10次，有效期10分钟</br>错误次数上限8次，超过后用户被锁定一小时，不允许发起提现\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/captcha/mobile/withdraw/combine** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/captcha/mobile/withdraw/combine**"
+        },
+        {
+          "info": {
+            "name": "用户资金提现",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/withdraw/combine/submit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "用户资金提现只支持单平台单站点多账户提现，不支持跨平台同币种提现。\n\n目前API接口支持</br>提现币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,IDR,SGD,AED</br>到账币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,CNY,SGD,CNH\n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/combine/submit** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/withdraw/combine/submit**"
+        },
+        {
+          "info": {
+            "name": "查询用户KYC状态",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/collection/v1/kyc/status",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "查询用户收款账户余额\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/kyc/status**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/kyc/status**"
+        },
+        {
+          "info": {
+            "name": "更新收款人材料信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/payee-document",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "更新合同材料信息\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-document**  </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-document**"
+        },
+        {
+          "info": {
+            "name": "查询收款人信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payee-bank-accounts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "收款人银行账户编号</br>即创建收款人银行账号信息接口返回id"
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "地区，参考`MODELS-地区`"
+              },
+              {
+                "name": "accountNo",
+                "value": "",
+                "type": "query",
+                "description": "银行账号"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "分页页码"
+              }
+            ]
+          },
+          "docs": "分页查询收款人信息\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts**  </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts**"
+        },
+        {
+          "info": {
+            "name": "创建收款人银行账号信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payee-bank-accounts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "创建收款人银行账号信息\n* 创建前请提前调用`通用服务-上传附件`接口上传相关材料文件（采购单/结算单/物流单/报关单等，具体可咨询客户经理），创建成功会返回收款人信息，如果姓名、证件号、银行账号匹配已有收款人信息，则会返回已存在的收款人。\n\n* 成功创建收款人银行账号之后，连连这边会进行申报审核，状态为审核成功之后就能正常使用该收款人。\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts** </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts**"
+        },
+        {
+          "info": {
+            "name": "删除收款人银行账号信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/payee-bank-accounts/account/:payeeBankAccountId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "payeeBankAccountId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts/account/{payeeBankAccountId}**  </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts/account/{payeeBankAccountId}**"
+        },
+        {
+          "info": {
+            "name": "查询批量付款结果",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/batch-payments",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "batchId",
+                "value": "",
+                "type": "query",
+                "description": "批量付款批次号"
+              }
+            ]
+          },
+          "docs": "查询批量付款结果信息\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments**  </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments**"
+        },
+        {
+          "info": {
+            "name": "创建批量付款",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/batch-payments",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "1、该接口的调用需要优先在连连端开通功能白名单方可使用，当连连这边认定的假期期间，供应商付款也是暂时不可用的；</br>\n2、在创建该请求前用户需要先调用短信验证码接口来获取二次校验，每小时获取短信验证码上限10次；短信验证码错误次数达8次账号锁定且在2小时之内不能再进行资金操作；</br>\n3、当用户发送批量付款请求时，API端会根据当前汇率来预估用户余额是否充足，如果余额不足会返回余额不足错误。\n### 供应商付款流程图\n![](https://cbva-cms2.oss-cn-hangzhou.aliyuncs.com/cb_file/erp/20220630-154046.jpg)\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments** </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments**\n"
+        },
+        {
+          "info": {
+            "name": "查询付款明细",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/batch-payments/:batchId/payments",
+            "params": [
+              {
+                "name": "batchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              }
+            ]
+          },
+          "docs": "获取批量付款明细\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments/{batchId}/payments**  </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments/{batchId}/payments**\n"
+        },
+        {
+          "info": {
+            "name": "查询币种账户余额",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/collection/v1/wallets",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种账户币种"
+              }
+            ]
+          },
+          "docs": "获取币种账户信息以及余额\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallets**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallets**"
+        },
+        {
+          "info": {
+            "name": "查询币种账户资金流水",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/collection/v1/wallets/transaction",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "查询资金流水开始时间"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "查询资金流水结束时间"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              }
+            ]
+          },
+          "docs": "币种账户资金明细列表查询，按币种进行查询，结果按创建时间倒序排序。\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallets/transaction**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallets/transaction**"
+        },
+        {
+          "info": {
+            "name": "查询币种账户充值记录",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/collection/v1/wallet-recharges",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "转入记录创建起始时间"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "转入记录创建结束时间"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              },
+              {
+                "name": "externalTransId",
+                "value": "",
+                "type": "query",
+                "description": "第三方单号"
+              }
+            ]
+          },
+          "docs": "币种账户充值列表查询，可以按币种进行查询，结果按创建时间倒序排序。\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-recharges**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallet-recharges**"
+        },
+        {
+          "info": {
+            "name": "币种账户充值",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/collection/v1/wallet-recharges",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "将一个或多个同平台店铺收款账号的钱转入币种账户用于汇兑或付款，转入前需要确认店铺收款账号余额大于转入金额。\n### 币种账户充值流程图\n![](https://cbva-cms2.oss-cn-hangzhou.aliyuncs.com/cb_file/erp/20220630-154041.jpg)\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-recharges** </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallet-recharges**"
+        },
+        {
+          "info": {
+            "name": "查询币种账户充值银行账号",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/supplier/v1/cards",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              }
+            ]
+          },
+          "docs": "根据币种查询币种账户充值银行账号\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/cards**  </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/cards**"
+        },
+        {
+          "info": {
+            "name": "查询币种账户充值银行转账记录",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/supplier/v1/card-recharges",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "转账记录创建起始时间"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "转账记录创建结束时间"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "accountNo",
+                "value": "",
+                "type": "query",
+                "description": "卡号"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              }
+            ]
+          },
+          "docs": "查询币种账户充值银行转账记录，结果按创建时间倒序排序。\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/card-recharges**  </br>\n生产域名 - **https://global-api.lianlianpay.com/supplier/v1/card-recharges**"
+        },
+        {
+          "info": {
+            "name": "查询提现记录",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/collection/v1/withdraws",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "提现创建起始时间"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "提现创建结束时间"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "分页大小"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              },
+              {
+                "name": "externalTransId",
+                "value": "",
+                "type": "query",
+                "description": "第三方单号"
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "query",
+                "description": "平台</br>参照`MODELS-店铺平台`"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "状态 \n\nstatus|message\n-|-\n1|提现中\n2|提现成功\n3|提现失败"
+              },
+              {
+                "name": "withdrawType",
+                "value": "",
+                "type": "query",
+                "description": "提现类型\n\nwithdrawType|message\n-|-\nBALANCE|余额提现\nWALLET|币种账户提现\nCREDIT|提前宝提现"
+              }
+            ]
+          },
+          "docs": "接口聚合了店铺、币种账户、提前宝提现列表查询，结果按创建时间倒序排序\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/withdraws**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/withdraws**"
+        },
+        {
+          "info": {
+            "name": "查询提现银行账号信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/collection/v1/bankcards",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "币种"
+              }
+            ]
+          },
+          "docs": "该接口支持按币种查询客户提现银行账号信息\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/bankcards**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/bankcards**"
+        },
+        {
+          "info": {
+            "name": "币种账户提现",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/collection/v1/wallet-withdraws",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "币种账户提现接口，提现前需要确认币种账户余额大于提现金额，提现结果异步通知返回或调用方查询确认。\n### 币种账户提现流程图\n![](https://cbva-cms2.oss-cn-hangzhou.aliyuncs.com/cb_file/erp/20220630-154035.jpg)\n\n联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-withdraws**  </br>\n生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallet-withdraws**"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

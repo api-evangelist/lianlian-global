@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Payers API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of payers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "开始时间，13位时间戳毫秒"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，13位时间戳毫秒"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码，默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量，默认值为20"
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "query",
+                "description": "客户端请求ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "付款人状态"
+              }
+            ]
+          },
+          "docs": "Get list of payers"
+        },
+        {
+          "info": {
+            "name": "Create a  payer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建付款人\r\n- request_id相同，业务字段相同时，幂等返回\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段相同时，会返回PAYER_IS_EXIST\r\n对于接口超时情况，可使用原报文重试或使用request_id调用收款人列表查询接口。"
+        },
+        {
+          "info": {
+            "name": "Get a payer by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payers/:payer_id",
+            "params": [
+              {
+                "name": "payer_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "查询付款人信息"
+        },
+        {
+          "info": {
+            "name": "Update a payer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payers/:payer_id",
+            "params": [
+              {
+                "name": "payer_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "仅允许状态为失败的付款人，进行信息更新。\r\n- 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一payer_id并发提交，会返回REQUEST_CONFLICT\r\n提供根据payer_id查询的接口获取最新状态"
+        },
+        {
+          "info": {
+            "name": "Delete a payer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/payers/:payer_id",
+            "params": [
+              {
+                "name": "payer_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "删除付款人\r\n- 业务字段（payer_id）相同时，不支持幂等"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

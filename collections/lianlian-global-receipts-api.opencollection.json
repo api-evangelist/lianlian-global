@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Receipts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Receipts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/receipts",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建一个凭证申请，凭证生成后通过webhook通知状态`COMPLETED`，此时可以通过凭证下载接口获取交易凭证或外汇汇款申请书文件。"
+        },
+        {
+          "info": {
+            "name": "Download a receipt by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/receipts/download",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "付款凭证或外汇汇款申请书文件下载，获取的凭证文件为ZIP压缩文件，解压缩后是PDF格式文件。"
+        },
+        {
+          "info": {
+            "name": "Get a receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/receipts/:transaction_id/:receipt_type",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path",
+                "description": "交易单号"
+              },
+              {
+                "name": "receipt_type",
+                "value": "",
+                "type": "path",
+                "description": "类型，默认值为：VOUCHER。VOUCHER（付款凭证）或APPLICATION_FOR_FUNDS_TRANSFERS（外汇汇款申请书）"
+              }
+            ]
+          },
+          "docs": "获取凭证或外汇汇款申请书文件的生成状态。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

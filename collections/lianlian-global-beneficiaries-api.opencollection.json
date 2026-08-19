@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Beneficiaries API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Beneficiaries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a beneficiary by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/beneficiaries/:beneficiary_id",
+            "params": [
+              {
+                "name": "beneficiary_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "根据收款人唯一ID获取收款人详情信息。"
+        },
+        {
+          "info": {
+            "name": "Update a beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/beneficiaries/:beneficiary_id",
+            "params": [
+              {
+                "name": "beneficiary_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "仅允许状态为失败的收款人，进行信息更新。\r\n- 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一beneficiary_id并发提交，会返回REQUEST_CONFLICT\r\n提供了根据beneficiary_id查询的接口获取最新状态"
+        },
+        {
+          "info": {
+            "name": "Delete a beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/beneficiaries/:beneficiary_id",
+            "params": [
+              {
+                "name": "beneficiary_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "删除已经存在的收款人。\r\n- 业务字段（beneficiary_id）相同时，不支持幂等"
+        },
+        {
+          "info": {
+            "name": "Get list of beneficiaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/beneficiaries",
+            "params": [
+              {
+                "name": "account_currency",
+                "value": "",
+                "type": "query",
+                "description": "收款银行账户币种"
+              },
+              {
+                "name": "purpose",
+                "value": "",
+                "type": "query",
+                "description": "交易类型"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "收款人状态"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "开始时间，13位时间戳毫秒"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，13位时间戳毫秒"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码，默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量，默认值为20"
+              },
+              {
+                "name": "beneficiary_account_type",
+                "value": "",
+                "type": "query",
+                "description": "收款账户类型，BANK_ACCOUNT 分发到银行账户、LL_ACCOUNT 分发到连连内部户"
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "query",
+                "description": "客户端请求ID"
+              }
+            ]
+          },
+          "docs": "获取收款人列表信息。"
+        },
+        {
+          "info": {
+            "name": "Create a beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/beneficiaries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建一个收款人。\r\n- request_id相同，业务字段相同时，幂等返回\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段相同时，会返回BENEFICIARY_ALREADY_EXISTS\r\n对于接口超时情况，可使用原报文重试或使用request_id调用Get list of beneficiaries收款人列表查询接口。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

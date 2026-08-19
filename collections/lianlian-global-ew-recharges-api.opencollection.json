@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Ew Recharges API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ew Recharges",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Recharge by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-recharges/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "transaction ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the information of the Recharge transaction with the matching ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

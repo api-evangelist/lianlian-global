@@ -1,0 +1,566 @@
+{
+  "item": [
+    {
+      "id": "f4cee0dd-844a-4dea-ac0b-bb69802967ca",
+      "name": "Quotes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0a7dfcc8-0c14-4de1-a3cf-020835d5d5b2",
+          "name": "Get a reference rate",
+          "request": {
+            "name": "Get a reference rate",
+            "description": {
+              "content": "获取参考汇率。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                "get_reference_rate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7b784853-ac0b-4e9f-b136-3c1cf968e8d2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_reference_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"currency_pair\": \"string\",\n  \"base_currency\": \"str\",\n  \"client_rate\": \"string\",\n  \"sell_currency\": \"str\",\n  \"buy_currency\": \"str\",\n  \"quote_time\": 7694.096368216028,\n  \"settle_date\": \"stringst\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39bdb25a-c6b1-42e4-b1b4-87ea292b3581",
+              "name": "code | message \r\n---------|----------\r\n INVALID_PARAM | 无效的参数\r\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\r\n RATE_INVAILD|当前汇率不可用，请稍后再试\r\n SERVICE_UNAVAILABLE | 请求的服务当前不可用",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_reference_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20b2264b-e451-4c4e-b813-5bbd68ea3918",
+              "name": "code | message\r\n---------|----------\r\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_reference_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6af2b32c-3ba6-4880-a573-e099e00e8f59",
+              "name": "code | message\r\n---------|----------\r\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_reference_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10db2787-8263-4f93-b7cc-7c880fb2e511",
+              "name": "code | message\r\n---------|----------\r\n INTERNAL_SERVER_ERROR | An internal server error has occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_reference_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fce80ce2-bcc6-4580-876f-106f2c3c5b62",
+          "name": "Get a conversion rate",
+          "request": {
+            "name": "Get a conversion rate",
+            "description": {
+              "content": "获取conversion交易汇率。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "quotes",
+                "get_conversion_rate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"sell_amount\": \"<string>\",\n  \"buy_amount\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7156ca14-d9dd-489b-96f2-f39b55696dd0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_conversion_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"sell_amount\": \"<string>\",\n  \"buy_amount\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rate_id\": \"stringstringstring\",\n  \"currency_pair\": \"string\",\n  \"base_currency\": \"str\",\n  \"client_rate\": \"string\",\n  \"sell_currency\": \"str\",\n  \"buy_currency\": \"str\",\n  \"settle_date\": \"stringst\",\n  \"valid_time\": 6706.023501738911,\n  \"quote_time\": 7938.4279076531475,\n  \"sell_amount\": \"string\",\n  \"buy_amount\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c22433e8-2c40-4eb7-8d0a-ea6cd3ef847d",
+              "name": "code | message \r\n---------|----------\r\n INVALID_PARAM | 无效的参数\r\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\r\n RATE_INVAILD|当前汇率不可用，请稍后再试\r\n SERVICE_UNAVAILABLE | 请求的服务当前不可用",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_conversion_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"sell_amount\": \"<string>\",\n  \"buy_amount\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c349416b-3a35-440b-88b4-b0206980623d",
+              "name": "code | message\r\n---------|----------\r\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_conversion_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"sell_amount\": \"<string>\",\n  \"buy_amount\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00eb4dbf-6f4b-4fae-8e19-285057370d09",
+              "name": "code | message\r\n---------|----------\r\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_conversion_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"sell_amount\": \"<string>\",\n  \"buy_amount\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c76d43df-81c5-442b-bddc-88c2b97f6047",
+              "name": "code | message\r\n---------|----------\r\n INTERNAL_SERVER_ERROR | An internal server error has occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "quotes",
+                    "get_conversion_rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_type\": \"<string>\",\n  \"sell_currency\": \"<string>\",\n  \"buy_currency\": \"<string>\",\n  \"sell_amount\": \"<string>\",\n  \"buy_amount\": \"<string>\",\n  \"settle_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9db554f3-cb65-4e8a-9041-84feba9f3f49",
+    "name": "Distribution Account Quotes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Users API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "账户余额查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Id of an existing user."
+              }
+            ]
+          },
+          "docs": "通过该接口获取用户在连连的账户余额，查询无须传参，连连会全量账户返回"
+        },
+        {
+          "info": {
+            "name": "post-users-userId",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Id of an existing user."
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Update User Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "Id of an existing user."
+              }
+            ]
+          },
+          "docs": "Update the information of an existing user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Payment API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a payment  detail by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accept_payments/request_id/:request_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "商户系统中该笔订单的唯一编码"
+              }
+            ]
+          },
+          "docs": "根据商户系统中request_id查询支付结果详情。"
+        },
+        {
+          "info": {
+            "name": "Create a automatic payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accept_payments/autopayment",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### 功能说明：\r\n自动免密支付接口。\r\n### 幂等说明：\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，继续执行原支付交易；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付交易。\r\n### 超时方案：\r\n如果调用Create a automatic payment接口超时，可使用request_id调用Get a payment detail by ID接口获取结果。\r\n### 验证支付：\r\n如果调用Create a automatic payment接口返回status=REQUIRES_ACTION，需要调用Send captcha on a payment获取支付验证码，然后调用Verify captcha on a payment进行验证支付。"
+        },
+        {
+          "info": {
+            "name": "Send captcha on a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accept_payments/captchas/:request_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### 功能说明：\r\n当支付需要进行验证时，通过该接口发送支付验证码。\r\n"
+        },
+        {
+          "info": {
+            "name": "Verify captcha on a payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accept_payments/captchas/verify/:request_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### 功能说明：\r\n提交验证码进行验证支付，推进支付流程。\r\n\r\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

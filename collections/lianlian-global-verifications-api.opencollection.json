@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Verifications API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/verifications/:request_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update verification"
+        },
+        {
+          "info": {
+            "name": "Get list of verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/verifications",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码,默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量,默认值20"
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "query",
+                "description": "客户端唯一请求ID，在交易时作为请求参数进行防重控制"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "SUCCEEDED：认证成功； FAILDE：认证失败； REQUIRES_ACTION：待提交确认信息（对公银行账户认证场景中返回）；  PROCESSING：受理中（对公银行账户认证场景中返回）"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "查询的开始日期，开始时间和结束时间都为空，默认查询近三个月的数据"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "查询的截止日期，开始时间和结束时间都为空，默认查询近三个月的数据"
+              }
+            ]
+          },
+          "docs": "Get list of verification"
+        },
+        {
+          "info": {
+            "name": "Create a verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/verifications",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "向指定的银行卡创建一次验证。\r\n- request_id相同，业务字段相同时，会返回VERIFY_ORDER_EXIST\r\n- request_id相同，业务字段不同时，会返回VERIFY_ORDER_EXIST\r\n- request_id不同，业务字段相同时，按全新交易处理\r\n接口调用超时时，可使用request_id调用Get list of verification列表查询接口获取结果。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

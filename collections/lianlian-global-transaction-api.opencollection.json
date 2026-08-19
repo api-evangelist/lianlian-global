@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Transaction API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transaction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a transaction by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "交易ID"
+              }
+            ]
+          },
+          "docs": "通过唯一交易ID获取交易明细详情信息。"
+        },
+        {
+          "info": {
+            "name": "Get list of transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页条数"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "query",
+                "description": "客户请求ID"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "交易币种"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "交易状态"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "交易明细ID"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "create_time起始时间，13位时间戳毫秒"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "create_time结束时间，13位时间戳毫秒"
+              }
+            ]
+          },
+          "docs": "通过分页方式获取交易明细列表信息。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

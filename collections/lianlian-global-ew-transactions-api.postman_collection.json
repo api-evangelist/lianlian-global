@@ -1,0 +1,160 @@
+{
+  "item": [
+    {
+      "id": "60c9b12f-57e0-4e88-a8d7-8d140fc9b7ea",
+      "name": "Ew Transactions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "61b61cbd-4a61-4707-98c1-584bfadb1964",
+          "name": "Get list of Transactions",
+          "request": {
+            "name": "Get list of Transactions",
+            "description": {
+              "content": "Get list of Transactions.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ew-transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"search\": \"<string>\",\n  \"start_time\": \"<string>\",\n  \"status\": \"<string>\",\n  \"type\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "07c13a75-b3eb-49b1-ba9e-c9ea4dd8ddfa",
+              "name": "Data list is ordered by create_time desc.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ew-transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"search\": \"<string>\",\n  \"start_time\": \"<string>\",\n  \"status\": \"<string>\",\n  \"type\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"request_id\": \"string\",\n      \"amount\": \"string\",\n      \"currency\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"PAYOUT\",\n      \"user_id\": \"string\",\n      \"status\": \"PROCESSING\",\n      \"create_time\": \"string\"\n    }\n  ],\n  \"total_count\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9905ef1d-e5d2-4302-900b-a9e409de5410",
+              "name": "Transaction Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ew-transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"search\": \"<string>\",\n  \"start_time\": \"<string>\",\n  \"status\": \"<string>\",\n  \"type\": \"<string>\",\n  \"currency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7d5ab252-c083-4717-8e84-d370a34210ae",
+    "name": "Distribution Account Ew Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

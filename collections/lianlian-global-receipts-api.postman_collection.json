@@ -1,0 +1,521 @@
+{
+  "item": [
+    {
+      "id": "c7f19ee9-cb4f-4241-8c15-cda8ab843a3f",
+      "name": "Receipts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6c008c8a-e2e6-4153-96e6-919593436a35",
+          "name": "Create a receipt",
+          "request": {
+            "name": "Create a receipt",
+            "description": {
+              "content": "创建一个凭证申请，凭证生成后通过webhook通知状态`COMPLETED`，此时可以通过凭证下载接口获取交易凭证或外汇汇款申请书文件。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receipts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"receipt_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36e905e7-1215-4727-9d9d-d711dc66ffb0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"receipt_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"string\",\n  \"receipt_type\": \"string\",\n  \"status\": \"string\",\n  \"create_time\": 7826.184569932201\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bcde631-c6d2-4295-86b0-994c96fe61cb",
+              "name": "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\nPARAM_ERROR | A parameter value is not valid or is missing.\r\nTRANSACTION_ID_NOT_FOUND | The transaction order is not found. \r\nTRANSACTION_NOT_SUCCEED | The transaction order status is not SUCCEEDED. ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"receipt_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2a35d93-f340-402c-acc1-d6f9fbff1696",
+              "name": "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"receipt_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "679091cf-15e7-4a91-8a4d-2382c88b94c6",
+          "name": "Download a receipt by ID",
+          "request": {
+            "name": "Download a receipt by ID",
+            "description": {
+              "content": "付款凭证或外汇汇款申请书文件下载，获取的凭证文件为ZIP压缩文件，解压缩后是PDF格式文件。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receipts",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"receipt_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "558e0f6b-2a8c-439e-a006-741fd2ea9d54",
+              "name": "付款凭证或外汇汇款申请书文件流信息，文件为ZIP压缩文件，解压缩后是PDF格式文件。",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipts",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"receipt_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f04f33e-28f8-4c6a-b4a7-d54805c1ddaa",
+          "name": "Get a receipt",
+          "request": {
+            "name": "Get a receipt",
+            "description": {
+              "content": "获取凭证或外汇汇款申请书文件的生成状态。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receipts",
+                ":transaction_id",
+                ":receipt_type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) 交易单号"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "receipt_type",
+                  "description": "(Required) 类型，默认值为：VOUCHER。VOUCHER（付款凭证）或APPLICATION_FOR_FUNDS_TRANSFERS（外汇汇款申请书）"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "34a445d0-001d-4614-a542-c75c5afe6de8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipts",
+                    ":transaction_id",
+                    ":receipt_type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易单号"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "receipt_type",
+                      "description": "(Required) 类型，默认值为：VOUCHER。VOUCHER（付款凭证）或APPLICATION_FOR_FUNDS_TRANSFERS（外汇汇款申请书）"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"string\",\n  \"receipt_type\": \"string\",\n  \"status\": \"string\",\n  \"create_time\": 7260.798221605799\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85600701-5e05-4c9d-9f90-12748ed99c3b",
+              "name": "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipts",
+                    ":transaction_id",
+                    ":receipt_type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易单号"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "receipt_type",
+                      "description": "(Required) 类型，默认值为：VOUCHER。VOUCHER（付款凭证）或APPLICATION_FOR_FUNDS_TRANSFERS（外汇汇款申请书）"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f63cdc5f-89ba-489a-882b-710afeb1514f",
+              "name": "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receipts",
+                    ":transaction_id",
+                    ":receipt_type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易单号"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "receipt_type",
+                      "description": "(Required) 类型，默认值为：VOUCHER。VOUCHER（付款凭证）或APPLICATION_FOR_FUNDS_TRANSFERS（外汇汇款申请书）"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6d91ef7c-5506-499b-b670-892c81568195",
+    "name": "Distribution Account Receipts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

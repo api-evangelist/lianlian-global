@@ -1,0 +1,774 @@
+{
+  "item": [
+    {
+      "id": "77305b54-0f92-4fd9-9107-06cc94043b20",
+      "name": "Payment",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eef6e718-ae87-4ef8-88d1-feb58f5d3dab",
+          "name": "Get a payment  detail by ID",
+          "request": {
+            "name": "Get a payment  detail by ID",
+            "description": {
+              "content": "根据商户系统中request_id查询支付结果详情。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accept_payments",
+                "request_id",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) 商户系统中该笔订单的唯一编码"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "0aa0baaf-b893-4034-9c72-22d48b0b1fb6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "request_id",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 商户系统中该笔订单的唯一编码"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c36fb685-2abf-490f-9b4f-dc5aa0adfebc",
+              "name": "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "request_id",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 商户系统中该笔订单的唯一编码"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a687b80a-8cdd-4383-9693-10c2bb9d3700",
+              "name": "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "request_id",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 商户系统中该笔订单的唯一编码"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "591ed1f4-20e3-4c9b-aab2-189f228a70c9",
+          "name": "Create a automatic payment",
+          "request": {
+            "name": "Create a automatic payment",
+            "description": {
+              "content": "### 功能说明：\r\n自动免密支付接口。\r\n### 幂等说明：\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，继续执行原支付交易；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付交易。\r\n### 超时方案：\r\n如果调用Create a automatic payment接口超时，可使用request_id调用Get a payment detail by ID接口获取结果。\r\n### 验证支付：\r\n如果调用Create a automatic payment接口返回status=REQUIRES_ACTION，需要调用Send captcha on a payment获取支付验证码，然后调用Verify captcha on a payment进行验证支付。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accept_payments",
+                "autopayment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"business_type\": \"<string>\",\n  \"customer\": {\n    \"identifier\": \"<string>\",\n    \"name\": \"<string>\",\n    \"identification_type\": \"<string>\",\n    \"id_number\": \"<string>\"\n  },\n  \"product_info\": [\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ],\n  \"amount_details\": {\n    \"product_money_amount\": \"<string>\",\n    \"product_money_amount_currency\": \"<string>\",\n    \"fee_money_amount\": \"<string>\",\n    \"fee_money_amount_currency\": \"<string>\"\n  },\n  \"payment_method\": \"<string>\",\n  \"description\": \"<string>\",\n  \"expires_time\": \"<number>\",\n  \"metadata\": \"<object>\",\n  \"additional_info\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35bebeb7-159b-4029-9838-dd7ecb54fa3c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "autopayment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"4e95132208654df990eb9b34edfefdca\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"business_type\": \"<string>\",\n  \"customer\": {\n    \"identifier\": \"<string>\",\n    \"name\": \"<string>\",\n    \"identification_type\": \"<string>\",\n    \"id_number\": \"<string>\"\n  },\n  \"product_info\": [\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ],\n  \"amount_details\": {\n    \"product_money_amount\": \"<string>\",\n    \"product_money_amount_currency\": \"<string>\",\n    \"fee_money_amount\": \"<string>\",\n    \"fee_money_amount_currency\": \"<string>\"\n  },\n  \"payment_method\": \"<string>\",\n  \"description\": \"<string>\",\n  \"expires_time\": \"<number>\",\n  \"metadata\": \"<object>\",\n  \"additional_info\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da2cd9fe-8a10-42f3-a28d-d955c7f46d1d",
+              "name": "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nCUR_SUPPORT_ERROR | The currency is not supported.\r\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\r\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\r\nAGREEMENT_NOT_EXIST | Agreement does not exist.\r\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\r\nAGREEMENT_CANCELLED | The agreement has been cancelled.\r\nAGREEMENT_EXPIRED | The agreement has been expired.\r\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\r\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\r\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\r\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\r\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\r\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\r\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\r\nAML_REJECT | AML reject.\r\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\r\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\r\nPAYMENT_ALREADY_EXISTS | Payment already exists.\r\nPAYMENT_CLOSED | Payment has been closed.\r\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\r\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\r\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\r\nPAYMENT_REPEAT | Payment has already been successfully paid.\r\nPAYMENT_EXPIRED | Payment has expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "autopayment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"4e95132208654df990eb9b34edfefdca\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"business_type\": \"<string>\",\n  \"customer\": {\n    \"identifier\": \"<string>\",\n    \"name\": \"<string>\",\n    \"identification_type\": \"<string>\",\n    \"id_number\": \"<string>\"\n  },\n  \"product_info\": [\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\"\n    }\n  ],\n  \"amount_details\": {\n    \"product_money_amount\": \"<string>\",\n    \"product_money_amount_currency\": \"<string>\",\n    \"fee_money_amount\": \"<string>\",\n    \"fee_money_amount_currency\": \"<string>\"\n  },\n  \"payment_method\": \"<string>\",\n  \"description\": \"<string>\",\n  \"expires_time\": \"<number>\",\n  \"metadata\": \"<object>\",\n  \"additional_info\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b023702f-1321-4687-bee6-423d8c05ac0b",
+          "name": "Send captcha on a payment",
+          "request": {
+            "name": "Send captcha on a payment",
+            "description": {
+              "content": "### 功能说明：\r\n当支付需要进行验证时，通过该接口发送支付验证码。\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accept_payments",
+                "captchas",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"captcha\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5c65ce0a-9cd7-41eb-a396-bbb0380b34af",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "captchas",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"captcha\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ddb87db-8fec-4f7a-8ce9-ae0ddf005ddf",
+              "name": "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nPAYMENT_NOT_EXIST|Payment does not exist.\r\nNO_NEED_VERIFY|No need to verify.\r\nREQUEST_CONFLICT|The request cannot be processed as another request is being processed.\r\nREMOTE_INVOKE_FAIL|A system or application error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "captchas",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"captcha\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28f42666-f6e1-4f8c-8c25-9c024ecee1e7",
+          "name": "Verify captcha on a payment",
+          "request": {
+            "name": "Verify captcha on a payment",
+            "description": {
+              "content": "### 功能说明：\r\n提交验证码进行验证支付，推进支付流程。\r\n\r\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accept_payments",
+                "captchas",
+                "verify",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"captcha\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "55992543-3d7c-49e7-b066-995d4dfb2899",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "captchas",
+                    "verify",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"captcha\": \"651938\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc6c77bb-ad15-4782-a811-099d25d15926",
+              "name": "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nCUR_SUPPORT_ERROR | The currency is not supported.\r\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\r\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\r\nAGREEMENT_NOT_EXIST | Agreement does not exist.\r\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\r\nAGREEMENT_CANCELLED | The agreement has been cancelled.\r\nAGREEMENT_EXPIRED | The agreement has been expired.\r\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\r\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\r\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\r\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\r\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\r\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\r\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\r\nAML_REJECT | AML reject.\r\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\r\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\r\nPAYMENT_ALREADY_EXISTS | Payment already exists.\r\nPAYMENT_CLOSED | Payment has been closed.\r\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\r\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\r\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\r\nPAYMENT_REPEAT | Payment has already been successfully paid.\r\nPAYMENT_EXPIRED | Payment has expired.\r\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\r\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\t\r\nCAPTCHA_NOT_VALID|The verification code has expired, please retrieve it again.\t\r\nCAPTCHA_NOT_MATCH|The verification code is incorrect, please check.\t\r\nCAPTCHA_USED|The verification code has been used, please retrieve a new one.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "captchas",
+                    "verify",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"captcha\": \"651938\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3aa49254-8533-431e-ab35-2ef970766f07",
+    "name": "Distribution Account Payment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

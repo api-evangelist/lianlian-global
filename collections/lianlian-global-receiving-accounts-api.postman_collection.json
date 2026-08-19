@@ -1,0 +1,1052 @@
+{
+  "item": [
+    {
+      "id": "b8c07155-ccd6-4504-bc84-abc9918bf96a",
+      "name": "Receiving Accounts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "785d673e-57a1-46b6-990c-8c89b9f02bb0",
+          "name": "Open a receiving account",
+          "request": {
+            "name": "Open a receiving account",
+            "description": {
+              "content": "申请收款账户。\r\n- request_id相同，业务字段（country_code或channel_code）相同时，幂等返回\r\n- request_id相同，业务字段（country_code或channel_code）不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段（country_code或channel_code）相同时，按全新交易处理，创建新的receiving account\r\n对于接口超时情况，可使用原报文重试或使用request_id调用Get list of receiving accounts接口获取结果。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receiving_accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"<string>\",\n  \"channel_code\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"payment_methods\": \"<string>\",\n  \"nickname\": \"<string>\",\n  \"metadata\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a5bc1d9-295f-4277-bf47-1fce0e178d8d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"string\",\n  \"channel_code\": \"string\",\n  \"currency_list\": [\n    null\n  ],\n  \"country_code\": \"string\",\n  \"payment_methods\": \"string\",\n  \"nickname\": \"string\",\n  \"metadata\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e33de527-f98c-4eb4-a88b-8e216ef102f7",
+              "name": "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing.\r\n ILLEGAL_ARGUMENT_EXCEPTION| A parameter value is not valid\r\n CURRENCY_SINGLE_ERR| When the currency type is a single currency, the number of currencyList cannot be greater than 1\r\n KYC_STATUS_FAILED| Abnormal KYC status\r\n QUERY_OPENID_FAIL| Exception when querying authorization id\r\n CREATE_PARTICIPANT_FAIL| Create participant id exception\r\n NO_VIRTUAL_GROUP| No deck available\r\n GROUP_NOT_SUPPORT_CURRENCY| The deck does not support the incoming currency list\r\n REQUEST_CONFLICT| The request cannot be processed as another request is being processed.\r\n VIRTUAL_APPLY_FAILED| Virtual card apply failed.\r\n CORE_ACCOUNT_APPLY_FAILED| Account apply failed.\r\n ACCOUNT_BIND_EXCEPTION| Account binding exception\r\n NOT_SUPPORT_MULI_CURRENCY| not support multi-currency cards",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"string\",\n  \"channel_code\": \"string\",\n  \"currency_list\": [\n    null\n  ],\n  \"country_code\": \"string\",\n  \"payment_methods\": \"string\",\n  \"nickname\": \"string\",\n  \"metadata\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "afd15950-b806-4858-acc4-e7cdfe116d05",
+          "name": "Get list of receiving accounts",
+          "request": {
+            "name": "Get list of receiving accounts",
+            "description": {
+              "content": "根据查询条件获取收款账户列表。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receiving_accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "页码,默认值为1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<string>",
+                  "description": "每页查询数量,默认值20"
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "全球收款账户唯一标识"
+                },
+                {
+                  "disabled": false,
+                  "key": "nickname",
+                  "value": "<string>",
+                  "description": "全球收款账户别名"
+                },
+                {
+                  "disabled": false,
+                  "key": "country_code",
+                  "value": "<string>",
+                  "description": "全球收款账户发卡行所在的国家地区"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "全球收款账户支持收款的币种"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "全球收款账户的状态 `ACTIVE`：正常 `PROCESSING`：处理中     `INACTIVE`：非正常 `CLOSED` ：关闭"
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_methods",
+                  "value": "<string>",
+                  "description": "`SWIFT`全球收款账户,`LOCAL`本地收款账户,默认`SWIFT`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "2bae9780-da71-4dcc-9751-11f673889544",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nickname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_methods",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page_size\": \"string\",\n  \"page\": \"string\",\n  \"total_count\": \"string\",\n  \"total_page\": \"string\",\n  \"page_list \": {\n    \"value\": \"reference #/components/schemas/Receiving_Accounts_Info not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9daac30-fad5-4c60-b1f8-1798f01390ab",
+              "name": "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing.\r\n ILLEGAL_ARGUMENT_EXCEPTION | page_size must be less than or equal to 1000",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nickname",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "country_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_methods",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b20ce0b-be3f-4012-b696-0a034e76a458",
+          "name": "Get list of channels",
+          "request": {
+            "name": "Get list of channels",
+            "description": {
+              "content": "获取收款账户支持的渠道信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receiving_accounts",
+                "channel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "country_code",
+                  "value": "<string>",
+                  "description": "全球收款账户国家地区"
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_methods",
+                  "value": "<string>",
+                  "description": "渠道支付方式， `SWIFT`, `LOCAL`,默认`SWIFT`"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "d7e6138c-1ec5-4534-a31c-5a0fd89f26d1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "country_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_methods",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"value\": \"reference #/components/schemas/Receiving_Accounts_Channel not found in the OpenAPI spec\"\n  },\n  {\n    \"value\": \"reference #/components/schemas/Receiving_Accounts_Channel not found in the OpenAPI spec\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b966cfad-8c44-4bb3-8074-ec0d3851d7cd",
+              "name": "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing. ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    "channel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "country_code",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_methods",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56b979f6-68c6-4e1f-9ec5-d60b72a32df2",
+          "name": "Update a receiving account",
+          "request": {
+            "name": "Update a receiving account",
+            "description": {
+              "content": "根据收款账户唯一ID更新账户信息。\r\n- 业务字段（id）相同时，可多次调用更新，数据为最后一次更新的内容",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receiving_accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) global_account的主键"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nickname\": \"<string>\",\n  \"metadata\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "08bc488c-cfdc-4907-9419-70bfead3bc3a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) global_account的主键"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nickname\": \"<string>\",\n  \"metadata\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31dff22e-585a-4d6e-a90e-28aa19a09d79",
+              "name": "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing. \r\n STATE_EXCEPTION | The alias cannot be modified in a non-successful state!",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) global_account的主键"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nickname\": \"<string>\",\n  \"metadata\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0058fac-3da6-437d-91ba-376919c68c95",
+              "name": "code | message \r\n---------|----------\r\n RESOURCE_NOT_FOUND | The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) global_account的主键"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nickname\": \"<string>\",\n  \"metadata\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26b5382c-960d-4939-af84-ad010afcbf56",
+          "name": "Get receiving account by ID",
+          "request": {
+            "name": "Get receiving account by ID",
+            "description": {
+              "content": "根据收款账户唯一ID获取账户详情信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receiving_accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) global_account的主键"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "4a422123-1f78-474a-ab85-8207a4cf30d0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) global_account的主键"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8396bee1-5e8c-4fc8-991e-c5d252c0ac68",
+              "name": "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing. ",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) global_account的主键"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24f3aee3-fc90-432c-99e6-15a6c36ac4ef",
+          "name": "Close a receiving account",
+          "request": {
+            "name": "Close a receiving account",
+            "description": {
+              "content": "关闭指定的收款账户，关闭后对应账户将无法进行收款。\r\n- 业务字段（id）相同时，支持幂等，多次调用关闭，返回相同的结果",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "receiving_accounts",
+                "close",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) global_account的主键"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"close_reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ef871748-89d5-4673-8d81-07786478a935",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    "close",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) global_account的主键"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"close_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5768e157-47b6-452b-8978-cceecbc371f7",
+              "name": "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or is missing.\r\n STATE_EXCEPTION | The alias cannot be modified in a non-successful state!\r\n STATE_EXCEPTION | The global account has been closed, please do not repeat the operation!",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "receiving_accounts",
+                    "close",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) global_account的主键"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"close_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b195c6dc-9def-408b-801d-1f580de5d892",
+    "name": "Distribution Account Receiving Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

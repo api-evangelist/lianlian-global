@@ -1,0 +1,158 @@
+{
+  "item": [
+    {
+      "id": "eb110d11-3845-4c2e-af7c-295e78aa79ce",
+      "name": "Ew Receipts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ba3e4ef7-1b7b-407f-bc40-626374ded9c9",
+          "name": "Get Receipt Info by ID",
+          "request": {
+            "name": "Get Receipt Info by ID",
+            "description": {
+              "content": "Get Receipt by transaction ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ew-receipts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Transaction ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16182e7a-5df3-4eef-9000-d3358c6dc128",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ew-receipts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Transaction ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fee\": \"string\",\n  \"receive_amount\": \"string\",\n  \"receive_currency\": \"string\",\n  \"payer_source_id_type\": \"EMAIL\",\n  \"payer_source_id\": \"string\",\n  \"account_no\": \"string\",\n  \"context\": \"string\",\n  \"payer_name\": \"string\",\n  \"payee_source_id\": \"string\",\n  \"id\": \"string\",\n  \"message\": \"string\",\n  \"user_id\": \"string\",\n  \"create_time\": \"string\",\n  \"name\": \"string\",\n  \"status\": \"PROCESSING\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0844d400-558a-40e4-ab02-e8301074063f",
+              "name": "Transaction Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ew-receipts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Transaction ID"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ddcec37f-a991-4bee-be49-06eb5bd5bdcc",
+    "name": "Distribution Account Ew Receipts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

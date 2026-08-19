@@ -1,0 +1,326 @@
+{
+  "item": [
+    {
+      "id": "556aef8e-37d7-4b1a-820c-7e7f60a05f7b",
+      "name": "Files",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bb80e09a-3717-44c6-9f2c-97a3e76569c1",
+          "name": "Upload a file",
+          "request": {
+            "name": "Upload a file",
+            "description": {
+              "content": "### 功能说明\r\n上传文件，返回文件ID\r\n### 幂等说明\r\n不支持幂等，每次请求都会创建新的资源，并返回新的ID\r\n### 限制\r\n- 文件大小最大不能超过20M\r\n- 支持的文件类型：jpg、png、jpeg、bmp、pdf、csv、xls、xlsx\r\n- 限流说明：每日200次",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "files",
+                "upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            }
+          },
+          "response": [
+            {
+              "id": "70f93d11-7925-4a64-b84a-654007768940",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "files",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3789007f-510b-4300-a723-2168656a37df",
+              "name": "**code**|**message**\r\n---|---\r\nFILE_UPLOAD_EMPTY|The file stream cannot be empty.\r\nPURPOSE_IS_BLANK|Required parameters are missing.\r\nFILE_UPLOAD_EXCEED_MAX_SIZE|File upload exceeds the maximum value.\r\nMD5_MISMATCH|File md5 mismatch.\r\nINVALID_CLIENT|Client invalid.\r\nFILE_FREQUENCY_LIMIT_EXCEED|File upload or download  exceeds the limit,try again later.\r\nFILE_FREQUENCY_USER_LIMIT_EXCEED|File upload or download exceeds the limit,try again later.\r\nFILE_SERVER_REMOTE_ERROR|A system or application error occurred.\r\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "files",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "89601619-9f74-4958-82cd-5f0478bca61f",
+          "name": "Download a file by ID",
+          "request": {
+            "name": "Download a file by ID",
+            "description": {
+              "content": "下载文件",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "files",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a4284f08-080d-4b60-a6b2-bac5e642c523",
+              "name": "返回文件流信息",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "files",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b61ff394-0ae5-48e9-b85f-7b8834b872b9",
+              "name": "**code**|**message**\r\n---|---\r\nMISSING_REQUIRED_PARAMETER|Required parameters are missing.\r\nFILE_FREQUENCY_USER_LIMIT_EXCEED|File upload or download exceeds the limit,try again later.\r\nFILE_SERVER_REMOTE_ERROR|A system or application error occurred.\r\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "files",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3210c105-f676-46bb-a8aa-f46a389eda52",
+              "name": "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "files",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3883768f-d33c-4c77-9567-b76276d3c915",
+    "name": "Distribution Account Files API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

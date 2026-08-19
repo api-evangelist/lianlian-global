@@ -1,0 +1,2446 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Operations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/file/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File ID"
+              }
+            ]
+          },
+          "docs": "Download File by `id`."
+        },
+        {
+          "info": {
+            "name": "Get list of Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-files",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get list of Files."
+        },
+        {
+          "info": {
+            "name": "Upload File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/file/upload",
+            "params": [
+              {
+                "name": "file",
+                "value": "",
+                "type": "query",
+                "description": "File stream, A maximum of 10 MB files are supported. Empty files are not allowed."
+              },
+              {
+                "name": "notes",
+                "value": "",
+                "type": "query",
+                "description": "The notes of the file, max length is 128 characters."
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "User naming the file when uploading."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload a file to LianLian Global's server. The max size of an upload file is up to 10MB.\nWhen you upload a file, the API responds with a `id`.\nThis `id` will be referenced as required as part of the `File Folder` object.\n\nAllowed file types:\n`application/x-rar-compressed` `application/zip` `application/pdf` `image/jpeg` `image/png`\n\n"
+        },
+        {
+          "info": {
+            "name": "Get list of Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-balances"
+          },
+          "docs": "#### Demo for java SDK\n```java\n//create an API service as native Object\nBalanceReadService service = GatewayProxyFactory.getInstance().create(BalanceReadService.class, config);\n//init your API call parameter\nBaseOpenApiReq req = new BaseOpenApiReq();\n//invoke api as native call and get the deserialized result Object\nRichOpenRes<List<BalanceDetailRes>> res = service.list(req);\n//if invoke succeed do your business\nif (res.isSuccess()) {\n    //do your business here\n    System.out.println(res);\n    "
+        },
+        {
+          "info": {
+            "name": "Get List of Balances With Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-balances-with-settings"
+          },
+          "docs": "Get list of balances and with the account settings."
+        },
+        {
+          "info": {
+            "name": "Create a Conversion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-conversions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new `Conversion` to be executed. To associate a conversion with a `Payout`, use the Payout API.\nNote: On a conversion, both `buy_currency` and `sell_currency` will be populated, but define only one of either `buy_amount` or `sell_amount`. "
+        },
+        {
+          "info": {
+            "name": "Get Conversion by Request_ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-conversions/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get detail of a `Conversion` transaction."
+        },
+        {
+          "info": {
+            "name": "Start a New Agreement Signing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-agreements/signing",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a New Agreement Signing"
+        },
+        {
+          "info": {
+            "name": "Get Agreement By Merchant Client ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-agreements/merchant-client-id",
+            "params": [
+              {
+                "name": "merchant_client_id",
+                "value": "",
+                "type": "query",
+                "description": "Merchant ID as known by the client platform."
+              },
+              {
+                "name": "agreement_type",
+                "value": "",
+                "type": "query",
+                "description": "Signing agreement type."
+              }
+            ]
+          },
+          "docs": "Get `Agreement` by merchant_client_id"
+        },
+        {
+          "info": {
+            "name": "Get File Folder Info by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-folders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File Floder ID"
+              }
+            ]
+          },
+          "docs": "Get File Floder Info by ID."
+        },
+        {
+          "info": {
+            "name": "Delete File Folder Info by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/ew-folders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "File Floder ID"
+              }
+            ]
+          },
+          "docs": "Delete `File Folder` Info by ID. This method only delete File Floder object, not the files associated with it."
+        },
+        {
+          "info": {
+            "name": "Create File Folder Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-folders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "create a new `File Floder` with multiple `File` refrence."
+        },
+        {
+          "info": {
+            "name": "Create a LockFX Quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-conversions/lockfx",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lock quote."
+        },
+        {
+          "info": {
+            "name": "Get a Bank Account Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-contacts/bank/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific bank account contact by the `contact _id`."
+        },
+        {
+          "info": {
+            "name": "Delete a Bank Account Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/ew-contacts/bank/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific bank account contact by the `contact_id`."
+        },
+        {
+          "info": {
+            "name": "Create a New Bank Account Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-contacts/bank",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new bank account `Contact` which will be audited by LianLian Global before that can be used in payout transaction.\nA notification of the audit result will be sent by Webhook after subscribing the payee related event `Contact`."
+        },
+        {
+          "info": {
+            "name": "Get a Bank Account Contact by Merchant Client Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-contacts/bank/merchant-client-id/:merchant_client_id",
+            "params": [
+              {
+                "name": "merchant_client_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific bank account contact by the `merchant_client_id`."
+        },
+        {
+          "info": {
+            "name": "Delete a Bank Account Contact by Merchant Client Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/ew-contacts/bank/merchant-client-id/:merchant_client_id",
+            "params": [
+              {
+                "name": "merchant_client_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific bank account contact by the `merchant_client_id`."
+        },
+        {
+          "info": {
+            "name": "Clearing Rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-contacts/clearing-rules",
+            "params": [
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query",
+                "description": "Country code of payee's bank account."
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "Clearing menthod code."
+              },
+              {
+                "name": "send_currency",
+                "value": "",
+                "type": "query",
+                "description": "Currency of payment to payee's bank account (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format)."
+              },
+              {
+                "name": "entity_type",
+                "value": "",
+                "type": "query",
+                "description": "Payee bank account type, one of `INDIVIDUAL` and `CORPORATE`"
+              }
+            ]
+          },
+          "docs": "Query Clearing Rules"
+        },
+        {
+          "info": {
+            "name": "Get a Network Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-contacts/network/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific network contact by the `contact_id`."
+        },
+        {
+          "info": {
+            "name": "Delete a Network Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/ew-contacts/network/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific network contact by the `contact_id`."
+        },
+        {
+          "info": {
+            "name": "Create a New Network Contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-contacts/network",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new network `Payee` which will be audited by LianLian Global before that can be used in payout transaction.\nA notification of the audit result will be sent by Webhook after subscribing the payee related event `Payee`."
+        },
+        {
+          "info": {
+            "name": "Get a Network Contact by Merchant Client Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-contacts/network/merchant-client-id/:merchant_client_id",
+            "params": [
+              {
+                "name": "merchant_client_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific network payee by the `merchant_client_id`."
+        },
+        {
+          "info": {
+            "name": "Delete a Network Contact by Merchant Client Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/ew-contacts/network/merchant-client-id/:merchant_client_id",
+            "params": [
+              {
+                "name": "merchant_client_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific network payee by the `merchant_client_id`."
+        },
+        {
+          "info": {
+            "name": "Get Payout by Request ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-payouts/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Request ID"
+              }
+            ]
+          },
+          "docs": "Get the detail of a payout transaction by Request ID."
+        },
+        {
+          "info": {
+            "name": "Create a Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-payouts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a payout to a payee.  \nThe successful creation only represents the successful receipt of the distribution order by LianLian Global, does not means the transaction succeed. You can use `Get Payout by Request ID` API to obtain transaction results.\n\nIf you want to receive notification of transaction results, you can subscribe to payout related event `Payout`.\n \n[Note] Payment can include exchange when `send_currency `and `pay_currency` are different, and conversion is not included when `send"
+        },
+        {
+          "info": {
+            "name": "Create a payout to APP",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-payouts-to-app",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a payout to APP(this APP will onboarding Ewallet).  \nThe successful creation only represents the successful receipt of the distribution order by LianLian Global, does not means the transaction succeed. You can use `Get Payout by Request ID` API to obtain transaction results.\n\nIf you want to receive notification of transaction results, you can subscribe to payout related event `Payout`.\n \n[Note] Payment can include exchange when `send_currency `and `pay_currency` are different, and convers"
+        },
+        {
+          "info": {
+            "name": "Get Request Payment by Request ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-request-payments/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "Request ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the information of the `Request Payment` with the matching Request ID."
+        },
+        {
+          "info": {
+            "name": "Create a New Request Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-request-payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new request payment."
+        },
+        {
+          "info": {
+            "name": "Request Payment Url",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/ew-request-payments/url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a `Request Payment` URL for a Payer."
+        },
+        {
+          "info": {
+            "name": "Query Currency Account Available Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/global/common/v1/account"
+          },
+          "docs": "query currency balance"
+        },
+        {
+          "info": {
+            "name": "Retrieve all balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/global/common/v1/account/list"
+          },
+          "docs": "Retrieve all balances"
+        },
+        {
+          "info": {
+            "name": "Upload Document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/documents",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Upload document to Lianlian Pay system. \n\nReturn type is `Document` object. `Document.id` should be used in other APIs if a support document is required.\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Download Document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/documents/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download document file by `dcoumentId`. \n\nInterface Maximum Concurrency：300\n"
+        },
+        {
+          "info": {
+            "name": "Get Event List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/events",
+            "params": [
+              {
+                "name": "topic",
+                "value": "",
+                "type": "query",
+                "description": "Event topic defined in Lianlian Pay's system."
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "If nonzero, skip this number of results before returning data. Used with `pageSize` to provide pagination for large datasets."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "If nonzero, return no more than this number of results. Used with `pageNum` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records"
+              }
+            ]
+          },
+          "docs": "Get a list of Lianlian Pay system generated events. Empty list will be returned if there is no applicable events.\n\nReturn type is List<`Event`>\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Lianlian Pay system generated event by `eventId`\n\nReturn type is `Event` object\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get Exchange Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/exchange/:exchangeId",
+            "params": [
+              {
+                "name": "exchangeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Exchange Info Request, `exchange` object will be returned\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Create a Currency Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create currency exchange request, result will be return via webhook. Merchant can also use `Get Exchange Info` API to retrieve coresponding request results.\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get List of Fundings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/funding",
+            "params": [
+              {
+                "name": "beginTime",
+                "value": "",
+                "type": "query",
+                "description": "beginning time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ending time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets"
+              }
+            ]
+          },
+          "docs": "Get List of Fundings detail\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get Funding by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/funding/:fundingId",
+            "params": [
+              {
+                "name": "fundingId",
+                "value": "",
+                "type": "path",
+                "description": "Unique Funding ID From Merchant's System"
+              }
+            ]
+          },
+          "docs": "Get Funding by ID"
+        },
+        {
+          "info": {
+            "name": "Return funding",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/funding/:fundingId",
+            "params": [
+              {
+                "name": "fundingId",
+                "value": "",
+                "type": "path",
+                "description": "Unique Funding ID From Merchant's System"
+              }
+            ]
+          },
+          "docs": "Return funding"
+        },
+        {
+          "info": {
+            "name": "Get indicative market rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/marketrate",
+            "params": [
+              {
+                "name": "sourceCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Source Currency"
+              },
+              {
+                "name": "targetCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Target Currency"
+              },
+              {
+                "name": "quoteCode",
+                "value": "",
+                "type": "query",
+                "description": "Quote code assigned by LianLian"
+              },
+              {
+                "name": "tenor",
+                "value": "",
+                "type": "query",
+                "description": "tenor"
+              }
+            ]
+          },
+          "docs": "Get an indicative market quote for the buy/sell currency"
+        },
+        {
+          "info": {
+            "name": "Create LockFX Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/lockrate",
+            "params": [
+              {
+                "name": "sourceCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Source Currency"
+              },
+              {
+                "name": "targetCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Target Currency"
+              },
+              {
+                "name": "quoteCode",
+                "value": "",
+                "type": "query",
+                "description": "Quote Code assigned by Lianlian"
+              },
+              {
+                "name": "tenor",
+                "value": "",
+                "type": "query",
+                "description": "tenor"
+              }
+            ]
+          },
+          "docs": "The Create LockFX Rate gives the user a guaranteed rate for an agreed period of time."
+        },
+        {
+          "info": {
+            "name": "Create a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transaction"
+          },
+          "docs": "Create transaction request, result will be return via webhook. Merchant can also use `Get Transaction Info` API to retrieve coresponding request results.\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get Transaction Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transaction/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "Unique Transaction ID From Merchant's System"
+              }
+            ]
+          },
+          "docs": "Get Transaction Info Request, `transaction` object will be returned\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Create Payee",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payee"
+          },
+          "docs": "Create Payee request, result will be return via webhook. Merchant can also use `Get Payee Info` API to retrieve coresponding request results.\n\nInterface Maximum Concurrency：300\n"
+        },
+        {
+          "info": {
+            "name": "Get Payee Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payee/:payeeId",
+            "params": [
+              {
+                "name": "payeeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique Payee ID in Merchant's System"
+              }
+            ]
+          },
+          "docs": "Get Payee Info Request, `payee` object will be returned\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Update the Payee Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/payee/:payeeId",
+            "params": [
+              {
+                "name": "payeeId",
+                "value": "",
+                "type": "path",
+                "description": "Unique Payee ID in Merchant's System"
+              }
+            ]
+          },
+          "docs": "Update the payeeId Infomation if the audit status of the payee is failed.\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Create Receipt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/receipt",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Receipt"
+        },
+        {
+          "info": {
+            "name": "Get Receipt Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/receipt/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Receipt Info"
+        },
+        {
+          "info": {
+            "name": "Create Trade File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tradefile"
+          },
+          "docs": "Create Trade File request\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get Trade File Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tradefile/:tradeFileId",
+            "params": [
+              {
+                "name": "tradeFileId",
+                "value": "",
+                "type": "path",
+                "description": "Unique Trade File ID in Merchant's System"
+              }
+            ]
+          },
+          "docs": "Get Trade File Info Request, `trade-file` object will be returned\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Create Underlying Trade File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/underlytradefile"
+          },
+          "docs": "Create Underlying Trade File"
+        },
+        {
+          "info": {
+            "name": "Get Underlying Trade File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/underlytradefile/:underlyTradeFileId",
+            "params": [
+              {
+                "name": "underlyTradeFileId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Underlying Trade File"
+        },
+        {
+          "info": {
+            "name": "Create a transation for the provided payee info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/directransaction"
+          },
+          "docs": "When making a payment to a non-currency controlled country, you can create a payment transaction directly with this API, without having to create a payee.\nCreate transaction request, result will be return via webhook. Merchant can also use `Get Direc Transaction Info` API to retrieve coresponding request results.\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get Direc Transaction Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/directransaction/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "Unique Transaction ID From Merchant's System"
+              }
+            ]
+          },
+          "docs": "Get Transaction Info Request, `directransaction` object will be returned\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Create Trade File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tradeFile"
+          },
+          "docs": "Submit trading material documents. Before making a request, supporting documents should be uploaded into Lianlian Pay's file system first. Supporting document reviewing results will be returned via webhook \n"
+        },
+        {
+          "info": {
+            "name": "Get Trade File by trade file ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tradeFile/:tradeFileId",
+            "params": [
+              {
+                "name": "tradeFileId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Trade File by trade file ID"
+        },
+        {
+          "info": {
+            "name": "Apply VCC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vcc/apply"
+          },
+          "docs": "The cardId of the VCC will be returned in real time. The VCC generation is an asynchronous process, and after the VCC is generated, LianlianPay will notify the counterpart through webhook, and the counterpart can query the VCC information through API."
+        },
+        {
+          "info": {
+            "name": "Get VCC Info by Card ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/:cardId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get VCC Info by Card ID"
+        },
+        {
+          "info": {
+            "name": "Block VCC",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/vcc/:cardId",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Block VCC"
+        },
+        {
+          "info": {
+            "name": "Get List of VCC Authorization Transacions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/authTransaction",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "query",
+                "description": "Unique Card ID defined by LianlianPay"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "query",
+                "description": "Unique authorization transaction id defined by LianlianPay"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records"
+              },
+              {
+                "name": "beginTime",
+                "value": "",
+                "type": "query",
+                "description": "beginning time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ending time of funding created, in format of timestamp and units are seconds"
+              }
+            ]
+          },
+          "docs": "The scale of the search cannot exceed 7 days"
+        },
+        {
+          "info": {
+            "name": "Get VCC Authorization Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/authTransaction/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get VCC Authorization Transaction"
+        },
+        {
+          "info": {
+            "name": "Get List of VCC Settlement Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/settleTransaction",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "query",
+                "description": "Unique Card ID defined by LianlianPay"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets"
+              },
+              {
+                "name": "beginTime",
+                "value": "",
+                "type": "query",
+                "description": "beginning time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ending time of funding created, in format of timestamp and units are seconds"
+              }
+            ]
+          },
+          "docs": "The scale of the search cannot exceed 7 days"
+        },
+        {
+          "info": {
+            "name": "Get VCC 3DS otp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/otp/:otpId",
+            "params": [
+              {
+                "name": "otpId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID for this 3DS OTP"
+              }
+            ]
+          },
+          "docs": "Get VCC 3DS otp"
+        },
+        {
+          "info": {
+            "name": "Get Webhook Registration List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/webhooks"
+          },
+          "docs": "Get a list of webhook registrations of a client. If no registrations, empty list will be returned.\n\nReturn type is List<`Webhook`>\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Register Webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/webhooks",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Register a webhook in Lianlian Pay system. Registered webhook will be used to send events generated by Lianlian Pay system.\n\nReturn type is `Webhook` object\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Get Webhook Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a webhook registration details by `webhookId`.\n\nReturn type is `Webhook` object\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Delete Webhook Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/webhooks/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a webhook registration by `webhookId`.\n\nInterface Maximum Concurrency：300"
+        },
+        {
+          "info": {
+            "name": "Apply Virtual Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/va/apply",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "You can apply for a virtual account through this API, after submitting the application, the initial status of the virtual account is CREATING, after the status is changed to ACTIVE, you can get the detail information of the virtual account, the notification of the status change can be received via webhook"
+        },
+        {
+          "info": {
+            "name": "Supplement Virtual Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/va/supplement",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "You can supplement a virtual account through this API, before submitting the application, the status of the virtual account should be ACTIVE."
+        },
+        {
+          "info": {
+            "name": "Get Virtual Account Info by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/va/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Virtual Account unique ID defined by LianlianPay"
+              }
+            ]
+          },
+          "docs": "Get Virtual Account Info by ID"
+        },
+        {
+          "info": {
+            "name": "Get List of Virtual Account Debit Records",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/va/transaction",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "Virtual Account unique ID defined by LianlianPay"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records"
+              },
+              {
+                "name": "beginTime",
+                "value": "",
+                "type": "query",
+                "description": "beginning time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ending time of funding created, in format of timestamp and units are seconds"
+              }
+            ]
+          },
+          "docs": "Get List of Virtual Account Debit Records"
+        },
+        {
+          "info": {
+            "name": "Get Virtual Account Debit Record",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/va/transaction/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "Unique transaction id defined by LianlianPay"
+              }
+            ]
+          },
+          "docs": "Get Virtual Account Debit Record"
+        },
+        {
+          "info": {
+            "name": "Get Virtual Account Verify",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/va/verify/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "Unique transaction id defined by LianlianPay"
+              }
+            ]
+          },
+          "docs": "Get Virtual Account Verify"
+        },
+        {
+          "info": {
+            "name": "Get  Virtual Account Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/virtualCard/:virtualAcctId",
+            "params": [
+              {
+                "name": "virtualAcctId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get  Virtual Account Information"
+        },
+        {
+          "info": {
+            "name": "Create a Virtual Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/virtualCard/add",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Virtual Account"
+        },
+        {
+          "info": {
+            "name": "Get Client Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/balance"
+          },
+          "docs": "Returns Total balance of client's account within LianLian in one or more currencies.  Not specifying a currency will return the default currencies configured for client.\n"
+        },
+        {
+          "info": {
+            "name": "Start New Merchant Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/merchants"
+          },
+          "docs": "Starts asynchronous process of registering a new merchant with LianLian.  \n\nOn successful return, if `registration_complete` is `false`, platform shall use `registration_url` to redirect the merchant to in order to begin the LianLian Registration Experience.  \n\nWhen registration is successfully completed the merchant will be redirected to the passed in `redirect_url`"
+        },
+        {
+          "info": {
+            "name": "Get Merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/merchants/merchant_client_id/:merchant_client_id",
+            "params": [
+              {
+                "name": "merchant_client_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get information about the merchant - in particular their status on the LianLian platform."
+        },
+        {
+          "info": {
+            "name": "Send Payment to Merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payments"
+          },
+          "docs": "Initiates a payment to specific merchant. \n\nThis call is Idempotent if sent with the same payment_client_id and last payment request was successfull.  In this case the additional HTTP Response Header `Request-Repeated: true` will be returned.  If the original request failed, a new payment request will retry the payment.\n\nSteps within API:\n\n* **Money Debited** from client's account  \n can fail from insufficient funds  \n* **Verify Merchant Registration** information is valid  \n  If Merchant is unk"
+        },
+        {
+          "info": {
+            "name": "Get Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payments/payment_client_id/:payment_client_id",
+            "params": [
+              {
+                "name": "payment_client_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a Merchant's Payment Object including internal Lianlian payment status.\n\nThe API returns HTTP Status 200 with the related payment object if the payment was successful.  \n\nThe API returns HTTP Status 404 if the `POST /payments` call returned an error as the **payment_client_id** is not in the system and not recognized."
+        },
+        {
+          "info": {
+            "name": " CREATE UNASSIGNED BILL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/bill/add",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new bill which is waiting for claim from a user in LianLianPay System.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/bill/add**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/bill/add**\n\n"
+        },
+        {
+          "info": {
+            "name": "QUERY BILL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bill",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "extOrderId",
+                "value": "",
+                "type": "query",
+                "description": "Unique bill ID from partner system"
+              }
+            ]
+          },
+          "docs": "Get bill details by external bill ID.\n\nSandbox:\t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/bill**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/bill**\n\n"
+        },
+        {
+          "info": {
+            "name": "Create a Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/bill"
+          },
+          "docs": "Currenly bill can only be paid via wire transfer. Payee information such as due amount and payer information shall be included in the API request body.\n\nBeneficiary account will be returned by Lianlian Global in request respone boday."
+        },
+        {
+          "info": {
+            "name": "CREATE ASSIGNED BILL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/bill/order",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new bill which is directly assigned to one user in LianLianPay System.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/bill/order**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/bill/order**\n"
+        },
+        {
+          "info": {
+            "name": "QUERY REFUND ORDER",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refund/order",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "refundOrderId",
+                "value": "",
+                "type": "query",
+                "description": "Unique refund order ID from partner system"
+              }
+            ]
+          },
+          "docs": "Get refund order details by external refund ID.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/refund/order**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/refund/order**"
+        },
+        {
+          "info": {
+            "name": "REFUND PAID BILL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refund/order",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Fully refund paid bill for users.\n\nSandbox:  \t**https://global-api-sandbox.lianlianpay-inc.com/api/v1/gateway/refund/order**\n<br>\nProduction:\t**https://global-api.lianlianpay.com/api/v1/gateway/refund/order**"
+        },
+        {
+          "info": {
+            "name": "自建站贸易材料真实性采集接口",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/trade/material/commit",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LLPAY-Signature",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "该接口用以传输自建站贸易材料信息 \n\n联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/trade/material/commit** </br>\n生产域名 - **https://global-open-api.lianlianpay.com/trade/material/commit**"
+        },
+        {
+          "info": {
+            "name": "Query Bill Info by BillID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bill/:billId",
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get bill details in Lianlian Global's system by `billId`"
+        },
+        {
+          "info": {
+            "name": "Edit the Payer Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/bill/:billId",
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "The following conditions need to be met in order to initiate a payer modification request.\n\n  1. The status of original payer should not be 'AUDITING' \n  2. The actual payer name should not the same as the payer name transmitted by platform\n  3. No FX-related transactions have been initiated on this bill regardless of the status of \n     the transaction."
+        },
+        {
+          "info": {
+            "name": "Query Funding Trans of  Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fundingtrans/:billId",
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get bill transication records by `billId`"
+        },
+        {
+          "info": {
+            "name": "Query Refunding Trans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/refundingtrans/:refundingId",
+            "params": [
+              {
+                "name": "refundingId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get refund request details by `refundingId`"
+        },
+        {
+          "info": {
+            "name": "Create Refunding Trans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/refundingtrans"
+          },
+          "docs": "Create a single refund request, results will be noticed via webhook event. Client can also use `Query Refunding Trans` API to retrieve coresponding request results.\n\nRequested total refudning amount shall no larger than total funding amount."
+        },
+        {
+          "info": {
+            "name": "Get List of Funding Trans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fundingtrans"
+          },
+          "docs": "The scale of the search cannot exceed 7 days"
+        },
+        {
+          "info": {
+            "name": "Cancel Exchange Trans",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/exchange/:exchangeId/cancel",
+            "params": [
+              {
+                "name": "exchangeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reverse a previously created FX request. Result will be noticed by webhook event, client can also get corresponding results via `Query Exchange Trans`\n\n1. Only FX without balance transfer request can be reversed\n2. Partialy reversed FX request(reversed via `Return Exchange Trans`) can not be reversed\n3. Orgional FX rate will be used to reverse the FX request.\n4. After reverse, a new FX can be created if necessary"
+        },
+        {
+          "info": {
+            "name": "Query Exchange Return Trans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/exchangereturn/:exchangReturnId",
+            "params": [
+              {
+                "name": "exchangReturnId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get FX reverse transaction record details by `exchangReturnId`"
+        },
+        {
+          "info": {
+            "name": "Return Exchange Trans",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/exchangereturn"
+          },
+          "docs": "Initiate a partial FX reverse request, Result will be noticed by webhook event, client can also get corresponding results via `Query Exchange Trans`\n\n1. Partial FX request is only supported for certain instructions which the original instruction is separate foreign exchange instruction.\n2. The original FX rate and materials is used to conduct re-exchange and the refund declaration will be performed.\n3. Requested FX reverse amount cannot exceed the amount of original payout. \n4. FX reverse reques"
+        },
+        {
+          "info": {
+            "name": "Query Bill Exchange Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/exchange/:billId",
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Bill ID"
+              }
+            ]
+          },
+          "docs": "Get payment transaction record details by billId"
+        },
+        {
+          "info": {
+            "name": "Get FX Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/rate/:rateType/:sourceCurrency/:targetCurrency",
+            "params": [
+              {
+                "name": "sourceCurrency",
+                "value": "",
+                "type": "path",
+                "description": "Source Currency"
+              },
+              {
+                "name": "targetCurrency",
+                "value": "",
+                "type": "path",
+                "description": "Target Currency"
+              },
+              {
+                "name": "rateType",
+                "value": "",
+                "type": "path",
+                "description": "Rate Type, one of \n|Code|Decription|\n|----|-----|\n|reference|Rate for reference|"
+              }
+            ]
+          },
+          "docs": "This operation "
+        },
+        {
+          "info": {
+            "name": "Get BC VA Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/bc/va"
+          },
+          "docs": "Get BC VA Info"
+        },
+        {
+          "info": {
+            "name": "Create a CNY Virtual Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/cnyva"
+          },
+          "docs": "Create a CNY Virtual Account"
+        },
+        {
+          "info": {
+            "name": "Get CNY VA Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/cnyva/:virtualAcctId",
+            "params": [
+              {
+                "name": "virtualAcctId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get CNY VA Information"
+        },
+        {
+          "info": {
+            "name": "Get Funding Trans by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fundingtrans/:fundingId",
+            "params": [
+              {
+                "name": "fundingId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Funding record by funding ID"
+        },
+        {
+          "info": {
+            "name": "Create CNY Payment Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/paymenttrans"
+          },
+          "docs": "Create a single CNY Payment request, results will be noticed via webhook event. Client can also use `Query Refunding Trans` API to retrieve coresponding request results.\n\nRequested total refudning amount shall no larger than total funding amount."
+        },
+        {
+          "info": {
+            "name": "Get CNY Payment Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/paymenttrans/:paymentId",
+            "params": [
+              {
+                "name": "paymentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get CNY Payment Information"
+        },
+        {
+          "info": {
+            "name": "Create Multiple FX Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/multipleExchange"
+          },
+          "docs": "Create multiple FX transactions, result will be returned via webhook event. Client can also use `Query Exchange Trans` API to get the corresponding request results."
+        },
+        {
+          "info": {
+            "name": "Create a Payer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payer"
+          },
+          "docs": "Currenly bill can only be paid via wire transfer. Payer information such as due amount and payer information shall be included in the API request body."
+        },
+        {
+          "info": {
+            "name": "Get Payer Info by PayerId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payer/:payerId",
+            "params": [
+              {
+                "name": "payerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get payer details in LianLian Global's system by `payerId`"
+        },
+        {
+          "info": {
+            "name": "Create Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payout"
+          },
+          "docs": "Create Payout"
+        },
+        {
+          "info": {
+            "name": "Get Payout Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payout/:payoutId",
+            "params": [
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "Payout request id from client"
+              }
+            ]
+          },
+          "docs": "Get Payout Detail"
+        },
+        {
+          "info": {
+            "name": "Create Exchangepayout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/exchangepayout"
+          },
+          "docs": "Create Exchangepayout"
+        },
+        {
+          "info": {
+            "name": "Get Exchangepayout Detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/exchangepayout/:payoutId",
+            "params": [
+              {
+                "name": "payoutId",
+                "value": "",
+                "type": "path",
+                "description": "Payout request id from client"
+              }
+            ]
+          },
+          "docs": "Get Exchangepayout Detail"
+        },
+        {
+          "info": {
+            "name": "Get Receipt Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/receipt/:receiptType/:transactionId",
+            "params": [
+              {
+                "name": "receiptType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Receipt Info"
+        },
+        {
+          "info": {
+            "name": "Add Trade File Attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tradeFile/supplementaryAttachment"
+          },
+          "docs": "Add attachments to an existing trade file. Before you use this interface, ensure the files are uploaded to LianLian Global’s system. This lets you attach supported files to a specific trade file."
+        },
+        {
+          "info": {
+            "name": "Get Currency Account Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/va/balance/:currency",
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Currency Account Balance"
+        },
+        {
+          "info": {
+            "name": "Get List of VCC Card Authorization Transacions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/card/authTransaction",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "query",
+                "description": "Unique Card ID defined by LianLian Global"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "query",
+                "description": "Unique authorization transaction id defined by LianLian Global"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records"
+              },
+              {
+                "name": "beginTime",
+                "value": "",
+                "type": "query",
+                "description": "beginning time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ending time of funding created, in format of timestamp and units are seconds"
+              }
+            ]
+          },
+          "docs": "The scale of the search cannot exceed 7 days"
+        },
+        {
+          "info": {
+            "name": "Get VCC Card Authorization Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/card/authTransaction/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get VCC Card Authorization Transaction"
+        },
+        {
+          "info": {
+            "name": "Get List of VCC Card Settlement Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vcc/card/settleTransaction",
+            "params": [
+              {
+                "name": "cardId",
+                "value": "",
+                "type": "query",
+                "description": "Unique Card ID defined by LianLian Global"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, return no more than this number of results. Used with pageNum to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 20 records"
+              },
+              {
+                "name": "pageNum",
+                "value": "",
+                "type": "query",
+                "description": "if nonzero, skip this number of results before returning data. Used with pageSize to provide pagination for large datasets"
+              },
+              {
+                "name": "beginTime",
+                "value": "",
+                "type": "query",
+                "description": "beginning time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "ending time of funding created, in format of timestamp and units are seconds"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "query",
+                "description": "Unique settlement transaction id defined by LianLian Global"
+              }
+            ]
+          },
+          "docs": "The scale of the search cannot exceed 7 days"
+        },
+        {
+          "info": {
+            "name": "Get Lock FX Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/outbound/card/v1/lockrate",
+            "params": [
+              {
+                "name": "sourceCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Source Currency"
+              },
+              {
+                "name": "targetCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Target Currency"
+              }
+            ]
+          },
+          "docs": "The Get Lock FX Rate gives the user a guaranteed rate for an agreed period of time."
+        },
+        {
+          "info": {
+            "name": "Create Trade File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/service-tradeFile"
+          },
+          "docs": "Submit trading material documents. Before making a request, supporting documents should be uploaded into Lianlian Pay's file system first. Supporting document reviewing results will be returned via webhook \n"
+        },
+        {
+          "info": {
+            "name": "Get Trade File by trade file ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/service-tradeFile/:tradeFileId",
+            "params": [
+              {
+                "name": "tradeFileId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Trade File by trade file ID"
+        },
+        {
+          "info": {
+            "name": "Send Tuition Evidence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tuitionevidences"
+          },
+          "docs": "Submit trading material documents. Before making a request, supporting documents should be uploaded into Lianlian Pay's file system first. Supporting document reviewing results will be returned via webhook \n\nThe following verifications will be conducted on trading materials: \n1. to verify whether the bill exists;\n2. to verify whether the “documentId” is valid; and \n3. to reject uploading the new materials if there is verification under progress or the same is completed before. \n"
+        },
+        {
+          "info": {
+            "name": "Query Tuition evidence of Bill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tuitionevidences/:billId",
+            "params": [
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get evidence details by bill id "
+        },
+        {
+          "info": {
+            "name": "Create Payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/payment"
+          },
+          "docs": "Create Payout"
+        },
+        {
+          "info": {
+            "name": "Submit Trade File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tradeinfo"
+          },
+          "docs": "By submitting trade materials, the interface can accumulate trade quotas for the counterparty, and within the quota range, exchange and remittance transactions can be initiated.<br>\n通过提交贸易材料接口可为对接方累计贸易额度，在额度范围内可发起汇兑汇出交易。"
+        },
+        {
+          "info": {
+            "name": "Get Trade File Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/get"
+          },
+          "docs": "Get payer details in Lianlian Global's system by `payerId`.<br>通过`payerId`查询连连国际系统中的付款人详细信息。"
+        },
+        {
+          "info": {
+            "name": "Get Webhook Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/webhook/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a webhook registration details by `webhookId`.\n\nReturn type is `Webhook` object"
+        },
+        {
+          "info": {
+            "name": "Delete Webhook Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/webhook/:webhookId",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a webhook registration by `webhookId`."
+        },
+        {
+          "info": {
+            "name": "Submit Declaration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apply"
+          },
+          "docs": "Submit declaration information through this interface.<br>\n通过该接口提交申报信息."
+        },
+        {
+          "info": {
+            "name": "Submit Trade File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}"
+          },
+          "docs": "By submitting trade materials, the interface can accumulate trade quotas for the counterparty, and within the quota range, exchange and remittance transactions can be initiated.<br>\n通过提交贸易材料接口可为对接方累计贸易额度，在额度范围内可发起汇兑汇出交易。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

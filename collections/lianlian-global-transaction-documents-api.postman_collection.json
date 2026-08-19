@@ -1,0 +1,1036 @@
+{
+  "item": [
+    {
+      "id": "86db9433-01a6-4e88-a929-1990727d3bc8",
+      "name": "Transaction Documents",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c2437b09-ebf1-48c1-b1e3-55b9e3044ef1",
+          "name": "Create a transaction document",
+          "request": {
+            "name": "Create a transaction document",
+            "description": {
+              "content": "创建贸易材料信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "addc4bd8-409f-4bda-bfb0-f66599d2fae8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_document_batch_id\": \"string\",\n  \"status\": \"string\",\n  \"create_time\": 8233.617632116779\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3274b848-c0c7-4280-98f8-b2a8b7660f62",
+          "name": "Get list of transaction documents",
+          "request": {
+            "name": "Get list of transaction documents",
+            "description": {
+              "content": "查询贸易材料列表信息",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "documents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "business_type",
+                  "value": "<string>",
+                  "description": "(Required) 业务类型"
+                },
+                {
+                  "disabled": false,
+                  "key": "purpose",
+                  "value": "<string>",
+                  "description": "用途"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner_id",
+                  "value": "<string>",
+                  "description": "贸易材料所属方ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner_type",
+                  "value": "<string>",
+                  "description": "贸易材料所属方"
+                },
+                {
+                  "disabled": false,
+                  "key": "original_order_id",
+                  "value": "<string>",
+                  "description": "客户侧订单号"
+                },
+                {
+                  "disabled": false,
+                  "key": "transaction_document_batch_id",
+                  "value": "<string>",
+                  "description": "批次号"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "贸易材料审核状态"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time ",
+                  "value": "<string>",
+                  "description": "(Required) 材料创建开始时间(含)，时间间隔不大于3个月"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<string>",
+                  "description": "(Required) 材料创建结束时间(含)，时间间隔不大于3个月"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "页码,默认值为1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<string>",
+                  "description": "每页查询数量,默认值20，不大于1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "transaction_document_id",
+                  "value": "<string>",
+                  "description": "连连生成的贸易材料唯一编号"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "c54ecdf8-e23b-40f2-af71-b9fec8b75ca3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "business_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "purpose",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "original_order_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_document_batch_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time ",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_document_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page_size\": \"string\",\n  \"page\": \"string\",\n  \"total_count\": \"string\",\n  \"total_page\": \"string\",\n  \"page_list\": {\n    \"value\": \"reference ../models/TransactionDocumentQueryResponseV3.yaml not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae0f1f56-30d9-43cb-a3cf-8c32c2e15f53",
+              "name": "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nDATE_RANGE_TOO_BIG | The time interval exceeds 3 months",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "business_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "purpose",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "original_order_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_document_batch_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time ",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_document_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "980e9122-e210-4a76-8d44-ca6a4c68f684",
+          "name": "Get transaction document by ID",
+          "request": {
+            "name": "Get transaction document by ID",
+            "description": {
+              "content": "此接口将返回批次内所有明细的处理结果。\n如明细总条数、处理成功条数、处理失败条数。\n需要注意的是，当批次内明细数据小于等于500条时，可通过此接口查看详情。\n如果批次明细大于500条，建议您使用Get list of transaction document接口分页查询详细信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "documents",
+                ":transaction_document_batch_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_document_batch_id",
+                  "description": "(Required) 材料批次ID，长度64"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "ab1fac09-184a-41a2-ad1d-ff58e174a88f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    ":transaction_document_batch_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_document_batch_id",
+                      "description": "(Required) 材料批次ID，长度64"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ba1838a4-8449-4ef1-b37d-12832ad2b196",
+          "name": "Get list of transaction quotas",
+          "request": {
+            "name": "Get list of transaction quotas",
+            "description": {},
+            "url": {
+              "path": [
+                "documents",
+                "quotas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "owner_type",
+                  "value": "<string>",
+                  "description": "贸易材料所属方，BENEFICIARY或PAYER"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner_id",
+                  "value": "<string>",
+                  "description": "贸易材料所属方ID，beneficiary_id或payer_id"
+                },
+                {
+                  "disabled": false,
+                  "key": "transaction_document_batch_ids",
+                  "value": "<string>",
+                  "description": "批次号列表"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "页码,默认值为1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<string>",
+                  "description": "每页查询数量,默认值20"
+                },
+                {
+                  "disabled": false,
+                  "key": "business_type",
+                  "value": "<string>",
+                  "description": "业务类型 TRAVEL 酒旅"
+                },
+                {
+                  "disabled": false,
+                  "key": "purpose",
+                  "value": "<string>",
+                  "description": "提供材料的用途 PAYOUT 付款"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "577e09c1-9679-4c84-9c4a-53ac620020b4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    "quotas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "owner_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_document_batch_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "business_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "purpose",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page_size\": \"string\",\n  \"page\": \"string\",\n  \"total_count\": \"string\",\n  \"total_page\": \"string\",\n  \"page_list\": [\n    {\n      \"transaction_document_batch_id\": \"string\",\n      \"owner_type\": \"string\",\n      \"owner_id\": \"string\",\n      \"currency\": \"string\",\n      \"total_quota\": \"string\",\n      \"available_quota\": \"string\",\n      \"frozen_quota\": \"string\",\n      \"business_type\": \"string\",\n      \"purpose\": \"string\"\n    },\n    {\n      \"transaction_document_batch_id\": \"string\",\n      \"owner_type\": \"string\",\n      \"owner_id\": \"string\",\n      \"currency\": \"string\",\n      \"total_quota\": \"string\",\n      \"available_quota\": \"string\",\n      \"frozen_quota\": \"string\",\n      \"business_type\": \"string\",\n      \"purpose\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04ba100f-23e9-4761-a84e-23ae33b32cc9",
+              "name": "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_NOT_EXIST|payer is not exist\r\nBENEFICIARY_NOT_EXIST|beneficiary is not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    "quotas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "owner_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_document_batch_ids",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "business_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "purpose",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3f0247a-36b0-4735-bb55-8690473ee240",
+          "name": "Update transaction documents",
+          "request": {
+            "name": "Update transaction documents",
+            "description": {
+              "content": "更新批次号",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "documents",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_document_details\": [\n    {\n      \"original_order_id\": \"<string>\",\n      \"transaction_document_batch_id\": \"<string>\"\n    },\n    {\n      \"original_order_id\": \"<string>\",\n      \"transaction_document_batch_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "393fffdf-ef3f-4a84-81c2-18e6bc4e4b6a",
+              "name": "**failure_code** | **failure_reason** \r\n---------|----------\r\nMATERIAL_UPDATE_REJECT_DUE_TO_EXISTED_BATCH | Reject to update batch due to existed\r\nPURPOSE_NOT_UNIQUE | purpose is not unique\r\nBUSINESS_TYPE_NOT_UNIQUE | business_type is not unique\r\nOWNER_TYPE_NOT_UNIQUE | owner_type is not unique\r\nOWNER_ID_NOT_UNIQUE | owner_id is not unique\r\nRESOURCE_NOT_FOUND | The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_document_details\": [\n    {\n      \"original_order_id\": \"<string>\",\n      \"transaction_document_batch_id\": \"<string>\"\n    },\n    {\n      \"original_order_id\": \"<string>\",\n      \"transaction_document_batch_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"original_order_id\": \"string\",\n    \"transaction_document_batch_id\": \"string\",\n    \"result\": false,\n    \"failure_code\": \"string\",\n    \"failure_reason\": \"string\"\n  },\n  {\n    \"original_order_id\": \"string\",\n    \"transaction_document_batch_id\": \"string\",\n    \"result\": true,\n    \"failure_code\": \"string\",\n    \"failure_reason\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbbf7cea-05f3-4f3a-81b6-5900800d2610",
+              "name": "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nMATERIAL_REJECT_DUE_TO_DUPLICATION | Reject to submit due to duplication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_document_details\": [\n    {\n      \"original_order_id\": \"<string>\",\n      \"transaction_document_batch_id\": \"<string>\"\n    },\n    {\n      \"original_order_id\": \"<string>\",\n      \"transaction_document_batch_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8919d108-807b-4fd3-b04b-b3da7fb74a0d",
+          "name": "Get transaction document by ID",
+          "request": {
+            "name": "Get transaction document by ID",
+            "description": {
+              "content": "查询单条订单材料",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "documents",
+                ":original_order_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "original_order_id",
+                  "description": "(Required) 客户侧订单号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "6b41a8da-0b54-48ad-86a8-e67d17149734",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    ":original_order_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "original_order_id",
+                      "description": "(Required) 客户侧订单号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73cdcdef-ce56-4bce-8598-fa55db31c1e1",
+              "name": "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    ":original_order_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "original_order_id",
+                      "description": "(Required) 客户侧订单号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "359de682-8f08-4e8a-8dc3-3f5db9b37c91",
+              "name": "**code** | **message** \r\n---------|----------\r\nRESOURCE_NOT_FOUND | The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    ":original_order_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "original_order_id",
+                      "description": "(Required) 客户侧订单号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "18bb0f99-f82c-4a26-bf89-45f35bc7f2c3",
+    "name": "Distribution Account Transaction Documents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

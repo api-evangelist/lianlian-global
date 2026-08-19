@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Ew Oauth2 API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ew Oauth2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-oauth2/token",
+            "params": [
+              {
+                "name": "grant_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of grant."
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "APP client ID."
+              },
+              {
+                "name": "client_secret",
+                "value": "",
+                "type": "query",
+                "description": "Client APP secret key."
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory if grant_type = `authorization_code`.<br>The authorization_code that Successful response of after user authed."
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory if grant_type = `authorization_code`. <br> The redirect URI where you want the response to be sent for your app to handle. It must exactly match one of the redirect URIs that you registered in the portal, except that it must be URL-encoded, and it can have additional path segments."
+              },
+              {
+                "name": "refresh_token",
+                "value": "",
+                "type": "query",
+                "description": "Mandatory if grant_type = `refresh_token`.<br>An OAuth 2.0 refresh token. The app can use this token to acquire other access tokens after the current access token expires. In order to prevent client APP miss the response result, LL Platform will maintain the idempotent successful request for 15 minutes."
+              }
+            ]
+          },
+          "docs": "Request an access token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

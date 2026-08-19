@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Kyc API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Kyc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "创建企业 KYC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/kyc/corporate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建企业KYC"
+        },
+        {
+          "info": {
+            "name": "修改企业 KYC",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/kyc/corporate/:member_id",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "修改企业KYC"
+        },
+        {
+          "info": {
+            "name": "创建个人KYC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/kyc/individual",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建个人kyc"
+        },
+        {
+          "info": {
+            "name": "修改个人KYC",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/kyc/individual/:member_id",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "修改个人kyc"
+        },
+        {
+          "info": {
+            "name": "查询KYC信息",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/kyc/:member_id",
+            "params": [
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "查询KYC信息"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

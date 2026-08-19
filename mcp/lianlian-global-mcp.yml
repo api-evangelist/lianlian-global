@@ -3,10 +3,10 @@ method: derived
 status: candidate
 source: openapi/ (173 specs, 548 classified operations)
 server: null
-notes: No official hosted or remote MCP server was found for LianLian Global (searched the developer portal, the
-  LLGlobal GitHub organization and npm). LianLian instead ships Agent Skills (see skills/). This file records a
-  candidate MCP surface derived from the published OpenAPI, grouped by API product — it is a design starting point,
-  not a provider claim.
+notes: No official hosted or remote MCP server was found for LianLian Global (searched the developer portal,
+  the LLGlobal GitHub organization and npm). LianLian instead ships Agent Skills (see skills/). This file
+  records a candidate MCP surface derived from the published OpenAPI, grouped by API product — it is a
+  design starting point, not a provider claim.
 candidate_namespaces:
 - namespace: B2B-inflow-payout
   openapi_files: 12
@@ -83,3 +83,8 @@ candidate_namespaces:
 related_artifacts:
   skills: skills/_index.yml
   agentic_access: agentic-access/lianlian-global-agentic-access.yml
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census

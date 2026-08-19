@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Checkout API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Checkout",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a checkout session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accept_payments/checkout/sessions",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## 功能说明\r\nCheckout是一种预先构建的付款形式，企业可以使用Checkout在网站上完成收款。Checkout Session提供一个支付URL，将客户重定向到支付页面完成付款。通过该接口创建Checkout Session获取收银台的支付URL。\r\n## 防重和幂等说明\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，返回最新的支付收银台url；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付收银台url。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

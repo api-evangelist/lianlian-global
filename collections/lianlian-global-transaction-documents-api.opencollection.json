@@ -1,0 +1,236 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Transaction Documents API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transaction Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of transaction documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/documents",
+            "params": [
+              {
+                "name": "business_type",
+                "value": "",
+                "type": "query",
+                "description": "业务类型"
+              },
+              {
+                "name": "purpose",
+                "value": "",
+                "type": "query",
+                "description": "用途"
+              },
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "query",
+                "description": "贸易材料所属方ID"
+              },
+              {
+                "name": "owner_type",
+                "value": "",
+                "type": "query",
+                "description": "贸易材料所属方"
+              },
+              {
+                "name": "original_order_id",
+                "value": "",
+                "type": "query",
+                "description": "客户侧订单号"
+              },
+              {
+                "name": "transaction_document_batch_id",
+                "value": "",
+                "type": "query",
+                "description": "批次号"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "贸易材料审核状态"
+              },
+              {
+                "name": "start_time ",
+                "value": "",
+                "type": "query",
+                "description": "材料创建开始时间(含)，时间间隔不大于3个月"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "材料创建结束时间(含)，时间间隔不大于3个月"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码,默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量,默认值20，不大于1000"
+              },
+              {
+                "name": "transaction_document_id",
+                "value": "",
+                "type": "query",
+                "description": "连连生成的贸易材料唯一编号"
+              }
+            ]
+          },
+          "docs": "查询贸易材料列表信息"
+        },
+        {
+          "info": {
+            "name": "Create a transaction document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/documents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建贸易材料信息。"
+        },
+        {
+          "info": {
+            "name": "Get transaction document by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/documents/:transaction_document_batch_id",
+            "params": [
+              {
+                "name": "transaction_document_batch_id",
+                "value": "",
+                "type": "path",
+                "description": "材料批次ID，长度64"
+              }
+            ]
+          },
+          "docs": "此接口将返回批次内所有明细的处理结果。\n如明细总条数、处理成功条数、处理失败条数。\n需要注意的是，当批次内明细数据小于等于500条时，可通过此接口查看详情。\n如果批次明细大于500条，建议您使用Get list of transaction document接口分页查询详细信息。"
+        },
+        {
+          "info": {
+            "name": "Get list of transaction quotas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/documents/quotas",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "owner_type",
+                "value": "",
+                "type": "query",
+                "description": "贸易材料所属方，BENEFICIARY或PAYER"
+              },
+              {
+                "name": "owner_id",
+                "value": "",
+                "type": "query",
+                "description": "贸易材料所属方ID，beneficiary_id或payer_id"
+              },
+              {
+                "name": "transaction_document_batch_ids",
+                "value": "",
+                "type": "query",
+                "description": "批次号列表"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码,默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量,默认值20"
+              },
+              {
+                "name": "business_type",
+                "value": "",
+                "type": "query",
+                "description": "业务类型 TRAVEL 酒旅"
+              },
+              {
+                "name": "purpose",
+                "value": "",
+                "type": "query",
+                "description": "提供材料的用途 PAYOUT 付款"
+              }
+            ]
+          },
+          "docs": "Get list of transaction quotas"
+        },
+        {
+          "info": {
+            "name": "Update transaction documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/documents/update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "更新批次号"
+        },
+        {
+          "info": {
+            "name": "Get transaction document by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/documents/:original_order_id",
+            "params": [
+              {
+                "name": "original_order_id",
+                "value": "",
+                "type": "path",
+                "description": "客户侧订单号"
+              }
+            ]
+          },
+          "docs": "查询单条订单材料"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

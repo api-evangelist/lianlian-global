@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Payout API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payout",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "发起付款",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/payout",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "发起付款"
+        },
+        {
+          "info": {
+            "name": "查询付款详情",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/payout/:transaction_id",
+            "params": [
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "查询付款详情"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

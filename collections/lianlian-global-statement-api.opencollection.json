@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Statement API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "账户资金流水查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/statement/transactions",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "query",
+                "description": "账户号"
+              },
+              {
+                "name": "begin_time",
+                "value": "",
+                "type": "query",
+                "description": "开始时间，10位 秒级时间戳"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "结束时间，10位 秒级时间戳"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码，默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量，默认值20"
+              }
+            ]
+          },
+          "docs": "账户资金流水查询"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

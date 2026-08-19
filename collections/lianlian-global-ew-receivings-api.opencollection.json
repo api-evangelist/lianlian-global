@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Ew Receivings API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ew Receivings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Receiving Info by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-receivings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the information of the Receiving with the matching transaction ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

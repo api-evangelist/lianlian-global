@@ -1,0 +1,251 @@
+{
+  "item": [
+    {
+      "id": "8510ddc5-71ed-456a-bd8d-79fe961ed349",
+      "name": "Checkout",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39f7f61a-d26d-4f2c-a9e5-7dfa96493dee",
+          "name": "Create a checkout session",
+          "request": {
+            "name": "Create a checkout session",
+            "description": {
+              "content": "## 功能说明\r\nCheckout是一种预先构建的付款形式，企业可以使用Checkout在网站上完成收款。Checkout Session提供一个支付URL，将客户重定向到支付页面完成付款。通过该接口创建Checkout Session获取收银台的支付URL。\r\n## 防重和幂等说明\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，返回最新的支付收银台url；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付收银台url。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accept_payments",
+                "checkout",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"<string>\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"customer\": {\n    \"identifier\": \"<string>\",\n    \"name\": \"<string>\",\n    \"identification_type\": \"<string>\",\n    \"id_number\": \"<string>\"\n  },\n  \"product_info\": [\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    }\n  ],\n  \"payment_method\": \"<string>\",\n  \"description\": \"<string>\",\n  \"expires_time\": \"<number>\",\n  \"return_url\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"additional_info\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "04fbff78-11ec-4ed6-9e7f-6c8f54159b0d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "checkout",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"4e95132208654df990eb9b34edfefdca\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"customer\": {\n    \"identifier\": \"<string>\",\n    \"name\": \"<string>\",\n    \"identification_type\": \"<string>\",\n    \"id_number\": \"<string>\"\n  },\n  \"product_info\": [\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    }\n  ],\n  \"payment_method\": \"<string>\",\n  \"description\": \"支付广告年费\",\n  \"expires_time\": \"<number>\",\n  \"return_url\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"additional_info\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11aaa737-8f66-411e-9c48-0dfd6dd8447b",
+              "name": "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid.\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n EXPIRES_TIME_INVALID|The expires time is not supported.\r\n MERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\n MERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\r\n MERCHANT_ACCT_CUR_ERROR|The merchant does not support this currency.\r\n MERCHANT_ACCT_NOT_EXIST|The merchant currency account doesn't exist.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n MERCHANT_ACCT_BIZ_INVALID|The merchant bizType is invalid.\r\n MERCHANT_PAY_METHOD_NOT_EXIST|Payment method not exist.\r\n MERCHANT_PAY_METHOD_INVALID|Payment method not supported.\r\n ORDER_EXIST_AND_EXPIRED|The order exists but has expired, please change the order information and create again.\r\n CUR_SUPPORT_ERROR|The currency is not supported.\r\n ORDER_AMOUNT_ERROR|Currency order amount is incorrect.\r\n ORDER_AMOUNT_LIMIT_ERROR|The amount exceeds the limit for that currency.\r\n MERCHANT_CHARGE_COLLECT_WAY_BLANK|The charge collect way is blank.\r\n MERCHANT_CHARGE_COLLECT_WAY_INVALID|The charge collect way not supported.\r\n REQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\n CREATE_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_ALREADY_EXISTS|Payment already exists.\r\n PAYMENT_CLOSED|Payment has been closed.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n SUBMIT_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_NOT_EXIST|Payment does not exist.\r\n PAYMENT_REPEAT|Payment has already been successfully paid.\r\n PAYMENT_FAILED|Payment unsuccessful.\r\n PAYMENT_ANOMALY|Payment anomaly.\r\n PAYMENT_PROCESSED|Payment being processed.\r\n REQUEST_CONFLICT|The request cannot be processed as another request is being processed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "checkout",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"4e95132208654df990eb9b34edfefdca\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"customer\": {\n    \"identifier\": \"<string>\",\n    \"name\": \"<string>\",\n    \"identification_type\": \"<string>\",\n    \"id_number\": \"<string>\"\n  },\n  \"product_info\": [\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    }\n  ],\n  \"payment_method\": \"<string>\",\n  \"description\": \"支付广告年费\",\n  \"expires_time\": \"<number>\",\n  \"return_url\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"additional_info\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f7a8cb2-276c-4eb3-ba71-7799c4b5ceee",
+              "name": "code | message \n---------|----------\n INTERNAL_SERVER_ERROR|An internal server error has occurred.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accept_payments",
+                    "checkout",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"4e95132208654df990eb9b34edfefdca\",\n  \"amount\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"customer\": {\n    \"identifier\": \"<string>\",\n    \"name\": \"<string>\",\n    \"identification_type\": \"<string>\",\n    \"id_number\": \"<string>\"\n  },\n  \"product_info\": [\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    },\n    {\n      \"product_name\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"category\": \"<string>\"\n    }\n  ],\n  \"payment_method\": \"<string>\",\n  \"description\": \"支付广告年费\",\n  \"expires_time\": \"<number>\",\n  \"return_url\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"additional_info\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3495a946-6261-4819-a696-691c30998b44",
+    "name": "Distribution Account Checkout API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

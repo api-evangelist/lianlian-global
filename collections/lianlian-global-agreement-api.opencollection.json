@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Agreement API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agreement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of agreements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accept_payments/agreements",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "customer_identifier",
+                "value": "",
+                "type": "query",
+                "description": "用户在商户系统中的唯一编号"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "授权协议的ID"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码，默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页条数，默认值为20"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "协议的状态"
+              }
+            ]
+          },
+          "docs": "Get list of agreements"
+        },
+        {
+          "info": {
+            "name": "Get a agreement by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accept_payments/agreements/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "授权协议的ID"
+              }
+            ]
+          },
+          "docs": "Get a agreement by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

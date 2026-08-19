@@ -1,0 +1,247 @@
+{
+  "item": [
+    {
+      "id": "6510b4a6-727c-46f7-8999-fb5f5538100d",
+      "name": "Payout",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a1d1a5e8-b6eb-43cf-885b-835bc9b4ff9e",
+          "name": "发起付款",
+          "request": {
+            "name": "发起付款",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "payout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"transaction_type\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"pricing_currency\": \"<string>\",\n  \"source_currency\": \"<string>\",\n  \"target_currency\": \"<string>\",\n  \"commission_undertaker\": \"<string>\",\n  \"payee_bank_account_number\": \"<string>\",\n  \"payee_bank_country_code\": \"<string>\",\n  \"bank_name\": \"<string>\",\n  \"source_amount\": \"<string>\",\n  \"target_amount\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"routing_type\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"swift_code\": \"<string>\",\n  \"trade_memo\": \"<string>\",\n  \"trade_file_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74707c9d-1952-40ba-8460-aaa919fbf42e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "payout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"transaction_type\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"pricing_currency\": \"<string>\",\n  \"source_currency\": \"<string>\",\n  \"target_currency\": \"<string>\",\n  \"commission_undertaker\": \"<string>\",\n  \"payee_bank_account_number\": \"<string>\",\n  \"payee_bank_country_code\": \"<string>\",\n  \"bank_name\": \"<string>\",\n  \"source_amount\": \"<string>\",\n  \"target_amount\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"routing_type\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"swift_code\": \"<string>\",\n  \"trade_memo\": \"<string>\",\n  \"trade_file_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9f92a72-3ff4-421e-a8a6-f39dc66ae500",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "payout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transaction_id\": \"<string>\",\n  \"transaction_type\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"pricing_currency\": \"<string>\",\n  \"source_currency\": \"<string>\",\n  \"target_currency\": \"<string>\",\n  \"commission_undertaker\": \"<string>\",\n  \"payee_bank_account_number\": \"<string>\",\n  \"payee_bank_country_code\": \"<string>\",\n  \"bank_name\": \"<string>\",\n  \"source_amount\": \"<string>\",\n  \"target_amount\": \"<string>\",\n  \"payment_method\": \"<string>\",\n  \"routing_type\": \"<string>\",\n  \"routing_number\": \"<string>\",\n  \"swift_code\": \"<string>\",\n  \"trade_memo\": \"<string>\",\n  \"trade_file_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9297e09e-343d-4988-8307-2d1c00011b2f",
+          "name": "查询付款详情",
+          "request": {
+            "name": "查询付款详情",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "payout",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "902fb586-2b60-4ca6-95fb-12e55c1eb130",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "payout",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0d9fb732-b0be-4ee9-a3ed-01072bdee546",
+    "name": "Distribution Account Payout API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Topup API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Topup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "充值分页查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/topup",
+            "params": [
+              {
+                "name": "account_number",
+                "value": "",
+                "type": "query",
+                "description": "虚拟卡号"
+              },
+              {
+                "name": "currency_list",
+                "value": "",
+                "type": "query",
+                "description": "币种列表，币种列表 例如：[\"USD\",\"JPY\"] 参考： https://www.iso.org/iso-4217-currency-codes.html"
+              },
+              {
+                "name": "begin_time",
+                "value": "",
+                "type": "query",
+                "description": "充值开始时间，10位 秒级时间戳"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "充值结束时间，10位 秒级时间戳"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码，默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量，默认值20"
+              }
+            ]
+          },
+          "docs": "充值信息分页查询。"
+        },
+        {
+          "info": {
+            "name": "充值详情查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/topup/:topup_id",
+            "params": [
+              {
+                "name": "topup_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "充值详情查询"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

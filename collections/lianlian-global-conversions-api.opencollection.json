@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Conversions API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conversions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a conversion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/conversions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "发起conversion交易。\r\n- request_id相同，业务字段相同时，返回http code 400，errorCode ORDER_EXIST\r\n- request_id相同，业务字段不同时，返回http code 400，errorCode ORDER_EXIST\r\n- request_id不同，业务字段相同时，不支持幂等，作为全新的一笔交易进行处理\r\n对于接口超时情况，可使用request_id调用Get a conversion接口获取结果。"
+        },
+        {
+          "info": {
+            "name": "Get a conversion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/conversions/:request_id",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "查询conversion信息。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

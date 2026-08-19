@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Receiving Accounts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Receiving Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get list of receiving accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/receiving_accounts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码,默认值为1"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页查询数量,默认值20"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户唯一标识"
+              },
+              {
+                "name": "nickname",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户别名"
+              },
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户发卡行所在的国家地区"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户支持收款的币种"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户的状态 `ACTIVE`：正常 `PROCESSING`：处理中     `INACTIVE`：非正常 `CLOSED` ：关闭"
+              },
+              {
+                "name": "payment_methods",
+                "value": "",
+                "type": "query",
+                "description": "`SWIFT`全球收款账户,`LOCAL`本地收款账户,默认`SWIFT`"
+              }
+            ]
+          },
+          "docs": "根据查询条件获取收款账户列表。"
+        },
+        {
+          "info": {
+            "name": "Open a receiving account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/receiving_accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "申请收款账户。\r\n- request_id相同，业务字段（country_code或channel_code）相同时，幂等返回\r\n- request_id相同，业务字段（country_code或channel_code）不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段（country_code或channel_code）相同时，按全新交易处理，创建新的receiving account\r\n对于接口超时情况，可使用原报文重试或使用request_id调用Get list of receiving accounts接口获取结果。"
+        },
+        {
+          "info": {
+            "name": "Get list of channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/receiving_accounts/channel",
+            "params": [
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query",
+                "description": "全球收款账户国家地区"
+              },
+              {
+                "name": "payment_methods",
+                "value": "",
+                "type": "query",
+                "description": "渠道支付方式， `SWIFT`, `LOCAL`,默认`SWIFT`"
+              }
+            ]
+          },
+          "docs": "获取收款账户支持的渠道信息。"
+        },
+        {
+          "info": {
+            "name": "Get receiving account by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/receiving_accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "global_account的主键"
+              }
+            ]
+          },
+          "docs": "根据收款账户唯一ID获取账户详情信息。"
+        },
+        {
+          "info": {
+            "name": "Update a receiving account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/receiving_accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "global_account的主键"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "根据收款账户唯一ID更新账户信息。\r\n- 业务字段（id）相同时，可多次调用更新，数据为最后一次更新的内容"
+        },
+        {
+          "info": {
+            "name": "Close a receiving account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/receiving_accounts/close/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "global_account的主键"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "关闭指定的收款账户，关闭后对应账户将无法进行收款。\r\n- 业务字段（id）相同时，支持幂等，多次调用关闭，返回相同的结果"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

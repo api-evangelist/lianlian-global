@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Captchas API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Captchas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a captcha code to phone",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/captchas/phone",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "目前仅允许授权人身份为法人。当法人的证件类型为身份证时，会取法人的手机、全名、证件号进行三要素验证。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

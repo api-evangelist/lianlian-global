@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Ew Receiving API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ew Receiving",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Receiving Account list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-receiving/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get list of receiving accounts created by your LianLian Global account.\n"
+        },
+        {
+          "info": {
+            "name": "Get Receiving Account Info by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ew-receiving/accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the information of the Receiving Account with the matching ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

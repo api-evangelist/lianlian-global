@@ -1,0 +1,290 @@
+{
+  "item": [
+    {
+      "id": "d499985f-0040-4a4d-a0b7-52d77792ed0f",
+      "name": "Compliances",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "78501707-6018-4ef0-803c-9217f425ed1f",
+          "name": "Create a compliance material",
+          "request": {
+            "name": "Create a compliance material",
+            "description": {},
+            "url": {
+              "path": [
+                "compliances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"<string>\",\n  \"type\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"attachments\": [\n    {\n      \"attachment_type\": \"<string>\",\n      \"file_id\": \"<string>\"\n    },\n    {\n      \"attachment_type\": \"<string>\",\n      \"file_id\": \"<string>\"\n    }\n  ],\n  \"memo\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89770737-bf2a-4c11-9e90-741503e2b678",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compliances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"<string>\",\n  \"type\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"attachments\": [\n    {\n      \"attachment_type\": \"<string>\",\n      \"file_id\": \"<string>\"\n    },\n    {\n      \"attachment_type\": \"<string>\",\n      \"file_id\": \"<string>\"\n    }\n  ],\n  \"memo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"entity_id\": \"string\",\n  \"type\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d5df95d-633a-4909-bc44-04ea1790257e",
+              "name": "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nFILE_NOT_EXIST|fileId not found\r\nBENEFICIARY_NOT_EXISTS|beneficiary is not exist\r\nREQUEST_ID_IS_NOT_UNIQUE|request_id is not unique\r\nREVIEW_EXIST_ERROR|material review apply exist\r\nCHANNEL_ID_NOT_FOUND|channelId not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compliances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"<string>\",\n  \"type\": \"<string>\",\n  \"entity_id\": \"<string>\",\n  \"attachments\": [\n    {\n      \"attachment_type\": \"<string>\",\n      \"file_id\": \"<string>\"\n    },\n    {\n      \"attachment_type\": \"<string>\",\n      \"file_id\": \"<string>\"\n    }\n  ],\n  \"memo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7eb1746-4211-4be4-b740-b597740488dc",
+          "name": "Get a compliance material by request_id",
+          "request": {
+            "name": "Get a compliance material by request_id",
+            "description": {},
+            "url": {
+              "path": [
+                "compliances",
+                ":request_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) 客户端唯一请求ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "20d1ae50-9b5a-4402-adc2-17094d0934ed",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compliances",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 客户端唯一请求ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72109c35-080e-4d6b-998c-f69b1dcc91d5",
+              "name": "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "compliances",
+                    ":request_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) 客户端唯一请求ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8dc33e74-be5b-4c00-a440-8142965cbfdd",
+    "name": "Distribution Account Compliances API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

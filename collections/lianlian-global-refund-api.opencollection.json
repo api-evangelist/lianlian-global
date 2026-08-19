@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Refund API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refund",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a refund detail by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accept_payments/refunds/request_id/:request_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "商户系统中该笔退款的唯一编码"
+              }
+            ]
+          },
+          "docs": "Get a refund detail by ID"
+        },
+        {
+          "info": {
+            "name": "Create a refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accept_payments/refunds",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "### 功能说明：\r\n对指定的支付订单进行退款，支持多次部分退款。\r\n### 幂等说明：不支持幂等\r\n- request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id不同，业务字段相同时，按全新交易处理，创建新的Refund交易。\r\n### 超时方案：\r\n如果调用Create a refund接口超时，可使用request_id调用Get a refund detail by ID接口获取结果。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

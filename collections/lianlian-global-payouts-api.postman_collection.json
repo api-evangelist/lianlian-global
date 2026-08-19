@@ -1,0 +1,1375 @@
+{
+  "item": [
+    {
+      "id": "37c1ba19-dd1d-4751-89f1-acefe990b293",
+      "name": "Payouts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1acd4d7a-5ef5-42ee-85bc-211107d068da",
+          "name": "Get a payout by ID",
+          "request": {
+            "name": "Get a payout by ID",
+            "description": {
+              "content": "通过交易唯一ID获取付款详情信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "3de86bc2-def2-4fcb-b1c8-3f8d10e422b0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b583518-6bb3-43cf-9a33-431991797d25",
+              "name": "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa2c6bd0-44ea-4c08-b31b-3d2cf3858045",
+          "name": "Create a payout",
+          "request": {
+            "name": "Create a payout",
+            "description": {
+              "content": "### 功能说明：\r\n向指定收款对象创建一笔付款。\r\n### 幂等说明：不支持幂等\r\n- request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id不同，业务字段相同时，按全新交易处理，创建新的payout交易。\r\n### 超时方案：\r\n如果调用Create a payout接口超时，可使用request_id调用Get list of payouts接口获取结果。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "610528d2-edb4-4046-ada8-20d950a984d8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "416ead07-8dc4-4049-b345-bffee572c4b1",
+              "name": "**code** |**message**\r\n---------|----------\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nPARAM_ERROR | A parameter value is not valid or is missing.\r\nSOURCE_AMOUNT_BELOW_LIMIT|source amount below limit.\r\nSOURCE_AMOUNT_ABOVE_LIMIT|source amount above limit.\r\nTARGET_AMOUNT_BELOW_LIMIT|target amount below limit.\r\nTARGET_AMOUNT_ABOVE_LIMIT|target amount above limit.\r\nFEE_CONFIG_ERROR|Fee config error, please contact your client manager.\r\nKYC_FAILED|Failed to retrieve KYC information.\r\nACCOUNT_STATUS_INVALID|The account status is invalid.\r\nDOCUMENT_EXPECTED_DECLARATION_TIME_INVALID|The expected declaration time exceeds the payout transaction created time.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb4922fe-0016-418c-aacd-8d3d272abb24",
+              "name": "**code** |**message**\r\n---------|----------\r\nINTERNAL_SERVER_ERROR | An internal server error has occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecedb823-9a9d-4203-9303-af5d7d5ed02e",
+          "name": "Get list of payouts",
+          "request": {
+            "name": "Get list of payouts",
+            "description": {
+              "content": "获取付款列表信息",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "transaction_id",
+                  "value": "<string>",
+                  "description": "交易订单ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "purpose",
+                  "value": "<string>",
+                  "description": "用途，枚举：PAYOUT、WITHDRAW"
+                },
+                {
+                  "disabled": false,
+                  "key": "source_currency",
+                  "value": "<string>",
+                  "description": "源币种"
+                },
+                {
+                  "disabled": false,
+                  "key": "target_currency",
+                  "value": "<string>",
+                  "description": "目的币种"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "订单状态"
+                },
+                {
+                  "disabled": false,
+                  "key": "request_id",
+                  "value": "<string>",
+                  "description": "客户端请求ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<string>",
+                  "description": "开始时间，13位时间戳毫秒"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<string>",
+                  "description": "结束时间，13位时间戳毫秒"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "页码，默认值为1"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<string>",
+                  "description": "每页查询数量，默认值为20"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "a45aa8eb-5a7b-488f-9ab5-266ff4a3ff58",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "transaction_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "purpose",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "request_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page_size\": \"string\",\n  \"page\": \"string\",\n  \"total_count\": \"string\",\n  \"total_page\": \"string\",\n  \"page_list\": [\n    {\n      \"value\": \"reference ../models/PaymentDetailsResponse.yaml not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference ../models/PaymentDetailsResponse.yaml not found in the OpenAPI spec\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d77d722f-d15e-44e3-a963-3b34a6f9c6bf",
+          "name": "Cancel a payout",
+          "request": {
+            "name": "Cancel a payout",
+            "description": {
+              "content": "取消付款。\r\n- 业务字段（transaction_id）相同时，不支持幂等",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts",
+                "cancel",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"memo\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "49ef7884-0777-4e85-aad6-51003a630bd6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "cancel",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"string\",\n  \"status\": \"PROCESSING\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ad00b5f-513f-4db6-a266-1df3674dd87c",
+              "name": "**code**|**message**\r\n---|---\r\nORDER_STATUS_CAN_NOT_CANCEL|order status does not support cancellation operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "cancel",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16060a1d-a616-4d2e-b666-41727c087d38",
+              "name": "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "cancel",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"memo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f289cdf-0336-49ba-9f95-62f1afdbfe2c",
+          "name": "Send captcha on a payout",
+          "request": {
+            "name": "Send captcha on a payout",
+            "description": {
+              "content": "当付款交易需要进行验证时，通过该接口发送付款验证码。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts",
+                "captchas",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) 交易ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"send_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c1fbe1eb-ccab-4b4d-b8c3-caff99ff508f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "captchas",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"send_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction_id\": \"string\",\n  \"send_time\": 9932.799153489454,\n  \"send_type\": \"string\",\n  \"country_code\": \"string\",\n  \"phone_tail\": \"string\",\n  \"email\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5fb9e670-4757-467e-8a98-a95cf3ad2bb4",
+          "name": "Verify captcha on a payout",
+          "request": {
+            "name": "Verify captcha on a payout",
+            "description": {
+              "content": "提交验证码进行验证，推进付款流程。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts",
+                "captchas",
+                "verify",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) 交易单号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"captcha\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "893382d3-1fae-4da5-8c7a-dcd367175b47",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "captchas",
+                    "verify",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易单号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"captcha\": \"651938\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "915e5b39-1061-4fde-91b2-a1a9a24ba891",
+              "name": "code |message | param\r\n---------|----------|---------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. |e.g: country_code\r\n PARAM_ERROR | A parameter value is not valid. |\r\n CAPTCHA_NOT_SEND | Please obtain the verification code first. |\r\n CAPTCHA_NOT_VALID | The verification code has expired, please retrieve it again. |\r\n CAPTCHA_NOT_MATCH | The verification code is incorrect, please check. |\r\n CAPTCHA_USED | The verification code has been used, please retrieve a new one. |",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "captchas",
+                    "verify",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易单号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"captcha\": \"651938\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06d465c2-5ff3-44a5-bfe3-436077fa6edc",
+          "name": "Supplement transaction  document",
+          "request": {
+            "name": "Supplement transaction  document",
+            "description": {
+              "content": "### 功能说明：\r\n补充付款订单的贸易材料，暂只支持`business_type=IMPORT_TRADE_ADVANCE`进口预付场景的付款单。一个进口预付付款单可以补充多笔贸易材料，直到补充的贸易材料总金额等于预付付款单的金额。\r\n### 幂等说明：\r\n- request_id相同，业务字段相同时，幂等返回，并返回最新的审核状态status。\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE。\r\n- request_id不同，业务字段相同时，按全新请求处理。\r\n### 超时方案：\r\n如果调用Supplement transaction  document接口超时，可使用原报文重试。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payouts",
+                "documents",
+                "supplement",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) 交易单号"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"<string>\",\n  \"document_detail\": {\n    \"request_id\": \"<string>\",\n    \"amount\": \"<string>\",\n    \"currency\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "db4c0bb6-96c1-4cd7-8812-2ff4d5922a61",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "documents",
+                    "supplement",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易单号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"<string>\",\n  \"document_detail\": {\n    \"request_id\": \"<string>\",\n    \"amount\": \"<string>\",\n    \"currency\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cddc4ab1-cc33-4901-8339-4c347aac619c",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payouts",
+                    "documents",
+                    "supplement",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) 交易单号"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "application/json",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"request_id\": \"<string>\",\n  \"document_detail\": {\n    \"request_id\": \"<string>\",\n    \"amount\": \"<string>\",\n    \"currency\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "185ece95-3cc3-4fde-8a71-fe9c9dace064",
+          "name": "Calculate payout fees",
+          "request": {
+            "name": "Calculate payout fees",
+            "description": {
+              "content": "payout手续费试算",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fee",
+                "budget"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "purpose",
+                  "value": "<string>",
+                  "description": "(Required) 用途，枚举：PAYOUT、WITHDRAW"
+                },
+                {
+                  "disabled": false,
+                  "key": "source_currency",
+                  "value": "<string>",
+                  "description": "(Required) 源币种"
+                },
+                {
+                  "disabled": false,
+                  "key": "target_currency",
+                  "value": "<string>",
+                  "description": "(Required) 目的币种"
+                },
+                {
+                  "disabled": false,
+                  "key": "source_amount",
+                  "value": "<string>",
+                  "description": "(Required) 源币种金额"
+                },
+                {
+                  "disabled": false,
+                  "key": "swift_charge_option",
+                  "value": "<string>",
+                  "description": "(Required) SWIFT中间行费用承担方，枚举： OUR（付款人承担） 、SHA（共同承担） 、BEN (收款人承担手续费)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pobo_option",
+                  "value": "<string>",
+                  "description": "(Required) 是否使用POBO，枚举：TRUE、FALSE"
+                },
+                {
+                  "disabled": false,
+                  "key": "charge_type",
+                  "value": "<string>",
+                  "description": "计费类型，枚举值： 1：内扣-从付款金额中收取服务费 2：外收-从付款金额基础上额外收取服务费"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "5a9f8aa2-c54f-4c4b-893f-9f922b3e233d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fee",
+                    "budget"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "purpose",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "target_currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source_amount",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "swift_charge_option",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pobo_option",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "charge_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Bearer <Token>",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_fee_amount\": \"string\",\n  \"fee_currency\": \"string\",\n  \"basic_fee_details\": {\n    \"configuration_basic_percent\": \"string\",\n    \"basic_percent_fee\": \"string\",\n    \"configuration_basic_flat\": \"string\",\n    \"basic_fee_amount\": \"string\",\n    \"basic_min_fee_amount\": \"string\",\n    \"basic_max_fee_amount\": \"string\"\n  },\n  \"field_fee_details\": [\n    {\n      \"field_name\": \"string\",\n      \"field_value\": \"string\",\n      \"fee_amount\": \"string\",\n      \"percent\": \"string\",\n      \"percent_fee\": \"string\",\n      \"condition_flat\": \"string\",\n      \"field_type\": \"string\"\n    },\n    {\n      \"field_name\": \"string\",\n      \"field_value\": \"string\",\n      \"fee_amount\": \"string\",\n      \"percent\": \"string\",\n      \"percent_fee\": \"string\",\n      \"condition_flat\": \"string\",\n      \"field_type\": \"string\"\n    }\n  ],\n  \"total_min_fee_amount\": \"string\",\n  \"total_max_fee_amount\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5dc133f0-8af6-41a0-aedc-fcd474fbca81",
+    "name": "Distribution Account Payouts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

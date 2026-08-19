@@ -1,0 +1,167 @@
+{
+  "item": [
+    {
+      "id": "38a6590a-1438-47e3-8fab-9afbe38cbe4c",
+      "name": "Captchas",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4efdbe48-6e2a-479e-aec5-2886fdfc6772",
+          "name": "Send a captcha code to phone",
+          "request": {
+            "name": "Send a captcha code to phone",
+            "description": {
+              "content": "目前仅允许授权人身份为法人。当法人的证件类型为身份证时，会取法人的手机、全名、证件号进行三要素验证。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "captchas",
+                "phone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b132a37f-a9ea-47a8-b535-582d9381fa61",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "captchas",
+                    "phone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"phone\": \"string\",\n  \"country_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1f7ae53-b314-4ec3-8bd2-73593b48f40f",
+              "name": "code |message | param\n---------|----------|---------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. | e.g: country_code\n PARAM_ERROR | A parameter value is not valid. |\n CAPTCHA_INTERVAL_LIMIT | The captcha sending interval is less than 1 minute. |\n CAPTCHA_INTERVAL_TOTAL_LIMIT | Exceeded the number of verification code sends per user. |\n SMS_TEMPLATE_NOT_FOUND | The sms template does not exist. |\n REMOTE_INVOKE_FAIL | A system or application error occurred. |",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "captchas",
+                    "phone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b1fc53a8-b6bc-4f44-92d4-169f61a7c904",
+    "name": "Distribution Account Captchas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Accounts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "申请收款账户",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/accounts/apply",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "创建币种账户"
+        },
+        {
+          "info": {
+            "name": "会员账户信息查询",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/accounts/:member_id",
+            "params": [
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "会员账户信息查询"
+        },
+        {
+          "info": {
+            "name": "Create an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "为您的用户、商家、子公司、业务合作伙伴或客户创建一个新的LianLian Global帐户。\r\n- 业务字段相同时，支持幂等，返回当前account的最新状态"
+        },
+        {
+          "info": {
+            "name": "Get account detail info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/detail"
+          },
+          "docs": "Get account detail info"
+        },
+        {
+          "info": {
+            "name": "Authorize an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accounts/authorize",
+            "headers": [
+              {
+                "name": "X-On-Behalf-Of-User-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "请求用户账户授权\r\n- 业务字段相同时，支持幂等，只会创建一条授权记录，每次调用授权码code会刷新"
+        },
+        {
+          "info": {
+            "name": "Submit account for activation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accounts/submit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "提交开通账户所需的实名认证详情信息，进行账户激活。\r\n- 当status为INIT时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\r\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\r\n不同授权类型下，公司成员必填信息特别说明：\r\n\r\n**授权人类型** | **法人** | **代理人**| **法人短信验证**|**法人承诺函** |**法人手持承诺函** | **代理人授权书**\r\n---------|----------|---------|----------|---------|---------|---------\r\n LEGALPERSON | 必填 | 非必填 | 必填 | 非必填 | 非必填| 非必填\r\n AUTHORIZER | 必填 | 必填 | 非必填 | 必填| 必填| 必填"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

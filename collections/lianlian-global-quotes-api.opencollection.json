@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Quotes API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quotes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a reference rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/quotes/get_reference_rate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "获取参考汇率。"
+        },
+        {
+          "info": {
+            "name": "Get a conversion rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/quotes/get_conversion_rate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "获取conversion交易汇率。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

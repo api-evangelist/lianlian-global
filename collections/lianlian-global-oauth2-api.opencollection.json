@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Oauth2 API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Oauth2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get or refresh access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth2/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "获取或者刷新access token。\r\n- 业务字段（grant_type、client_id、client_secret）相同时，不支持幂等，会创建多个access token。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

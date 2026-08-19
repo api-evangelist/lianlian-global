@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Distribution Account Reports API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download a report by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reports/download",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "根据唯一ID获取交易报告文件，以下载的方式返回报告文件流信息。\r\n- 业务字段相同时，支持幂等，多次调用返回结果一致"
+        },
+        {
+          "info": {
+            "name": "Get list of reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/reports",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "页码"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "每页条数"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "报告类型"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "创建开始时间， 时间戳，毫秒"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "创建结束时间，时间戳，毫秒"
+              }
+            ]
+          },
+          "docs": "获取报告文件详情列表信息。"
+        },
+        {
+          "info": {
+            "name": "Create a report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "## 功能说明\r\n调用`Create a report`接口创建一个生成报告的任务，报告文件生成完成后会发送webhook通知，可以通过`Download a report by ID`接口下载报告文件。\r\n## 接口幂等说明\r\n- 业务字段相同时，不支持幂等，会创建多个report\r\n## 报表说明\r\n- 支持获取2年内的交易明细和资金明细数据。\r\n- 查询条件时间from到to时间范围不能超过3个月。\r\n- TRANSACTION_REPORT：交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- TRANSACTION_PLATFORM_REPORT：账户体系产品平台维度获取交易明细，交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- STATEMENT_REPORT：资金明细包含交易后余额，不包含账户期初期末余额，支持查询D日最新的资金明细。\r\n- STATEMENT_BALANCE_REPORT：包含期初和期末余额的资金对账单，仅支持获取D-1日数据，请在D日凌晨"
+        },
+        {
+          "info": {
+            "name": "Get a report by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "报表ID"
+              }
+            ]
+          },
+          "docs": "根据唯一ID获取报告文件详情信息。"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,742 @@
+{
+  "item": [
+    {
+      "id": "098dd718-b910-418f-be13-9d145f54f78e",
+      "name": "Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3cbffeca-9204-41dd-940e-6b5d15e90819",
+          "name": "Download a report by ID",
+          "request": {
+            "name": "Download a report by ID",
+            "description": {
+              "content": "根据唯一ID获取交易报告文件，以下载的方式返回报告文件流信息。\r\n- 业务字段相同时，支持幂等，多次调用返回结果一致",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "id",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "报表ID"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f8ab52e9-2301-465a-ab4d-8fc0d9ce9a66",
+              "name": "返回报告文件流信息",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "报表ID",
+                        "type": "text/plain"
+                      },
+                      "key": "id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "85ca8381-f8a4-4d80-b63e-c96d24333495",
+              "name": "**CODE**|**MESSAGE**\n---|---\nMISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.\nFILE_SERVER_REMOTE_ERROR|A system or application error occurred.\nREPORT_STATUS_UNAVAILABLE|The report status is unavailable.\nREPORT_FILE_EXPIRED|The report file is expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "报表ID",
+                        "type": "text/plain"
+                      },
+                      "key": "id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a934e7ab-f39d-4df7-9225-cf815354bb19",
+              "name": "**CODE**|**MESSAGE**\n---|---\nNOT_AUTHORIZED|Lacks valid authentication credentials or insufficient permissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "报表ID",
+                        "type": "text/plain"
+                      },
+                      "key": "id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1d53583-448a-4a68-8b4d-abf3461c0650",
+              "name": "**CODE**|**MESSAGE**\n---|---\nRESOURCE_NOT_FOUND|The specified resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "报表ID",
+                        "type": "text/plain"
+                      },
+                      "key": "id",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21bf0edf-0fb1-460d-b7df-49c28fe779d9",
+          "name": "Create a report",
+          "request": {
+            "name": "Create a report",
+            "description": {
+              "content": "## 功能说明\r\n调用`Create a report`接口创建一个生成报告的任务，报告文件生成完成后会发送webhook通知，可以通过`Download a report by ID`接口下载报告文件。\r\n## 接口幂等说明\r\n- 业务字段相同时，不支持幂等，会创建多个report\r\n## 报表说明\r\n- 支持获取2年内的交易明细和资金明细数据。\r\n- 查询条件时间from到to时间范围不能超过3个月。\r\n- TRANSACTION_REPORT：交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- TRANSACTION_PLATFORM_REPORT：账户体系产品平台维度获取交易明细，交易明细数据会存在一定延迟，如果需要获取最新生成的交易记录，请调用各个业务模块的Get list接口。\r\n- STATEMENT_REPORT：资金明细包含交易后余额，不包含账户期初期末余额，支持查询D日最新的资金明细。\r\n- STATEMENT_BALANCE_REPORT：包含期初和期末余额的资金对账单，仅支持获取D-1日数据，请在D日凌晨3点钟以后发起请求。\r\n- ACCEPT_PAYMENT_TRANSACTION_BILL：支付收单（Accept Payments）交易明细，仅支持获取D-1日数据，支持transaction_type:ACCEPT_PAYMENT和ACCEPT_PAYMENT_REFUND\r\n- ACCEPT_PAYMENT_BALANCE_BILL：支付收单（Accept Payments）资金明细，仅支持获取D-1日数据，支持transaction_type:ACCEPT_PAYMENT和ACCEPT_PAYMENT_REFUND\r\n- ACCEPT_PAYMENT_SETTLEMENT_REPORT：支付收单（Accept Payments）结算单。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c19ac6ef-c48a-4a31-b638-5460d013eca7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a2b4608-65b4-4871-823c-475778e4ad4c",
+              "name": "code | message \r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n PARAM_ERROR | A parameter value is not valid.\r\n DATE_RANGE_TOO_BIG | The time interval exceeds 3 months.\r\n REPORT_TIME_FORBIDDEN | Report creation is prohibited at the current time.\r\n REPORT_TIME_TOO_EARLY | The report time is too early.\r\n MERCHANT_ACCT_NOT_EXIST | The merchant currency account doesn't exist.\r\n STATEMENT_REPORT_MUST_BEFORE_TODAY | The end time of statement report must be earlier than today.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04773e93-ec49-4ed6-b224-90ce45cfc6ce",
+          "name": "Get list of reports",
+          "request": {
+            "name": "Get list of reports",
+            "description": {
+              "content": "获取报告文件详情列表信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "报告类型"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<string>",
+                  "description": "创建开始时间， 时间戳，毫秒"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<string>",
+                  "description": "创建结束时间，时间戳，毫秒"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "1f5c2d07-a31f-4ff8-8833-9881eb0e9e95",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page_size\": \"string\",\n  \"page\": \"string\",\n  \"total_count\": \"string\",\n  \"total_page\": \"string\",\n  \"page_list\": [\n    {\n      \"value\": \"reference #/components/schemas/Report - copy not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/Report - copy not found in the OpenAPI spec\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24788188-f93b-4504-bcef-952bc06b2206",
+              "name": "code | message \r\n---------|----------\r\n START_AND_END_DATE_INVALID | Both the start time and end time must be either both filled in or both empty.\r\n PARAM_ERROR| A parameter value is not valid.\r\n MISSING_REQUIRED_PARAMETER|A required parameter in the request is missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07984dba-c836-42f3-a05d-ebb7441da528",
+          "name": "Get a report by ID",
+          "request": {
+            "name": "Get a report by ID",
+            "description": {
+              "content": "根据唯一ID获取报告文件详情信息。",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "reports",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) 报表ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            }
+          },
+          "response": [
+            {
+              "id": "c9620253-1826-465c-8139-f16e5285d7e6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) 报表ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "539f067e-8ab1-46de-bc8b-cfa1aad3616d",
+              "name": "code | message \r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER| A required parameter in the request is missing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) 报表ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e94c36b-0dd5-47a5-9476-b02ca0483fc0",
+              "name": "code | message \r\n---------|----------\r\n RESOURCE_NOT_FOUND| The specified resource does not exist.\r\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "reports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) 报表ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3e103121-7ae1-4e8e-a632-84671f387361",
+    "name": "Distribution Account Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
