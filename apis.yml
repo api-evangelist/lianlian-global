@@ -37,6 +37,17 @@ tags:
 - E-Commerce
 - Card Issuing
 - Remittance
+- Financial-Services
+- B2B Payments
+- Digital Wallet
+- China
+tags_raw:
+- Payments
+- Cross-Border Payments
+- Foreign Exchange
+- E-Commerce
+- Card Issuing
+- Remittance
 - Financial Services
 - B2B Payments
 - Digital Wallet
@@ -99,6 +110,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -201,6 +214,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Balances
+  tags_raw:
   - Balance
   properties:
   - type: OpenAPI
@@ -608,7 +623,8 @@ apis:
   description: The 接口 API from LianLian Global — 63 operation(s) for 接口.
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
-  tags:
+  tags: []
+  tags_raw:
   - 接口
   properties:
   - type: OpenAPI
@@ -1068,6 +1084,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -1169,7 +1187,8 @@ apis:
   description: The Get API from LianLian Global — 1 operation(s) for get.
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
-  tags:
+  tags: []
+  tags_raw:
   - Get
   properties:
   - type: OpenAPI
@@ -1221,6 +1240,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - KYC
+  tags_raw:
   - Kyc
   properties:
   - type: OpenAPI
@@ -1323,6 +1344,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Authentication
+  tags_raw:
   - Oauth2
   properties:
   - type: OpenAPI
@@ -1373,7 +1396,8 @@ apis:
   description: The Operations API from LianLian Global — 117 operation(s) for operations.
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -1680,6 +1704,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Quotes
+  tags_raw:
   - Quote
   properties:
   - type: OpenAPI
@@ -2037,6 +2063,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Top-Up
+  tags_raw:
   - Topup
   properties:
   - type: OpenAPI
@@ -2293,6 +2321,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -2344,6 +2374,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Verification
+  tags_raw:
   - Verifications
   properties:
   - type: OpenAPI
@@ -2395,6 +2427,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
