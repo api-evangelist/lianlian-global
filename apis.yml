@@ -9,6 +9,18 @@ description: LianLian Global (连连国际) is the cross-border payments arm of 
   OpenAPI/Swagger specifications describing more than 550 operations. LianLian authenticates with API keys and OAuth
   2.0, signs every request and webhook with RSA SHA-256 via the LLPAY-Signature header, and ships first-party Java
   and TypeScript SDKs, a Python sandbox CLI and three published AI agent skills from its LLGlobal GitHub organization.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -2480,6 +2492,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/lianlian-global-capability-edges.yml
+  name: LianLian Global Business Capability Map
 - type: AgenticAccess
   url: agentic-access/lianlian-global-agentic-access.yml
 - type: DomainSecurity
