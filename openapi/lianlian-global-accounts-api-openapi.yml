@@ -279,51 +279,6 @@ paths:
       description: ''
 components:
   schemas:
-    Account:
-      title: Account
-      type: object
-      description: 收款账户（带充值功能）
-      examples: []
-      properties:
-        account_id:
-          type: string
-          description: 账户号
-          maxLength: 32
-        account_type:
-          type: string
-          description: 账户类型
-          maxLength: 8
-          enum:
-          - TOPUP
-          - RECEIVING
-        member_id:
-          type: string
-          description: 会员id
-          maxLength: 32
-        currency:
-          type: string
-          description: 币种，3位，参考：https://www.iso.org/iso-4217-currency-codes.html
-        status:
-          type: string
-          description: 状态
-          maxLength: 8
-          enum:
-          - ENABLED
-          - DISABLED
-        freeze_amount:
-          type: string
-          maxLength: 16
-        available_amount:
-          type: string
-          maxLength: 16
-        bank:
-          $ref: '#/components/schemas/Bank'
-      required:
-      - account_id
-      - account_type
-      - member_id
-      - currency
-      - freeze_amount
     Bank:
       title: Bank
       x-stoplight:
@@ -376,6 +331,51 @@ components:
       - account_number
       - swift_code
       - bank_name
+    Account:
+      title: Account
+      type: object
+      description: 收款账户（带充值功能）
+      examples: []
+      properties:
+        account_id:
+          type: string
+          description: 账户号
+          maxLength: 32
+        account_type:
+          type: string
+          description: 账户类型
+          maxLength: 8
+          enum:
+          - TOPUP
+          - RECEIVING
+        member_id:
+          type: string
+          description: 会员id
+          maxLength: 32
+        currency:
+          type: string
+          description: 币种，3位，参考：https://www.iso.org/iso-4217-currency-codes.html
+        status:
+          type: string
+          description: 状态
+          maxLength: 8
+          enum:
+          - ENABLED
+          - DISABLED
+        freeze_amount:
+          type: string
+          maxLength: 16
+        available_amount:
+          type: string
+          maxLength: 16
+        bank:
+          $ref: '#/components/schemas/Bank'
+      required:
+      - account_id
+      - account_type
+      - member_id
+      - currency
+      - freeze_amount
   securitySchemes:
     Component:
       type: oauth2

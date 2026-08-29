@@ -403,37 +403,6 @@ paths:
         id: 99p15q3c1cqqk
 components:
   schemas:
-    Captcha:
-      title: Captcha
-      x-stoplight:
-        id: avwxzy6nqni4l
-      type: object
-      properties:
-        request_id:
-          type: string
-          x-stoplight:
-            id: w06gj2yscma2g
-          description: 商户系统中该笔订单的唯一编码。
-        send_time:
-          type: number
-          x-stoplight:
-            id: 3ytmr9h6lcfo3
-          description: 发送时间，13位时间戳。
-        send_type:
-          type: string
-          x-stoplight:
-            id: l06omig2r96no
-          description: 验证码发送方式：PHONE, EMAIL。
-        country_code:
-          type: string
-          x-stoplight:
-            id: qgc51p9koogga
-          description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码。
-        phone_tail:
-          type: string
-          x-stoplight:
-            id: xbbnvvlqgertf
-          description: 手机号后4位
     Payment:
       title: Payment
       x-stoplight:
@@ -573,6 +542,37 @@ components:
           x-stoplight:
             id: io6j2ri2cd9nb
           description: "业务类型\n枚举 | 说明 \n---------|----------\nYICAIFU|易采付"
+    Captcha:
+      title: Captcha
+      x-stoplight:
+        id: avwxzy6nqni4l
+      type: object
+      properties:
+        request_id:
+          type: string
+          x-stoplight:
+            id: w06gj2yscma2g
+          description: 商户系统中该笔订单的唯一编码。
+        send_time:
+          type: number
+          x-stoplight:
+            id: 3ytmr9h6lcfo3
+          description: 发送时间，13位时间戳。
+        send_type:
+          type: string
+          x-stoplight:
+            id: l06omig2r96no
+          description: 验证码发送方式：PHONE, EMAIL。
+        country_code:
+          type: string
+          x-stoplight:
+            id: qgc51p9koogga
+          description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码。
+        phone_tail:
+          type: string
+          x-stoplight:
+            id: xbbnvvlqgertf
+          description: 手机号后4位
   securitySchemes:
     Component:
       type: oauth2

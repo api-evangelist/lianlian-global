@@ -13451,58 +13451,6 @@ components:
       - topic
       x-tags:
       - 对象
-    statement:
-      title: statement
-      x-stoplight:
-        id: h8ztry2mufw3b
-      type: object
-      properties:
-        billNumber:
-          type: string
-          maxLength: 32
-          description: 账务流水号
-        fundDirection:
-          type: string
-          enum:
-          - CREDIT
-          - DEBIT
-          description: '资金方向，CREDIT：入账；DEBIT：出账
-
-            '
-        currency:
-          type: string
-          minLength: 3
-          maxLength: 3
-          description: 币种
-        transactionAmount:
-          type: string
-          maxLength: 16
-          description: 交易金额
-        balance:
-          type: string
-          maxLength: 16
-          description: 交易后可用余额
-        accountDate:
-          type: string
-          description: 账务日期，格式：yyyy-MM-dd
-        transactionTime:
-          type: string
-          description: 交易时间，格式：yyyy-MM-dd HH:mm:ss
-        remark:
-          type: string
-          maxLength: 128
-          description: 备注
-        totalCount:
-          type: string
-          description: 总条数
-        pageNum:
-          type: string
-          description: 当前页码
-        pageSize:
-          type: string
-          description: 每页查询数量
-      x-tags:
-      - 对象
     account:
       type: object
       properties:
@@ -13564,6 +13512,58 @@ components:
       title: account
       x-stoplight:
         id: 62e56dc100b32
+      x-tags:
+      - 对象
+    statement:
+      title: statement
+      x-stoplight:
+        id: h8ztry2mufw3b
+      type: object
+      properties:
+        billNumber:
+          type: string
+          maxLength: 32
+          description: 账务流水号
+        fundDirection:
+          type: string
+          enum:
+          - CREDIT
+          - DEBIT
+          description: '资金方向，CREDIT：入账；DEBIT：出账
+
+            '
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: 币种
+        transactionAmount:
+          type: string
+          maxLength: 16
+          description: 交易金额
+        balance:
+          type: string
+          maxLength: 16
+          description: 交易后可用余额
+        accountDate:
+          type: string
+          description: 账务日期，格式：yyyy-MM-dd
+        transactionTime:
+          type: string
+          description: 交易时间，格式：yyyy-MM-dd HH:mm:ss
+        remark:
+          type: string
+          maxLength: 128
+          description: 备注
+        totalCount:
+          type: string
+          description: 总条数
+        pageNum:
+          type: string
+          description: 当前页码
+        pageSize:
+          type: string
+          description: 每页查询数量
       x-tags:
       - 对象
     document_3:
@@ -14200,6 +14200,27 @@ components:
         |CZK|捷克克朗|
 
         '
+    cardType:
+      title: 提现银行卡类型
+      description: '字段值|注释
+
+        -|-
+
+        0|借记卡
+
+        1|信用卡
+
+        2|对公银行卡'
+      type: string
+    shopStatus:
+      title: 店铺状态
+      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|0\t|待完善信息  |\n|1\t|待审核\t      |\n|2\t|审核通过\t      |\n|3\t|审核失败\t      |\n|4\t|已注销\t      |\n|5\t|已迁移\t      |\n|6\t|待激活\t      |\n"
+      type: integer
+    creditStatus:
+      title: 入账状态
+      description: "| 字段值 | 状态 | 注释 |\n| -------|-------|-------|\n| 0\t| 挂起 | |\n| 1\t| 加款中 | |\n| 2\t| 加款成功 | 即入账成功，连连官网页面交易明细仅展示此状态单据 |\n| 3\t| 退还中 | |\n| 4\t| 已退还 | |\n| 5\t| 已红冲 | 加款成功后退款红冲 |\n| 6\t| 待加款 | |\n| 7\t| 待退款 | |"
+      type: string
+      x-internal: false
     marketplaceName:
       type: string
       title: marketplaceName
@@ -14236,31 +14257,14 @@ components:
         SI Prod IT Marketplace|意大利站
 
         SI UK Prod Marketplace|英国站'
-    shopStatus:
-      title: 店铺状态
-      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|0\t|待完善信息  |\n|1\t|待审核\t      |\n|2\t|审核通过\t      |\n|3\t|审核失败\t      |\n|4\t|已注销\t      |\n|5\t|已迁移\t      |\n|6\t|待激活\t      |\n"
+    withdrawStatus:
+      title: 提现状态
+      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|1\t|提现中\t      |\n|2\t|提现成功\t      |\n|3\t|提现失败\t      |"
       type: integer
     busiType:
       title: 资金流水业务类型
       description: "|字段值\t  |\n|-------|\n|入账\t|\n|提现\t|\n|供应商付款\t|\n|VAT缴税\t|\n|增值服务\t|\n|支付费用\t|\n|转入出账\t|\n|转入入账\t|\n|汇兑出账\t|\n|汇兑入账\t|\n|金融还款\t|\n|退款\t|\n|提前宝入账\t|\n|提前宝出账\t|\n|提前宝还款\t|\n|提前宝失败入账\t|\n|提前宝还款撤销\t|\n|提前宝失败出账\t|\n|服务费退款\t|\n|服务费\t|\n|ESG手续费\t|\n|其他入账\t|\n|其他出账\t|\n|VAT WITHHOLDING\t|\n|VAT WITHHOLDING REFUND\t|\n|店铺集中管理入账\t|\n|店铺集中管理出账\t|\n|闪收入账\t|\n|闪收服务费\t|\n|闪收出账\t|\n|闪收超期服务费\t|\n|闪收手续费退还\t|\n|欧税通手续费\t|\n|提现退手续费\t|"
       type: string
-    cardType:
-      title: 提现银行卡类型
-      description: '字段值|注释
-
-        -|-
-
-        0|借记卡
-
-        1|信用卡
-
-        2|对公银行卡'
-      type: string
-    creditStatus:
-      title: 入账状态
-      description: "| 字段值 | 状态 | 注释 |\n| -------|-------|-------|\n| 0\t| 挂起 | |\n| 1\t| 加款中 | |\n| 2\t| 加款成功 | 即入账成功，连连官网页面交易明细仅展示此状态单据 |\n| 3\t| 退还中 | |\n| 4\t| 已退还 | |\n| 5\t| 已红冲 | 加款成功后退款红冲 |\n| 6\t| 待加款 | |\n| 7\t| 待退款 | |"
-      type: string
-      x-internal: false
     authStatus:
       type: object
       x-stoplight:
@@ -14277,10 +14281,6 @@ components:
         AUTH_WAIT|待授权
 
         NO_AUTH|无需授权'
-    withdrawStatus:
-      title: 提现状态
-      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|1\t|提现中\t      |\n|2\t|提现成功\t      |\n|3\t|提现失败\t      |"
-      type: integer
     tradeCode:
       title: 贸易类型
       type: string

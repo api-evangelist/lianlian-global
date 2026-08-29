@@ -267,6 +267,21 @@ paths:
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
 components:
+  parameters:
+    page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: string
+      description: 页码
+    page_size:
+      name: page_size
+      in: query
+      required: false
+      schema:
+        type: integer
+      description: 每页条数
   schemas:
     Report_-_copy:
       title: Report
@@ -325,21 +340,6 @@ components:
           x-stoplight:
             id: eq1m7anti3z77
           description: 报表创建时间，毫秒
-  parameters:
-    page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: string
-      description: 页码
-    page_size:
-      name: page_size
-      in: query
-      required: false
-      schema:
-        type: integer
-      description: 每页条数
   securitySchemes:
     Component:
       type: oauth2

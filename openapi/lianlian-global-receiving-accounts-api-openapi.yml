@@ -377,82 +377,6 @@ paths:
       - Receiving Accounts
 components:
   schemas:
-    Receiving_Accounts_Channel:
-      title: Receiving Accounts Channel
-      x-stoplight:
-        id: nvfnc9jrcuiwv
-      type: object
-      properties:
-        account_type:
-          type: string
-          x-stoplight:
-            id: 8jzjxlczz795h
-          description: 全球账户金融机构账户类型,`Checking`,`Saving`,`Current`
-        capabilities:
-          type: object
-          x-stoplight:
-            id: cu8pwd4qwaagq
-          description: 支持您的全球帐户的付款和收款功能
-          properties:
-            clearing_systems:
-              type: string
-              x-stoplight:
-                id: zjz0umorwf45t
-              description: 清算方式FAST\MEPS\GIRO\SEPA\Faster Payments\CHAPS\Bacs\Zengin\ACH\Fedwire\RTGS\Bank\FPS
-            payment_methods:
-              type: string
-              x-stoplight:
-                id: c3vfeev92xqy9
-              description: 可以收到资金的付款方式`SWIFT`,`LOCAL`
-        country_code:
-          type: string
-          x-stoplight:
-            id: meg2avj2r66ll
-          description: 全球收款账户支持收款的国家地区,`CN``US``HK`等
-        currency_list:
-          type: array
-          x-stoplight:
-            id: ybww9qjsw25y4
-          description: 全球收款账户支持的币种`USD``CNH``GBP``HKD``EUR`等27个币
-          items: {}
-        institution:
-          type: object
-          x-stoplight:
-            id: 6x7khek6peeqm
-          description: 发卡机构信息
-          properties:
-            bank_name:
-              type: string
-              x-stoplight:
-                id: dcbdgltjsz4s4
-              description: 发卡银行名称，花旗银行
-            branch_name:
-              type: string
-              x-stoplight:
-                id: lcw1uf2c6ysza
-              description: 发卡银行分支行名称，花旗香港
-            branch_location:
-              type: string
-              x-stoplight:
-                id: 1z8rjskzvvwtl
-              description: '城市地区。
-
-                示例：`London`'
-            branch_address:
-              type: string
-              x-stoplight:
-                id: bre7d5giwzgkt
-              description: 地址
-        swift_code:
-          type: string
-          x-stoplight:
-            id: kswq10yuqtxoo
-          description: 银行SWIFT code
-        channel_code:
-          type: string
-          x-stoplight:
-            id: e4yj614782kwp
-          description: 发卡渠道银行编码
     Receiving_Accounts_Info:
       title: Receiving Accounts Info
       x-stoplight:
@@ -594,6 +518,82 @@ components:
           x-stoplight:
             id: tpc2ebqf7npbe
           description: 业务拓展字段
+    Receiving_Accounts_Channel:
+      title: Receiving Accounts Channel
+      x-stoplight:
+        id: nvfnc9jrcuiwv
+      type: object
+      properties:
+        account_type:
+          type: string
+          x-stoplight:
+            id: 8jzjxlczz795h
+          description: 全球账户金融机构账户类型,`Checking`,`Saving`,`Current`
+        capabilities:
+          type: object
+          x-stoplight:
+            id: cu8pwd4qwaagq
+          description: 支持您的全球帐户的付款和收款功能
+          properties:
+            clearing_systems:
+              type: string
+              x-stoplight:
+                id: zjz0umorwf45t
+              description: 清算方式FAST\MEPS\GIRO\SEPA\Faster Payments\CHAPS\Bacs\Zengin\ACH\Fedwire\RTGS\Bank\FPS
+            payment_methods:
+              type: string
+              x-stoplight:
+                id: c3vfeev92xqy9
+              description: 可以收到资金的付款方式`SWIFT`,`LOCAL`
+        country_code:
+          type: string
+          x-stoplight:
+            id: meg2avj2r66ll
+          description: 全球收款账户支持收款的国家地区,`CN``US``HK`等
+        currency_list:
+          type: array
+          x-stoplight:
+            id: ybww9qjsw25y4
+          description: 全球收款账户支持的币种`USD``CNH``GBP``HKD``EUR`等27个币
+          items: {}
+        institution:
+          type: object
+          x-stoplight:
+            id: 6x7khek6peeqm
+          description: 发卡机构信息
+          properties:
+            bank_name:
+              type: string
+              x-stoplight:
+                id: dcbdgltjsz4s4
+              description: 发卡银行名称，花旗银行
+            branch_name:
+              type: string
+              x-stoplight:
+                id: lcw1uf2c6ysza
+              description: 发卡银行分支行名称，花旗香港
+            branch_location:
+              type: string
+              x-stoplight:
+                id: 1z8rjskzvvwtl
+              description: '城市地区。
+
+                示例：`London`'
+            branch_address:
+              type: string
+              x-stoplight:
+                id: bre7d5giwzgkt
+              description: 地址
+        swift_code:
+          type: string
+          x-stoplight:
+            id: kswq10yuqtxoo
+          description: 银行SWIFT code
+        channel_code:
+          type: string
+          x-stoplight:
+            id: e4yj614782kwp
+          description: 发卡渠道银行编码
   securitySchemes:
     Component:
       type: oauth2
