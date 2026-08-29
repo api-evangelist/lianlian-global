@@ -1,15 +1,13 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Checkout API
+  title: Accept Payments Checkout API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  summary: accept payments
+  description: '通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。
+
+    '
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Checkout
 paths:
@@ -27,7 +25,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment'
         '400':
-          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid.\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n EXPIRES_TIME_INVALID|The expires time is not supported.\r\n MERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\r\n MERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\r\n MERCHANT_ACCT_CUR_ERROR|The merchant does not support this currency.\r\n MERCHANT_ACCT_NOT_EXIST|The merchant currency account doesn't exist.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n MERCHANT_ACCT_BIZ_INVALID|The merchant bizType is invalid.\r\n MERCHANT_PAY_METHOD_NOT_EXIST|Payment method not exist.\r\n MERCHANT_PAY_METHOD_INVALID|Payment method not supported.\r\n ORDER_EXIST_AND_EXPIRED|The order exists but has expired, please change the order information and create again.\r\n CUR_SUPPORT_ERROR|The currency is not supported.\r\n ORDER_AMOUNT_ERROR|Currency order amount is incorrect.\r\n ORDER_AMOUNT_LIMIT_ERROR|The amount exceeds the limit for that currency.\r\n MERCHANT_CHARGE_COLLECT_WAY_BLANK|The charge collect way is blank.\r\n MERCHANT_CHARGE_COLLECT_WAY_INVALID|The charge collect way not supported.\r\n REQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\r\n CREATE_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_ALREADY_EXISTS|Payment already exists.\r\n PAYMENT_CLOSED|Payment has been closed.\r\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\r\n SUBMIT_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\r\n PAYMENT_NOT_EXIST|Payment does not exist.\r\n PAYMENT_REPEAT|Payment has already been successfully paid.\r\n PAYMENT_FAILED|Payment unsuccessful.\r\n PAYMENT_ANOMALY|Payment anomaly.\r\n PAYMENT_PROCESSED|Payment being processed.\r\n REQUEST_CONFLICT|The request cannot be processed as another request is being processed."
+          description: "code | message \n---------|----------\n PARAM_ERROR | A parameter value is not valid.\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\n EXPIRES_TIME_INVALID|The expires time is not supported.\n MERCHANT_PAY_CONFIG_NOT_EXIST|The merchant config does not exist.\n MERCHANT_PAY_CONFIG_INCORRECT|The merchant config is incorrect.\n MERCHANT_ACCT_CUR_ERROR|The merchant does not support this currency.\n MERCHANT_ACCT_NOT_EXIST|The merchant currency account doesn't exist.\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\n MERCHANT_ACCT_BIZ_INVALID|The merchant bizType is invalid.\n MERCHANT_PAY_METHOD_NOT_EXIST|Payment method not exist.\n MERCHANT_PAY_METHOD_INVALID|Payment method not supported.\n ORDER_EXIST_AND_EXPIRED|The order exists but has expired, please change the order information and create again.\n CUR_SUPPORT_ERROR|The currency is not supported.\n ORDER_AMOUNT_ERROR|Currency order amount is incorrect.\n ORDER_AMOUNT_LIMIT_ERROR|The amount exceeds the limit for that currency.\n MERCHANT_CHARGE_COLLECT_WAY_BLANK|The charge collect way is blank.\n MERCHANT_CHARGE_COLLECT_WAY_INVALID|The charge collect way not supported.\n REQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.\n CREATE_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\n PAYMENT_ALREADY_EXISTS|Payment already exists.\n PAYMENT_CLOSED|Payment has been closed.\n MERCHANT_ACCT_STATUS_INVALID|The merchant status is invalid.\n SUBMIT_PAYMENT_PARAM_INVALID|Parameter(s) missing or incorrect.\n PAYMENT_NOT_EXIST|Payment does not exist.\n PAYMENT_REPEAT|Payment has already been successfully paid.\n PAYMENT_FAILED|Payment unsuccessful.\n PAYMENT_ANOMALY|Payment anomaly.\n PAYMENT_PROCESSED|Payment being processed.\n REQUEST_CONFLICT|The request cannot be processed as another request is being processed."
           content:
             application/json:
               schema:
@@ -41,7 +39,17 @@ paths:
       operationId: post-checkout-sessions
       x-stoplight:
         id: w75rld3e64kjt
-      description: "## 功能说明\r\nCheckout是一种预先构建的付款形式，企业可以使用Checkout在网站上完成收款。Checkout Session提供一个支付URL，将客户重定向到支付页面完成付款。通过该接口创建Checkout Session获取收银台的支付URL。\r\n## 防重和幂等说明\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，返回最新的支付收银台url；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付收银台url。"
+      description: '## 功能说明
+
+        Checkout是一种预先构建的付款形式，企业可以使用Checkout在网站上完成收款。Checkout Session提供一个支付URL，将客户重定向到支付页面完成付款。通过该接口创建Checkout Session获取收银台的支付URL。
+
+        ## 防重和幂等说明
+
+        - request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，返回最新的支付收银台url；
+
+        - request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。
+
+        - request_id不同时，按全新交易处理，创建新的支付收银台url。'
       security:
       - 客户端凭据授权: []
       parameters:
@@ -112,7 +120,15 @@ paths:
                       enum:
                       - ID_CARD
                       - UNIFIED_SOCIAL_CREDIT_ID
-                      description: "付款人的证件类型，payment_method为CN_FAST_PAYMENT_CREDIT_CARD或CN_FAST_PAYMENT_DEBIT_CARD时，identification_type必须填ID_CARD\r\n枚举值|说明\r\n----|----\r\nID_CARD|中国大陆居民身份证\r\nUNIFIED_SOCIAL_CREDIT_ID|中国大陆企业统一社会信用代码证"
+                      description: '付款人的证件类型，payment_method为CN_FAST_PAYMENT_CREDIT_CARD或CN_FAST_PAYMENT_DEBIT_CARD时，identification_type必须填ID_CARD
+
+                        枚举值|说明
+
+                        ----|----
+
+                        ID_CARD|中国大陆居民身份证
+
+                        UNIFIED_SOCIAL_CREDIT_ID|中国大陆企业统一社会信用代码证'
                     id_number:
                       type: string
                       x-stoplight:
@@ -123,7 +139,19 @@ paths:
                 payment_method:
                   x-stoplight:
                     id: 1wv4y8l6r4bk0
-                  description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|CNY 快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|CNY 快捷支付借记卡\r\nCNY_COMPANY_BANK_CARD|CNY 企业网银\r\n"
+                  description: '支付方式
+
+                    枚举值|说明
+
+                    ----|----
+
+                    CN_FAST_PAYMENT_CREDIT_CARD|CNY 快捷支付信用卡
+
+                    CN_FAST_PAYMENT_DEBIT_CARD|CNY 快捷支付借记卡
+
+                    CNY_COMPANY_BANK_CARD|CNY 企业网银
+
+                    '
                   enum:
                   - CN_FAST_PAYMENT_CREDIT_CARD
                   - CN_FAST_PAYMENT_DEBIT_CARD
@@ -228,7 +256,23 @@ components:
           - CANCELED
           - EXPIRED
           - REQUIRES_ACTION
-          description: "支付状态\r\n枚举值|说明\r\n----|----\r\nCREATED|已创建，等待支付\r\nPROCESSING|支付中\r\nREQUIRES_ACTION|待验证码验证支付\r\nSUCCEEDED|成功\r\nCANCELED|已取消\r\nEXPIRED|过期"
+          description: '支付状态
+
+            枚举值|说明
+
+            ----|----
+
+            CREATED|已创建，等待支付
+
+            PROCESSING|支付中
+
+            REQUIRES_ACTION|待验证码验证支付
+
+            SUCCEEDED|成功
+
+            CANCELED|已取消
+
+            EXPIRED|过期'
         payment_method:
           x-stoplight:
             id: al4uj0pwcgu9j
@@ -236,7 +280,19 @@ components:
           - CN_FAST_PAYMENT_CREDIT_CARD
           - CN_FAST_PAYMENT_DEBIT_CARD
           - CNY_COMPANY_BANK_CARD
-          description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|银行卡快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|银行卡快捷支付借记卡\r\nCNY_COMPANY_BANK_CARD|CNY 企业网银\r\n"
+          description: '支付方式
+
+            枚举值|说明
+
+            ----|----
+
+            CN_FAST_PAYMENT_CREDIT_CARD|银行卡快捷支付信用卡
+
+            CN_FAST_PAYMENT_DEBIT_CARD|银行卡快捷支付借记卡
+
+            CNY_COMPANY_BANK_CARD|CNY 企业网银
+
+            '
         payment_currency:
           type: string
           x-stoplight:
@@ -302,4 +358,14 @@ components:
           type: string
           x-stoplight:
             id: io6j2ri2cd9nb
-          description: "业务类型\r\n枚举 | 说明 \r\n---------|----------\r\nYICAIFU|易采付"
+          description: "业务类型\n枚举 | 说明 \n---------|----------\nYICAIFU|易采付"
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: 91jfx04sdnbg4

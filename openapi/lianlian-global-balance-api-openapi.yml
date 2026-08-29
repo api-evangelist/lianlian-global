@@ -1,15 +1,12 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Balance API
+  title: Lianlian Global Balance API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: 'Operations tagged Balance across 2 of this provider''s published API definitions: lianlian-global-lppe-coreaccount-openapi.yml, lianlian-global-outbound-payout-verification-balance-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://global-api.lianlian.com/api/v1
+- url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1
+  description: Live Server
 tags:
 - name: Balance
 paths:
@@ -38,7 +35,13 @@ paths:
                       type: string
                       x-stoplight:
                         id: buieo0sni1l6k
-                      description: "当前币种账户的状态\r\n`APPLYING`开户中\r\n`SUCCEEDED`正常\r\n`FAILED`非正常"
+                      description: '当前币种账户的状态
+
+                        `APPLYING`开户中
+
+                        `SUCCEEDED`正常
+
+                        `FAILED`非正常'
                     available_amount:
                       type: string
                       x-stoplight:
@@ -58,9 +61,11 @@ paths:
                       type: string
                       x-stoplight:
                         id: o0d8n881a2m5o
-                      description: "账户总余额：\r\nTotal account balance (available_amount + pending_amount + reserved_amount)"
+                      description: '账户总余额：
+
+                        Total account balance (available_amount + pending_amount + reserved_amount)'
         '400':
-          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or missing. "
+          description: "code | message \n---------|----------\n PARAM_ERROR | A parameter value is not valid or missing. "
           content:
             application/json:
               schema:
@@ -81,6 +86,8 @@ paths:
         description: 币种
       x-stoplight:
         id: kwl372sgx0efp
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
   /balance/history:
     get:
       summary: Get history balances
@@ -142,7 +149,7 @@ paths:
                       example: '6590.56'
           headers: {}
         '400':
-          description: "code | message \r\n---------|----------\r\n PARAM_ERROR | A parameter value is not valid or missing. "
+          description: "code | message \n---------|----------\n PARAM_ERROR | A parameter value is not valid or missing. "
           content:
             application/json:
               schema:
@@ -150,7 +157,21 @@ paths:
       operationId: get-balance-history
       x-stoplight:
         id: ztzi31qhx3ea3
-      description: "### 功能说明：\r\n获取账户历史日终余额\r\n### 日期date传参说明：\r\n- 每天10:00 AM（UTC+8）生成前一天的日终余额信息。\r\n### 日期date传参举例：\r\n- 在2025-04-07 10:00 AM查询date=20250407的内容，查无记录；\r\n- 在2025-04-08 8:00 AM查询date=20250407的内容，查无记录；\r\n- 在2025-04-08 10:00 AM查询date=20250407的内容，可正常查询20250407的日终余额内容。"
+      description: '### 功能说明：
+
+        获取账户历史日终余额
+
+        ### 日期date传参说明：
+
+        - 每天10:00 AM（UTC+8）生成前一天的日终余额信息。
+
+        ### 日期date传参举例：
+
+        - 在2025-04-07 10:00 AM查询date=20250407的内容，查无记录；
+
+        - 在2025-04-08 8:00 AM查询date=20250407的内容，查无记录；
+
+        - 在2025-04-08 10:00 AM查询date=20250407的内容，可正常查询20250407的日终余额内容。'
       security:
       - 客户端凭据授权: []
       parameters:
@@ -175,6 +196,8 @@ paths:
         name: date
         description: 格式yyyyMMdd，东八区时区
         required: true
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
   /balance/{currency}:
     parameters:
     - schema:
@@ -197,13 +220,19 @@ paths:
                     type: string
                     x-stoplight:
                       id: ds1oqhlw38tzi
-                    description: "Account currency\r\n\r\n"
+                    description: 'Account currency
+
+
+                      '
                     maxLength: 3
                   balance:
                     type: string
                     x-stoplight:
                       id: jn5gfg7ta6nkp
-                    description: "Account balance\r\n\r\n"
+                    description: 'Account balance
+
+
+                      '
                     maxLength: 15
                 required:
                 - currency
@@ -235,3 +264,19 @@ paths:
         id: 3wg9pivf3rjgm
       tags:
       - Balance
+    servers:
+    - url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1
+      description: Live Server
+components:
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          scopes: {}
+          refreshUrl: /oauth2/token
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+x-refined-from:
+- lianlian-global-lppe-coreaccount-openapi.yml
+- lianlian-global-outbound-payout-verification-balance-openapi.yml

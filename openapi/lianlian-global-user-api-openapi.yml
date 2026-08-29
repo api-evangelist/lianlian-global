@@ -1,15 +1,9 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account User API
+  title: 账户余额查询 User API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: http://localhost:3000
 tags:
 - name: User
 paths:
@@ -20,74 +14,79 @@ paths:
       responses:
         '200':
           description: User Created
-          schema:
-            $ref: '#/definitions/User'
           headers:
             header-0:
-              type: string
+              schema:
+                type: string
             header-1:
-              type: string
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           description: Missing Required Information
-          schema:
-            type: 'null'
+          content:
+            application/json:
+              schema:
+                type: 'null'
         '409':
           description: Email Already Taken
-          schema:
-            type: 'null'
+          content:
+            application/json:
+              schema:
+                type: 'null'
       description: 反馈结果
-      parameters:
-      - in: body
-        name: body
-        schema:
-          type: object
-          properties:
-            onwayBalance:
-              type: string
-              x-stoplight:
-                id: 8z7f9cmiigez9
-            totalBalance:
-              type: string
-              x-stoplight:
-                id: c57z38373o75u
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                onwayBalance:
+                  type: string
+                  x-stoplight:
+                    id: 8z7f9cmiigez9
+                totalBalance:
+                  type: string
+                  x-stoplight:
+                    id: c57z38373o75u
         description: Post the necessary fields for the API to create a new user.
-        x-examples:
-          Create User Bob Fellow:
-            firstName: Bob
-            lastName: Fellow
-            email: bob.fellow@gmail.com
-            dateOfBirth: '1996-08-24'
       tags:
       - User
-definitions:
-  User:
-    title: User
-    type: object
-    properties:
-      id:
-        type: integer
-        description: Unique identifier for the given user.
-      firstName:
-        type: string
-      lastName:
-        type: string
-      email:
-        type: string
-        format: email
-      dateOfBirth:
-        type: string
-        format: date
-        example: '1997-10-31'
-      emailVerified:
-        type: boolean
-        description: Set to true if the user's email has been verified.
-      createDate:
-        type: string
-        format: date
-        description: The date that the user was created.
-    required:
-    - id
-    - firstName
-    - lastName
-    - email
-    - emailVerified
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1997-10-31'
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+        createDate:
+          type: string
+          format: date
+          description: The date that the user was created.
+      required:
+      - id
+      - firstName
+      - lastName
+      - email
+      - emailVerified
+x-stoplight:
+  id: d04slm5ra253f

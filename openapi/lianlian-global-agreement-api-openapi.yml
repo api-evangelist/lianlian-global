@@ -1,15 +1,13 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Agreement API
+  title: Accept Payments Agreement API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  summary: accept payments
+  description: '通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。
+
+    '
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Agreement
 paths:
@@ -171,7 +169,17 @@ components:
           type: string
           x-stoplight:
             id: qaggzldrbngt1
-          description: "协议的状态\r\n枚举值|说明\r\n----|----\r\nACTIVE|正常\r\nCANCELED|已取消（已解除）\r\nEXPIRED|已过期"
+          description: '协议的状态
+
+            枚举值|说明
+
+            ----|----
+
+            ACTIVE|正常
+
+            CANCELED|已取消（已解除）
+
+            EXPIRED|已过期'
         create_time:
           type: number
           x-stoplight:
@@ -187,3 +195,13 @@ components:
           x-stoplight:
             id: oxuhzmdh6q21r
           description: 协议的到期时间，13位时间戳毫秒。
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: 91jfx04sdnbg4

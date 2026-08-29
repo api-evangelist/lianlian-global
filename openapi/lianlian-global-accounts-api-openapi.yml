@@ -1,15 +1,12 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Accounts API
+  title: Lianlian Global Accounts API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: 'Operations tagged Accounts across 2 of this provider''s published API definitions: lianlian-global-connect-account-openapi.yml, lianlian-global-lppe-accounts-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: http://localhost:3000
+- url: https://global-api.lianlian.com/api/v1
+  description: ''
 tags:
 - name: Accounts
 paths:
@@ -51,6 +48,8 @@ paths:
       description: 创建币种账户
       tags:
       - Accounts
+    servers:
+    - url: http://localhost:3000
   /v1/accounts/{member_id}:
     parameters:
     - schema:
@@ -106,6 +105,8 @@ paths:
               - member_id
         description: ''
       parameters: []
+    servers:
+    - url: http://localhost:3000
   /accounts:
     parameters: []
     post:
@@ -120,7 +121,15 @@ paths:
                 $ref: ../models/AccountResponse.yaml
           headers: {}
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER| A required parameter in the request is missing.\r\nAUTH_CLIENT_NOT_EXIST| The configuration is incorrect. Please contact the account manager or online customer service."
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            MISSING_REQUIRED_PARAMETER| A required parameter in the request is missing.
+
+            AUTH_CLIENT_NOT_EXIST| The configuration is incorrect. Please contact the account manager or online customer service.'
           content:
             application/json:
               schema:
@@ -131,13 +140,18 @@ paths:
             schema:
               $ref: ../models/AccountRequest.yaml
         description: ''
-      description: "为您的用户、商家、子公司、业务合作伙伴或客户创建一个新的LianLian Global帐户。\r\n- 业务字段相同时，支持幂等，返回当前account的最新状态"
+      description: '为您的用户、商家、子公司、业务合作伙伴或客户创建一个新的LianLian Global帐户。
+
+        - 业务字段相同时，支持幂等，返回当前account的最新状态'
       x-stoplight:
         id: soqetl7kkcqfp
       security:
       - 客户端凭据授权: []
       tags:
       - Accounts
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
+      description: ''
   /accounts/detail:
     parameters: []
     get:
@@ -152,13 +166,23 @@ paths:
               schema:
                 $ref: ../models/AccountResponse.yaml
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER| A required parameter in the request is missing."
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            MISSING_REQUIRED_PARAMETER| A required parameter in the request is missing.'
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '404':
-          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
           content:
             application/json:
               schema:
@@ -169,6 +193,9 @@ paths:
       parameters: []
       security:
       - 授权码授权: []
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
+      description: ''
   /accounts/authorize:
     parameters: []
     post:
@@ -183,7 +210,13 @@ paths:
               schema:
                 $ref: ../models/AccountsAuthorizeResponse.yaml
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nMISSING_REQUIRED_PARAMETER| A required parameter in the request is missing."
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            MISSING_REQUIRED_PARAMETER| A required parameter in the request is missing.'
           content:
             application/json:
               schema:
@@ -205,7 +238,12 @@ paths:
         in: header
         name: X-On-Behalf-Of-User-Id
         description: 需要申请授权的user_id
-      description: "请求用户账户授权\r\n- 业务字段相同时，支持幂等，只会创建一条授权记录，每次调用授权码code会刷新"
+      description: '请求用户账户授权
+
+        - 业务字段相同时，支持幂等，只会创建一条授权记录，每次调用授权码code会刷新'
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
+      description: ''
   /accounts/submit:
     parameters: []
     post:
@@ -228,7 +266,7 @@ paths:
       operationId: submit-account
       x-stoplight:
         id: qobblne9q3bmg
-      description: "提交开通账户所需的实名认证详情信息，进行账户激活。\r\n- 当status为INIT时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\r\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\r\n不同授权类型下，公司成员必填信息特别说明：\r\n\r\n**授权人类型** | **法人** | **代理人**| **法人短信验证**|**法人承诺函** |**法人手持承诺函** | **代理人授权书**\r\n---------|----------|---------|----------|---------|---------|---------\r\n LEGALPERSON | 必填 | 非必填 | 必填 | 非必填 | 非必填| 非必填\r\n AUTHORIZER | 必填 | 必填 | 非必填 | 必填| 必填| 必填"
+      description: "提交开通账户所需的实名认证详情信息，进行账户激活。\n- 当status为INIT时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\n不同授权类型下，公司成员必填信息特别说明：\n\n**授权人类型** | **法人** | **代理人**| **法人短信验证**|**法人承诺函** |**法人手持承诺函** | **代理人授权书**\n---------|----------|---------|----------|---------|---------|---------\n LEGALPERSON | 必填 | 非必填 | 必填 | 非必填 | 非必填| 非必填\n AUTHORIZER | 必填 | 必填 | 非必填 | 必填| 必填| 必填"
       security:
       - 授权码授权: []
       requestBody:
@@ -236,6 +274,9 @@ paths:
           application/json:
             schema:
               $ref: ../models/KYCRequest.yaml
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
+      description: ''
 components:
   schemas:
     Account:
@@ -335,3 +376,24 @@ components:
       - account_number
       - swift_code
       - bank_name
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+    Component_2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 授权码授权
+x-refined-from:
+- lianlian-global-connect-account-openapi.yml
+- lianlian-global-lppe-accounts-openapi.yml

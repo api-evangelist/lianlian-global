@@ -1,15 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Quotes API
+  title: Conversion Quotes API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: ''
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Quotes
 paths:
@@ -81,25 +76,25 @@ paths:
                 - quote_time
                 - settle_date
         '400':
-          description: "code | message \r\n---------|----------\r\n INVALID_PARAM | 无效的参数\r\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\r\n RATE_INVAILD|当前汇率不可用，请稍后再试\r\n SERVICE_UNAVAILABLE | 请求的服务当前不可用"
+          description: "code | message \n---------|----------\n INVALID_PARAM | 无效的参数\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\n RATE_INVAILD|当前汇率不可用，请稍后再试\n SERVICE_UNAVAILABLE | 请求的服务当前不可用"
           content:
             application/json:
               schema:
                 $ref: ../models/ErrorNoParamandTraceId.yaml
         '403':
-          description: "code | message\r\n---------|----------\r\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions."
+          description: "code | message\n---------|----------\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions."
           content:
             application/json:
               schema:
                 $ref: ../models/ErrorNoParamandTraceId.yaml
         '429':
-          description: "code | message\r\n---------|----------\r\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting."
+          description: "code | message\n---------|----------\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting."
           content:
             application/json:
               schema:
                 $ref: ../models/ErrorNoParamandTraceId.yaml
         '500':
-          description: "code | message\r\n---------|----------\r\n INTERNAL_SERVER_ERROR | An internal server error has occurred."
+          description: "code | message\n---------|----------\n INTERNAL_SERVER_ERROR | An internal server error has occurred."
           content:
             application/json:
               schema:
@@ -241,25 +236,25 @@ paths:
                 - valid_time
                 - quote_time
         '400':
-          description: "code | message \r\n---------|----------\r\n INVALID_PARAM | 无效的参数\r\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\r\n RATE_INVAILD|当前汇率不可用，请稍后再试\r\n SERVICE_UNAVAILABLE | 请求的服务当前不可用"
+          description: "code | message \n---------|----------\n INVALID_PARAM | 无效的参数\n RATE_NOT_FOUND| 找不到汇率，请联系运营人员\n RATE_INVAILD|当前汇率不可用，请稍后再试\n SERVICE_UNAVAILABLE | 请求的服务当前不可用"
           content:
             application/json:
               schema:
                 $ref: ../models/ErrorNoParamandTraceId.yaml
         '403':
-          description: "code | message\r\n---------|----------\r\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions."
+          description: "code | message\n---------|----------\n FORBIDDEN_ERROR | Authorization failed due to insufficient permissions."
           content:
             application/json:
               schema:
                 $ref: ../models/ErrorNoParamandTraceId.yaml
         '429':
-          description: "code | message\r\n---------|----------\r\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting."
+          description: "code | message\n---------|----------\n LIMIT_ERROR | Too many requests. Blocked due to rate limiting."
           content:
             application/json:
               schema:
                 $ref: ../models/ErrorNoParamandTraceId.yaml
         '500':
-          description: "code | message\r\n---------|----------\r\n INTERNAL_SERVER_ERROR | An internal server error has occurred."
+          description: "code | message\n---------|----------\n INTERNAL_SERVER_ERROR | An internal server error has occurred."
           content:
             application/json:
               schema:
@@ -320,3 +315,15 @@ paths:
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
       tags:
       - Quotes
+components:
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          scopes: {}
+          refreshUrl: /oauth2/token
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+x-stoplight:
+  id: ahystadh3c2yx

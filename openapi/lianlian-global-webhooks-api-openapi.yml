@@ -1,15 +1,15 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Webhooks API
+  title: Webhooks API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  contact:
+    email: fx_support@lianlianpay.com
+  description: "This section contains operations and models of LianLian Global Webhook service. \n\nWebhook is a common service shared by multiple LianLian Global products, and all operations of this service are hosted in China.\n\nProduction Endpoint - **global-api.lianlianpay.com**"
+servers:
+- url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
+  description: Sandbox
+- url: https://global-api.lianlianpay.com/common/v1
+  description: Online
 tags:
 - name: Webhooks
 paths:
@@ -154,7 +154,16 @@ paths:
                   type: string
                   x-stoplight:
                     id: koy96fsby537p
-                  description: "Event topics defined in LianLian Global's system.\r\n\r\n| Topic | Description |\r\n|--------|------------|\r\n| outbound.payer.approved |  payer approved |\r\n| outbound.payer.rejected  |  payer reject |"
+                  description: 'Event topics defined in LianLian Global''s system.
+
+
+                    | Topic | Description |
+
+                    |--------|------------|
+
+                    | outbound.payer.approved |  payer approved |
+
+                    | outbound.payer.rejected  |  payer reject |'
               required:
               - url
               - topic
@@ -240,7 +249,18 @@ components:
           type: string
           x-stoplight:
             id: 5g9j9zgbb5xjm
-          description: "Event topics defined in LianLian Global's system.\r\n\r\n| Topic | Description |\r\n|--------|------------|\r\n| OUTWARD_PAYERINFO_RESPONSE |  Payer KYC result notification |\r\n| OUTWARD_TRADEFILE_RESPONSE  |  Trade file audit result notification |\r\n| OUTWARD_ORDER_RESPONSE  |  Transaction processing result notification |"
+          description: 'Event topics defined in LianLian Global''s system.
+
+
+            | Topic | Description |
+
+            |--------|------------|
+
+            | OUTWARD_PAYERINFO_RESPONSE |  Payer KYC result notification |
+
+            | OUTWARD_TRADEFILE_RESPONSE  |  Trade file audit result notification |
+
+            | OUTWARD_ORDER_RESPONSE  |  Transaction processing result notification |'
         createTime:
           type: string
           format: date-time
@@ -252,3 +272,5 @@ components:
       - url
       - topic
       - createTime
+x-stoplight:
+  id: 3jiywij5kydqq

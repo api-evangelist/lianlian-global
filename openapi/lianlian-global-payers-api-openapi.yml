@@ -1,15 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Payers API
+  title: Payouts Payers API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: payout能力
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Payers
 paths:
@@ -26,7 +21,15 @@ paths:
               schema:
                 $ref: ../models/Payersponse.yaml
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_IS_EXIST|payer is exist\r\nPAYER_APPLY_FAILED|payer create failed"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            PAYER_IS_EXIST|payer is exist
+
+            PAYER_APPLY_FAILED|payer create failed'
           content:
             application/json:
               schema:
@@ -43,7 +46,15 @@ paths:
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
       tags:
       - Payers
-      description: "创建付款人\r\n- request_id相同，业务字段相同时，幂等返回\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段相同时，会返回PAYER_IS_EXIST\r\n对于接口超时情况，可使用原报文重试或使用request_id调用收款人列表查询接口。"
+      description: '创建付款人
+
+        - request_id相同，业务字段相同时，幂等返回
+
+        - request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE
+
+        - request_id不同，业务字段相同时，会返回PAYER_IS_EXIST
+
+        对于接口超时情况，可使用原报文重试或使用request_id调用收款人列表查询接口。'
     get:
       summary: Get list of payers
       tags:
@@ -85,7 +96,11 @@ paths:
                       x-stoplight:
                         id: 7ouk3s7b0pu14
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing."
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.'
           content:
             application/json:
               schema:
@@ -148,7 +163,7 @@ paths:
               schema:
                 $ref: ../models/Payersponse.yaml
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing. \r\nPAYER_QUERY_FAILED|payer get failed"
+          description: "**code**|**message**\n---|---\nPARAM_ERROR|A parameter value is not valid or missing. \nPAYER_QUERY_FAILED|payer get failed"
           content:
             application/json:
               schema:
@@ -173,7 +188,13 @@ paths:
               schema:
                 $ref: ../models/PayerUpdateResponse.yaml
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_UPDATE_FAILED|payer update failed"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            PAYER_UPDATE_FAILED|payer update failed'
           content:
             application/json:
               schema:
@@ -190,7 +211,11 @@ paths:
           application/json:
             schema:
               $ref: ../models/PayerUpdateRequest.yaml
-      description: "仅允许状态为失败的付款人，进行信息更新。\r\n- 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一payer_id并发提交，会返回REQUEST_CONFLICT\r\n提供根据payer_id查询的接口获取最新状态"
+      description: '仅允许状态为失败的付款人，进行信息更新。
+
+        - 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一payer_id并发提交，会返回REQUEST_CONFLICT
+
+        提供根据payer_id查询的接口获取最新状态'
     delete:
       summary: Delete a payer
       operationId: delete-payers-payer_id
@@ -210,16 +235,45 @@ paths:
                     type: boolean
                     description: 删除结果
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_DELETE_FAILED|payer delete failed"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            PAYER_DELETE_FAILED|payer delete failed'
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
       tags:
       - Payers
-      description: "删除付款人\r\n- 业务字段（payer_id）相同时，不支持幂等"
+      description: '删除付款人
+
+        - 业务字段（payer_id）相同时，不支持幂等'
       security:
       - 客户端凭据授权: []
       parameters:
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+components:
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+    Component_2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 授权码授权
+x-stoplight:
+  id: w073d3fxcx3df

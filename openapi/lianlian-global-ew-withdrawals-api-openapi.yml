@@ -1,15 +1,15 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Ew Withdrawals API
+  title: Ew Withdrawals API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: Transfer funds from your Balance Account to your bank account.
+servers:
+- url: https://test-global-api.lianlianpay-inc.com/gateway/v1/
+  description: SANDBOX
+- url: https://uk-api.lianlianglobal.com/gateway/v1/
+  description: UK PRD
+- url: https://us-api.lianlianglobal.com/gateway/v1/
+  description: US PRD
 tags:
 - name: Ew Withdrawals
 paths:
@@ -116,3 +116,5 @@ components:
         conversion:
           $ref: ./CommonModel.json#/components/schemas/ConversionBasicInfo
       title: Withdrawal
+x-stoplight:
+  id: 6mpkrljtm6vro

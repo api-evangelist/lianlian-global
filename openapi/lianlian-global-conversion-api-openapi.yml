@@ -1,15 +1,9 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Conversion API
+  title: Conversion API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: http://localhost:3000
 tags:
 - name: Conversion
 paths:
@@ -135,3 +129,5 @@ components:
         modify_time:
           type: string
           description: 更新时间，10位 秒级时间戳
+x-stoplight:
+  id: 9sb4rsdd97o4e

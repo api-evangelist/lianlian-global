@@ -1,15 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Receipts API
+  title: Finance Receipts API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  summary: Finance API
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Receipts
 paths:
@@ -35,7 +30,16 @@ paths:
                     type: string
                     x-stoplight:
                       id: r7qyinwrcysrx
-                    description: "类型\r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                    description: '类型
+
+
+                      类型|说明
+
+                      ----|----
+
+                      VOUCHER|付款凭证
+
+                      APPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书'
                   status:
                     type: string
                     x-stoplight:
@@ -47,13 +51,17 @@ paths:
                       id: 2o4ajnl1zpj5k
                     description: 创建时间，13位时间戳
         '400':
-          description: "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\nPARAM_ERROR | A parameter value is not valid or is missing.\r\nTRANSACTION_ID_NOT_FOUND | The transaction order is not found. \r\nTRANSACTION_NOT_SUCCEED | The transaction order status is not SUCCEEDED. "
+          description: "**code** |**message**\n---------|----------\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\nPARAM_ERROR | A parameter value is not valid or is missing.\nTRANSACTION_ID_NOT_FOUND | The transaction order is not found. \nTRANSACTION_NOT_SUCCEED | The transaction order status is not SUCCEEDED. "
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '404':
-          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
           content:
             application/json:
               schema:
@@ -87,7 +95,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: 3kpwe7ip45aml
-                  description: "类型，默认为VOUCHER \r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                  description: "类型，默认为VOUCHER \n\n类型|说明\n----|----\nVOUCHER|凭证\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
       description: 创建一个凭证申请，凭证生成后通过webhook通知状态`COMPLETED`，此时可以通过凭证下载接口获取交易凭证或外汇汇款申请书文件。
   /receipts/download:
     post:
@@ -126,7 +134,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: 22yrxousxupky
-                  description: "类型，默认为VOUCHER \r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                  description: "类型，默认为VOUCHER \n\n类型|说明\n----|----\nVOUCHER|付款凭证\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
       description: 付款凭证或外汇汇款申请书文件下载，获取的凭证文件为ZIP压缩文件，解压缩后是PDF格式文件。
   /receipts/{transaction_id}/{receipt_type}:
     parameters:
@@ -162,7 +170,16 @@ paths:
                     type: string
                     x-stoplight:
                       id: 3dzebkx9dp3h5
-                    description: "类型\r\n\r\n类型|说明\r\n----|----\r\nVOUCHER|付款凭证\r\nAPPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书"
+                    description: '类型
+
+
+                      类型|说明
+
+                      ----|----
+
+                      VOUCHER|付款凭证
+
+                      APPLICATION_FOR_FUNDS_TRANSFERS|外汇汇款申请书'
                   status:
                     type: string
                     x-stoplight:
@@ -174,13 +191,21 @@ paths:
                       id: p2ju07i5e6pp5
                     description: 创建时间
         '400':
-          description: "**code** |**message**\r\n---------|----------\r\nMISSING_REQUIRED_PARAMETER | A required parameter in the request is missing."
+          description: '**code** |**message**
+
+            ---------|----------
+
+            MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.'
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '404':
-          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
           content:
             application/json:
               schema:
@@ -192,3 +217,22 @@ paths:
       - 客户端凭据授权: []
       parameters: []
       description: 获取凭证或外汇汇款申请书文件的生成状态。
+components:
+  securitySchemes:
+    Component:
+      type: oauth2
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+      flows:
+        clientCredentials:
+          scopes: {}
+          refreshUrl: /oauth2/token
+          tokenUrl: /oauth2/token
+    Component_2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 授权码授权

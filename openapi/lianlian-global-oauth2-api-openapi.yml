@@ -1,15 +1,9 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Oauth2 API
+  title: Oauth2 API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: https://global-api.lianlian.com/api/v2
 tags:
 - name: Oauth2
 paths:
@@ -26,13 +20,13 @@ paths:
               schema:
                 $ref: ../models/AccessTokenResponse.yaml
         '400':
-          description: "code | message\r\n---------|----------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\r\n PARAM_ERROR | A parameter value is not valid.\r\n INVALID_REFRESH_TOKEN |Invalid refresh token.\r\n INVALID_CLIENT | Client dose not exist.\r\n INVALID_CLIENT_SECRET | Invalid client secret.\r\n INVALID_AUTH_CODE | Incorrect authorization code.\r\n FUNCTION_SCOPE_BLANK | The scopeCodes is not set.\r\n REQUEST_CONFLICT | The request cannot be processed as another request is being processed."
+          description: "code | message\n---------|----------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing.\n PARAM_ERROR | A parameter value is not valid.\n INVALID_REFRESH_TOKEN |Invalid refresh token.\n INVALID_CLIENT | Client dose not exist.\n INVALID_CLIENT_SECRET | Invalid client secret.\n INVALID_AUTH_CODE | Incorrect authorization code.\n FUNCTION_SCOPE_BLANK | The scopeCodes is not set.\n REQUEST_CONFLICT | The request cannot be processed as another request is being processed."
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '401':
-          description: "code | message\r\n---------|----------\r\n NOT_AUTHORIZED | Lacks valid authentication credentials or insufficient permissions."
+          description: "code | message\n---------|----------\n NOT_AUTHORIZED | Lacks valid authentication credentials or insufficient permissions."
           content:
             application/json:
               schema:
@@ -71,8 +65,12 @@ paths:
               type: object
               properties: {}
         description: ''
-      description: "获取或者刷新access token。\r\n- 业务字段（grant_type、client_id、client_secret）相同时，不支持幂等，会创建多个access token。"
+      description: '获取或者刷新access token。
+
+        - 业务字段（grant_type、client_id、client_secret）相同时，不支持幂等，会创建多个access token。'
       parameters:
       - $ref: ./Webhooks.yaml#/components/parameters/header-Content-Type
       tags:
       - Oauth2
+x-stoplight:
+  id: t268rmyd2cy2p

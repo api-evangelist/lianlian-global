@@ -1,15 +1,9 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Quote API
+  title: Rate Quote API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: http://localhost:3000
 tags:
 - name: Quote
 paths:
@@ -74,3 +68,5 @@ components:
         end_time:
           type: string
           description: 汇率有效结束时间，10位 秒级时间戳
+x-stoplight:
+  id: hxzhwuf62pjoe

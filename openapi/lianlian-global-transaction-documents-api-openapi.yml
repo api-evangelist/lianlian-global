@@ -1,15 +1,12 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Transaction Documents API
+  title: Lianlian Global Transaction Documents API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: 'Operations tagged Transaction Documents across 3 of this provider''s published API definitions: lianlian-global-lppe-reference-openapi.yml, lianlian-global-lppe-reference2-openapi.yml, lianlian-global-lppe-reference3-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://global-api.lianlian.com/api/v1
+- url: https://global-api.lianlian.com/api/v2
+- url: https://global-api.lianlian.com/api/v3
 tags:
 - name: Transaction Documents
 paths:
@@ -36,7 +33,21 @@ paths:
                     enum:
                     - PROCESSING
                     - COMPLETED
-                    description: "状态。\r\n\r\n如果您的材料涉及审核流程，返回结果中status为PROCESSING，此时我们将由异步消息结果通知您（可通过webhook监听材料相关结果）\r\n【注】材料是否涉及审核请咨询对应客户经理。\r\n\r\n枚举|说明\r\n---|---\r\nPROCESSING|处理中\r\nCOMPLETED|处理完成"
+                    description: '状态。
+
+
+                      如果您的材料涉及审核流程，返回结果中status为PROCESSING，此时我们将由异步消息结果通知您（可通过webhook监听材料相关结果）
+
+                      【注】材料是否涉及审核请咨询对应客户经理。
+
+
+                      枚举|说明
+
+                      ---|---
+
+                      PROCESSING|处理中
+
+                      COMPLETED|处理完成'
                   create_time:
                     type: number
                     x-stoplight:
@@ -93,7 +104,7 @@ paths:
                     x-stoplight:
                       id: 6jh84h2gq97eu
         '400':
-          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nDATE_RANGE_TOO_BIG | The time interval exceeds 3 months"
+          description: "**code** | **message** \n---------|----------\nPARAM_ERROR | A parameter value is not valid.\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\nDATE_RANGE_TOO_BIG | The time interval exceeds 3 months"
           content:
             application/json:
               schema:
@@ -170,6 +181,8 @@ paths:
         description: 连连生成的贸易材料唯一编号
       requestBody:
         content: {}
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
   /documents/{transaction_document_batch_id}:
     parameters:
     - schema:
@@ -204,6 +217,8 @@ paths:
         需要注意的是，当批次内明细数据小于等于500条时，可通过此接口查看详情。
 
         如果批次明细大于500条，建议您使用Get list of transaction document接口分页查询详细信息。'
+    servers:
+    - url: https://global-api.lianlian.com/api/v1
   /documents/quotas:
     get:
       summary: Get list of transaction quotas
@@ -255,12 +270,26 @@ paths:
                           type: string
                           x-stoplight:
                             id: pm7ll2owly17j
-                          description: "贸易材料所属方。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）\r\n\r\n枚举|说明\r\n---|---\r\nBENEFICIARY|收款方收款币种为货币管制国家的管制货币时\r\nPAYER|付款方付款币种为货币管制国家的管制货币时"
+                          description: '贸易材料所属方。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）
+
+
+                            枚举|说明
+
+                            ---|---
+
+                            BENEFICIARY|收款方收款币种为货币管制国家的管制货币时
+
+                            PAYER|付款方付款币种为货币管制国家的管制货币时'
                         owner_id:
                           type: string
                           x-stoplight:
                             id: dcky6l38u63nw
-                          description: "贸易材料所属方ID。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）\r\n\r\n- owner_type=`BENEFICIARY`时，owner_id为Beneficiary资源对象的ID即beneficiary_id\r\n- owner_type=`PAYER`时，owner_id为Payer资源对象的ID即payer_id"
+                          description: '贸易材料所属方ID。仅当交易双方的币种涉及到货币管制国家的管制货币时必传。（e.g. 付款到CN地区CNY币种时）
+
+
+                            - owner_type=`BENEFICIARY`时，owner_id为Beneficiary资源对象的ID即beneficiary_id
+
+                            - owner_type=`PAYER`时，owner_id为Payer资源对象的ID即payer_id'
                         currency:
                           type: string
                           x-stoplight:
@@ -292,7 +321,15 @@ paths:
                             id: pth0vzinsoswg
                           description: 提供材料的用途。
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nPAYER_NOT_EXIST|payer is not exist\r\nBENEFICIARY_NOT_EXIST|beneficiary is not exist"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            PAYER_NOT_EXIST|payer is not exist
+
+            BENEFICIARY_NOT_EXIST|beneficiary is not exist'
           content:
             application/json:
               schema:
@@ -348,6 +385,8 @@ paths:
         in: query
         name: purpose
         description: 提供材料的用途 PAYOUT 付款
+    servers:
+    - url: https://global-api.lianlian.com/api/v2
   /documents/update:
     post:
       summary: Update transaction documents
@@ -355,7 +394,7 @@ paths:
       - Transaction Documents
       responses:
         '200':
-          description: "**failure_code** | **failure_reason** \r\n---------|----------\r\nMATERIAL_UPDATE_REJECT_DUE_TO_EXISTED_BATCH | Reject to update batch due to existed\r\nPURPOSE_NOT_UNIQUE | purpose is not unique\r\nBUSINESS_TYPE_NOT_UNIQUE | business_type is not unique\r\nOWNER_TYPE_NOT_UNIQUE | owner_type is not unique\r\nOWNER_ID_NOT_UNIQUE | owner_id is not unique\r\nRESOURCE_NOT_FOUND | The specified resource does not exist."
+          description: "**failure_code** | **failure_reason** \n---------|----------\nMATERIAL_UPDATE_REJECT_DUE_TO_EXISTED_BATCH | Reject to update batch due to existed\nPURPOSE_NOT_UNIQUE | purpose is not unique\nBUSINESS_TYPE_NOT_UNIQUE | business_type is not unique\nOWNER_TYPE_NOT_UNIQUE | owner_type is not unique\nOWNER_ID_NOT_UNIQUE | owner_id is not unique\nRESOURCE_NOT_FOUND | The specified resource does not exist."
           content:
             application/json:
               schema:
@@ -387,7 +426,7 @@ paths:
                       x-stoplight:
                         id: 01ubho25t2atj
         '400':
-          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\r\nMATERIAL_REJECT_DUE_TO_DUPLICATION | Reject to submit due to duplication"
+          description: "**code** | **message** \n---------|----------\nPARAM_ERROR | A parameter value is not valid.\nMISSING_REQUIRED_PARAMETER | A parameter value is missing.\nMATERIAL_REJECT_DUE_TO_DUPLICATION | Reject to submit due to duplication"
           content:
             application/json:
               schema:
@@ -423,6 +462,8 @@ paths:
                           id: xti7c3z1uqgb2
                         description: 批次号
       description: 更新批次号
+    servers:
+    - url: https://global-api.lianlian.com/api/v3
   /documents/{original_order_id}:
     parameters:
     - schema:
@@ -443,13 +484,13 @@ paths:
               schema:
                 $ref: ../models/TransactionDocumentQueryResponseV3.yaml
         '400':
-          description: "**code** | **message** \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing."
+          description: "**code** | **message** \n---------|----------\nPARAM_ERROR | A parameter value is not valid.\nMISSING_REQUIRED_PARAMETER | A parameter value is missing."
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '404':
-          description: "**code** | **message** \r\n---------|----------\r\nRESOURCE_NOT_FOUND | The specified resource does not exist."
+          description: "**code** | **message** \n---------|----------\nRESOURCE_NOT_FOUND | The specified resource does not exist."
           content:
             application/json:
               schema:
@@ -460,3 +501,25 @@ paths:
       description: 查询单条订单材料
       security:
       - 客户端凭据授权: []
+    servers:
+    - url: https://global-api.lianlian.com/api/v3
+components:
+  schemas:
+    TransactionDocument2.0:
+      $ref: ../models/TransactionDocumentsCallbackv2.0.yaml
+      x-stoplight:
+        id: avfwoak4v1p57
+      title: ''
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+x-refined-from:
+- lianlian-global-lppe-reference-openapi.yml
+- lianlian-global-lppe-reference2-openapi.yml
+- lianlian-global-lppe-reference3-openapi.yml

@@ -1,15 +1,15 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Ew Transactions API
+  title: Ew Transactions API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: "Transactions include Payout, Receipt, Receiving, Conversion, Add Funds, Withdrawal, and Card Payout.\n\n<br><br>\n# Transaction Data Types\nTYPE | ENTITY MODEL | DETAIL API \n---------|----------|---------\nPayout | [Payout MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/8c7c694a53896-payout) | [Get Payout by Request ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/64442df6273c2-get-payout-by-request-id) \nConversion | [Conversion MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/70dc418ffcecf-conversion) | [Get Conversion by Request ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/9e210a804e41d-get-conversion-by-request-id) \nReceiving | [Receiving MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/cc5631c490dd2-receiving) | [Get Receiving Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/c5e80b7885458-get-receiving-info-by-id) \nReceipt | [Receipt MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/6e57655a78545-receipt) | [Get Receipt Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/84febadf470f9-get-receipt-info-by-id) \nAddFunds | [AddFunds MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/83af2f985cb5f-recharge) | [Get Recharge by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/88c237ccc7f1f-get-recharge-by-id) \nWithdrawal | [Withdrawal MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/fd04c9c6053b5-withdrawal) | [Get Withdrawal Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/1667bfe91f74e-get-withdrawal-info-by-id) \nCardPayout | [CardPayout MODEL](https://developer.lianlianglobal.com/docs/e-wallet-openapi/7e68218f81790-card-payout) | [Get Card Payout Info by ID](https://developer.lianlianglobal.com/docs/e-wallet-openapi/c4fc08af99af6-get-card-payout-info-by-id) "
+servers:
+- url: https://test-global-api.lianlianpay-inc.com/gateway/v1/
+  description: SANDBOX
+- url: https://uk-api.lianlianglobal.com/gateway/v1/
+  description: UK PRD
+- url: https://us-api.lianlianglobal.com/gateway/v1/
+  description: US PRD
 tags:
 - name: Ew Transactions
 paths:
@@ -98,3 +98,5 @@ paths:
               - page_size
             examples: {}
         description: ''
+x-stoplight:
+  id: z7yijrgqaxlbo

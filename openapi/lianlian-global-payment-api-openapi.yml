@@ -1,15 +1,13 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Payment API
+  title: Accept Payments Payment API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  summary: accept payments
+  description: '通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。
+
+    '
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Payment
 paths:
@@ -31,13 +29,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment'
         '400':
-          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nMISSING_REQUIRED_PARAMETER | A parameter value is missing."
+          description: "code | message \n---------|----------\nPARAM_ERROR | A parameter value is not valid.\nMISSING_REQUIRED_PARAMETER | A parameter value is missing."
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '404':
-          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
           content:
             application/json:
               schema:
@@ -70,7 +72,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment'
         '400':
-          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nCUR_SUPPORT_ERROR | The currency is not supported.\r\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\r\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\r\nAGREEMENT_NOT_EXIST | Agreement does not exist.\r\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\r\nAGREEMENT_CANCELLED | The agreement has been cancelled.\r\nAGREEMENT_EXPIRED | The agreement has been expired.\r\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\r\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\r\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\r\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\r\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\r\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\r\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\r\nAML_REJECT | AML reject.\r\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\r\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\r\nPAYMENT_ALREADY_EXISTS | Payment already exists.\r\nPAYMENT_CLOSED | Payment has been closed.\r\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\r\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\r\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\r\nPAYMENT_REPEAT | Payment has already been successfully paid.\r\nPAYMENT_EXPIRED | Payment has expired."
+          description: "code | message \n---------|----------\nPARAM_ERROR | A parameter value is not valid.\nCUR_SUPPORT_ERROR | The currency is not supported.\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\nAGREEMENT_NOT_EXIST | Agreement does not exist.\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\nAGREEMENT_CANCELLED | The agreement has been cancelled.\nAGREEMENT_EXPIRED | The agreement has been expired.\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\nAML_REJECT | AML reject.\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\nPAYMENT_ALREADY_EXISTS | Payment already exists.\nPAYMENT_CLOSED | Payment has been closed.\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\nPAYMENT_REPEAT | Payment has already been successfully paid.\nPAYMENT_EXPIRED | Payment has expired."
           content:
             application/json:
               schema:
@@ -113,7 +115,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: nepy8xsjmlepj
-                  description: "业务类型\r\n枚举 | 说明 \r\n---------|----------\r\nYICAIFU|易采付"
+                  description: "业务类型\n枚举 | 说明 \n---------|----------\nYICAIFU|易采付"
                 amount_details:
                   type: object
                   x-stoplight:
@@ -165,7 +167,15 @@ paths:
                       type: string
                       x-stoplight:
                         id: ujscxio92j45o
-                      description: "付款人的证件类型\r\n枚举值|说明\r\n----|----\r\nID_CARD|中国大陆居民身份证\r\nUNIFIED_SOCIAL_CREDIT_ID|中国大陆企业统一社会信用代码证"
+                      description: '付款人的证件类型
+
+                        枚举值|说明
+
+                        ----|----
+
+                        ID_CARD|中国大陆居民身份证
+
+                        UNIFIED_SOCIAL_CREDIT_ID|中国大陆企业统一社会信用代码证'
                     id_number:
                       type: string
                       x-stoplight:
@@ -177,7 +187,17 @@ paths:
                   type: string
                   x-stoplight:
                     id: td7pi0gk4ty5h
-                  description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|CNY 快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|CNY 快捷支付借记卡\r\nACCOUNT_BALANCE_PAYMENT|账户余额支付"
+                  description: '支付方式
+
+                    枚举值|说明
+
+                    ----|----
+
+                    CN_FAST_PAYMENT_CREDIT_CARD|CNY 快捷支付信用卡
+
+                    CN_FAST_PAYMENT_DEBIT_CARD|CNY 快捷支付借记卡
+
+                    ACCOUNT_BALANCE_PAYMENT|账户余额支付'
                 description:
                   type: string
                   x-stoplight:
@@ -238,7 +258,25 @@ paths:
         in: header
         name: Content-Type
         description: application/json
-      description: "### 功能说明：\r\n自动免密支付接口。\r\n### 幂等说明：\r\n- request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，继续执行原支付交易；\r\n- request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。\r\n- request_id不同时，按全新交易处理，创建新的支付交易。\r\n### 超时方案：\r\n如果调用Create a automatic payment接口超时，可使用request_id调用Get a payment detail by ID接口获取结果。\r\n### 验证支付：\r\n如果调用Create a automatic payment接口返回status=REQUIRES_ACTION，需要调用Send captcha on a payment获取支付验证码，然后调用Verify captcha on a payment进行验证支付。"
+      description: '### 功能说明：
+
+        自动免密支付接口。
+
+        ### 幂等说明：
+
+        - request_id、amount、currency、customer.identifier相同 且 支付状态为CREATED或PROCESSING时，继续执行原支付交易；
+
+        - request_id相同 且 amount、currency、customer.identifier任一不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误。
+
+        - request_id不同时，按全新交易处理，创建新的支付交易。
+
+        ### 超时方案：
+
+        如果调用Create a automatic payment接口超时，可使用request_id调用Get a payment detail by ID接口获取结果。
+
+        ### 验证支付：
+
+        如果调用Create a automatic payment接口返回status=REQUIRES_ACTION，需要调用Send captcha on a payment获取支付验证码，然后调用Verify captcha on a payment进行验证支付。'
   /accept_payments/captchas/{request_id}:
     parameters:
     - schema:
@@ -258,7 +296,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Captcha'
         '400':
-          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nPAYMENT_NOT_EXIST|Payment does not exist.\r\nNO_NEED_VERIFY|No need to verify.\r\nREQUEST_CONFLICT|The request cannot be processed as another request is being processed.\r\nREMOTE_INVOKE_FAIL|A system or application error occurred."
+          description: "code | message \n---------|----------\nPARAM_ERROR | A parameter value is not valid.\nPAYMENT_NOT_EXIST|Payment does not exist.\nNO_NEED_VERIFY|No need to verify.\nREQUEST_CONFLICT|The request cannot be processed as another request is being processed.\nREMOTE_INVOKE_FAIL|A system or application error occurred."
           content:
             application/json:
               schema:
@@ -297,7 +335,11 @@ paths:
         in: header
         name: Content-Type
         description: application/json
-      description: "### 功能说明：\r\n当支付需要进行验证时，通过该接口发送支付验证码。\r\n"
+      description: '### 功能说明：
+
+        当支付需要进行验证时，通过该接口发送支付验证码。
+
+        '
       x-stoplight:
         id: gv4642wlru10g
   /accept_payments/captchas/verify/{request_id}:
@@ -319,7 +361,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment'
         '400':
-          description: "code | message \r\n---------|----------\r\nPARAM_ERROR | A parameter value is not valid.\r\nCUR_SUPPORT_ERROR | The currency is not supported.\r\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\r\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\r\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\r\nAGREEMENT_NOT_EXIST | Agreement does not exist.\r\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\r\nAGREEMENT_CANCELLED | The agreement has been cancelled.\r\nAGREEMENT_EXPIRED | The agreement has been expired.\r\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\r\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\r\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\r\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\r\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\r\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\r\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\r\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\r\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\r\nAML_REJECT | AML reject.\r\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\r\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\r\nPAYMENT_ALREADY_EXISTS | Payment already exists.\r\nPAYMENT_CLOSED | Payment has been closed.\r\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\r\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\r\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\r\nPAYMENT_REPEAT | Payment has already been successfully paid.\r\nPAYMENT_EXPIRED | Payment has expired.\r\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\r\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\t\r\nCAPTCHA_NOT_VALID|The verification code has expired, please retrieve it again.\t\r\nCAPTCHA_NOT_MATCH|The verification code is incorrect, please check.\t\r\nCAPTCHA_USED|The verification code has been used, please retrieve a new one."
+          description: "code | message \n---------|----------\nPARAM_ERROR | A parameter value is not valid.\nCUR_SUPPORT_ERROR | The currency is not supported.\nAMOUNT_NOT_EQUAL | The sum of the product amount and the fee amount does not equal the order amount.\nMERCHANT_PAY_CONFIG_INCORRECT | The merchant config is incorrect.\nMERCHANT_ACCT_CUR_ERROR | The merchant currency account does not support this currency.\nAGREEMENT_NOT_EXIST | Agreement does not exist.\nMERCHANT_PAY_METHOD_INVALID | Payment method not supported.\nAGREEMENT_CANCELLED | The agreement has been cancelled.\nAGREEMENT_EXPIRED | The agreement has been expired.\nPAYMENT_STATUS_NOT_SUPPORT | Order status does not support payment.\nORDER_EXIST_AND_EXPIRED | The order exists but has expired, please change the order information and create again.\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\nMERCHANT_ACCT_NOT_EXIST | The merchant doesn't exist.\nMERCHANT_ACCT_STATUS_INVALID | The merchant status is invalid.\nMERCHANT_ACCT_CUR_NOT_EXIST | The merchant currency account doesn't exist.\nMERCHANT_ACCT_CUR_SIZE_INVALID | The merchant currency account size is invalid.\nMERCHANT_ACCT_CUR_STATUS_INVALID | The merchant currency account status is invalid.\nUSER_INFO_KYC_NOT_EXIST | User KYC information does not exist.\nKYC_STATUS_NOT_SUPPORT | KYC status does not support submission.\nACCOUNT_INFO_NOT_FOUND | Account information does not exist.\nAML_REJECT | AML reject.\nREQUEST_CONFLICT | The request cannot be processed as another request is being processed.\nCREATE_PAYMENT_PARAM_INVALID | Parameter(s) missing or incorrect.\nPAYMENT_ALREADY_EXISTS | Payment already exists.\nPAYMENT_CLOSED | Payment has been closed.\nMERCHANT_ACCT_INVALID | The merchant account is invalid.\nBUDGET_FEE_NOT_EQUAL | Inconsistent system budget costs.\nACCOUNT_BALANCE_INSUFFICIENT | Account balance insufficient.\nPAYMENT_REPEAT | Payment has already been successfully paid.\nPAYMENT_EXPIRED | Payment has expired.\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\nCAPTCHA_NOT_SEND|Please obtain the verification code first.\t\nCAPTCHA_NOT_VALID|The verification code has expired, please retrieve it again.\t\nCAPTCHA_NOT_MATCH|The verification code is incorrect, please check.\t\nCAPTCHA_USED|The verification code has been used, please retrieve a new one."
           content:
             application/json:
               schema:
@@ -351,11 +393,47 @@ paths:
         in: header
         name: Content-Type
         description: application/json
-      description: "### 功能说明：\r\n提交验证码进行验证支付，推进支付流程。\r\n\r\n"
+      description: '### 功能说明：
+
+        提交验证码进行验证支付，推进支付流程。
+
+
+        '
       x-stoplight:
         id: 99p15q3c1cqqk
 components:
   schemas:
+    Captcha:
+      title: Captcha
+      x-stoplight:
+        id: avwxzy6nqni4l
+      type: object
+      properties:
+        request_id:
+          type: string
+          x-stoplight:
+            id: w06gj2yscma2g
+          description: 商户系统中该笔订单的唯一编码。
+        send_time:
+          type: number
+          x-stoplight:
+            id: 3ytmr9h6lcfo3
+          description: 发送时间，13位时间戳。
+        send_type:
+          type: string
+          x-stoplight:
+            id: l06omig2r96no
+          description: 验证码发送方式：PHONE, EMAIL。
+        country_code:
+          type: string
+          x-stoplight:
+            id: qgc51p9koogga
+          description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码。
+        phone_tail:
+          type: string
+          x-stoplight:
+            id: xbbnvvlqgertf
+          description: 手机号后4位
     Payment:
       title: Payment
       x-stoplight:
@@ -392,7 +470,23 @@ components:
           - CANCELED
           - EXPIRED
           - REQUIRES_ACTION
-          description: "支付状态\r\n枚举值|说明\r\n----|----\r\nCREATED|已创建，等待支付\r\nPROCESSING|支付中\r\nREQUIRES_ACTION|待验证码验证支付\r\nSUCCEEDED|成功\r\nCANCELED|已取消\r\nEXPIRED|过期"
+          description: '支付状态
+
+            枚举值|说明
+
+            ----|----
+
+            CREATED|已创建，等待支付
+
+            PROCESSING|支付中
+
+            REQUIRES_ACTION|待验证码验证支付
+
+            SUCCEEDED|成功
+
+            CANCELED|已取消
+
+            EXPIRED|过期'
         payment_method:
           x-stoplight:
             id: al4uj0pwcgu9j
@@ -400,7 +494,19 @@ components:
           - CN_FAST_PAYMENT_CREDIT_CARD
           - CN_FAST_PAYMENT_DEBIT_CARD
           - CNY_COMPANY_BANK_CARD
-          description: "支付方式\r\n枚举值|说明\r\n----|----\r\nCN_FAST_PAYMENT_CREDIT_CARD|银行卡快捷支付信用卡\r\nCN_FAST_PAYMENT_DEBIT_CARD|银行卡快捷支付借记卡\r\nCNY_COMPANY_BANK_CARD|CNY 企业网银\r\n"
+          description: '支付方式
+
+            枚举值|说明
+
+            ----|----
+
+            CN_FAST_PAYMENT_CREDIT_CARD|银行卡快捷支付信用卡
+
+            CN_FAST_PAYMENT_DEBIT_CARD|银行卡快捷支付借记卡
+
+            CNY_COMPANY_BANK_CARD|CNY 企业网银
+
+            '
         payment_currency:
           type: string
           x-stoplight:
@@ -466,35 +572,14 @@ components:
           type: string
           x-stoplight:
             id: io6j2ri2cd9nb
-          description: "业务类型\r\n枚举 | 说明 \r\n---------|----------\r\nYICAIFU|易采付"
-    Captcha:
-      title: Captcha
-      x-stoplight:
-        id: avwxzy6nqni4l
-      type: object
-      properties:
-        request_id:
-          type: string
-          x-stoplight:
-            id: w06gj2yscma2g
-          description: 商户系统中该笔订单的唯一编码。
-        send_time:
-          type: number
-          x-stoplight:
-            id: 3ytmr9h6lcfo3
-          description: 发送时间，13位时间戳。
-        send_type:
-          type: string
-          x-stoplight:
-            id: l06omig2r96no
-          description: 验证码发送方式：PHONE, EMAIL。
-        country_code:
-          type: string
-          x-stoplight:
-            id: qgc51p9koogga
-          description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码。
-        phone_tail:
-          type: string
-          x-stoplight:
-            id: xbbnvvlqgertf
-          description: 手机号后4位
+          description: "业务类型\n枚举 | 说明 \n---------|----------\nYICAIFU|易采付"
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+x-stoplight:
+  id: 91jfx04sdnbg4

@@ -1,15 +1,15 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Ew Receiving API
+  title: Ew Receiving API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: "Receiving Accounts are accounts that function as local bank accounts. \nThey can be used to collect funds from around the world. You get account details that enable you to collect funds from various platforms such as Amazon, Etsy, etc. \n\nYou can apply Receiving Accounts on LianLian Global's website, and by using Receiving API you could query your Receiving accounts and Receiving transactions detail information.\n\n![Wallet.png](https://stoplight.io/api/v1/projects/cHJqOjEyMDg0Ng/images/ooe1JpNsV1Q)"
+servers:
+- url: https://test-global-api.lianlianpay-inc.com/gateway/v1/
+  description: SANDBOX
+- url: https://uk-api.lianlianglobal.com/gateway/v1/
+  description: UK PRD
+- url: https://us-api.lianlianglobal.com/gateway/v1/
+  description: US PRD
 tags:
 - name: Ew Receiving
 paths:
@@ -76,3 +76,5 @@ components:
           type: array
           items:
             $ref: ./CommonModel.json#/components/schemas/UserShop
+x-stoplight:
+  id: drmdm24yuutvg

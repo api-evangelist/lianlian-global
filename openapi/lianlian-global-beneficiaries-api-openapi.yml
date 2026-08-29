@@ -1,15 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Beneficiaries API
+  title: Payouts Beneficiaries API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: payout能力
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Beneficiaries
 paths:
@@ -32,7 +27,11 @@ paths:
               schema:
                 $ref: ../models/BeneficiaryResponse.yaml
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing."
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.'
           content:
             application/json:
               schema:
@@ -64,20 +63,31 @@ paths:
                     type: string
                     x-stoplight:
                       id: 9ehe79x3fhzcy
-                    description: "收款人ID\r\n\r\n"
+                    description: '收款人ID
+
+
+                      '
                     maxLength: 64
                 required:
                 - result
                 - beneficiary_id
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nBENEFICIARY_NOT_EXISTS|beneficiary not exists"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            BENEFICIARY_NOT_EXISTS|beneficiary not exists'
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
       tags:
       - Beneficiaries
-      description: "删除已经存在的收款人。\r\n- 业务字段（beneficiary_id）相同时，不支持幂等"
+      description: '删除已经存在的收款人。
+
+        - 业务字段（beneficiary_id）相同时，不支持幂等'
       security:
       - 客户端凭据授权: []
       parameters:
@@ -94,7 +104,19 @@ paths:
               schema:
                 $ref: ../models/BeneficiaryUpdateResponse.yaml
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nBENEFICIARY_ATTACHMENTS_EXCEEDS_LIMIT|beneficiary attachments exceeds limit\r\nCHARACTER_INVALID|character_invalid\r\nSTATUS_NOT_SUPPORT|status not support\r\nBENEFICIARY_NOT_EXISTS|beneficiary not exists"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            BENEFICIARY_ATTACHMENTS_EXCEEDS_LIMIT|beneficiary attachments exceeds limit
+
+            CHARACTER_INVALID|character_invalid
+
+            STATUS_NOT_SUPPORT|status not support
+
+            BENEFICIARY_NOT_EXISTS|beneficiary not exists'
           content:
             application/json:
               schema:
@@ -106,7 +128,11 @@ paths:
               $ref: ../models/BeneficiaryUpdateRequest.yaml
       tags:
       - Beneficiaries
-      description: "仅允许状态为失败的收款人，进行信息更新。\r\n- 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一beneficiary_id并发提交，会返回REQUEST_CONFLICT\r\n提供了根据beneficiary_id查询的接口获取最新状态"
+      description: '仅允许状态为失败的收款人，进行信息更新。
+
+        - 当status为FAILED时，允许提交，提交后状态变为PROCESSING。该接口不允许同一beneficiary_id并发提交，会返回REQUEST_CONFLICT
+
+        提供了根据beneficiary_id查询的接口获取最新状态'
       security:
       - 客户端凭据授权: []
       parameters:
@@ -152,7 +178,11 @@ paths:
                       x-stoplight:
                         id: 8suuyerj6uw9l
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing."
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.'
           content:
             application/json:
               schema:
@@ -227,7 +257,25 @@ paths:
                 $ref: ../models/BeneficiaryCreateResponse.yaml
               examples: {}
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nBENEFICIARY_ATTACHMENTS_EXCEEDS_LIMIT|beneficiary attachments exceeds limit\r\nCHARACTER_INVALID|character_invalid\r\nUSER_NOT_EXIST|user not exist\r\nUSER_KYC_FAILED|user kyc failed\r\nREQUEST_ID_NOT_UNIQUE|request id not unique\r\nWITHDRAW_ACCOUNT_INVALID|withdraw account invalid\r\nBENEFICIARY_ALREADY_EXISTS|beneficiary already exists"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            BENEFICIARY_ATTACHMENTS_EXCEEDS_LIMIT|beneficiary attachments exceeds limit
+
+            CHARACTER_INVALID|character_invalid
+
+            USER_NOT_EXIST|user not exist
+
+            USER_KYC_FAILED|user kyc failed
+
+            REQUEST_ID_NOT_UNIQUE|request id not unique
+
+            WITHDRAW_ACCOUNT_INVALID|withdraw account invalid
+
+            BENEFICIARY_ALREADY_EXISTS|beneficiary already exists'
           content:
             application/json:
               schema:
@@ -239,7 +287,15 @@ paths:
               $ref: ../models/BeneficiaryRequest .yaml
             examples: {}
         description: ''
-      description: "创建一个收款人。\r\n- request_id相同，业务字段相同时，幂等返回\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE\r\n- request_id不同，业务字段相同时，会返回BENEFICIARY_ALREADY_EXISTS\r\n对于接口超时情况，可使用原报文重试或使用request_id调用Get list of beneficiaries收款人列表查询接口。"
+      description: '创建一个收款人。
+
+        - request_id相同，业务字段相同时，幂等返回
+
+        - request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE
+
+        - request_id不同，业务字段相同时，会返回BENEFICIARY_ALREADY_EXISTS
+
+        对于接口超时情况，可使用原报文重试或使用request_id调用Get list of beneficiaries收款人列表查询接口。'
       tags:
       - Beneficiaries
       security:
@@ -247,3 +303,24 @@ paths:
       parameters:
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Content-Type
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
+components:
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+    Component_2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 授权码授权
+x-stoplight:
+  id: w073d3fxcx3df

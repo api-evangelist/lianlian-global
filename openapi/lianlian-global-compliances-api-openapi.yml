@@ -1,15 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Compliances API
+  title: Payouts Compliances API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: payout能力
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Compliances
 paths:
@@ -45,9 +40,33 @@ paths:
                     type: string
                     x-stoplight:
                       id: y897gcpjdd1ud
-                    description: "审核状态\r\n枚举|说明\r\n----|----\r\nPROCESSING |审核中\r\nSUCCEEDED |正常\r\nFAILED |审核拒绝"
+                    description: '审核状态
+
+                      枚举|说明
+
+                      ----|----
+
+                      PROCESSING |审核中
+
+                      SUCCEEDED |正常
+
+                      FAILED |审核拒绝'
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nFILE_NOT_EXIST|fileId not found\r\nBENEFICIARY_NOT_EXISTS|beneficiary is not exist\r\nREQUEST_ID_IS_NOT_UNIQUE|request_id is not unique\r\nREVIEW_EXIST_ERROR|material review apply exist\r\nCHANNEL_ID_NOT_FOUND|channelId not found"
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing.
+
+            FILE_NOT_EXIST|fileId not found
+
+            BENEFICIARY_NOT_EXISTS|beneficiary is not exist
+
+            REQUEST_ID_IS_NOT_UNIQUE|request_id is not unique
+
+            REVIEW_EXIST_ERROR|material review apply exist
+
+            CHANNEL_ID_NOT_FOUND|channelId not found'
           content:
             application/json:
               schema:
@@ -77,7 +96,19 @@ paths:
                 type:
                   x-stoplight:
                     id: y2lnuimzwj0to
-                  description: "上传的合规材料类型\r\n枚举|说明\r\n----|----\r\nbeneficiary|收款人材料\r\npayer|付款人材料\r\npayment|payout付款材料\r\ndeposit|加款材料"
+                  description: '上传的合规材料类型
+
+                    枚举|说明
+
+                    ----|----
+
+                    beneficiary|收款人材料
+
+                    payer|付款人材料
+
+                    payment|payout付款材料
+
+                    deposit|加款材料'
                   enum:
                   - beneficiary
                   - payer
@@ -112,7 +143,25 @@ paths:
                         type: string
                         x-stoplight:
                           id: vvn3lod43uzaz
-                        description: "附件类型\r\n枚举|说明\r\n----|----\r\nCOMMERCIAL_DOCUMENTS | 商业单据\r\nLOGISTICS_DOCUMENTS |物流单据\r\nLOGISTICS_COMMUNICATION_DOCUMENTS |物流沟通凭证\r\nCONTRACT_DOCUMENTS |合同\r\nORDER_DOCUMENTS |交易单据\r\nCUSTOMS_DECLARATION |报关单\r\nOTHER_ATTACH |其它附件 "
+                        description: '附件类型
+
+                          枚举|说明
+
+                          ----|----
+
+                          COMMERCIAL_DOCUMENTS | 商业单据
+
+                          LOGISTICS_DOCUMENTS |物流单据
+
+                          LOGISTICS_COMMUNICATION_DOCUMENTS |物流沟通凭证
+
+                          CONTRACT_DOCUMENTS |合同
+
+                          ORDER_DOCUMENTS |交易单据
+
+                          CUSTOMS_DECLARATION |报关单
+
+                          OTHER_ATTACH |其它附件 '
                       file_id:
                         type: string
                         x-stoplight:
@@ -138,7 +187,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ComplianceMaterial'
         '404':
-          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
           content:
             application/json:
               schema:
@@ -166,7 +219,19 @@ components:
           type: string
           x-stoplight:
             id: 5oyfevzyi50vv
-          description: "上传的合规材料类型\r\n枚举|说明\r\n----|----\r\nbeneficiary|收款人材料\r\npayer|付款人材料\r\npayment|payout付款材料\r\ndeposit|加款材料"
+          description: '上传的合规材料类型
+
+            枚举|说明
+
+            ----|----
+
+            beneficiary|收款人材料
+
+            payer|付款人材料
+
+            payment|payout付款材料
+
+            deposit|加款材料'
         entity_id:
           type: string
           x-stoplight:
@@ -191,7 +256,25 @@ components:
                 type: string
                 x-stoplight:
                   id: d3ojztfg66yex
-                description: "附件类型\r\n枚举|说明\r\n----|----\r\nCOMMERCIAL_DOCUMENTS | 商业单据\r\nLOGISTICS_DOCUMENTS |物流单据\r\nLOGISTICS_COMMUNICATION_DOCUMENTS |物流沟通凭证\r\nCONTRACT_DOCUMENTS |合同\r\nORDER_DOCUMENTS |交易单据\r\nCUSTOMS_DECLARATION |报关单\r\nOTHER_ATTACH |其它附件 "
+                description: '附件类型
+
+                  枚举|说明
+
+                  ----|----
+
+                  COMMERCIAL_DOCUMENTS | 商业单据
+
+                  LOGISTICS_DOCUMENTS |物流单据
+
+                  LOGISTICS_COMMUNICATION_DOCUMENTS |物流沟通凭证
+
+                  CONTRACT_DOCUMENTS |合同
+
+                  ORDER_DOCUMENTS |交易单据
+
+                  CUSTOMS_DECLARATION |报关单
+
+                  OTHER_ATTACH |其它附件 '
               file_id:
                 type: string
                 x-stoplight:
@@ -201,7 +284,17 @@ components:
           type: string
           x-stoplight:
             id: or77w915o9w29
-          description: "审核状态\r\n枚举|说明\r\n----|----\r\nPROCESSING |审核中\r\nSUCCEEDED |正常\r\nFAILED |审核拒绝"
+          description: '审核状态
+
+            枚举|说明
+
+            ----|----
+
+            PROCESSING |审核中
+
+            SUCCEEDED |正常
+
+            FAILED |审核拒绝'
         failure_code:
           type: string
           x-stoplight:
@@ -212,3 +305,23 @@ components:
           x-stoplight:
             id: 6s2i427xp8fvh
           description: 审核失败原因描述
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+    Component_2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 授权码授权
+x-stoplight:
+  id: w073d3fxcx3df

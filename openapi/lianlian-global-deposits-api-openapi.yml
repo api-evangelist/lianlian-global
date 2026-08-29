@@ -1,15 +1,9 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Deposits API
+  title: Deposits API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Deposits
 paths:
@@ -35,12 +29,14 @@ paths:
                     type: string
                     x-stoplight:
                       id: rh8ngz15547ei
-                    description: "操作类型\r\n`PROCESS`:：推进加款 \r\n`REFUND`：退款 \r\n`RELEASE`：解付"
+                    description: "操作类型\n`PROCESS`:：推进加款 \n`REFUND`：退款 \n`RELEASE`：解付"
                   action_time:
                     type: string
                     x-stoplight:
                       id: j2ldn2ryqfi0m
-                    description: "操作时间\r\n请求操作的时间"
+                    description: '操作时间
+
+                      请求操作的时间'
                   deposit_id:
                     type: string
                     x-stoplight:
@@ -50,14 +46,14 @@ paths:
                     type: string
                     x-stoplight:
                       id: 989odckxa4n3f
-                    description: "加款单状态\r\n`REQUIRE_ACTION`:待补充贸易材料 \r\n`PENDING`：待处理（加款的过程中遇到了异常）\r\n`PROCESSING`：加款中 \r\n`SUCCEEDED`:完成 \r\n`REFUND_PENDING`：退款中 \r\n`REFUND`:已退款 \r\n`ONWAY`:在途"
+                    description: "加款单状态\n`REQUIRE_ACTION`:待补充贸易材料 \n`PENDING`：待处理（加款的过程中遇到了异常）\n`PROCESSING`：加款中 \n`SUCCEEDED`:完成 \n`REFUND_PENDING`：退款中 \n`REFUND`:已退款 \n`ONWAY`:在途"
                   global_account_number:
                     type: string
                     x-stoplight:
                       id: xygh0qy5eiymq
                     description: 全球收款账户账号
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing.\r\nREASON_REQUIRED|REASON_REQUIRED\r\nFAILURE|An error occurred while processing the request.  e.g. The payer's account does not exist \r\nABNORMAL|System error, please retry."
+          description: "**code**|**message**\n---|---\nPARAM_ERROR|A parameter value is not valid or missing.\nREASON_REQUIRED|REASON_REQUIRED\nFAILURE|An error occurred while processing the request.  e.g. The payer's account does not exist \nABNORMAL|System error, please retry."
           content:
             application/json:
               schema:
@@ -67,7 +63,11 @@ paths:
                   value:
                     ? ''
                     : string
-      description: "收款账户入金确认。\r\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为PROCESSING。该接口不允许同一deposit_id并发提交，会返回REQUEST_CONFLICT\r\n对于接口超时情况，可使用deposit_id查询Get list of deposits接口获取处理结果"
+      description: '收款账户入金确认。
+
+        - 当status为REQUIRE_ACTION时，允许提交，提交后状态变为PROCESSING。该接口不允许同一deposit_id并发提交，会返回REQUEST_CONFLICT
+
+        对于接口超时情况，可使用deposit_id查询Get list of deposits接口获取处理结果'
       requestBody:
         content:
           application/json:
@@ -83,7 +83,7 @@ paths:
                   description: 加款单ID
                 business_type:
                   type: string
-                  description: "业务类型。\r\n\r\n枚举 | 说明 \r\n---------|----------\r\nGOODS_PURCHASE|商品采购，用于支付商品采购的费用\r\nSALARY|工资薪金，用于发放工资、薪金的款项\r\nLOGISTICS|物流费用，用于支付物流相关的费用\r\nCOMMISSIONS|交易佣金，用于支付佣金相关的费用\r\nADVERTISEMENT|广告费用，用于支付广告营销相关的费用\r\nECOMMERCE|电商货款\r\nBRAND_TECHNICAL_SERVICE|商标注册，用于支付商标注册相关的费用\r\nHEALTHCARE_SERVICES|医疗相关服务\r\nIMPORT_TRADE|进口付款\r\nWITHDRAW|提现\r\n"
+                  description: "业务类型。\n\n枚举 | 说明 \n---------|----------\nGOODS_PURCHASE|商品采购，用于支付商品采购的费用\nSALARY|工资薪金，用于发放工资、薪金的款项\nLOGISTICS|物流费用，用于支付物流相关的费用\nCOMMISSIONS|交易佣金，用于支付佣金相关的费用\nADVERTISEMENT|广告费用，用于支付广告营销相关的费用\nECOMMERCE|电商货款\nBRAND_TECHNICAL_SERVICE|商标注册，用于支付商标注册相关的费用\nHEALTHCARE_SERVICES|医疗相关服务\nIMPORT_TRADE|进口付款\nWITHDRAW|提现\n"
                 action:
                   type: string
                   description: '是否入账
@@ -152,11 +152,19 @@ paths:
                       id: ssrnxcg10zecu
                     type: array
                     items:
-                      $ref: '#/components/schemas/Deposit - copy'
+                      $ref: '#/components/schemas/Deposit_-_copy'
                       x-stoplight:
                         id: xwn00d3fkf6y1
         '400':
-          description: "**code**|**message**\r\n---|---\r\nPARAM_ERROR|A parameter value is not valid or missing   e.g:clientId is null\r\nILLEGAL_ARGUMENT_EXCEPTION|Parameter check failure. e.g.user_id and sso_user_id cannot be empty at the same\r\nINVALID_PARAMETER_VALUE| A parameter value is not valid."
+          description: '**code**|**message**
+
+            ---|---
+
+            PARAM_ERROR|A parameter value is not valid or missing   e.g:clientId is null
+
+            ILLEGAL_ARGUMENT_EXCEPTION|Parameter check failure. e.g.user_id and sso_user_id cannot be empty at the same
+
+            INVALID_PARAMETER_VALUE| A parameter value is not valid.'
           content:
             application/json:
               schema:
@@ -218,7 +226,7 @@ paths:
       - 客户端凭据授权: []
 components:
   schemas:
-    Deposit - copy:
+    Deposit_-_copy:
       title: Deposits
       x-stoplight:
         id: 6682setxt571t
@@ -293,3 +301,14 @@ components:
           x-stoplight:
             id: e5wfhj9fxg8f3
           description: 发卡银行分支行名称，例如：花旗香港
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+x-stoplight:
+  id: 2nj93bq745btm

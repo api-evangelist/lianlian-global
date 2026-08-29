@@ -1,15 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Payouts API
+  title: Payouts API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  description: payout能力
+servers:
+- url: https://global-api.lianlian.com/api/v1
 tags:
 - name: Payouts
 paths:
@@ -31,7 +26,11 @@ paths:
                 $ref: ../models/PaymentResponse.yaml
               examples: {}
         '404':
-          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
           content:
             application/json:
               schema:
@@ -60,13 +59,39 @@ paths:
               examples: {}
           headers: {}
         '400':
-          description: "**code** |**message**\r\n---------|----------\r\nREQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.\r\nPARAM_ERROR | A parameter value is not valid or is missing.\r\nSOURCE_AMOUNT_BELOW_LIMIT|source amount below limit.\r\nSOURCE_AMOUNT_ABOVE_LIMIT|source amount above limit.\r\nTARGET_AMOUNT_BELOW_LIMIT|target amount below limit.\r\nTARGET_AMOUNT_ABOVE_LIMIT|target amount above limit.\r\nFEE_CONFIG_ERROR|Fee config error, please contact your client manager.\r\nKYC_FAILED|Failed to retrieve KYC information.\r\nACCOUNT_STATUS_INVALID|The account status is invalid.\r\nDOCUMENT_EXPECTED_DECLARATION_TIME_INVALID|The expected declaration time exceeds the payout transaction created time."
+          description: '**code** |**message**
+
+            ---------|----------
+
+            REQUEST_ID_IS_NOT_UNIQUE | The request id is not unique.
+
+            PARAM_ERROR | A parameter value is not valid or is missing.
+
+            SOURCE_AMOUNT_BELOW_LIMIT|source amount below limit.
+
+            SOURCE_AMOUNT_ABOVE_LIMIT|source amount above limit.
+
+            TARGET_AMOUNT_BELOW_LIMIT|target amount below limit.
+
+            TARGET_AMOUNT_ABOVE_LIMIT|target amount above limit.
+
+            FEE_CONFIG_ERROR|Fee config error, please contact your client manager.
+
+            KYC_FAILED|Failed to retrieve KYC information.
+
+            ACCOUNT_STATUS_INVALID|The account status is invalid.
+
+            DOCUMENT_EXPECTED_DECLARATION_TIME_INVALID|The expected declaration time exceeds the payout transaction created time.'
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '500':
-          description: "**code** |**message**\r\n---------|----------\r\nINTERNAL_SERVER_ERROR | An internal server error has occurred."
+          description: '**code** |**message**
+
+            ---------|----------
+
+            INTERNAL_SERVER_ERROR | An internal server error has occurred.'
       requestBody:
         content:
           application/json:
@@ -74,7 +99,21 @@ paths:
               $ref: ../models/PaymentRequest.yaml
             examples: {}
         description: ''
-      description: "### 功能说明：\r\n向指定收款对象创建一笔付款。\r\n### 幂等说明：不支持幂等\r\n- request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；\r\n- request_id不同，业务字段相同时，按全新交易处理，创建新的payout交易。\r\n### 超时方案：\r\n如果调用Create a payout接口超时，可使用request_id调用Get list of payouts接口获取结果。"
+      description: '### 功能说明：
+
+        向指定收款对象创建一笔付款。
+
+        ### 幂等说明：不支持幂等
+
+        - request_id相同，业务字段相同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；
+
+        - request_id相同，业务字段不同时，返回`REQUEST_ID_IS_NOT_UNIQUE`错误；
+
+        - request_id不同，业务字段相同时，按全新交易处理，创建新的payout交易。
+
+        ### 超时方案：
+
+        如果调用Create a payout接口超时，可使用request_id调用Get list of payouts接口获取结果。'
       security:
       - 客户端凭据授权: []
       parameters:
@@ -203,7 +242,26 @@ paths:
                     maxLength: 64
                   status:
                     type: string
-                    description: "订单状态\r\n\r\n状态|说明\r\n----|----\r\nCREATED|已创建\r\nPENDING|挂起，此时可取消付款\r\nPROCESSING|付款处理中\r\nSUCCEEDED|付款成功\r\nFAILED|付款失败\r\nRETURNED|付款退回，付款成功后银行退回资金\r\nCANCELD|付款取消"
+                    description: '订单状态
+
+
+                      状态|说明
+
+                      ----|----
+
+                      CREATED|已创建
+
+                      PENDING|挂起，此时可取消付款
+
+                      PROCESSING|付款处理中
+
+                      SUCCEEDED|付款成功
+
+                      FAILED|付款失败
+
+                      RETURNED|付款退回，付款成功后银行退回资金
+
+                      CANCELD|付款取消'
                     maxLength: 32
                     enum:
                     - CREATEED
@@ -215,13 +273,21 @@ paths:
                     - CANCELD
               examples: {}
         '400':
-          description: "**code**|**message**\r\n---|---\r\nORDER_STATUS_CAN_NOT_CANCEL|order status does not support cancellation operation"
+          description: '**code**|**message**
+
+            ---|---
+
+            ORDER_STATUS_CAN_NOT_CANCEL|order status does not support cancellation operation'
           content:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
         '404':
-          description: "**code**|**message**\r\n---|---\r\nRESOURCE_NOT_FOUND|The specified resource does not exist."
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
           content:
             application/json:
               schema:
@@ -240,7 +306,9 @@ paths:
               - memo
             examples: {}
         description: ''
-      description: "取消付款。\r\n- 业务字段（transaction_id）相同时，不支持幂等"
+      description: '取消付款。
+
+        - 业务字段（transaction_id）相同时，不支持幂等'
       security:
       - 客户端凭据授权: []
       parameters:
@@ -350,7 +418,7 @@ paths:
               schema:
                 $ref: ../models/PaymentResponse.yaml
         '400':
-          description: "code |message | param\r\n---------|----------|---------\r\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. |e.g: country_code\r\n PARAM_ERROR | A parameter value is not valid. |\r\n CAPTCHA_NOT_SEND | Please obtain the verification code first. |\r\n CAPTCHA_NOT_VALID | The verification code has expired, please retrieve it again. |\r\n CAPTCHA_NOT_MATCH | The verification code is incorrect, please check. |\r\n CAPTCHA_USED | The verification code has been used, please retrieve a new one. |"
+          description: "code |message | param\n---------|----------|---------\n MISSING_REQUIRED_PARAMETER | A required parameter in the request is missing. |e.g: country_code\n PARAM_ERROR | A parameter value is not valid. |\n CAPTCHA_NOT_SEND | Please obtain the verification code first. |\n CAPTCHA_NOT_VALID | The verification code has expired, please retrieve it again. |\n CAPTCHA_NOT_MATCH | The verification code is incorrect, please check. |\n CAPTCHA_USED | The verification code has been used, please retrieve a new one. |"
           content:
             application/json:
               schema:
@@ -416,7 +484,21 @@ paths:
       operationId: post-payouts-documents-supplement
       x-stoplight:
         id: 6hsr04nbvsf66
-      description: "### 功能说明：\r\n补充付款订单的贸易材料，暂只支持`business_type=IMPORT_TRADE_ADVANCE`进口预付场景的付款单。一个进口预付付款单可以补充多笔贸易材料，直到补充的贸易材料总金额等于预付付款单的金额。\r\n### 幂等说明：\r\n- request_id相同，业务字段相同时，幂等返回，并返回最新的审核状态status。\r\n- request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE。\r\n- request_id不同，业务字段相同时，按全新请求处理。\r\n### 超时方案：\r\n如果调用Supplement transaction  document接口超时，可使用原报文重试。"
+      description: '### 功能说明：
+
+        补充付款订单的贸易材料，暂只支持`business_type=IMPORT_TRADE_ADVANCE`进口预付场景的付款单。一个进口预付付款单可以补充多笔贸易材料，直到补充的贸易材料总金额等于预付付款单的金额。
+
+        ### 幂等说明：
+
+        - request_id相同，业务字段相同时，幂等返回，并返回最新的审核状态status。
+
+        - request_id相同，业务字段不同时，会返回REQUEST_ID_IS_NOT_UNIQUE。
+
+        - request_id不同，业务字段相同时，按全新请求处理。
+
+        ### 超时方案：
+
+        如果调用Supplement transaction  document接口超时，可使用原报文重试。'
       requestBody:
         content:
           application/json:
@@ -635,3 +717,24 @@ paths:
       security:
       - 客户端凭据授权: []
       description: payout手续费试算
+components:
+  securitySchemes:
+    Component:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth2/token
+          refreshUrl: /oauth2/token
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
+    Component_2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: ''
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+      description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 授权码授权
+x-stoplight:
+  id: w073d3fxcx3df

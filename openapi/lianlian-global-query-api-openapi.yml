@@ -1,15 +1,15 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Distribution Account Query API
+  title: FX RATE Query API
   version: '1.0'
-host: global-api-sandbox.lianlianpay-inc.com
-basePath: /b2b-import/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+  contact:
+    email: fx_support@lianlianpay.com
+  description: This section contains the operations and models of LianLian Global fx rate service.
+servers:
+- url: https://gtest-open-api.lianlianpay-inc.com/remittance/outward/v2/exchangeRate
+  description: Sandbox
+- description: Online
+  url: https://global-open-api.lianlianpay.com/remittance/outward/v2/exchangeRate
 tags:
 - name: Query
 paths:
@@ -32,15 +32,24 @@ paths:
                     maxLength: 10
                   rateId:
                     type: string
-                    description: "Rate ID\r\n\r\n"
+                    description: 'Rate ID
+
+
+                      '
                     maxLength: 24
                   baseCurrency:
                     type: string
-                    description: "Base Currency Sample: USD is the Base Currency for USD/CNY\r\n\r\n"
+                    description: 'Base Currency Sample: USD is the Base Currency for USD/CNY
+
+
+                      '
                     maxLength: 3
                   sourceCurrency:
                     type: string
-                    description: "Source Currency\r\n\r\n"
+                    description: 'Source Currency
+
+
+                      '
                     maxLength: 3
                   targetCurrency:
                     type: string
@@ -49,7 +58,10 @@ paths:
                   rateTime:
                     type: string
                     format: date-time
-                    description: "Rate Time\r\n\r\n"
+                    description: 'Rate Time
+
+
+                      '
                 examples:
                   New User Bob Fellow:
                     value:
@@ -165,3 +177,5 @@ paths:
         id: l2eykshn0ltcq
       tags:
       - Query
+x-stoplight:
+  id: ydanajuqx1scl
