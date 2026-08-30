@@ -2075,7 +2075,7 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
-  - Top-Up
+  - Topup
   tags_raw:
   - Topup
   properties:
@@ -2386,7 +2386,7 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
-  - Verification
+  - Verifications
   tags_raw:
   - Verifications
   properties:
