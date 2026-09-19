@@ -48,7 +48,7 @@ tags:
 - Foreign Exchange
 - E-Commerce
 - Card Issuing
-- Remittance
+- Remittances
 - Financial-Services
 - B2B Payments
 - Digital Wallet
@@ -585,6 +585,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Conversion
+  tags_raw:
   - Conversions
   properties:
   - type: OpenAPI
@@ -1149,6 +1151,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Gateways
+  tags_raw:
   - Gateway
   properties:
   - type: OpenAPI
@@ -1407,6 +1411,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Payments
+  tags_raw:
   - Payment
   properties:
   - type: OpenAPI
@@ -2281,6 +2287,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Authentication
+  tags_raw:
   - Oauth2
   properties:
   - type: OpenAPI
@@ -2332,6 +2340,8 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
+  - Top-Up
+  tags_raw:
   - Top Up
   properties:
   - type: OpenAPI
