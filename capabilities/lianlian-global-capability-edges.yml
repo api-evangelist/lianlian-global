@@ -1,0 +1,155 @@
+slug: lianlian-global
+provider: LianLian Global
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 14
+edges:
+- tag: Kyc
+  spec_file: lianlian-global-kyc-api-openapi.yml
+  capability_id: BC-1300.20
+  capability_id_l1: BC-1300
+  capability_name: KYC & Customer Due Diligence Management
+  confidence: 0.93
+  evidence: '"POST /v1/kyc/corporate 创建企业 KYC", "POST /v1/kyc/individual 创建个人KYC", schemas CorporateKycInfo,
+    IndividualKycInfo, CorporateCert'
+  reason: Operations create and maintain corporate and individual KYC records with certificate and address
+    data — customer due diligence for a licensed payments provider.
+- tag: Checkout
+  spec_file: lianlian-global-checkout-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: 'POST /accept_payments/checkout/sessions "Create a checkout session"; description: "实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款"'
+  reason: Creating checkout sessions to accept card, wallet and local payment methods is payment instruction
+    capture/initiation on a payment acceptance rail.
+- tag: Payment
+  spec_file: lianlian-global-payment-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: '"POST /accept_payments/autopayment Create a automatic payment", "Verify captcha on a payment",
+    schemas Payment, Captcha'
+  reason: Accepting card/wallet/local-method payments with instruction capture, authorisation challenge
+    and status retrieval is payment initiation and processing.
+- tag: Payout
+  spec_file: lianlian-global-payout-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: '"POST /v1/payout 发起付款", "GET /v1/payout/{transaction_id} 查询付款详情", schema Payout'
+  reason: Initiating a disbursement and querying its detail is payment instruction capture and processing
+    on a licensed payment rail.
+- tag: Payouts
+  spec_file: lianlian-global-payouts-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.85
+  evidence: '"POST /payouts create_payout Create a payout", "POST /payouts/cancel/{transaction_id} Cancel
+    a payout", "GET /fee/budget Calculate payout fees"'
+  reason: Full payout instruction lifecycle — creation, cancellation, authorisation challenge, fee calculation
+    — which is payment initiation management for cross-border disbursements.
+- tag: Card Payouts
+  spec_file: lianlian-global-card-payouts-api-openapi.yml
+  capability_id: BC-1340
+  capability_id_l1: BC-1340
+  capability_name: Payments & Card Management
+  confidence: 0.8
+  evidence: '"Payout activity based on LianLian Global cards." / GET /card-payouts/{id} "Get Card Payout
+    Info by ID", schema CardPayout'
+  reason: Operations expose disbursement (payout) activity settled over card rails — payments & card management.
+    Which sub-capability (card transaction processing vs payment processing) is ambiguous for a pure status-retrieval
+    endpoint, so only the L1 is asserted.
+- tag: Gateway
+  spec_file: lianlian-global-gateway-api-openapi.yml
+  capability_id: BC-1340.60
+  capability_id_l1: BC-1340
+  capability_name: Card Issuance Management
+  confidence: 0.8
+  evidence: '"POST /gateway/vcc-api/card 申请卡", "DELETE /gateway/vcc-api/card/{cardId} 注销卡", "GET /gateway/vcc-api/card/{cardId}
+    查询卡详情"'
+  reason: Despite the generic 'Gateway' tag, the operations are virtual-card issuance and lifecycle (apply
+    for card, cancel card, update card) plus supporting sub-account/balance queries — card issuance management.
+    Some ambiguity as transaction and control endpoints also appear under the same tag.
+- tag: 接口
+  spec_file: lianlian-global-default-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.8
+  evidence: GET /rate/{rateType}/{sourceCurrency}/{targetCurrency}  get-rate  查询汇率; POST /payee    创建收款人
+  reason: Aggregated tag spanning the B2B cross-border payout, payee/payer, funding, split-settlement
+    (分账) and FX-rate specs — i.e. initiating and processing international payments with currency conversion,
+    which is cross-border payment management.
+- tag: Transfer
+  spec_file: lianlian-global-transfer-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.78
+  evidence: POST /v1/transfer post-v1-transfer "发起转账" (initiate transfer); GET /v1/transfer/{transaction_id}
+    "查询转账详情"
+  reason: Initiates and queries payment transfers — payment instruction capture and status tracking. Could
+    arguably be cross-border payment management, so slightly below top confidence on the sub-capability.
+- tag: Quotes
+  spec_file: lianlian-global-quotes-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.72
+  evidence: POST /quotes/get_conversion_rate "Get a conversion rate"; POST /quotes/get_reference_rate
+    "Get a reference rate"
+  reason: Currency conversion quoting for cross-border money movement — FX pricing within the cross-border
+    payment rail. Not a sales CPQ 'quote' despite the tag string.
+- tag: Conversion
+  spec_file: lianlian-global-conversion-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.7
+  evidence: POST /v1/conversion "发起汇兑" (initiate FX conversion); GET /v1/conversion/{conversion_id} "查询汇兑信息";
+    schema Conversion
+  reason: Initiating and querying currency conversions on a cross-border payments platform maps to cross-border
+    payment management, which explicitly covers FX. Could alternatively be read as corporate FX management,
+    hence 0.7.
+- tag: Conversions
+  spec_file: lianlian-global-conversions-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.7
+  evidence: POST /conversions "Create a conversion"; GET /conversions/{request_id} "Get a conversion"
+  reason: Same surface as the Conversion tag — currency conversion creation/lookup within a cross-border
+    payment rail; the FX element sits under cross-border payment management.
+- tag: Ew Withdrawals
+  spec_file: lianlian-global-ew-withdrawals-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.7
+  evidence: '"Transfer funds from your Balance Account to your bank account." / "Get Withdrawal Info by
+    ID", schema Withdrawal'
+  reason: Withdrawal instructions move funds from a held balance to a bank account — payment initiation/instruction
+    on a payments platform. Only a read operation is exposed, so confidence is moderate on the sub-capability.
+- tag: Query
+  spec_file: lianlian-global-query-api-openapi.yml
+  capability_id: BC-1340.40
+  capability_id_l1: BC-1340
+  capability_name: Cross-Border Payment Management
+  confidence: 0.7
+  evidence: POST /query post-rate "Get FX Rate"; "models of LianLian Global fx rate service"
+  reason: FX rate retrieval for a cross-border payments provider; the Cross-Border Payment Management
+    sub-capability explicitly covers international payments and FX. Not treasury hedging — it is a rate-serving
+    rail for cross-border transfers.
