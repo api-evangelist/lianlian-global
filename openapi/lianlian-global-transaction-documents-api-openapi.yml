@@ -2,9 +2,8 @@ openapi: 3.2.0
 info:
   title: Lianlian Global Transaction Documents API
   version: '1.0'
-  description: 'Operations tagged Transaction Documents across 3 of this provider''s published API definitions: lianlian-global-lppe-reference-openapi.yml, lianlian-global-lppe-reference2-openapi.yml, lianlian-global-lppe-reference3-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Transaction Documents across 2 of this provider''s published API definitions: lianlian-global-lppe-reference2-openapi.yml, lianlian-global-lppe-reference3-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://global-api.lianlian.com/api/v1
 - url: https://global-api.lianlian.com/api/v2
 - url: https://global-api.lianlian.com/api/v3
 tags:
@@ -21,39 +20,66 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  transaction_document_batch_id:
-                    type: string
-                    x-stoplight:
-                      id: hk2obm8h5vnj2
-                  status:
-                    x-stoplight:
-                      id: bcuz5nkku22a9
-                    enum:
-                    - PROCESSING
-                    - COMPLETED
-                    description: '状态。
+                type: array
+                items:
+                  $ref: ../models/TransactionDocumentCreateResponseV2.yaml
+                  x-stoplight:
+                    id: zfttbhagr0t9l
+        '400':
+          description: '**code**|**message**
 
+            ---|---
 
-                      如果您的材料涉及审核流程，返回结果中status为PROCESSING，此时我们将由异步消息结果通知您（可通过webhook监听材料相关结果）
+            PARAM_ERROR|A parameter value is not valid or missing  e.g:purpose invalid
 
-                      【注】材料是否涉及审核请咨询对应客户经理。
+            MATERIAL_BATCH_IS_OVER_SIZE|documentBatch is overSize
 
+            PURPOSE_NOT_UNIQUE|purpose not unique
 
-                      枚举|说明
+            OWNER_TYPE_NOT_SAME|ownerType is not the same
 
-                      ---|---
+            REQUEST_ID_IS_NOT_UNIQUE|The request id is not unique.
 
-                      PROCESSING|处理中
+            REQUEST_ID_NOT_EXIST|request id not exist
 
-                      COMPLETED|处理完成'
-                  create_time:
-                    type: number
-                    x-stoplight:
-                      id: d3bclwwaq2296
-                    description: 材料批次创建时间，13位时间戳
-      description: 创建贸易材料信息。
+            MATERIAL_IS_EXIST|material is exist
+
+            BUSINESS_TYPE_NOT_UNIQUE|businessType not unique'
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error.yaml
+      description: '### 功能说明：
+
+        创建贸易材料信息。
+
+        ### 幂等说明：
+
+        - 请求报文体内容完全相同时，支持幂等，会返回上一次的结果；
+
+        - 业务字段request_id或original_order_id相同时，不支持幂等，返回`REQUEST_ID_NOT_UNIQUE`或`ORIGINAL_ORDER_ID_IS_EXIST`错误（transaction_amount为负数时，允许original_order_id重复）；
+
+        - 业务字段request_id不相同且origina_order_id不相同时，按新资源，创建新的贸易材料资源。
+
+        ### 超时应对方案：
+
+        如果调用Create a transaction document接口超时，可以选择如下方案进行处理：
+
+        - 立即原报文重试，会幂等返回结果。
+
+        - 使用request_id或original_order_id调用Get list of transaction documents接口获取结果，如果不存在，可重新提交。
+
+        ### 业务逻辑说明：
+
+        - 接口会同步返回贸易材料的校验结果和贸易材料的业务状态。
+
+        - 单次调用，同一批次号的贸易材料会按批进行处理，任意一笔材料校验失败，则本次调用同一批次号的数据受理失败，连连不会落库。
+
+        - 单次调用，可以同时传多个批次号的贸易材料数据。
+
+        - 单次调用支持贸易材料条数最大500条，如果单个批次号内材料明细条数超过500条，可以拆分为多次调用。
+
+        - 单次调用条数500条时，接口响应时间（RT）为4~5秒钟。'
       security:
       - 客户端凭据授权: []
       parameters:
@@ -63,10 +89,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../models/TransactionDocumentsRequest.yaml
+              $ref: '#/components/schemas/TransactionDocument2.0'
         description: ''
       tags:
       - Transaction Documents
+      x-stoplight:
+        id: fnmyecwdrgun7
     get:
       summary: Get list of transaction documents
       tags:
@@ -182,7 +210,7 @@ paths:
       requestBody:
         content: {}
     servers:
-    - url: https://global-api.lianlian.com/api/v1
+    - url: https://global-api.lianlian.com/api/v2
   /documents/{transaction_document_batch_id}:
     parameters:
     - schema:
@@ -201,7 +229,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../models/TransactionDocumentsResponse - copy.yaml
+                $ref: ../models/TransactionDocumentsCallback.2.0 - copy.yaml
+        '404':
+          description: '**code**|**message**
+
+            ---|---
+
+            RESOURCE_NOT_FOUND|The specified resource does not exist.'
+          content:
+            application/json:
+              schema:
+                $ref: ../models/ErrorNoParam.yaml
       operationId: get-transaction_documents
       security:
       - 客户端凭据授权: []
@@ -217,8 +255,10 @@ paths:
         需要注意的是，当批次内明细数据小于等于500条时，可通过此接口查看详情。
 
         如果批次明细大于500条，建议您使用Get list of transaction document接口分页查询详细信息。'
+      x-stoplight:
+        id: e40mk37daihb9
     servers:
-    - url: https://global-api.lianlian.com/api/v1
+    - url: https://global-api.lianlian.com/api/v2
   /documents/quotas:
     get:
       summary: Get list of transaction quotas
@@ -520,6 +560,5 @@ components:
           scopes: {}
       description: 详情参考[Authentication](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication) > 客户端凭据授权
 x-refined-from:
-- lianlian-global-lppe-reference-openapi.yml
 - lianlian-global-lppe-reference2-openapi.yml
 - lianlian-global-lppe-reference3-openapi.yml

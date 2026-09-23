@@ -28,7 +28,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
-      operationId: ''
+      operationId: getAccountById
       description: 获取用户信息。
       requestBody:
         content: {}
@@ -39,6 +39,7 @@ paths:
       - $ref: ../Base/Webhooks.yaml#/components/parameters/header-Authorization
       x-stoplight:
         id: xieu734majyzw
+      x-operation-id-source: derived
     servers:
     - url: https://global-api.lianlian.com/api/v1
   /account/list:
@@ -72,7 +73,6 @@ paths:
               schema:
                 type: 'null'
       operationId: query-currency-balance
-      description: Retrieve all balances
       x-stoplight:
         id: lj0vjww03w7ht
       requestBody:

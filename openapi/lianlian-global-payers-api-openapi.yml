@@ -11,7 +11,7 @@ paths:
   /payers:
     parameters: []
     post:
-      summary: Create a  payer
+      summary: Create a payer
       operationId: post-payers-create
       responses:
         '200':

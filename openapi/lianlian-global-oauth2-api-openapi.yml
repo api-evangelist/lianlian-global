@@ -5,7 +5,7 @@ info:
 servers:
 - url: https://global-api.lianlian.com/api/v2
 tags:
-- name: Oauth2
+- name: OAuth2
 paths:
   /oauth2/token:
     parameters: []
@@ -71,6 +71,6 @@ paths:
       parameters:
       - $ref: ./Webhooks.yaml#/components/parameters/header-Content-Type
       tags:
-      - Oauth2
+      - OAuth2
 x-stoplight:
   id: t268rmyd2cy2p

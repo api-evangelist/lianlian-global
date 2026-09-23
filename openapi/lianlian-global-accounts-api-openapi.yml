@@ -266,7 +266,22 @@ paths:
       operationId: submit-account
       x-stoplight:
         id: qobblne9q3bmg
-      description: "提交开通账户所需的实名认证详情信息，进行账户激活。\n- 当status为INIT时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\n- 当status为REQUIRE_ACTION时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT\n不同授权类型下，公司成员必填信息特别说明：\n\n**授权人类型** | **法人** | **代理人**| **法人短信验证**|**法人承诺函** |**法人手持承诺函** | **代理人授权书**\n---------|----------|---------|----------|---------|---------|---------\n LEGALPERSON | 必填 | 非必填 | 必填 | 非必填 | 非必填| 非必填\n AUTHORIZER | 必填 | 必填 | 非必填 | 必填| 必填| 必填"
+      description: '提交开通账户所需的实名认证详情信息，进行账户激活。
+
+        - 当status为INIT时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT
+
+        - 当status为REQUIRE_ACTION时，允许提交，提交后状态变为UNDER_REVIEW。并发重复提交，会返回REQUEST_CONFLICT
+
+        不同授权类型下，公司成员必填信息特别说明：
+
+
+        **授权人类型** | **法人** | **代理人**| **法人短信验证**|**法人承诺函** |**法人手持承诺函** | **代理人授权书**
+
+        ---------|----------|---------|----------|---------|---------|---------
+
+        LEGALPERSON | 必填 | 非必填 | 必填 | 非必填 | 非必填| 非必填
+
+        AUTHORIZER | 必填 | 必填 | 非必填 | 必填| 必填| 必填'
       security:
       - 授权码授权: []
       requestBody:
@@ -279,6 +294,51 @@ paths:
       description: ''
 components:
   schemas:
+    Account:
+      title: Account
+      type: object
+      description: 收款账户（带充值功能）
+      examples: []
+      properties:
+        account_id:
+          type: string
+          description: 账户号
+          maxLength: 32
+        account_type:
+          type: string
+          description: 账户类型
+          maxLength: 8
+          enum:
+          - TOPUP
+          - RECEIVING
+        member_id:
+          type: string
+          description: 会员id
+          maxLength: 32
+        currency:
+          type: string
+          description: 币种，3位，参考：https://www.iso.org/iso-4217-currency-codes.html
+        status:
+          type: string
+          description: 状态
+          maxLength: 8
+          enum:
+          - ENABLED
+          - DISABLED
+        freeze_amount:
+          type: string
+          maxLength: 16
+        available_amount:
+          type: string
+          maxLength: 16
+        bank:
+          $ref: '#/components/schemas/Bank'
+      required:
+      - account_id
+      - account_type
+      - member_id
+      - currency
+      - freeze_amount
     Bank:
       title: Bank
       x-stoplight:
@@ -331,51 +391,6 @@ components:
       - account_number
       - swift_code
       - bank_name
-    Account:
-      title: Account
-      type: object
-      description: 收款账户（带充值功能）
-      examples: []
-      properties:
-        account_id:
-          type: string
-          description: 账户号
-          maxLength: 32
-        account_type:
-          type: string
-          description: 账户类型
-          maxLength: 8
-          enum:
-          - TOPUP
-          - RECEIVING
-        member_id:
-          type: string
-          description: 会员id
-          maxLength: 32
-        currency:
-          type: string
-          description: 币种，3位，参考：https://www.iso.org/iso-4217-currency-codes.html
-        status:
-          type: string
-          description: 状态
-          maxLength: 8
-          enum:
-          - ENABLED
-          - DISABLED
-        freeze_amount:
-          type: string
-          maxLength: 16
-        available_amount:
-          type: string
-          maxLength: 16
-        bank:
-          $ref: '#/components/schemas/Bank'
-      required:
-      - account_id
-      - account_type
-      - member_id
-      - currency
-      - freeze_amount
   securitySchemes:
     Component:
       type: oauth2

@@ -70,7 +70,7 @@ paths:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
-      operationId: ''
+      operationId: getBalance
       description: 获取账户当前余额信息。
       requestBody:
         content: {}
@@ -86,6 +86,7 @@ paths:
         description: 币种
       x-stoplight:
         id: kwl372sgx0efp
+      x-operation-id-source: derived
     servers:
     - url: https://global-api.lianlian.com/api/v1
   /balance/history:
@@ -259,7 +260,9 @@ paths:
       requestBody:
         content: {}
         description: ''
-      description: Query currency account balance<br>查询币种账户余额
+      description: 'Query currency account balance
+
+        查询币种账户余额'
       x-stoplight:
         id: 3wg9pivf3rjgm
       tags:

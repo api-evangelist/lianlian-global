@@ -2,16 +2,13 @@ openapi: 3.2.0
 info:
   title: Lianlian Global 接口 API
   version: '1.0'
-  description: 'Operations tagged 接口 across 44 of this provider''s published API definitions: lianlian-global-b2b-cross-border-distribution-import-openapi.yml, lianlian-global-b2b-cross-border-distribution-openapi.yml, lianlian-global-b2b-cross-border-document-openapi.yml, lianlian-global-b2b-cross-border-event-import-openapi.yml, lianlian-global-b2b-cross-border-event-openapi.yml, lianlian-global-b2b-cross-border-funding-import-openapi.yml, lianlian-global-b2b-cross-border-funding-openapi.yml, lianlian-global-b2b-cross-border-fxrate-openapi.yml, lianlian-global-b2b-cross-border-payee-openapi.yml, lianlian-global-b2b-cross-border-payer-openapi.yml, lianlian-global-b2b-cross-border-payout-import-openapi.yml, lianlian-global-b2b-cross-border-payout-openapi.yml, lianlian-global-b2b-cross-border-shop-openapi.yml, lianlian-global-b2b-cross-border-tradefile-import-openapi.yml, lianlian-global-b2b-cross-border-tradefile-openapi.yml, lianlian-global-b2b-cross-border-virtualaccount-import-openapi.yml, lianlian-global-b2b-cross-border-virtualaccount-openapi.yml, lianlian-global-b2b-cross-border-webhook-import-openapi.yml, lianlian-global-b2b-cross-border-webhook-openapi.yml, lianlian-global-b2b-inflow-payout-distribution-openapi.yml, lianlian-global-b2b-inflow-payout-document-openapi.yml, lianlian-global-b2b-inflow-payout-event-openapi.yml, lianlian-global-b2b-inflow-payout-funding-openapi.yml, lianlian-global-b2b-inflow-payout-fxrate-openapi.yml, lianlian-global-b2b-inflow-payout-hk-payee-openapi.yml, lianlian-global-b2b-inflow-payout-payee-openapi.yml, lianlian-global-b2b-inflow-payout-payout-openapi.yml, lianlian-global-b2b-inflow-payout-shop-openapi.yml, lianlian-global-b2b-inflow-payout-tradefile-openapi.yml, lianlian-global-b2b-inflow-payout-virtualaccount-openapi.yml, lianlian-global-b2b-inflow-payout-webhook-openapi.yml, lianlian-global-connect-ota-account-openapi.yml, lianlian-global-connect-ota-document-openapi.yml, lianlian-global-connect-ota-event-openapi.yml, lianlian-global-connect-ota-funding-openapi.yml, lianlian-global-connect-ota-fxrate-openapi.yml, lianlian-global-connect-ota-member-openapi.yml, lianlian-global-connect-ota-payout-openapi.yml, lianlian-global-connect-ota-tradefile-openapi.yml, lianlian-global-connect-ota-webhook-openapi.yml, lianlian-global-llp-api-common-openapi.yml, lianlian-global-llp-api-userapi-regular-openapi.yml, lianlian-global-llp-api-userapi-supplier-openapi.yml, lianlian-global-llp-api-userapi-wallet-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged 接口 across 15 of this provider''s published API definitions: lianlian-global-b2b-cross-border-distribution-import-openapi.yml, lianlian-global-b2b-cross-border-document-openapi.yml, lianlian-global-b2b-cross-border-funding-openapi.yml, lianlian-global-b2b-cross-border-payee-openapi.yml, lianlian-global-b2b-cross-border-payer-openapi.yml, lianlian-global-b2b-cross-border-shop-openapi.yml, lianlian-global-b2b-cross-border-tradefile-import-openapi.yml…'
 servers:
 - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
-- url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export/v1
 - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
-- url: http://global-api-sandbox.lianlianpay-inc.com/disbursement/v1
-- url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import
+- url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export/v1
 - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export
 - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
-- url: http://global-api-sandbox.lianlianpay-inc.com/connect/v1
 - url: https://gtest-open-api.lianlianpay-inc.com/api/
 - url: https://global-api-sandbox.lianlianpay-inc.com/supplier/v1
 - url: https://global-api-sandbox.lianlianpay-inc.com/
@@ -57,6 +54,8 @@ paths:
                   type: string
                   description: 分账金额
                   maxLength: 10
+      operationId: postDistribute
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /distribute/{distributeId}:
@@ -79,6 +78,8 @@ paths:
       summary: 查询分账指令信息
       tags:
       - 接口
+      operationId: getDistributeByDistributeId
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /documents:
@@ -108,9 +109,7 @@ paths:
         '500':
           description: ''
       summary: 上传文件
-      description: '上传文件至连连，连连会返回`Document.id`用以标识对接方上传的文件
-
-        '
+      description: 上传文件至连连，连连会返回`Document.id`用以标识对接方上传的文件
       operationId: upload-document
       tags:
       - 接口
@@ -160,112 +159,12 @@ paths:
         '500':
           description: ''
       summary: 下载文件
-      description: '使用`dcoumentId` 下载文件
-
-
-        '
+      description: 使用`dcoumentId` 下载文件
       operationId: download-document
       tags:
       - 接口
       security:
       - authorization: []
-    servers:
-    - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
-  /events:
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  total:
-                    type: integer
-                    description: 总数
-                  list:
-                    type: array
-                    description: 事件对象列表
-                    items:
-                      $ref: '#/components/schemas/Event'
-                required:
-                - total
-                - list
-        '400':
-          description: 'Possible error codes:
-
-
-            | Code | Description |
-
-            |------|-------------|
-
-            | 999995 | \[PARAMETER\] ERROR_MESSAGE |'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-        '500':
-          description: ''
-      summary: 查询事件列表
-      description: 查询事件列表
-      operationId: get-event-list
-      tags:
-      - 接口
-      parameters:
-      - in: query
-        name: topic
-        description: 连连定义的Event topic
-        schema:
-          type: string
-      - in: query
-        name: pageNum
-        allowEmptyValue: true
-        description: 页码
-        schema:
-          type: integer
-          default: 1
-          minimum: 1
-      - in: query
-        name: pageSize
-        allowEmptyValue: true
-        description: 分页大小
-        schema:
-          type: integer
-          default: 20
-      security:
-      - authorization: []
-      - llpay-signature: []
-    servers:
-    - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
-  /events/{eventId}:
-    parameters:
-    - name: eventId
-      in: path
-      required: true
-      schema:
-        type: string
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Event'
-        '404':
-          description: ''
-        '500':
-          description: ''
-      summary: 查询事件
-      description: 根据eventId查询事件对象
-      tags:
-      - 接口
-      operationId: get-event
-      security:
-      - authorization: []
-      - llpay-signature: []
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
   /funding/{fundingId}:
@@ -282,10 +181,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_3'
+                $ref: '#/components/schemas/new-model_2'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
       summary: 查询加款信息
       tags:
       - 接口
+      operationId: getFundingByFundingId
+      x-operation-id-source: derived
     patch:
       responses:
         '200':
@@ -293,7 +198,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_4'
+                $ref: '#/components/schemas/new-model_2'
         '400':
           description: 'Bad Request
 
@@ -326,8 +231,10 @@ paths:
       description: 将已加款成功的资金退回
       tags:
       - 接口
+      operationId: patchFundingByFundingId
+      x-operation-id-source: derived
     servers:
-    - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
+    - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export/v1
   /fundings:
     get:
       responses:
@@ -338,7 +245,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/new-model_3'
+                  $ref: '#/components/schemas/new-model_2'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
       summary: 批量查询加款信息
       tags:
       - 接口
@@ -373,59 +284,10 @@ paths:
           type: integer
           default: 20
           maximum: 20
+      operationId: getFundings
+      x-operation-id-source: derived
     servers:
-    - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
-  /rate/{rateType}/{sourceCurrency}/{targetCurrency}:
-    parameters:
-    - name: sourceCurrency
-      in: path
-      required: true
-      description: 源币种
-      schema:
-        type: string
-        maxLength: 3
-    - name: targetCurrency
-      in: path
-      required: true
-      description: 目的币种
-      schema:
-        type: string
-        maxLength: 3
-    - name: rateType
-      in: path
-      required: true
-      description: "汇率类型, 传输方式如下 \n|传输值|解释|\n|----|-----|\n|reference|参考汇率|"
-      schema:
-        type: string
-        maxLength: 10
-    get:
-      summary: 查询汇率
-      tags:
-      - 接口
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/rate'
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-        ? ''
-        : description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/rate'
-      operationId: get-rate
-      description: ''
-      security:
-      - authorization: []
-      - llpay-signature: []
-    servers:
-    - url: http://global-api-sandbox.lianlianpay-inc.com/disbursement/v1
+    - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export/v1
   /payee:
     post:
       responses:
@@ -461,7 +323,6 @@ paths:
             '
         '500':
           description: Internal Server Error
-      description: 创建收款人
       summary: 创建收款人
       tags:
       - 接口
@@ -735,6 +596,8 @@ paths:
               - payeeIdIsLt
               - payeeIdExpiry
               - payeeContactNo
+      operationId: postPayee
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export/v1
   /payee/{payeeId}:
@@ -762,6 +625,8 @@ paths:
       description: 查询收款人信息
       tags:
       - 接口
+      operationId: getPayeeByPayeeId
+      x-operation-id-source: derived
     put:
       responses:
         '200':
@@ -1030,6 +895,8 @@ paths:
               - payeeIdExpiry
               - payeeContactNo
         description: 修改收款人信息
+      operationId: putPayeeByPayeeId
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export/v1
   /payer:
@@ -1041,7 +908,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/payer'
-      description: 创建付款人
       summary: 创建付款人
       tags:
       - 接口
@@ -1297,6 +1163,8 @@ paths:
               - payerIdIssue
               - payerIdExpiry
               - payerContactNo
+      operationId: postPayer
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /payer/{payerId}:
@@ -1318,6 +1186,8 @@ paths:
       description: 查询收款人信息
       tags:
       - 接口
+      operationId: getPayerByPayerId
+      x-operation-id-source: derived
     put:
       responses:
         '200':
@@ -1525,166 +1395,10 @@ paths:
                         description: 受益人证明文件
                         maxLength: 64
         description: 修改付款人信息
+      operationId: putPayerByPayerId
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
-  /payout:
-    post:
-      summary: 提交分发指令
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/new-model_5'
-      tags:
-      - 接口
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              title: 分发
-              description: 连连侧分发指令对象
-              properties:
-                payoutId:
-                  type: string
-                  description: 商户侧分发指令唯一编号
-                  maxLength: 64
-                tradeFileInfo:
-                  type: array
-                  description: 平台侧订单信息
-                  items:
-                    type: object
-                    properties:
-                      tradeFileId:
-                        type: string
-                        description: 平台侧订单唯一编号
-                        maxLength: 64
-                pricingCurrency:
-                  type: string
-                  description: 定价币种，参考附录币种代码
-                  minLength: 3
-                  maxLength: 3
-                sourceCurrency:
-                  type: string
-                  description: 源币种，默认为CNY
-                  minLength: 3
-                  maxLength: 3
-                sourceAmount:
-                  type: string
-                  description: 源币种金额，若 pricingCurrency = sourceCurrency，则该字段必填
-                  maxLength: 10
-                targetCurrency:
-                  type: string
-                  description: 目的币种，请参考附录币种代码
-                  minLength: 3
-                  maxLength: 3
-                targetAmount:
-                  type: string
-                  description: 目的币种金额，若 pricingCurrency = targetCurrency，则该字段必填
-                  maxLength: 10
-                payeeName:
-                  type: string
-                  description: 收款人名称
-                  maxLength: 128
-                payeeBankName:
-                  type: string
-                  description: 收款银行名称
-                  maxLength: 256
-                payeeBankAddress:
-                  type: string
-                  maxLength: 256
-                  description: 收款银行地址
-                payeeBankAcctType:
-                  type: string
-                  description: '收款银行账户类型，填写方式如下
-
-
-                    |传输值|解释|
-
-                    |----|----|
-
-                    |INDIVIDUAL|个人银行账户|
-
-                    |CORPORATE|企业银行账户|'
-                payeeBankAcctNo:
-                  type: string
-                  description: 收款银行账号
-                  maxLength: 32
-                payeeBankDistrict:
-                  type: string
-                  description: 收人银行所在国家或地区，请参考附录国家huo
-                  minLength: 3
-                  maxLength: 3
-                payeeBankSwiftCode:
-                  type: string
-                  description: 收款银行SwiftCode
-                  maxLength: 32
-                payeeBankType:
-                  type: string
-                  description: '收款银行国际编码，填写方式如下
-
-
-                    |传输值|解释|
-
-                    |---|---|
-
-                    |IBAN|如果银行账户为欧洲地区国际银行账户，而且需要走欧洲本地分发|
-
-                    |SORT|如果银行账户是英国地区银行账户，而且需要走英国本地分发|'
-                  maxLength: 8
-                payeeBankCode:
-                  type: string
-                  description: 收款银行国际编码，若payeeBankType已填写，则该字段填写相应的IBAN、SORTCODEzhi
-                  maxLength: 16
-                tradeCode:
-                  type: string
-                  description: 交易编码
-                  maxLength: 8
-                memo:
-                  type: string
-                  description: 打款备注
-                  maxLength: 40
-              required:
-              - payoutId
-              - tradeFileInfo
-              - pricingCurrency
-              - sourceCurrency
-              - targetCurrency
-              - payeeName
-              - payeeBankName
-              - payeeBankAddress
-              - payeeBankAcctType
-              - payeeBankAcctNo
-              - payeeBankDistrict
-              - payeeBankSwiftCode
-              - tradeCode
-    parameters: []
-    servers:
-    - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import
-  /payout/{payoutId}:
-    parameters:
-    - name: payoutId
-      in: path
-      required: true
-      description: 商户侧分发指令唯一编号
-      schema:
-        type: string
-        maxLength: 64
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/new-model_5'
-      summary: 查询分发指令信息
-      tags:
-      - 接口
-    servers:
-    - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import
   /shop:
     post:
       responses:
@@ -1693,7 +1407,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_7'
+                $ref: '#/components/schemas/new-model_3'
         '400':
           description: 'Bad Request
 
@@ -1736,6 +1450,8 @@ paths:
                   type: string
                   description: 店铺链接
                   maxLength: 128
+      operationId: postShop
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export
   /shop/{shopId}:
@@ -1752,14 +1468,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_7'
+                $ref: '#/components/schemas/new-model_3'
         '404':
           description: Not Found
         '500':
           description: Internal Server Error
       tags:
       - 接口
-      summary: ' 查询店铺信息'
+      summary: 查询店铺信息
+      operationId: getShopByShopId
+      x-operation-id-source: derived
     put:
       responses:
         '200':
@@ -1767,7 +1485,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_7'
+                $ref: '#/components/schemas/new-model_3'
       summary: 修改店铺信息
       description: 在店铺审核失败的情况下，可以修改店铺信息（店铺经营类别、店铺链接）
       tags:
@@ -1786,6 +1504,8 @@ paths:
                   type: string
                   description: 店铺链接
                   maxLength: 128
+      operationId: putShopByShopId
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-export
   /tradefile:
@@ -1796,7 +1516,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_8'
+                $ref: '#/components/schemas/new-model_4'
       summary: 提交贸易材料
       tags:
       - 接口
@@ -1921,6 +1641,8 @@ paths:
               - tradeCurrency
               - tradeAmount
               - tradeName
+      operationId: postTradefile
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /tradefile/{materialId}:
@@ -1939,10 +1661,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_8'
+                $ref: '#/components/schemas/new-model_4'
       summary: 查询贸易材料信息
       tags:
       - 接口
+      operationId: getTradefileByMaterialId
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /virtualaccount:
@@ -1953,7 +1677,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_10'
+                $ref: '#/components/schemas/new-model_5'
       summary: 创建虚拟卡
       description: 为一对新的买卖关系创建虚拟卡
       tags:
@@ -2006,6 +1730,8 @@ paths:
               - payerId
               - payerName
               - payerAccountNumber
+      operationId: postVirtualaccount
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /virtualaccount/{receivingAccountNo}:
@@ -2024,10 +1750,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/new-model_10'
+                $ref: '#/components/schemas/new-model_5'
       summary: 查询虚拟卡号
       tags:
       - 接口
+      operationId: getVirtualaccountByReceivingAccountNo
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /virtualaccounts:
@@ -2040,9 +1768,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/new-model_10'
+                  $ref: '#/components/schemas/new-model_5'
       summary: 批量查询虚拟卡号
-      description: 批量查询虚拟卡号
       parameters:
       - in: query
         name: payeeId
@@ -2089,6 +1816,8 @@ paths:
           maximum: 20
       tags:
       - 接口
+      operationId: getVirtualaccounts
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/b2b-import/v1
   /webhooks:
@@ -2186,7 +1915,6 @@ paths:
         '500':
           description: ''
       summary: 查询WebHook列表
-      description: 查询WebHook列表
       operationId: get-webhook-registration-list
       tags:
       - 接口
@@ -2240,56 +1968,11 @@ paths:
       - llpay-signature: []
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
-  /webhooks/{webhookId}:
-    parameters:
-    - name: webhookId
-      in: path
-      required: true
-      schema:
-        type: string
-    get:
-      summary: 查询Webhook
-      description: 通过webhookId查询WebHook
-      operationId: get-webhook-registration
-      tags:
-      - 接口
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/webhook_2'
-        '404':
-          description: ''
-        '500':
-          description: ''
-      security:
-      - authorization: []
-      - llpay-signature: []
-    delete:
-      responses:
-        '200':
-          description: ''
-        '404':
-          description: ''
-        '500':
-          description: ''
-      summary: 删除Webhook
-      description: 删除WebHook
-      operationId: delete-webhook-registration
-      tags:
-      - 接口
-      security:
-      - authorization: []
-      - llpay-signature: []
-    servers:
-    - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
   /account:
     parameters: []
     post:
       summary: 创建会员账户
-      operationId: ''
+      operationId: postAccount
       responses:
         '200':
           description: ''
@@ -2344,6 +2027,7 @@ paths:
       description: ''
       tags:
       - 接口
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
   /account/{memberId}:
@@ -2371,8 +2055,9 @@ paths:
           description: Bad Request
         '500':
           description: Internal Server Error
-      operationId: ''
+      operationId: getAccountByMemberId
       description: ''
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
   /statement:
@@ -2392,7 +2077,7 @@ paths:
           description: Bad Request
         '500':
           description: Internal Server Error
-      operationId: ''
+      operationId: getStatement
       parameters:
       - schema:
           type: string
@@ -2434,6 +2119,7 @@ paths:
         name: pageSize
         description: 每页查询数量，单页最多20条
         required: true
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
   /balance:
@@ -2475,7 +2161,7 @@ paths:
           description: Bad Request
         '500':
           description: Internal Server Error
-      operationId: ''
+      operationId: getBalance
       description: ''
       parameters:
       - schema:
@@ -2492,13 +2178,14 @@ paths:
         name: currency
         description: 币种
         required: true
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
   /member/:
     parameters: []
     post:
       summary: 创建会员
-      operationId: ''
+      operationId: postMember
       responses:
         '200':
           description: ''
@@ -2576,6 +2263,7 @@ paths:
       parameters: []
       tags:
       - 接口
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
   /member/ {memberId}:
@@ -2587,7 +2275,7 @@ paths:
       required: true
     put:
       summary: 修改会员信息
-      operationId: ''
+      operationId: putMember {memberId}
       responses:
         '200':
           description: ''
@@ -2599,7 +2287,6 @@ paths:
           description: Bad Request
         '500':
           description: Internal Server Error
-      description: 修改会员信息
       requestBody:
         content:
           application/json:
@@ -2649,6 +2336,7 @@ paths:
         description: ''
       tags:
       - 接口
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
   /member/{memberId}:
@@ -2673,7 +2361,8 @@ paths:
           description: Bad Request
         '500':
           description: Internal Server Error
-      operationId: ''
+      operationId: getMemberByMemberId
+      x-operation-id-source: derived
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/connect/v1
   /dictionaries/district/{code}:
@@ -2811,7 +2500,8 @@ paths:
         获取citycode时，code请填写对应provincecode
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/dictionaries/district/{code}** </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/dictionaries/district/{code}**
+
 
         生产地址 - **https://global-api.lianlianpay.com/common/v1/dictionaries/district/{code}**'
       operationId: get-dictionaries-district-code
@@ -2898,7 +2588,8 @@ paths:
       description: '你可以通过上传附件接口返回的id进行附件文件的下载。
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/documents/{Id}** </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/documents/{Id}**
+
 
         生产地址 - **https://global-api.lianlianpay.com/common/v1/documents/{Id}**'
       operationId: download-document
@@ -2963,7 +2654,8 @@ paths:
         每小时获取验证码上限10次
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/verification-codes/SMS** </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/verification-codes/SMS**
+
 
         生产地址 - **https://global-api.lianlianpay.com/common/v1/verification-codes/SMS**'
       operationId: post-verification-codes
@@ -3006,6 +2698,539 @@ paths:
                   - SUBMIT_PAYMENT
               required:
               - verificationEnum
+      security:
+      - authorization: []
+      - llpay-signature: []
+    servers:
+    - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
+  /webhooks/{webhookId}:
+    parameters:
+    - name: webhookId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: 查询WebHook
+      description: '通过webhookId查询WebHook
+
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/webhooks/{webhookId}**
+
+
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/webhooks/{webhookId}**'
+      operationId: get-webhook-registration
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                title: 注册WebHook结果
+                description: ''
+                x-tags:
+                - 对象
+                properties:
+                  id:
+                    type: string
+                    description: 流水单号
+                    maxLength: 32
+                  url:
+                    type: string
+                    description: webhook url
+                    maxLength: 64
+                  topic:
+                    type: string
+                    title: Event-Topic枚举
+                    description: '定义的Topic
+
+
+                      | Topic | Event-Data名称| 描述|
+
+                      |--------|------------|------------|
+
+                      | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+
+                      '
+                    x-tags:
+                    - 对象
+                  createTime:
+                    type: string
+                    description: 创建时间
+                    format: date-time
+                required:
+                - id
+                - url
+                - topic
+                - createTime
+              example:
+                id: 202103239016596&1138
+                url: www.baidu.com
+                createTime: '2021-03-23T10:46:19.000Z'
+                topic: withdraw.event.response
+        '400':
+          description: '| Code | Message | Description |
+
+            |------|-------------|-------------|
+
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                error: Bad request
+                code: '400006'
+                message: Signature validation failed. Contact Lianlian Pay for technical support.
+        '404':
+          description: 传入webhookId不存在
+          content:
+            application/json:
+              example:
+                message: Resource not found.
+        '500':
+          description: '| Code | Message |
+
+            |------|-------------|
+
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|'
+      tags:
+      - 接口
+      parameters:
+      - in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: LLPAY-Signature
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: webhookId
+        required: true
+        description: 即查询WebHook列表接口返回id
+        schema:
+          type: string
+      security:
+      - authorization: []
+      - llpay-signature: []
+    delete:
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: '| Code | Message | Description |
+
+            |------|-------------|-------------|
+
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                error: Bad request
+                code: '400006'
+                message: Signature validation failed. Contact Lianlian Pay for technical support.
+        '404':
+          description: 传入webhookId不存在
+          content:
+            application/json:
+              example:
+                message: Resource not found.
+        '500':
+          description: '| Code | Message |
+
+            |------|-------------|
+
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|'
+      summary: 删除WebHook
+      description: '删除已注册的WebHook
+
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/webhooks/{webhookId}**
+
+
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/webhooks/{webhookId}**'
+      operationId: delete-webhook-registration
+      tags:
+      - 接口
+      parameters:
+      - in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: LLPAY-Signature
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: webhookId
+        required: true
+        description: 即查询WebHook列表接口返回id
+        schema:
+          type: string
+      security:
+      - authorization: []
+      - llpay-signature: []
+    servers:
+    - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
+  /events:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: 总数
+                  list:
+                    type: array
+                    description: ''
+                    items:
+                      type: object
+                      title: Event
+                      description: 调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为SUCCESS。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为MAXIMUM_RETRIES_REACHED。
+                      x-tags:
+                      - 对象
+                      properties:
+                        id:
+                          type: string
+                          description: 流水单号
+                        topic:
+                          type: string
+                          title: Event-Topic枚举
+                          description: '定义的Topic
+
+
+                            | Topic | Event-Data名称| 描述|
+
+                            |--------|------------|------------|
+
+                            | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+
+                            '
+                          x-tags:
+                          - 对象
+                        data:
+                          description: Event具体对象，例如提现Event
+                          type: string
+                        createTime:
+                          type: string
+                          description: 创建时间
+                          format: date-time
+                        status:
+                          type: string
+                          description: '状态
+
+
+                            | status | description |
+
+                            |--------|-------------|
+
+                            | PROCESSING | 处理中 |
+
+                            | SUCCESS | 处理成功 |
+
+                            | MAXIMUM_RETRIES_REACHED | 处理失败 |'
+                          enum:
+                          - PROCESSING
+                          - SUCCESS
+                          - MAXIMUM_RETRIES_REACHED
+                        webhookUrl:
+                          type: string
+                          description: webhook url
+                      required:
+                      - topic
+                      - data
+                      - createTime
+                required:
+                - total
+                - list
+              example:
+                list:
+                - data: '{"externalTransId":"2021032400000123","status":2}'
+                  createTime: '2021-03-24T08:53:18.897Z'
+                  topic: withdraw.event.response
+                  id: '202103249052452'
+                  webhookUrl: www.baidu.com
+                  status: MAXIMUM_RETRIES_REACHED
+                - data: '{"externalTransId":"2021032400000123","status":2}'
+                  createTime: '2021-03-24T08:53:19.587Z'
+                  topic: withdraw.event.response
+                  id: '202103249052449'
+                  webhookUrl: www.baidu.com
+                  status: SUCCESS
+                total: 2
+        '400':
+          description: '| Code | Message | Description |
+
+            |------|-------------|-------------|
+
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |
+
+            | 999995 | [pageNum] pageNum can''t be null. | 请求参数不合法 |'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                code: '999995'
+                message: '[pageNum]min value is 1'
+        '500':
+          description: '| Code | Message |
+
+            |------|-------------|
+
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|'
+      summary: 查询事件列表
+      description: '查询回调事件列表
+
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/events**
+
+
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/events**'
+      operationId: get-event-list
+      parameters:
+      - in: query
+        name: topic
+        description: topic
+        schema:
+          type: string
+      - in: query
+        name: pageNum
+        description: 页码
+        allowEmptyValue: true
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - in: query
+        name: pageSize
+        description: 分页大小
+        allowEmptyValue: true
+        schema:
+          type: integer
+          default: 20
+      - in: query
+        name: status
+        allowEmptyValue: true
+        description: '状态
+
+
+          | status | description |
+
+          |--------|-------------|
+
+          | PROCESSING | 处理中 |
+
+          | SUCCESS | 处理成功 |
+
+          | MAXIMUM_RETRIES_REACHED | 处理失败 |'
+        schema:
+          type: string
+      - in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: LLPAY-Signature
+        required: true
+        schema:
+          type: string
+      tags:
+      - 接口
+      security:
+      - authorization: []
+      - llpay-signature: []
+    servers:
+    - url: https://global-api-sandbox.lianlianpay-inc.com/common/v1
+  /events/{eventId}:
+    parameters:
+    - name: eventId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: 查询事件
+      description: '根据eventId查询事件对象
+
+
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/events/{eventId}**
+
+
+        生产地址 - **https://global-api.lianlianpay.com/common/v1/events/{eventId}**'
+      operationId: get-event
+      tags:
+      - 接口
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                title: Event
+                description: 调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为SUCCESS。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为MAXIMUM_RETRIES_REACHED。
+                x-tags:
+                - 对象
+                properties:
+                  id:
+                    type: string
+                    description: 流水单号
+                  topic:
+                    type: string
+                    title: Event-Topic枚举
+                    description: '定义的Topic
+
+
+                      | Topic | Event-Data名称| 描述|
+
+                      |--------|------------|------------|
+
+                      | withdraw.event.response | 提现Event|在提现成功、提现失败时触发相关事件|
+
+                      '
+                    x-tags:
+                    - 对象
+                  data:
+                    type: string
+                    description: Event具体对象，例如提现Event
+                  createTime:
+                    type: string
+                    description: 创建时间
+                    format: date-time
+                  status:
+                    type: string
+                    description: '状态
+
+
+                      | status | description |
+
+                      |--------|-------------|
+
+                      | PROCESSING | 处理中 |
+
+                      | SUCCESS | 处理成功 |
+
+                      | MAXIMUM_RETRIES_REACHED | 处理失败 |'
+                    enum:
+                    - PROCESSING
+                    - SUCCESS
+                    - MAXIMUM_RETRIES_REACHED
+                  webhookUrl:
+                    type: string
+                    description: webhook url
+                required:
+                - topic
+                - data
+                - createTime
+              example:
+                data: '{"externalTransId":"2021032400000123","status":2}'
+                createTime: '2021-03-24T08:53:18.897Z'
+                topic: withdraw.event.response
+                id: '202103249052452'
+                webhookUrl: www.baidu.com
+                status: MAXIMUM_RETRIES_REACHED
+        '400':
+          description: '| Code | Message | Description |
+
+            |------|-------------|-------------|
+
+            | 400001 | Missing LLPAY-Signature header. |请求头缺失 |
+
+            | 400003 | Invalid signature time. | 请求头时间戳不合法（请求消息包的签名时间和本地服务器的时间的最大允许阈值10min） |
+
+            | 400006 | Signature validation failed. Contact Lianlian Pay for technical support. |验签异常，请参照授权流程中签名规则检查 |'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                  message:
+                    type: string
+              example:
+                error: Bad request
+                code: '400006'
+                message: Signature validation failed. Contact Lianlian Pay for technical support.
+        '404':
+          description: 传入的eventId不存在
+          content:
+            application/json:
+              example:
+                message: Resource not found.
+        '500':
+          description: '| Code | Message |
+
+            |------|-------------|
+
+            | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|'
+      parameters:
+      - in: path
+        name: eventId
+        required: true
+        description: 即查询时间列表接口返回id
+        schema:
+          type: string
+      - in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: LLPAY-Signature
+        required: true
+        schema:
+          type: string
       security:
       - authorization: []
       - llpay-signature: []
@@ -3290,7 +3515,8 @@ paths:
           type: string
       tags:
       - 接口
-      description: '联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/bank-code/search** </br>
+      description: '联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/bank-code/search**
+
 
         生产地址 - **https://global-api.lianlianpay.com/common/v1/bank-code/search**'
       requestBody:
@@ -3350,7 +3576,8 @@ paths:
       description: '交易记录回执文件下载接口，响应为PDF数据流
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/receipt/download** </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/common/v1/receipt/download**
+
 
         生产地址 - **https://global-api.lianlianpay.com/common/v1/receipt/download**'
       parameters:
@@ -3602,7 +3829,8 @@ paths:
         |Rakuten|EU|EUR|
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/vcard/apply** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/vcard/apply**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/vcard/apply**'
       parameters:
@@ -3812,7 +4040,8 @@ paths:
       description: '返回有效持有人列表
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/holder/query/list** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/holder/query/list**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/holder/query/list**'
       operationId: holder-query-list
@@ -4026,7 +4255,8 @@ paths:
       description: '查询收款账户详情
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/shop/accounts**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/shop/accounts**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/shop/accounts**'
       operationId: get-shop-accounts
@@ -4179,7 +4409,8 @@ paths:
       description: '查询用户收款账户余额
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/balance/query** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/balance/query**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/account/balance/query**'
       operationId: account-balance-query
@@ -4424,7 +4655,8 @@ paths:
       description: '查询收款账户详情
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/query** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/account/query**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/account/query**'
       operationId: account-query
@@ -4675,7 +4907,8 @@ paths:
       description: '查询用户境外收款账户资金流水
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/myshop/transaction** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/myshop/transaction**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/myshop/transaction**'
       operationId: myshop-transaction
@@ -4873,7 +5106,8 @@ paths:
       description: '查询中国银行的实时牌价， 这里的汇率只是参考费率，实际以成交为准。
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/exchangeRate/query** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/exchangeRate/query**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/exchangeRate/query**'
       operationId: exchangeRate-query
@@ -5097,7 +5331,8 @@ paths:
       description: '查询用户加款记录
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/transaction/entry/list** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/transaction/entry/list**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/transaction/entry/list**'
       operationId: transaction-entry-list
@@ -5476,7 +5711,8 @@ paths:
       description: '查询店铺提现交易记录
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/record/list** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/record/list**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/withdraw/record/list**'
       operationId: withdraw-record-list
@@ -5702,7 +5938,8 @@ paths:
       description: '查询已绑定提现银行卡
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/bankcard/query/list** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/bankcard/query/list**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/bankcard/query/list**'
       operationId: bankcard-query-list
@@ -5806,10 +6043,15 @@ paths:
       summary: 用户资金操作-发送验证码
       tags:
       - 接口
-      description: '验证码发送至连连账户当前绑定手机号</br>短信验证码获取上限：每小时10次，有效期10分钟</br>错误次数上限8次，超过后用户被锁定一小时，不允许发起提现
+      description: '验证码发送至连连账户当前绑定手机号
+
+        短信验证码获取上限：每小时10次，有效期10分钟
+
+        错误次数上限8次，超过后用户被锁定一小时，不允许发起提现
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/captcha/mobile/withdraw/combine** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/captcha/mobile/withdraw/combine**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/captcha/mobile/withdraw/combine**'
       operationId: captcha-mobile-withdraw-combine
@@ -6009,10 +6251,15 @@ paths:
       description: '用户资金提现只支持单平台单站点多账户提现，不支持跨平台同币种提现。
 
 
-        目前API接口支持</br>提现币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,IDR,SGD,AED</br>到账币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,CNY,SGD,CNH
+        目前API接口支持
+
+        提现币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,IDR,SGD,AED
+
+        到账币种：USD,CAD,EUR,GBP,JPY,HKD,AUD,CNY,SGD,CNH
 
 
-        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/combine/submit** </br>
+        联调地址 - **https://gtest-open-api.lianlianpay-inc.com/api/withdraw/combine/submit**
+
 
         生产域名 - **https://global-open-api.lianlianpay.com/withdraw/combine/submit**'
       operationId: withdraw-combine-submit
@@ -6141,7 +6388,8 @@ paths:
       description: '查询用户收款账户余额
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/kyc/status**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/kyc/status**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/kyc/status**'
       security:
@@ -6195,7 +6443,8 @@ paths:
       description: '更新合同材料信息
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-document**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-document**
+
 
         生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-document**'
       parameters:
@@ -6719,7 +6968,8 @@ paths:
         * 成功创建收款人银行账号之后，连连这边会进行申报审核，状态为审核成功之后就能正常使用该收款人。
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts** </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts**
+
 
         生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts**'
       tags:
@@ -7377,7 +7627,8 @@ paths:
       description: '分页查询收款人信息
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts**
+
 
         生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts**'
       operationId: get-payees
@@ -7467,7 +7718,8 @@ paths:
             |------|-------------|
 
             | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|'
-      description: '联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts/account/{payeeBankAccountId}**  </br>
+      description: '联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/payee-bank-accounts/account/{payeeBankAccountId}**
+
 
         生产域名 - **https://global-api.lianlianpay.com/supplier/v1/payee-bank-accounts/account/{payeeBankAccountId}**'
       tags:
@@ -7588,7 +7840,8 @@ paths:
       description: '查询批量付款结果信息
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments**
+
 
         生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments**'
       parameters:
@@ -7710,9 +7963,11 @@ paths:
             |------|-------------|
 
             | 500000 |Internal Server Error, Contact Lianlian Pay for technical support|'
-      description: '1、该接口的调用需要优先在连连端开通功能白名单方可使用，当连连这边认定的假期期间，供应商付款也是暂时不可用的；</br>
+      description: '1、该接口的调用需要优先在连连端开通功能白名单方可使用，当连连这边认定的假期期间，供应商付款也是暂时不可用的；
 
-        2、在创建该请求前用户需要先调用短信验证码接口来获取二次校验，每小时获取短信验证码上限10次；短信验证码错误次数达8次账号锁定且在2小时之内不能再进行资金操作；</br>
+
+        2、在创建该请求前用户需要先调用短信验证码接口来获取二次校验，每小时获取短信验证码上限10次；短信验证码错误次数达8次账号锁定且在2小时之内不能再进行资金操作；
+
 
         3、当用户发送批量付款请求时，API端会根据当前汇率来预估用户余额是否充足，如果余额不足会返回余额不足错误。
 
@@ -7721,11 +7976,10 @@ paths:
         ![](https://cbva-cms2.oss-cn-hangzhou.aliyuncs.com/cb_file/erp/20220630-154046.jpg)
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments** </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments**
 
-        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments**
 
-        '
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments**'
       tags:
       - 接口
       parameters:
@@ -8057,11 +8311,10 @@ paths:
       description: '获取批量付款明细
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments/{batchId}/payments**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/batch-payments/{batchId}/payments**
 
-        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments/{batchId}/payments**
 
-        '
+        生产域名 - **https://global-api.lianlianpay.com/supplier/v1/batch-payments/{batchId}/payments**'
       tags:
       - 接口
       parameters:
@@ -8217,7 +8470,8 @@ paths:
       description: '获取币种账户信息以及余额
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallets**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallets**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallets**'
       tags:
@@ -8403,7 +8657,8 @@ paths:
       description: '币种账户资金明细列表查询，按币种进行查询，结果按创建时间倒序排序。
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallets/transaction**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallets/transaction**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallets/transaction**'
       tags:
@@ -8525,7 +8780,8 @@ paths:
         ![](https://cbva-cms2.oss-cn-hangzhou.aliyuncs.com/cb_file/erp/20220630-154041.jpg)
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-recharges** </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-recharges**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallet-recharges**'
       tags:
@@ -8716,7 +8972,8 @@ paths:
       description: '币种账户充值列表查询，可以按币种进行查询，结果按创建时间倒序排序。
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-recharges**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-recharges**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallet-recharges**'
       tags:
@@ -8855,7 +9112,8 @@ paths:
       description: '根据币种查询币种账户充值银行账号
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/cards**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/cards**
+
 
         生产域名 - **https://global-api.lianlianpay.com/supplier/v1/cards**'
       parameters:
@@ -8990,7 +9248,8 @@ paths:
       description: '查询币种账户充值银行转账记录，结果按创建时间倒序排序。
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/card-recharges**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/supplier/v1/card-recharges**
+
 
         生产域名 - **https://global-api.lianlianpay.com/supplier/v1/card-recharges**'
       parameters:
@@ -9350,7 +9609,8 @@ paths:
       description: '接口聚合了店铺、币种账户、提前宝提现列表查询，结果按创建时间倒序排序
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/withdraws**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/withdraws**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/withdraws**'
       tags:
@@ -9551,7 +9811,8 @@ paths:
       description: '该接口支持按币种查询客户提现银行账号信息
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/bankcards**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/bankcards**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/bankcards**'
       parameters:
@@ -9631,7 +9892,8 @@ paths:
         ![](https://cbva-cms2.oss-cn-hangzhou.aliyuncs.com/cb_file/erp/20220630-154035.jpg)
 
 
-        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-withdraws**  </br>
+        联调地址 - **https://global-api-sandbox.lianlianpay-inc.com/collection/v1/wallet-withdraws**
+
 
         生产域名 - **https://global-api.lianlianpay.com/collection/v1/wallet-withdraws**'
       operationId: wallet-withdraws
@@ -9748,62 +10010,6 @@ components:
       - createTime
       - updateTime
       - status
-    new-model_2:
-      type: object
-      title: 分账
-      description: 连连侧分账指令对象
-      properties:
-        distributeId:
-          type: string
-          description: '商户侧分账指令唯一编号
-
-            '
-          maxLength: 64
-        tradeFileId:
-          type: string
-          description: 平台侧订单唯一编号
-          maxLength: 64
-        distributeCurrency:
-          type: string
-          description: 分账币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        distributeAmount:
-          type: string
-          description: 分账金额
-          maxLength: 10
-        createTime:
-          type: string
-          description: 创建时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        status:
-          type: string
-          description: '分账状态，状态如下
-
-
-            |值|解释|
-
-            |---|---|
-
-            |Processing|处理中|
-
-            |Successed|处理成功|
-
-            |Failed|处理失败|'
-          enum:
-          - Processing
-          - Successed
-          - Failed
-      required:
-      - distributeId
-      - tradeFileId
-      - distributeCurrency
-      - distributeAmount
-      - createTime
-      - updateTime
-      - status
     document:
       type: object
       description: 连连定义的文件对象
@@ -9827,283 +10033,7 @@ components:
       - id
       - name
       - createTime
-    Event:
-      type: object
-      description: '调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为`SUCCESS`。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为`MAXIMUM_RETRIES_REACHED`。
-
-        '
-      x-tags:
-      - Models
-      title: 事件
-      properties:
-        id:
-          type: string
-          description: Event ID
-        topic:
-          type: string
-          description: '连连定义的Topic
-
-
-            | Topic | Description |
-
-            |--------|------------|
-
-            | b2b.payer.approved | 付款人审核通过 |
-
-            | b2b.payer.rejected |  付款人审核不通过 |
-
-            |b2b.funding.successed|加款成功|
-
-            |b2b.funding.rejected|加款失败|
-
-            |b2b.distribute.successed|分账成功|
-
-            |b2b.distribute.failed|分账失败|
-
-            |b2b.payout.successed | 分发成功 |
-
-            | b2b.payout.failed | 分发失败 |'
-          enum:
-          - b2b.payout.successed
-          - b2b.payout.failed
-          - b2b.distribute.successed
-          - b2b.distribute.failed
-          - b2b.funding.successed
-          - b2b.funding.rejected
-          - b2b.payer.rejected
-          - b2b.payer.approved
-        createTime:
-          type: string
-          description: 创建时间, UTC+0
-          format: date-time
-        data:
-          type: object
-          description: Event 详情
-          required:
-          - objectType
-          - objectId
-          properties:
-            objectType:
-              type: string
-              description: "对象类型 \n\n| type | description |\n|------|-------------|\n|payee|收款人对象|\n|funding|加款对象|\n|distribute|分账对象|\n|payout|分发对象|\n\n "
-              enum:
-              - payee
-              - funding
-              - distribute
-              - payout
-            objectId:
-              type: string
-              description: Event对象对应的唯一编号
-            url:
-              type: string
-              description: 'Event对应的对象的获取地址，可以通过该地址获取到Event对应的对象
-
-                '
-        status:
-          type: string
-          description: 'Event 状态.:
-
-
-            | status | description |
-
-            |--------|-------------|
-
-            | PROCESSING | Event 在处理中 |
-
-            | SUCCESS | Event通知成功，已收到对接方的200 HTTP状态代码. |
-
-            | MAXIMUM_RETRIES_REACHED | Event通知失败，多次重试均为成功 |'
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - MAXIMUM_RETRIES_REACHED
-        webhookURL:
-          type: string
-          description: Registered webhook url for this event
-      required:
-      - id
-      - topic
-      - createTime
-      - data
-      - status
-      - webhookURL
-    Event_2:
-      type: object
-      description: '调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为`SUCCESS`。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为`MAXIMUM_RETRIES_REACHED`。
-
-        '
-      x-tags:
-      - Models
-      title: 事件
-      properties:
-        id:
-          type: string
-          description: Event ID
-        topic:
-          type: string
-          description: '连连定义的Topic
-
-
-            | Topic | Description |
-
-            |--------|------------|
-
-            | b2b.payee.approved | 收款人审核通过 |
-
-            | b2b.payee.rejected |  收款人审核不通过 |
-
-            |b2b.shop.approved|店铺审核通过|
-
-            |b2b.shop.rejected|店铺审核不通过|
-
-            |b2b.funding.successed| 加款成功 |
-
-            |b2b.funding.hedged| 红冲成功 |
-
-            |b2b.funding.refunded| 退款成功 |
-
-            |b2b.tradeFile.approved|贸易材料审核通过|
-
-            |b2b.tradeFile.rejected|贸易材料审核不通过|
-
-            |b2b.distribute.successed| 分账成功 |
-
-            |b2b.distribute.failed| 分账失败 |
-
-            |b2b.payout.successed | 分发成功 |
-
-            |b2b.payout.failed | 分发失败 |
-
-            |b2b.payout.hedged|分发红冲|'
-          enum:
-          - b2b.payee.rejected
-          - b2b.payout.successed
-          - b2b.payout.failed
-          - b2b.distribute.successed
-          - b2b.distribute.failed
-          - b2b.funding.successed
-          - b2b.payee.approved
-          - b2b.funding.hedged
-          - b2b.funding.refunded
-          - b2b.shop.approved
-          - b2b.shop.rejected
-          - b2b.tradeFile.rejected
-          - b2b.tradeFile.approved
-          - b2b.payout.hedged
-        createTime:
-          type: string
-          description: 创建时间, UTC+0
-          format: date-time
-        data:
-          type: object
-          description: Event 详情
-          required:
-          - objectType
-          - objectId
-          properties:
-            objectType:
-              type: string
-              description: "对象类型 \n\n| type | description |\n|------|-------------|\n|payee|收款人对象|\n|funding|加款对象|\n|distribute|分账对象|\n|payout|分发对象|\n\n "
-              enum:
-              - payee
-              - funding
-              - distribute
-              - payout
-            objectId:
-              type: string
-              description: Event对象对应的唯一编号
-            url:
-              type: string
-              description: 'Event对应的对象的获取地址，可以通过该地址获取到Event对应的对象
-
-                '
-        status:
-          type: string
-          description: 'Event 状态.:
-
-
-            | status | description |
-
-            |--------|-------------|
-
-            | PROCESSING | Event 在处理中 |
-
-            | SUCCESS | Event通知成功，已收到对接方的200 HTTP状态代码. |
-
-            | MAXIMUM_RETRIES_REACHED | Event通知失败，多次重试均为成功 |'
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - MAXIMUM_RETRIES_REACHED
-        webhookURL:
-          type: string
-          description: Registered webhook url for this event
-      required:
-      - id
-      - topic
-      - createTime
-      - data
-      - status
-      - webhookURL
-    new-model_3:
-      type: object
-      title: 加款
-      description: 连连侧加款流水对象
-      properties:
-        fundingId:
-          type: string
-          description: 连连侧加款唯一编号
-          maxLength: 64
-        createTime:
-          type: string
-          description: 加款时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        amount:
-          type: string
-          description: 加款金额
-          maxLength: 10
-        payerName:
-          type: string
-          description: 付款人名称
-          maxLength: 32
-        payerAcctNo:
-          type: string
-          description: 付款人打款账号
-          maxLength: 32
-        receivingAcctNo:
-          type: string
-          description: 虚拟卡号
-          maxLength: 32
-        remark:
-          type: string
-          description: 付款人备注信息
-          maxLength: 140
-        status:
-          type: string
-          description: '加款状态，状态如下
-
-
-            |值|解释|
-
-            |----|-----|
-
-            |Processing|处理中|
-
-            |Successed|加款成功|
-
-            |Refunding|退款中|
-
-            |Refund Successed|退款成功|
-
-            '
-          enum:
-          - Processing
-          - Successed
-          - Refunding
-          - Refund Successed
-    new-model_4:
+    new-model_2:
       type: object
       title: 加款
       description: 连连侧加款流水对象
@@ -10172,45 +10102,6 @@ components:
           - Refunding
           - Refund Successed
           - Hedge Successed
-    rate:
-      type: object
-      description: 连连侧汇率对象
-      x-tags:
-      - Models
-      title: 汇率
-      properties:
-        rate:
-          type: string
-          description: 汇率
-          maxLength: 10
-        rateId:
-          type: string
-          description: 汇率编号
-          maxLength: 24
-        sourceCurrency:
-          type: string
-          description: 源币种
-          maxLength: 3
-        targetCurrency:
-          type: string
-          maxLength: 3
-          description: 目的币种
-        rateTime:
-          type: string
-          maxLength: 20
-          description: 汇率时间
-        baseCurrency:
-          type: string
-          maxLength: 3
-          description: '基准币种
-
-            例子: USD/CNY的汇率下，USD为基准币种'
-      required:
-      - rate
-      - sourceCurrency
-      - targetCurrency
-      - rateTime
-      - baseCurrency
     payee:
       type: object
       title: 收款人
@@ -10785,272 +10676,7 @@ components:
       - payerIdIssue
       - payerIdExpiry
       - payerContactNo
-    new-model_5:
-      type: object
-      title: 分发
-      description: 连连侧分发指令对象
-      properties:
-        payoutId:
-          type: string
-          description: 商户侧分发指令唯一编号
-          maxLength: 64
-        tradeFileInfo:
-          type: array
-          description: 平台侧订单信息
-          items:
-            type: object
-            properties:
-              tradeFileId:
-                type: string
-                description: 平台侧订单唯一编号
-                maxLength: 64
-        pricingCurrency:
-          type: string
-          description: 定价币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        sourceCurrency:
-          type: string
-          description: 源币种，默认为CNY
-          minLength: 3
-          maxLength: 3
-        sourceAmount:
-          type: string
-          description: 源币种金额，若 pricingCurrency = sourceCurrency，则该字段必填
-          maxLength: 10
-        targetCurrency:
-          type: string
-          description: 目的币种，请参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        targetAmount:
-          type: string
-          description: 目的币种金额，若 pricingCurrency = targetCurrency，则该字段必填
-          maxLength: 10
-        rate:
-          type: string
-          description: '汇兑汇率，若分发成功，则显示汇兑汇率
-
-            '
-          maxLength: 8
-        payeeName:
-          type: string
-          description: 收款人名称
-          maxLength: 128
-        payeeBankName:
-          type: string
-          description: 收款银行名称
-          maxLength: 256
-        payeeBankAddress:
-          type: string
-          maxLength: 256
-          description: 收款银行地址
-        payeeBankAcctType:
-          type: string
-          description: '收款银行账户类型，填写方式如下
-
-
-            |传输值|解释|
-
-            |----|----|
-
-            |INDIVIDUAL|个人银行账户|
-
-            |CORPORATE|企业银行账户|'
-        payeeBankAcctNo:
-          type: string
-          description: 收款银行账号
-          maxLength: 32
-        payeeBankDistrict:
-          type: string
-          description: 收人银行所在国家或地区，请参考附录国家huo
-          minLength: 3
-          maxLength: 3
-        payeeBankSwiftCode:
-          type: string
-          description: 收款银行SwiftCode
-          maxLength: 32
-        payeeBankType:
-          type: string
-          description: '收款银行国际编码，填写方式如下
-
-
-            |传输值|解释|
-
-            |---|---|
-
-            |IBAN|如果银行账户为欧洲地区国际银行账户，而且需要走欧洲本地分发|
-
-            |SORT|如果银行账户是英国地区银行账户，而且需要走英国本地分发|'
-          maxLength: 8
-        payeeBankCode:
-          type: string
-          description: 收款银行国际编码，若payeeBankType已填写，则该字段填写相应的IBAN、SORTCODEzhi
-          maxLength: 16
-        tradeCode:
-          type: string
-          description: 交易编码
-          maxLength: 8
-        memo:
-          type: string
-          description: 打款备注
-          maxLength: 40
-        createTime:
-          type: string
-          description: 创建时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        status:
-          type: string
-          description: '分发指令处理状态，状态如下
-
-
-            |值|解释|
-
-            |----|----|
-
-            |Processing|处理中|
-
-            |Successed|处理成功|
-
-            |Failed|处理失败|'
-          enum:
-          - Processing
-          - Successed
-          - Failed
-        failedReason:
-          type: string
-          description: 失败原因，若分发失败，则该字段显示失败原因
-          maxLength: 128
-      required:
-      - payoutId
-      - tradeFileInfo
-      - sourceCurrency
-      - targetCurrency
-      - payeeName
-      - payeeBankName
-      - payeeBankAddress
-      - payeeBankAcctNo
-      - payeeBankDistrict
-      - payeeBankSwiftCode
-      - payeeBankType
-      - tradeCode
-      - createTime
-      - updateTime
-      - status
-    new-model_6:
-      type: object
-      title: 分发
-      description: 连连侧分发指令对象
-      properties:
-        payoutId:
-          type: string
-          description: 商户侧分发指令唯一编号
-          maxLength: 64
-        tradeFileId:
-          type: array
-          description: 平台侧订单唯一编号
-          maxItems: 10
-          items:
-            type: string
-            maxLength: 64
-        pricingCurrency:
-          type: string
-          description: 定价币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        sourceCurrency:
-          type: string
-          description: 源币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        sourceAmount:
-          type: string
-          description: 源币种金额，若 pricingCurrency = sourceCurrency，则该字段必填
-          maxLength: 10
-        targetCurrency:
-          type: string
-          description: 目的币种，默认为CNY
-          minLength: 3
-          maxLength: 3
-        targetAmount:
-          type: string
-          description: 目的币种金额，若 pricingCurrency = targetCurrency，则该字段必填
-          maxLength: 10
-        rate:
-          type: string
-          description: '汇兑汇率，若分发成功，则显示汇兑汇率
-
-            '
-          maxLength: 8
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        payeeBankName:
-          type: string
-          description: 收款银行代码，参考附录银行列表
-          minLength: 8
-          maxLength: 8
-        CnapsCode:
-          type: string
-          description: 收款银行大额行号，若收款银行账户为对公账户，且payeeBankName = 15947916，则该字段必传
-          maxLength: 16
-        payeeBankAcctNo:
-          type: string
-          description: 收款银行账号
-          maxLength: 32
-        tradeCode:
-          type: string
-          description: 交易编码
-          maxLength: 8
-        memo:
-          type: string
-          description: 打款备注
-          maxLength: 40
-        createTime:
-          type: string
-          description: 创建时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        status:
-          type: string
-          description: '分发指令处理状态，状态如下
-
-
-            |值|解释|
-
-            |----|----|
-
-            |Processing|处理中|
-
-            |Successed|处理成功|
-
-            |Failed|处理失败|
-
-            |Hedged|红冲成功|'
-          enum:
-          - Processing
-          - Successed
-          - Failed
-          - Hedged
-        failedReason:
-          type: string
-          description: 失败原因，若分发失败，则该字段显示失败原因
-          maxLength: 128
-      required:
-      - payoutId
-      - tradeFileId
-      - payeeId
-      - payeeBankName
-      - payeeBankAcctNo
-      - tradeCode
-      - createTime
-      - updateTime
-      - status
-    new-model_7:
+    new-model_3:
       type: object
       title: 店铺
       properties:
@@ -11099,7 +10725,7 @@ components:
       - businessType
       - shopUrl
       - status
-    new-model_8:
+    new-model_4:
       type: object
       title: 贸易材料
       description: 连连侧贸易材料对象
@@ -11220,156 +10846,7 @@ components:
       - tradeCurrency
       - tradeAmount
       - tradeName
-    new-model_9:
-      type: object
-      title: 贸易材料
-      description: 连连侧贸易材料对象
-      properties:
-        materialId:
-          type: string
-          description: 商户侧指令唯一编号
-          maxLength: 64
-        tradeFileId:
-          type: string
-          description: 平台侧订单唯一编号
-          maxLength: 64
-        fundingId:
-          type: array
-          description: 订单对应的连连侧加款单号
-          items:
-            type: string
-            maxLength: 64
-        paymentType:
-          type: string
-          description: '订单支付方式，填写方式如下
-
-
-            |传输值|解释|
-
-            |----|----|
-
-            |0|线上收单|
-
-            |1|虚拟卡转账支付|'
-          enum:
-          - 0
-          - 1
-        payerName:
-          type: string
-          description: 付款人名称
-          maxLength: 32
-        payerCountryCode:
-          type: string
-          description: 付款方国别或地区，参考附录国家或地区代码
-          minLength: 3
-          maxLength: 3
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        tradeType:
-          type: string
-          description: '交易类型，传输方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |0|货物贸易|
-
-            |1|服务贸易|'
-          enum:
-          - 0
-          - 1
-        tradeTime:
-          type: string
-          description: 交易时间
-          maxLength: 25
-        tradeCurrency:
-          type: string
-          description: 交易币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        tradeAmount:
-          type: string
-          description: 交易金额
-          maxLength: 10
-        tradeName:
-          type: string
-          description: 商品名称
-          maxLength: 512
-        tradeCount:
-          type: string
-          description: 商品数量
-          maxLength: 10
-        goodsCarrier:
-          type: string
-          description: '物流信息，tradeType=0，该字段必填，填写方式如下
-
-
-            货物承运人及运货单号，例如：
-
-            中外运空运;MC2410918701000931505
-
-            '
-          maxLength: 128
-        serviceDetail:
-          type: string
-          description: 服务贸易详情，若tradeType=1时必填
-          maxLength: 512
-        serviceTime:
-          type: string
-          description: 服务发生时间，若tradeType=1时必填
-          maxLength: 25
-        tradeCode:
-          type: string
-          description: 交易编码
-          maxLength: 8
-        CustomsDeclarationNo:
-          type: string
-          description: 报关单号，若 tradeCode=122010 必填
-          maxLength: 64
-        supportDoc:
-          type: array
-          description: 贸易材料证明文件
-          items:
-            type: string
-        status:
-          type: string
-          description: '审核状态，传输方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |Processing|审核中|
-
-            |Success|审核成功|
-
-            |Failed|审核失败|'
-          maxLength: 128
-        failReason:
-          type: string
-          description: 审核失败原因
-          maxLength: 128
-      required:
-      - materialId
-      - tradeFileId
-      - fundingId
-      - paymentType
-      - payerName
-      - payerCountryCode
-      - payeeId
-      - tradeType
-      - tradeTime
-      - tradeCurrency
-      - tradeAmount
-      - tradeName
-      - tradeCount
-      - status
-    new-model_10:
+    new-model_5:
       type: object
       title: 虚拟卡
       description: 连连侧虚拟卡对象
@@ -11439,104 +10916,6 @@ components:
       - functionType
       - payeeId
       - payerName
-    new-model_11:
-      type: object
-      title: 虚拟卡
-      description: 连连侧虚拟卡对象
-      properties:
-        functionType:
-          type: string
-          description: '功能类型，用以识别发卡逻辑
-
-
-            |传输值|解释|
-
-            |---|---|
-
-            |0|针对一对买卖关系发一张虚拟卡|
-
-            |1|针对一个订单发一张虚拟卡|'
-          enum:
-          - 0
-          - 1
-        tradeFileId:
-          type: string
-          description: 平台侧订单唯一编号，若functionType=1，则该字段必填
-          maxLength: 64
-        orderAmount:
-          type: string
-          description: 订单金额
-          maxLength: 10
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        payerId:
-          type: string
-          description: 商户侧付款人唯一编号，若functionType=0，则该字段必填
-          maxLength: 64
-        shopId:
-          type: array
-          description: 平台侧店铺唯一编号
-          maxItems: 10
-          items:
-            type: string
-            maxLength: 64
-        payerName:
-          type: string
-          description: 付款人名称
-          maxLength: 64
-        createTime:
-          type: string
-          description: 虚拟卡创建时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        payerAccountNumber:
-          type: string
-          description: 付款人银行账号
-          maxLength: 32
-        currency:
-          type: array
-          description: 虚拟卡币种，参考附录币种
-          minItems: 3
-          maxItems: 3
-          items:
-            type: string
-        receivingAccountNo:
-          type: string
-          description: 收款虚拟卡号
-          maxLength: 32
-        bankName:
-          type: string
-          description: 虚拟账户银行名称
-          maxLength: 32
-        swiftCode:
-          type: string
-          description: 虚拟账户Swift Code
-          maxLength: 11
-        bankLocation:
-          type: string
-          description: 虚拟账户银行所在地
-          maxLength: 32
-        bankAddress:
-          type: string
-          maxLength: 256
-          description: 虚拟账户银行地址
-        accountName:
-          type: string
-          description: 虚拟卡账户户名
-          maxLength: 32
-      required:
-      - functionType
-      - payeeId
-      - shopId
-      - payerName
-      - createTime
-      - currency
-      - receivingAccountNo
-      - bankName
-      - swiftCode
-      - bankLocation
-      - bankAddress
-      - accountName
     webhook:
       type: object
       title: Webhook注册结果
@@ -11596,1859 +10975,56 @@ components:
       - url
       - createTime
       - topic
-    webhook_2:
+    statement:
+      title: statement
+      x-stoplight:
+        id: h8ztry2mufw3b
       type: object
-      title: Webhook注册结果
-      description: 'Webhook注册结果对象
-
-        '
       properties:
-        id:
+        billNumber:
           type: string
-          description: 流水单号
           maxLength: 32
-        url:
+          description: 账务流水号
+        fundDirection:
           type: string
-          description: Webhook url
-          maxLength: 64
-        createTime:
-          type: string
-          description: 注册时间, UTC+0 timestamp
-          format: date-time
-        topic:
-          type: string
-          description: '连连定义的Topic
-
-
-            | Topic | Description |
-
-            |--------|------------|
-
-            | b2b.payee.approved | 收款人审核通过 |
-
-            | b2b.payee.rejected |  收款人审核不通过 |
-
-            |b2b.shop.approved|店铺审核通过|
-
-            |b2b.shop.rejected|店铺审核不通过|
-
-            |b2b.funding.successed| 加款成功 |
-
-            |b2b.funding.hedged| 红冲成功 |
-
-            |b2b.funding.refunded| 退款成功 |
-
-            |b2b.tradeFile.approved|贸易材料审核通过|
-
-            |b2b.tradeFile.rejected|贸易材料审核不通过|
-
-            |b2b.distribute.successed| 分账成功 |
-
-            |b2b.distribute.failed| 分账失败 |
-
-            |b2b.payout.successed | 分发成功 |
-
-            | b2b.payout.failed | 分发失败 |
-
-            |b2b.payout.hedged|分发红冲|'
           enum:
-          - b2b.payee.rejected
-          - b2b.payout.successed
-          - b2b.payout.failed
-          - b2b.distribute.successed
-          - b2b.distribute.failed
-          - b2b.funding.successed
-          - b2b.payee.approved
-          - b2b.funding.hedged
-          - b2b.funding.refunded
-          - b2b.shop.approved
-          - b2b.shop.rejected
-          - b2b.tradeFile.approved
-          - b2b.tradeFile.rejected
-          - b2b.payout.hedged
-      required:
-      - id
-      - url
-      - createTime
-      - topic
-    new-model_12:
-      type: object
-      title: 分账
-      description: 连连侧分账指令对象
-      properties:
-        distributeId:
-          type: string
-          description: '商户侧分账指令唯一编号
+          - CREDIT
+          - DEBIT
+          description: '资金方向，CREDIT：入账；DEBIT：出账
 
             '
-          maxLength: 64
-        tradeFileId:
-          type: string
-          description: 平台侧订单唯一编号
-          maxLength: 64
-        distributeCurrency:
-          type: string
-          description: 分账币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        distributeAmount:
-          type: string
-          description: 分账金额
-          maxLength: 10
-        createTime:
-          type: string
-          description: 创建时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        status:
-          type: string
-          description: '分账状态，状态如下
-
-
-            |值|解释|
-
-            |---|---|
-
-            |Processing|处理中|
-
-            |Successed|处理成功|
-
-            |Failed|处理失败|'
-          enum:
-          - Processing
-          - Successed
-          - Failed
-      required:
-      - distributeId
-      - tradeFileId
-      - distributeCurrency
-      - distributeAmount
-      - createTime
-      - updateTime
-      - status
-      x-tags:
-      - 对象
-    document_2:
-      type: object
-      description: 连连定义的文件对象
-      title: 文件
-      properties:
-        id:
-          type: string
-          description: 连连定义的文件唯一编号
-          maxLength: 32
-        name:
-          type: integer
-          description: 文件名称
-          maximum: 128
-        createTime:
-          type: string
-          description: 文件创建时间, UTC+0
-          format: date-time
-      required:
-      - id
-      - name
-      - createTime
-      x-tags:
-      - 对象
-    Event_3:
-      type: object
-      description: '调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为`SUCCESS`。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为`MAXIMUM_RETRIES_REACHED`。
-
-        '
-      title: 事件
-      properties:
-        id:
-          type: string
-          description: Event ID
-        topic:
-          type: string
-          description: '连连定义的Topic
-
-
-            | Topic | Description |
-
-            |--------|------------|
-
-            | b2b.payee.approved | 收款人审核通过 |
-
-            | b2b.payee.rejected |  收款人审核不通过 |
-
-            |b2b.shop.approved|店铺审核通过|
-
-            |b2b.shop.rejected|店铺审核不通过|
-
-            |b2b.funding.successed| 加款成功 |
-
-            |b2b.funding.hedged| 红冲成功 |
-
-            |b2b.funding.refunded| 退款成功 |
-
-            |b2b.tradeFile.approved|贸易材料审核通过|
-
-            |b2b.tradeFile.rejected|贸易材料审核不通过|
-
-            |b2b.distribute.successed| 分账成功 |
-
-            |b2b.distribute.failed| 分账失败 |
-
-            |b2b.payout.successed | 分发成功 |
-
-            |b2b.payout.failed | 分发失败 |
-
-            |b2b.payout.hedged|分发红冲|'
-          enum:
-          - b2b.payee.rejected
-          - b2b.payout.successed
-          - b2b.payout.failed
-          - b2b.distribute.successed
-          - b2b.distribute.failed
-          - b2b.funding.successed
-          - b2b.payee.approved
-          - b2b.funding.hedged
-          - b2b.funding.refunded
-          - b2b.shop.approved
-          - b2b.shop.rejected
-          - b2b.tradeFile.rejected
-          - b2b.tradeFile.approved
-          - b2b.payout.hedged
-        createTime:
-          type: string
-          description: 创建时间, UTC+0
-          format: date-time
-        data:
-          type: object
-          description: Event 详情
-          required:
-          - objectType
-          - objectId
-          properties:
-            objectType:
-              type: string
-              description: "对象类型 \n\n| type | description |\n|------|-------------|\n|payee|收款人对象|\n|funding|加款对象|\n|distribute|分账对象|\n|payout|分发对象|\n\n "
-              enum:
-              - payee
-              - funding
-              - distribute
-              - payout
-            objectId:
-              type: string
-              description: Event对象对应的唯一编号
-            url:
-              type: string
-              description: 'Event对应的对象的获取地址，可以通过该地址获取到Event对应的对象
-
-                '
-        status:
-          type: string
-          description: 'Event 状态.:
-
-
-            | status | description |
-
-            |--------|-------------|
-
-            | PROCESSING | Event 在处理中 |
-
-            | SUCCESS | Event通知成功，已收到对接方的200 HTTP状态代码. |
-
-            | MAXIMUM_RETRIES_REACHED | Event通知失败，多次重试均为成功 |'
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - MAXIMUM_RETRIES_REACHED
-        webhookURL:
-          type: string
-          description: Registered webhook url for this event
-      required:
-      - id
-      - topic
-      - createTime
-      - data
-      - status
-      - webhookURL
-      x-tags:
-      - 对象
-    new-model_13:
-      type: object
-      title: 加款
-      description: 连连侧加款流水对象
-      properties:
-        fundingId:
-          type: string
-          description: 连连侧加款唯一编号
-          maxLength: 64
-        createTime:
-          type: string
-          description: 加款时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
         currency:
           type: string
-          description: 加款币种，参考附录币种代码
           minLength: 3
           maxLength: 3
-        amount:
+          description: 币种
+        transactionAmount:
           type: string
-          description: 加款金额
-          maxLength: 10
-        payerName:
+          maxLength: 16
+          description: 交易金额
+        balance:
           type: string
-          description: 付款人名称
-          maxLength: 64
-        payerAcctNo:
+          maxLength: 16
+          description: 交易后可用余额
+        accountDate:
           type: string
-          description: 付款人打款账号
-          maxLength: 32
-        receivingAcctNo:
+          description: 账务日期，格式：yyyy-MM-dd
+        transactionTime:
           type: string
-          description: 虚拟卡号
-          maxLength: 32
+          description: 交易时间，格式：yyyy-MM-dd HH:mm:ss
         remark:
           type: string
-          description: 付款人备注信息
-          maxLength: 140
-        status:
-          type: string
-          description: '加款状态，状态如下
-
-
-            |值|解释|
-
-            |----|-----|
-
-            |Processing|处理中|
-
-            |Successed|加款成功|
-
-            |Refunding|退款中|
-
-            |Refund Successed|退款成功|
-
-            |Hedging|红冲中（平台将已加款成功的资金退回，加款的状态会变为红冲中）|
-
-            |Hedge Successed|红冲成功|
-
-            '
-          enum:
-          - Processing
-          - Successed
-          - Hedging
-          - Refunding
-          - Refund Successed
-          - Hedge Successed
-      x-tags:
-      - 对象
-    rate_2:
-      type: object
-      description: 连连侧汇率对象
-      title: 汇率
-      properties:
-        rate:
-          type: string
-          description: 汇率
-          maxLength: 10
-        rateId:
-          type: string
-          description: 汇率编号
-          maxLength: 24
-        sourceCurrency:
-          type: string
-          description: 源币种
-          maxLength: 3
-        targetCurrency:
-          type: string
-          maxLength: 3
-          description: 目的币种
-        baseCurrency:
-          type: string
-          maxLength: 3
-          description: '基准币种
-
-            例子: USD/CNY的汇率下，USD为基准币种'
-      required:
-      - rate
-      - sourceCurrency
-      - targetCurrency
-      - baseCurrency
-      x-tags:
-      - 对象
-    payee_2:
-      type: object
-      title: 收款人
-      description: 连连侧收款人对象
-      properties:
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        payeeType:
-          type: string
-          description: '收款人类型，填写方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |Corporate|企业收款人|'
-          enum:
-          - Corporate
-        payeeNameCn:
-          type: string
-          description: 收款人中文名称
-          maxLength: 64
-        payeeNameEn:
-          type: string
-          description: 收款人英文名称
-          maxLength: 64
-        payeeNation:
-          type: string
-          description: '收款人所在国家或地区
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |HKG|香港收款人|'
-          enum:
-          - HKG
-          maxLength: 3
-        payeeDate:
-          type: string
-          description: '收款人出生或注册日，若收款人为企业，则为企业注册日期
-
-
-            格式：yyyyMMdd'
-          minLength: 8
-          maxLength: 8
-        payeeCiScan:
-          type: string
-          description: '收款人公司注册证书影印件
-
-
-            若payeeType=''Corporate''则这个字段为必填'
-          maxLength: 64
-        payeeCiNo:
-          type: string
-          description: '收款人公司注册证书证件号
-
-            若payeeType=''Corporate''则这个字段为必填'
-          maxLength: 64
-        payeeBrScan:
-          type: string
-          description: '收款人商业登记证书影印件
-
-            若payeeType=''Corporate''则这个字段为必填'
-          maxLength: 64
-        payeeBrNo:
-          type: string
-          description: '收款人商业登记证书证件号
-
-            若payeeType=''Corporate''则这个字段为必填'
-          maxLength: 64
-        payeeBrExpiry:
-          type: string
-          description: '收款人证件到期日
-
-
-            若收款人为香港企业，则该字段填写商业登记证书到期日
-
-
-            格式：yyyyMMdd'
-          minLength: 8
-          maxLength: 8
-        payeeAddress:
-          type: string
-          description: '收款人地址，若收款人为企业，则传输企业注册地址
-
-            '
           maxLength: 128
-        payeeOperateAddress:
+          description: 备注
+        totalCount:
           type: string
-          description: 企业经营地址，若收款人为企业，则该字段传企业经营地址
-          maxLength: 128
-        corporateNature:
+          description: 总条数
+        pageNum:
           type: string
-          description: '公司性质，若payeeType=''Corporate''则这个字段为必填，填写方式如下
-
-
-            |传输值|解释|
-
-            |---|----|
-
-            |0|股份公司|
-
-            |1|个人经营|
-
-            |2|国有企业|
-
-            |3|合伙经营|
-
-            |4|上市企业|
-
-            |5|有限公司|
-
-            |6|其他|'
-          enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-        legalPersIdType:
+          description: 当前页码
+        pageSize:
           type: string
-          description: '董事证件类型， 传输方式如下：
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |0|大陆身份证|
-
-            |1|国外护照|
-
-            |2|香港永久居民身份证|'
-          enum:
-          - 0
-          - 1
-          - 2
-        legalPersIdScanFront:
-          type: string
-          description: '董事证件正面，若payeeType=''Corporate''则这个字段为必填，传输信息如下：
-
-
-            |证件类型|传输信息|
-
-            |----|-----|
-
-            |大陆身份证|国徽面|
-
-            |外国护照|护照头像页|
-
-            |香港永久居民身份证|证件页|'
-          maxLength: 64
-        legalPersIdScanBack:
-          type: string
-          description: '董事证件反面，传输信息如下：
-
-
-            |证件类型|传输信息|
-
-            |----|-----|
-
-            |大陆身份证|人头面|
-
-            |外国护照|\|
-
-            |香港永久居民身份证|\|'
-          maxLength: 64
-        legalPersNameCn:
-          type: string
-          description: 董事名称，若payeeType='Corporate'则这个字段为必填
-          maxLength: 64
-        legalPersNameEn:
-          type: string
-          description: 董事名称（拼音），若payeeType='Corporate'则这个字段为必填
-          maxLength: 64
-        legalPersCountryCode:
-          type: string
-          minLength: 3
-          maxLength: 3
-          description: 董事所在国家或地区代码，
-        legalPersIdNo:
-          type: string
-          description: 董事证件号，若payeeType='Corporate'则这个字段为必填
-          maxLength: 32
-        legalPersIdIsLt:
-          type: string
-          description: '董事证件有效期是否为长期，填写方式如下
-
-
-            |传输值|解释|
-
-            |-----|-----|
-
-            |0|长期|
-
-            |1|非长期|'
-          enum:
-          - 0
-          - 1
-        legalPersDob:
-          type: string
-          description: 董事出生日期，若legalPersIdType不为0则该字段必填，格式：yyyyMMdd
-          minLength: 8
-          maxLength: 8
-        legalPersIdIssue:
-          type: string
-          description: 董事证件签发日，若payeeType='Corporate'则这个字段为必填，格式：yyyyMMdd
-          minLength: 8
-          maxLength: 8
-        legalPersIdExpiry:
-          type: string
-          description: 董事证件有效期，若payeeType='Corporate'且证件非长期则这个字段为必填
-          minLength: 8
-          maxLength: 8
-        legalPersIdAddress:
-          type: string
-          description: 董事地址，若payeeType='Corporate'则这个字段为必填
-          maxLength: 128
-        uboInfo:
-          type: array
-          description: 受益人信息，若payeeType='Corporate'则这个字段为必填
-          items:
-            type: object
-            properties:
-              uboId:
-                type: string
-                description: 商户侧收益人唯一编号
-                maxLength: 64
-              uboPersIdType:
-                type: string
-                enum:
-                - 0
-                - 1
-                - 2
-                description: '受益人证件类型， 传输方式如下：
-
-
-                  |传输值|解释|
-
-                  |----|-----|
-
-                  |0|大陆身份证|
-
-                  |1|国外护照|
-
-                  |2|香港永久居民身份证|'
-              uboPersIdScanFront:
-                type: string
-                description: '受益人证件正面，传输信息如下：
-
-
-                  |证件类型|传输信息|
-
-                  |----|-----|
-
-                  |大陆身份证|国徽面|
-
-                  |外国护照|护照头像页|
-
-                  |香港永久居民身份证|证件页|'
-                maxLength: 64
-              uboPersIdScanBack:
-                type: string
-                description: '受益人证件反面，传输信息如下：
-
-
-                  |证件类型|传输信息|
-
-                  |----|-----|
-
-                  |大陆身份证|人头面|
-
-                  |外国护照|\|
-
-                  |香港永久居民身份证|\|'
-                maxLength: 64
-              uboNameCn:
-                type: string
-                description: 受益人名称
-                maxLength: 64
-              uboNameEn:
-                type: string
-                description: 受益人名称（拼音）
-                maxLength: 64
-              uboPersCountryCode:
-                type: string
-                description: 受益人所在国家或地区代码，请参考附录
-                minLength: 3
-                maxLength: 3
-              uboPersIdNo:
-                type: string
-                description: 受益人证件号
-                maxLength: 32
-              uboPersIdIsLt:
-                type: string
-                description: '受益人证件有效期是否为长期，填写方式如下
-
-
-                  |传输值|解释|
-
-                  |-----|-----|
-
-                  |0|长期|
-
-                  |1|非长期|'
-                enum:
-                - 0
-                - 1
-              uboPersDob:
-                type: string
-                description: 受益人出生日期，若uboPersIdType不为0则该字段必填，格式：yyyyMMdd
-                minLength: 8
-                maxLength: 8
-              uboPersIdIssue:
-                type: string
-                description: 受益人证件签发日期，若payeeType='Corporate'则为必填，格式：yyyyMMdd
-                minLength: 8
-                maxLength: 8
-              uboPersIdExpiry:
-                type: string
-                description: 受益人身份证有效期，若若payeeType='Corporate'且证件非长期则必填，格式：yyyyMMdd
-                minLength: 8
-                maxLength: 8
-              uboAddress:
-                type: string
-                description: 受益人地址
-                maxLength: 128
-        uboEvidence:
-          type: string
-          description: NNC1/NAR1，若payeeType='Corporate'则这个字段为必填
-          maxLength: 64
-        payeeStatus:
-          type: string
-          description: '收款人审核状态，审核状态如下
-
-
-            |值|解释|
-
-            |----|-----|
-
-            |Processing|审核中|
-
-            |Successed|审核成功|
-
-            |Failed|审核失败|
-
-            |NeedUpdate|需更新材料|
-
-            |Prohibit|停止服务|'
-          enum:
-          - Processing
-          - Successed
-          - Failed
-          - NeedUpdate
-          - Prohibit
-        failedReason:
-          type: string
-          description: 若收款人审核失败，该显示审核失败原因
-          maxLength: 128
-      required:
-      - payeeId
-      - payeeType
-      - payeeNameEn
-      - payeeNation
-      - payeeDate
-      - payeeBrScan
-      - payeeBrExpiry
-      - payeeAddress
-      x-tags:
-      - 对象
-    payee_3:
-      type: object
-      title: 收款人
-      description: 连连侧收款人对象
-      properties:
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        payeeType:
-          type: string
-          description: '收款人类型，填写方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |Individual|个人收款人|
-
-            |Corporate|企业收款人|'
-          enum:
-          - Individual
-          - Corporate
-        payeeNation:
-          type: string
-          description: '收款人所在国家或地区
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |CHN|大陆收款人|'
-          enum:
-          - CHN
-          maxLength: 3
-        payeeNameCn:
-          type: string
-          description: 收款人中文名称
-          maxLength: 64
-        payeeNameEn:
-          type: string
-          description: 收款人英文名称
-          maxLength: 64
-        payeeDate:
-          type: string
-          description: '收款人出生或成立日，
-
-
-            若收款人为个人，则为个人出生日期
-
-            若收款人为企业，则为企业注册日期
-
-
-            格式：yyyyMMdd'
-          minLength: 8
-          maxLength: 8
-        payeeIdType:
-          type: string
-          description: '收款人证件类型，填写方式如下
-
-            |传输值|收款人类型|解释|
-
-            |----|-----|----|
-
-            |0|Individual|个人身份证|
-
-            |1|Corporate|统一社会信用代码|'
-          enum:
-          - 0
-          - 1
-        payeeIdScanFront:
-          type: string
-          description: 收款人证件照片（正面）
-          maxLength: 64
-        payeeIdScanBack:
-          type: string
-          description: '收款人证件照片（反面）
-
-
-            若payeeType=''Individual''则这个字段为必填'
-          maxLength: 64
-        payeeIdNo:
-          type: string
-          description: 收款人证件号
-          maxLength: 32
-        payeeAddress:
-          type: string
-          description: '收款人地址，
-
-            若收款人为企业，则传输企业注册地址
-
-            若收款人为个人，则传输个人居住地址'
-          maxLength: 128
-        payeeOperateAddress:
-          type: string
-          description: 企业经营地址，若收款人为企业，则该字段传企业经营地址
-          maxLength: 128
-        payeeIdIsLt:
-          type: string
-          description: '收款人证件是否为长期，填写方式如下
-
-
-            |传输值|解释|
-
-            |-----|-----|
-
-            |0|长期|
-
-            |1|非长期|'
-          enum:
-          - 0
-          - 1
-        payeeIdIssue:
-          type: string
-          description: 收款人证件签发日,格式：yyyyMMdd
-          minLength: 8
-          maxLength: 8
-        payeeIdExpiry:
-          type: string
-          description: 收款人证件有效期，若收款人证件为非长期，则该字段必填，格式：yyyyMMdd
-          minLength: 8
-          maxLength: 8
-        payeeContactNo:
-          type: string
-          description: '收款人联系方式（个人手机号、企业联系人手机号）
-
-            '
-          minLength: 11
-          maxLength: 11
-        corporateNature:
-          type: string
-          description: '公司性质，若payeeType=''Corporate''则这个字段为必填，填写方式如下
-
-
-            |传输值|解释|
-
-            |---|----|
-
-            |0|股份公司|
-
-            |1|个人经营|
-
-            |2|国有企业|
-
-            |3|合伙经营|
-
-            |4|上市企业|
-
-            |5|有限公司|
-
-            |6|其他|'
-          enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-        legalPersIdType:
-          type: string
-          description: '法人证件类型， 传输方式如下：
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |0|大陆身份证|
-
-            |1|国外护照|
-
-            |2|香港永久居民身份证|'
-          enum:
-          - 0
-          - 1
-          - 2
-        legalPersIdScanFront:
-          type: string
-          description: '法人证件正面，若payeeType=''Corporate''则这个字段为必填，传输信息如下：
-
-
-            |证件类型|传输信息|
-
-            |----|-----|
-
-            |大陆身份证|国徽面|
-
-            |外国护照|护照头像页|
-
-            |香港永久居民身份证|证件页|'
-          maxLength: 64
-        legalPersIdScanBack:
-          type: string
-          description: '法人证件反面，传输信息如下：
-
-
-            |证件类型|传输信息|
-
-            |----|-----|
-
-            |大陆身份证|人头面|
-
-            |外国护照|\|
-
-            |香港永久居民身份证|\|'
-          maxLength: 64
-        legalPersNameCn:
-          type: string
-          description: 法人名称，若payeeType='Corporate'则这个字段为必填
-          maxLength: 64
-        legalPersNameEn:
-          type: string
-          description: 法人名称（拼音），若payeeType='Corporate'则这个字段为必填
-          maxLength: 64
-        legalPersCountryCode:
-          type: string
-          minLength: 3
-          maxLength: 3
-          description: 法人所在国家或地区代码，
-        legalPersIdNo:
-          type: string
-          description: 法人证件号，若payeeType='Corporate'则这个字段为必填
-          maxLength: 32
-        legalPersIdIsLt:
-          type: string
-          description: '法人证件有效期是否为长期，填写方式如下
-
-
-            |传输值|解释|
-
-            |-----|-----|
-
-            |0|长期|
-
-            |1|非长期|'
-          enum:
-          - 0
-          - 1
-        legalPersDob:
-          type: string
-          description: 法人出生日期，若legalPersIdType不为0则该字段必填，格式：yyyyMMdd
-          minLength: 8
-          maxLength: 8
-        legalPersIdIssue:
-          type: string
-          description: 法人证件签发日，若payeeType='Corporate'则这个字段为必填，格式：yyyyMMdd
-          minLength: 8
-          maxLength: 8
-        legalPersIdExpiry:
-          type: string
-          description: 法人证件有效期，若payeeType='Corporate'且证件非长期则这个字段为必填
-          minLength: 8
-          maxLength: 8
-        legalPersIdAddress:
-          type: string
-          description: 法人地址，若payeeType='Corporate'则这个字段为必填
-          maxLength: 128
-        uboInfo:
-          type: array
-          description: 受益人信息，若payeeType='Corporate'则这个字段为必填
-          items:
-            type: object
-            properties:
-              uboId:
-                type: string
-                description: 商户侧收益人唯一编号
-                maxLength: 64
-              uboPersIdType:
-                type: string
-                enum:
-                - 0
-                - 1
-                - 2
-                description: '受益人证件类型， 传输方式如下：
-
-
-                  |传输值|解释|
-
-                  |----|-----|
-
-                  |0|大陆身份证|
-
-                  |1|国外护照|
-
-                  |2|香港永久居民身份证|'
-              uboPersIdScanFront:
-                type: string
-                description: '受益人证件正面，传输信息如下：
-
-
-                  |证件类型|传输信息|
-
-                  |----|-----|
-
-                  |大陆身份证|国徽面|
-
-                  |外国护照|护照头像页|
-
-                  |香港永久居民身份证|证件页|'
-                maxLength: 64
-              uboPersIdScanBack:
-                type: string
-                description: '受益人证件反面，传输信息如下：
-
-
-                  |证件类型|传输信息|
-
-                  |----|-----|
-
-                  |大陆身份证|人头面|
-
-                  |外国护照|\|
-
-                  |香港永久居民身份证|\|'
-                maxLength: 64
-              uboNameCn:
-                type: string
-                description: 受益人名称
-                maxLength: 64
-              uboNameEn:
-                type: string
-                description: 受益人名称（拼音）
-                maxLength: 64
-              uboPersCountryCode:
-                type: string
-                description: 受益人所在国家或地区代码，请参考附录
-                minLength: 3
-                maxLength: 3
-              uboPersIdNo:
-                type: string
-                description: 受益人证件号
-                maxLength: 32
-              uboPersIdIsLt:
-                type: string
-                description: '受益人证件有效期是否为长期，填写方式如下
-
-
-                  |传输值|解释|
-
-                  |-----|-----|
-
-                  |0|长期|
-
-                  |1|非长期|'
-                enum:
-                - 0
-                - 1
-              uboPersDob:
-                type: string
-                description: 受益人出生日期，若uboPersIdType不为0则该字段必填，格式：yyyyMMdd
-                minLength: 8
-                maxLength: 8
-              uboPersIdIssue:
-                type: string
-                description: 受益人证件签发日期，若payeeType='Corporate'则为必填，格式：yyyyMMdd
-                minLength: 8
-                maxLength: 8
-              uboPersIdExpiry:
-                type: string
-                description: 受益人身份证有效期，若若payeeType='Corporate'且证件非长期则必填，格式：yyyyMMdd
-                minLength: 8
-                maxLength: 8
-              uboAddress:
-                type: string
-                description: 受益人地址
-                maxLength: 128
-        uboEvidence:
-          type: string
-          description: 受益人证明文件，若payeeType='Corporate'则这个字段为必填
-          maxLength: 64
-        payeeStatus:
-          type: string
-          description: '收款人审核状态，审核状态如下
-
-
-            |值|解释|
-
-            |----|-----|
-
-            |Processing|审核中|
-
-            |Successed|审核成功|
-
-            |Failed|审核失败|
-
-            |NeedUpdate|需更新材料|
-
-            |Prohibit|停止服务|'
-          enum:
-          - Processing
-          - Successed
-          - Failed
-          - NeedUpdate
-          - Prohibit
-        failedReason:
-          type: string
-          description: 若收款人审核失败，该显示审核失败原因
-          maxLength: 128
-      required:
-      - payeeId
-      - payeeType
-      - payeeNameCn
-      - payeeNameEn
-      - payeeDate
-      - payeeIdType
-      - payeeIdScanFront
-      - payeeIdNo
-      - payeeAddress
-      - payeeIdIsLt
-      - payeeIdIssue
-      - payeeIdExpiry
-      - payeeContactNo
-      x-tags:
-      - 对象
-    new-model_14:
-      type: object
-      title: 分发
-      description: 连连侧分发指令对象
-      properties:
-        payoutId:
-          type: string
-          description: 商户侧分发指令唯一编号
-          maxLength: 64
-        tradeFileId:
-          type: array
-          description: 平台侧订单唯一编号
-          maxItems: 10
-          items:
-            type: string
-            maxLength: 64
-        pricingCurrency:
-          type: string
-          description: 定价币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        sourceCurrency:
-          type: string
-          description: 源币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        sourceAmount:
-          type: string
-          description: 源币种金额，若 pricingCurrency = sourceCurrency，则该字段必填
-          maxLength: 10
-        targetCurrency:
-          type: string
-          description: 目的币种，默认为CNY
-          minLength: 3
-          maxLength: 3
-        targetAmount:
-          type: string
-          description: 目的币种金额，若 pricingCurrency = targetCurrency，则该字段必填
-          maxLength: 10
-        rate:
-          type: string
-          description: '汇兑汇率，若分发成功，则显示汇兑汇率
-
-            '
-          maxLength: 8
-        refundCurrency:
-          type: string
-          description: 退款币种
-          minLength: 3
-          maxLength: 3
-        refundAmount:
-          type: string
-          description: 退款金额
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        payeeBankAcctType:
-          type: string
-          description: '收款人银行账户类型，若收款人payeeType=Corporate以及corporateNature=1，则该字段必填，填写方式如下
-
-
-            |传输值|解释|
-
-            |---|---|
-
-            |0|企业对公账户|
-
-            |1|法人对私账户|'
-          enum:
-          - 0
-          - 1
-        bankCountryCode:
-          type: string
-          description: 收款银行所在国家或地区，若未传则默认为CHN
-          enum:
-          - CHN
-          - HKG
-          minLength: 3
-          maxLength: 3
-        paymentMethod:
-          type: string
-          description: '付款方式，若targetCurrency不等于CNY，则该字段必填，填写方式如下
-
-
-            |传输值|解释|
-
-            |---|---|
-
-            |SWIFT|通过SWIFT进行付款|
-
-            |LOCAL|通过本地分发方式进行付款|'
-        accountRoutingType:
-          type: string
-          description: '路由号类型，若paymentType = LOCAL则必填，填写方式如下：
-
-
-            |字段值|解释|
-
-            |---|---|
-
-            |ABA|美国本地付款路有号|'
-          maxLength: 16
-        routingNumber:
-          type: string
-          description: 路由号，若paymentType = LOCAL则必填
-        swiftCode:
-          type: string
-          description: Swift Code,若targetCurrency不等于CNY则必填
-        payeeBankName:
-          type: string
-          description: '收款银行名称，
-
-            若targetCurrency = CNY则参考附录银行列表填写BankCode
-
-            若targetCUrrency ≠CNY则填写银行实际名称'
-        cnapsCode:
-          type: string
-          description: 收款银行大额行号，若收款银行账户为对公账户，且payeeBankName = 15947916，则该字段必传
-          maxLength: 16
-        payeeBankAcctNo:
-          type: string
-          description: 收款银行账号
-          maxLength: 32
-        tradeCode:
-          type: string
-          description: 交易编码
-          maxLength: 8
-        memo:
-          type: string
-          description: 打款备注
-          maxLength: 40
-        createTime:
-          type: string
-          description: 创建时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        status:
-          type: string
-          description: '分发指令处理状态，状态如下
-
-
-            |值|解释|
-
-            |----|----|
-
-            |Processing|处理中|
-
-            |Successed|处理成功|
-
-            |Failed|处理失败|
-
-            |Hedged|红冲成功|'
-          enum:
-          - Processing
-          - Successed
-          - Failed
-          - Hedged
-        failedReason:
-          type: string
-          description: 失败原因，若分发失败，则该字段显示失败原因
-          maxLength: 128
-      required:
-      - payoutId
-      - tradeFileId
-      - pricingCurrency
-      - sourceCurrency
-      - targetCurrency
-      - payeeId
-      - payeeBankName
-      - payeeBankAcctNo
-      - tradeCode
-      - createTime
-      - updateTime
-      - status
-      x-tags:
-      - 对象
-    new-model_15:
-      type: object
-      title: 店铺
-      properties:
-        shopId:
-          type: string
-          description: 平台侧店铺唯一编号
-          maxLength: 64
-        payeeId:
-          type: string
-          description: 平台侧收款人唯一编号
-          maxLength: 64
-        businessType:
-          type: string
-          description: 店铺经营类别代码，请参考附录经营类别列表传输
-          enum:
-          - '0001'
-          - '0002'
-          - '0003'
-          - '0004'
-          - '0005'
-          - '0006'
-          - '0007'
-          - 8
-          - 9
-          - '0010'
-          - '0011'
-          - '0012'
-          - '0013'
-          - '0014'
-          - '0015'
-          - '0016'
-          - '0017'
-          - 18
-          - 19
-          - '0020'
-          - '0021'
-          minLength: 4
-          maxLength: 4
-        shopUrl:
-          type: string
-          description: 店铺链接
-          maxLength: 128
-        status:
-          type: string
-          description: '店铺审核状态，审核状态如下
-
-
-            |值|解释|
-
-            |----|-----|
-
-            |Processing|审核中|
-
-            |Successed|审核成功|
-
-            |Failed|审核失败|'
-          enum:
-          - Processing
-          - Failed
-          - Successed
-          maxLength: 10
-        failedReason:
-          type: string
-          description: 审核失败原因，店铺审核失败的情况下会返回失败原因
-          maxLength: 128
-      required:
-      - shopId
-      - payeeId
-      - businessType
-      - shopUrl
-      - status
-      x-tags:
-      - 对象
-    new-model_16:
-      type: object
-      title: 贸易材料
-      description: 连连侧贸易材料对象
-      x-tags:
-      - 对象
-      properties:
-        materialId:
-          type: string
-          description: 商户侧指令唯一编号
-          maxLength: 64
-        tradeFileId:
-          type: string
-          description: 平台侧订单唯一编号
-          maxLength: 64
-        fundingId:
-          type: array
-          description: 订单对应的连连侧加款单号
-          items:
-            type: string
-            maxLength: 64
-        paymentType:
-          type: string
-          description: '订单支付方式，填写方式如下
-
-
-            |传输值|解释|
-
-            |----|----|
-
-            |0|线上收单|
-
-            |1|虚拟卡转账支付|'
-          enum:
-          - 0
-          - 1
-        payerName:
-          type: string
-          description: 付款人名称
-          maxLength: 64
-        payerCountryCode:
-          type: string
-          description: 付款方国别或地区，参考附录国家或地区代码
-          minLength: 3
-          maxLength: 3
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        tradeType:
-          type: string
-          description: '交易类型，传输方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |0|货物贸易|
-
-            |1|服务贸易|'
-          enum:
-          - 0
-          - 1
-        tradeTime:
-          type: string
-          description: 交易时间
-          maxLength: 25
-        tradeCurrency:
-          type: string
-          description: 交易币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        tradeAmount:
-          type: string
-          description: 交易金额
-          maxLength: 10
-        tradeName:
-          type: string
-          description: 商品名称
-          maxLength: 512
-        tradeCount:
-          type: string
-          description: 商品数量
-          maxLength: 64
-        deliveryName:
-          type: string
-          description: 收货人名称，若tradeType=0时必填
-          maxLength: 64
-        deliveryCountryCode:
-          type: string
-          description: 收货人所在国家或地区，若tradeType=0时必填
-          minLength: 3
-          maxLength: 3
-        deliveryAddress:
-          type: object
-          description: 收货人地址信息，若tradeType=0时必填
-          properties:
-            city:
-              type: string
-              description: 收货人所在城市
-              maxLength: 128
-            streetAddress:
-              type: string
-              description: 收货人所在街道地址
-              maxLength: 512
-        goodsCarrier:
-          type: string
-          description: '物流信息，tradeType=0，该字段必填，填写方式如下
-
-
-            货物承运人及运货单号，例如：
-
-            中外运空运;MC2410918701000931505
-
-            '
-          maxLength: 512
-        serviceDetail:
-          type: string
-          description: 服务贸易详情，若tradeType=1时必填
-          maxLength: 512
-        serviceTime:
-          type: string
-          description: 服务发生时间，若tradeType=1时必填
-          maxLength: 25
-        tradeCode:
-          type: string
-          description: 交易编码
-          maxLength: 8
-          x-stoplight:
-            id: 14eupgynsa86m
-        CustomsDeclarationNo:
-          type: string
-          maxLength: 64
-          x-stoplight:
-            id: anz1qkhqf6ycp
-          description: 报关单号，若 tradeCode=122010 必填
-        supportDoc:
-          type: array
-          description: 贸易材料证明文件
-          items:
-            type: string
-        status:
-          type: string
-          description: '审核状态，传输方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |Processing|审核中|
-
-            |Successed|审核成功|
-
-            |Failed|审核失败|'
-          maxLength: 128
-        failedReason:
-          type: string
-          description: 审核失败原因
-          maxLength: 128
-      required:
-      - materialId
-      - tradeFileId
-      - fundingId
-      - paymentType
-      - payerName
-      - payerCountryCode
-      - payeeId
-      - tradeType
-      - tradeTime
-      - tradeCurrency
-      - tradeAmount
-      - tradeName
-      - tradeCount
-      - status
-    new-model_17:
-      type: object
-      title: 虚拟卡
-      description: 连连侧虚拟卡对象
-      properties:
-        functionType:
-          type: string
-          description: '功能类型，用以识别发卡逻辑
-
-
-            |传输值|解释|
-
-            |---|---|
-
-            |0|针对一对买卖关系发一张虚拟卡|
-
-            |1|针对一个订单发一张虚拟卡|'
-          enum:
-          - 0
-          - 1
-        tradeFileId:
-          type: string
-          description: 平台侧订单唯一编号，若functionType=1，则该字段必填
-          maxLength: 64
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        payerId:
-          type: string
-          description: 商户侧付款人唯一编号，若functionType=0，则该字段必填
-          maxLength: 64
-        shopId:
-          type: array
-          description: 平台侧店铺唯一编号
-          maxItems: 10
-          items:
-            type: string
-            maxLength: 64
-        payerName:
-          type: string
-          description: 付款人名称
-          maxLength: 64
-        payerCountryCode:
-          type: string
-          description: 付款方国别或地区，参考附录国家或地区代码
-          minLength: 3
-          maxLength: 3
-        createTime:
-          type: string
-          description: 虚拟卡创建时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        payerAccountNumber:
-          type: string
-          description: 付款人银行账号
-          maxLength: 32
-        currency:
-          type: array
-          description: 虚拟卡币种，参考附录币种
-          minItems: 3
-          maxItems: 3
-          items:
-            type: string
-        orderInfo:
-          type: object
-          description: 订单信息
-          properties:
-            tradeType:
-              type: string
-              description: '交易类型，传输方式如下
-
-
-                |传输值|解释|
-
-                |----|-----|
-
-                |0|货物贸易|
-
-                |1|服务贸易|'
-              enum:
-              - 0
-              - 1
-            tradeTime:
-              type: string
-              description: 交易时间
-              maxLength: 25
-            tradeCurrency:
-              type: string
-              description: 交易币种，参考附录币种代码
-              minLength: 3
-              maxLength: 3
-            tradeAmount:
-              type: string
-              description: 交易金额
-              maxLength: 10
-            tradeName:
-              type: string
-              description: 商品名称
-              maxLength: 512
-            tradeCount:
-              type: string
-              description: 商品数量
-              maxLength: 64
-            serviceDetail:
-              type: string
-              description: 服务贸易详情，若tradeType=1时必填
-              maxLength: 512
-            serviceTime:
-              type: string
-              description: 服务发生时间，若tradeType=1时必填
-              maxLength: 25
-            deliveryName:
-              type: string
-              description: 收货人名称，若tradeType=0时必填
-              maxLength: 64
-            deliveryCountryCode:
-              type: string
-              description: 收货人所在国家或地区，若tradeType=0时必填
-              minLength: 3
-              maxLength: 3
-            deliveryAddress:
-              type: object
-              description: 收货人地址信息，若tradeType=0时必填
-              properties:
-                city:
-                  type: string
-                  description: 收货人所在城市
-                  maxLength: 128
-                streetAddress:
-                  type: string
-                  description: 收货人所在街道地址
-                  maxLength: 512
-          required:
-          - tradeType
-          - tradeTime
-          - tradeCurrency
-          - tradeAmount
-          - tradeName
-          - tradeCount
-        receivingAccountNo:
-          type: string
-          description: 收款虚拟卡号
-          maxLength: 32
-        bankName:
-          type: string
-          description: 虚拟账户银行名称
-          maxLength: 32
-        swiftCode:
-          type: string
-          description: 虚拟账户Swift Code
-          maxLength: 11
-        bankLocation:
-          type: string
-          description: 虚拟账户银行所在地
-          maxLength: 32
-        bankAddress:
-          type: string
-          maxLength: 256
-          description: 虚拟账户银行地址
-        accountName:
-          type: string
-          description: 虚拟卡账户户名
-          maxLength: 32
-      required:
-      - functionType
-      - payeeId
-      - shopId
-      - payerName
-      - createTime
-      - currency
-      - receivingAccountNo
-      - bankName
-      - swiftCode
-      - bankLocation
-      - bankAddress
-      - accountName
-      x-tags:
-      - 对象
-    webhook_3:
-      type: object
-      title: Webhook注册结果
-      description: 'Webhook注册结果对象
-
-        '
-      properties:
-        id:
-          type: string
-          description: 流水单号
-          maxLength: 32
-        url:
-          type: string
-          description: Webhook url
-          maxLength: 64
-        createTime:
-          type: string
-          description: 注册时间, UTC+0 timestamp
-          format: date-time
-        topic:
-          type: string
-          description: '连连定义的Topic
-
-
-            | Topic | Description |
-
-            |--------|------------|
-
-            | b2b.payee.approved | 收款人审核通过 |
-
-            | b2b.payee.rejected |  收款人审核不通过 |
-
-            |b2b.shop.approved|店铺审核通过|
-
-            |b2b.shop.rejected|店铺审核不通过|
-
-            |b2b.funding.successed| 加款成功 |
-
-            |b2b.funding.hedged| 红冲成功 |
-
-            |b2b.funding.refunded| 退款成功 |
-
-            |b2b.tradeFile.approved|贸易材料审核通过|
-
-            |b2b.tradeFile.rejected|贸易材料审核不通过|
-
-            |b2b.distribute.successed| 分账成功 |
-
-            |b2b.distribute.failed| 分账失败 |
-
-            |b2b.payout.successed | 分发成功 |
-
-            | b2b.payout.failed | 分发失败 |
-
-            |b2b.payout.hedged|分发红冲|'
-          enum:
-          - b2b.payee.rejected
-          - b2b.payout.successed
-          - b2b.payout.failed
-          - b2b.distribute.successed
-          - b2b.distribute.failed
-          - b2b.funding.successed
-          - b2b.payee.approved
-          - b2b.funding.hedged
-          - b2b.funding.refunded
-          - b2b.shop.approved
-          - b2b.shop.rejected
-          - b2b.tradeFile.approved
-          - b2b.tradeFile.rejected
-          - b2b.payout.hedged
-      required:
-      - id
-      - url
-      - createTime
-      - topic
+          description: 每页查询数量
       x-tags:
       - 对象
     account:
@@ -13512,265 +11088,6 @@ components:
       title: account
       x-stoplight:
         id: 62e56dc100b32
-      x-tags:
-      - 对象
-    statement:
-      title: statement
-      x-stoplight:
-        id: h8ztry2mufw3b
-      type: object
-      properties:
-        billNumber:
-          type: string
-          maxLength: 32
-          description: 账务流水号
-        fundDirection:
-          type: string
-          enum:
-          - CREDIT
-          - DEBIT
-          description: '资金方向，CREDIT：入账；DEBIT：出账
-
-            '
-        currency:
-          type: string
-          minLength: 3
-          maxLength: 3
-          description: 币种
-        transactionAmount:
-          type: string
-          maxLength: 16
-          description: 交易金额
-        balance:
-          type: string
-          maxLength: 16
-          description: 交易后可用余额
-        accountDate:
-          type: string
-          description: 账务日期，格式：yyyy-MM-dd
-        transactionTime:
-          type: string
-          description: 交易时间，格式：yyyy-MM-dd HH:mm:ss
-        remark:
-          type: string
-          maxLength: 128
-          description: 备注
-        totalCount:
-          type: string
-          description: 总条数
-        pageNum:
-          type: string
-          description: 当前页码
-        pageSize:
-          type: string
-          description: 每页查询数量
-      x-tags:
-      - 对象
-    document_3:
-      type: object
-      description: 连连定义的文件对象
-      title: 文件
-      properties:
-        id:
-          type: string
-          description: 连连定义的文件唯一编号
-          maxLength: 32
-        name:
-          type: integer
-          description: 文件名称
-          maximum: 128
-        createTime:
-          type: string
-          description: 文件创建时间, UTC+0
-          format: date-time
-      required:
-      - id
-      - name
-      - createTime
-      x-tags:
-      - 对象
-    Event_4:
-      type: object
-      description: '调用注册的Webhook url收到200 HTTP状态代码后，事件状态将更新为`SUCCESS`。 在成功之前，每60分钟将事件发送到注册的Webhook url，总共24次。 全部24次重试均未成功后，事件状态将更新为`MAXIMUM_RETRIES_REACHED`。
-
-        '
-      title: 事件
-      x-tags:
-      - 对象
-      properties:
-        id:
-          type: string
-          description: Event ID
-        topic:
-          type: string
-          description: "连连定义的Topic\n| Topic | Description |\n|--------|------------| \n| connect.member. active| 会员创建成功 |\n| connect.account. enabled| 会员账户创建成功 |\n|connect.funding.successed| 加款成功 | \n|connectfunding.hedged| 红冲成功 | \n|connect.funding.refunded| 退款成功|\n|connect.payout.successed | 分发成功 | \n|connect.payout.failed | 分发失败 | \n|connect.payout.hedged|分发红冲|"
-          enum:
-          - connect.member. active
-          - connect.account. enabled
-          - connect.funding.successed
-          - connectfunding.hedged
-          - connect.funding.refunded
-          - connect.payout.successed
-          - connect.payout.failed
-          - connect.payout.hedged
-        createTime:
-          type: string
-          description: 创建时间, UTC+0
-          format: date-time
-        data:
-          type: object
-          description: Event 详情
-          required:
-          - objectType
-          - objectId
-          properties:
-            objectType:
-              type: string
-              description: "对象类型 \n\n| type | description |\n|------|-------------|\n|member| 会员|\naccount|会员账户\n|funding|加款对象|\n|"
-              enum:
-              - member
-              - account
-              - funding
-              - payout
-            objectId:
-              type: string
-              description: Event对象对应的唯一编号
-            url:
-              type: string
-              description: 'Event对应的对象的获取地址，可以通过该地址获取到Event对应的对象
-
-                '
-        status:
-          type: string
-          description: 'Event 状态.:
-
-
-            | status | description |
-
-            |--------|-------------|
-
-            | PROCESSING | Event 在处理中 |
-
-            | SUCCESS | Event通知成功，已收到对接方的200 HTTP状态代码. |
-
-            | MAXIMUM_RETRIES_REACHED | Event通知失败，多次重试均为成功 |'
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - MAXIMUM_RETRIES_REACHED
-        webhookURL:
-          type: string
-          description: Registered webhook url for this event
-      required:
-      - id
-      - topic
-      - createTime
-      - data
-      - status
-      - webhookURL
-    new-model_18:
-      type: object
-      title: 加款
-      description: 连连侧加款流水对象
-      x-tags:
-      - 对象
-      properties:
-        fundingId:
-          type: string
-          description: 连连侧加款唯一编号
-          maxLength: 64
-        createTime:
-          type: string
-          description: 加款时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        updateTime:
-          type: string
-          description: 状态更新时间，格式：yyyy-MM-dd'T'HH:mm:ss'Z
-        currency:
-          type: string
-          description: 加款币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        amount:
-          type: string
-          description: 加款金额
-          maxLength: 10
-        payerName:
-          type: string
-          description: 付款人名称
-          maxLength: 64
-        payerAcctNo:
-          type: string
-          description: 付款人打款账号
-          maxLength: 32
-        virtualAccountNumber:
-          type: string
-          description: 虚拟卡号
-          maxLength: 32
-        remark:
-          type: string
-          description: 付款人备注信息
-          maxLength: 140
-        status:
-          type: string
-          description: '加款状态，状态如下
-
-
-            |值|解释|
-
-            |----|-----|
-
-            |Processing|处理中|
-
-            |Successed|加款成功|
-
-            |Refunding|退款中|
-
-            |Refund Successed|退款成功|
-
-            |Hedging|红冲中（平台将已加款成功的资金退回，加款的状态会变为红冲中）|
-
-            |Hedge Successed|红冲成功|
-
-            '
-          enum:
-          - Processing
-          - Successed
-          - Hedging
-          - Refunding
-          - Refund Successed
-          - Hedge Successed
-    rate_3:
-      type: object
-      description: 连连侧汇率对象
-      title: 汇率
-      properties:
-        rate:
-          type: string
-          description: 汇率
-          maxLength: 10
-        rateId:
-          type: string
-          description: 汇率编号
-          maxLength: 24
-        sourceCurrency:
-          type: string
-          description: 源币种
-          maxLength: 3
-        targetCurrency:
-          type: string
-          maxLength: 3
-          description: 目的币种
-        baseCurrency:
-          type: string
-          maxLength: 3
-          description: '基准币种
-
-            例子: USD/CNY的汇率下，USD为基准币种'
-      required:
-      - rate
-      - sourceCurrency
-      - targetCurrency
-      - baseCurrency
       x-tags:
       - 对象
     member:
@@ -13841,319 +11158,10 @@ components:
       - status
       - createTime
       - modifyTime
-    payout:
-      title: User
-      type: object
-      examples: []
-      x-stoplight:
-        id: f7337f17f355f
-      x-tags:
-      - 对象
-      properties:
-        payoutId:
-          type: string
-          description: 商户侧分发指令唯一编号
-          maxLength: 64
-        payoutType:
-          type: string
-          enum:
-          - WITHDRAW
-          - PAYMENT
-          description: 交易类型
-        memberId:
-          type: string
-          maxLength: 32
-          description: 出账会员Id
-        pricingCurrency:
-          type: string
-          minLength: 3
-          maxLength: 3
-          description: 定价币种
-        sourceCurrency:
-          type: string
-          minLength: 3
-          maxLength: 3
-          description: 出账币种
-        ' sourceAmount:':
-          type: string
-          maxLength: 16
-          description: 出账金额，如果pricingCurrency= sourceCurrency则必填
-        'targetCurrency ':
-          type: string
-          minLength: 3
-          maxLength: 3
-          description: 入账币种
-        targetAmount:
-          type: string
-          maxLength: 16
-          description: 入账金额，如果pricingCurrency= targetCurrency则必填
-        bankCountryCode:
-          type: string
-          minLength: 3
-          description: 收款银行所在国家或地区
-        paymentMethod:
-          type: string
-          description: "付款方式填写方式如下：\n  |传输值|解释|\n  |---|---|\n  |SWIFT|通过SWIFT进行付款|\n  |LOCAL|通过本地分发方式进行付款|\n              "
-        accountRoutingType:
-          type: string
-          maxLength: 16
-          description: 路由号类型，若paymentMethod = LOCAL则必填
-        routingNumber:
-          type: string
-          maxLength: 32
-          description: 路由号，若paymentMethod = LOCAL则必填
-        swiftCode:
-          type: string
-          description: Swift Code，paymentMethod = SWIFT则必填
-          maxLength: 11
-        payeeBankName:
-          type: string
-          maxLength: 64
-          description: ' 收款银行名称'
-        payeeBankAcctNo:
-          type: string
-          maxLength: 32
-          description: 收款银行账号
-        payeeBankAcctName:
-          type: string
-          maxLength: 128
-          description: 收款银行账户名称
-        memo:
-          type: string
-          maxLength: 128
-          description: 交易附言
-        rate:
-          type: string
-          maxLength: 8
-          description: 汇兑汇率，若分发成功，则显示汇兑汇率
-        status:
-          type: string
-          description: '分发指令处理状态，状态如下
-
-
-            |值|解释|
-
-            |----|----|
-
-            |Processing|处理中|
-
-            |Successed|处理成功|
-
-            |Failed|处理失败|
-
-            |Hedged|红冲成功|'
-        createTime:
-          type: string
-          description: 创建时间，格式：yyyy-MM-dd HH:mm:ss
-        modifyTime:
-          type: string
-          description: 更新时间，格式：yyyy-MM-dd HH:mm:ss
-        failedReason:
-          type: string
-          maxLength: 128
-          description: 失败原因，若分发失败，则该字段显示失败原因
-    new-model_19:
-      type: object
-      title: 贸易材料
-      description: 连连侧贸易材料对象
-      properties:
-        materialId:
-          type: string
-          description: 商户侧指令唯一编号
-          maxLength: 64
-        tradeFileId:
-          type: string
-          description: 平台侧订单唯一编号
-          maxLength: 64
-        fundingId:
-          type: array
-          description: 订单对应的连连侧加款单号
-          items:
-            type: string
-            maxLength: 64
-        paymentType:
-          type: string
-          description: '订单支付方式，填写方式如下
-
-
-            |传输值|解释|
-
-            |----|----|
-
-            |0|线上收单|
-
-            |1|虚拟卡转账支付|'
-          enum:
-          - 0
-          - 1
-        payerName:
-          type: string
-          description: 付款人名称
-          maxLength: 64
-        payerCountryCode:
-          type: string
-          description: 付款方国别或地区，参考附录国家或地区代码
-          minLength: 3
-          maxLength: 3
-        payeeId:
-          type: string
-          description: 商户侧收款人唯一编号
-          maxLength: 64
-        tradeType:
-          type: string
-          description: '交易类型，传输方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |0|货物贸易|
-
-            |1|服务贸易|'
-          enum:
-          - 0
-          - 1
-        tradeTime:
-          type: string
-          description: 交易时间
-          maxLength: 25
-        tradeCurrency:
-          type: string
-          description: 交易币种，参考附录币种代码
-          minLength: 3
-          maxLength: 3
-        tradeAmount:
-          type: string
-          description: 交易金额
-          maxLength: 10
-        tradeName:
-          type: string
-          description: 商品名称
-          maxLength: 512
-        tradeCount:
-          type: string
-          description: 商品数量
-          maxLength: 64
-        deliveryName:
-          type: string
-          description: 收货人名称，若tradeType=0时必填
-          maxLength: 64
-        deliveryCountryCode:
-          type: string
-          description: 收货人所在国家或地区，若tradeType=0时必填
-          minLength: 3
-          maxLength: 3
-        deliveryAddress:
-          type: object
-          description: 收货人地址信息，若tradeType=0时必填
-          properties:
-            city:
-              type: string
-              description: 收货人所在城市
-              maxLength: 128
-            streetAddress:
-              type: string
-              description: 收货人所在街道地址
-              maxLength: 512
-        goodsCarrier:
-          type: string
-          description: '物流信息，tradeType=0，该字段必填，填写方式如下
-
-
-            货物承运人及运货单号，例如：
-
-            中外运空运;MC2410918701000931505
-
-            '
-          maxLength: 512
-        serviceDetail:
-          type: string
-          description: 服务贸易详情，若tradeType=1时必填
-          maxLength: 512
-        serviceTime:
-          type: string
-          description: 服务发生时间，若tradeType=1时必填
-          maxLength: 25
-        supportDoc:
-          type: array
-          description: 贸易材料证明文件
-          items:
-            type: string
-        status:
-          type: string
-          description: '审核状态，传输方式如下
-
-
-            |传输值|解释|
-
-            |----|-----|
-
-            |Processing|审核中|
-
-            |Successed|审核成功|
-
-            |Failed|审核失败|'
-          maxLength: 128
-        failedReason:
-          type: string
-          description: 审核失败原因
-          maxLength: 128
-      required:
-      - materialId
-      - tradeFileId
-      - fundingId
-      - paymentType
-      - payerName
-      - payerCountryCode
-      - payeeId
-      - tradeType
-      - tradeTime
-      - tradeCurrency
-      - tradeAmount
-      - tradeName
-      - tradeCount
-      - status
-      x-tags:
-      - 对象
-    webhook_4:
-      type: object
-      title: Webhook注册结果
-      description: 'Webhook注册结果对象
-
-        '
-      x-tags:
-      - 对象
-      properties:
-        id:
-          type: string
-          description: 流水单号
-          maxLength: 32
-        url:
-          type: string
-          description: Webhook url
-          maxLength: 64
-        createTime:
-          type: string
-          description: 注册时间, UTC+0 timestamp
-          format: date-time
-        topic:
-          type: string
-          description: "连连定义的Topic\n| Topic | Description |\n|--------|------------| \n| connect.member. active| 会员创建成功 |\n| connect.account. enabled| 会员账户创建成功 |\n|connect.funding.successed| 加款成功 | \n|connectfunding.hedged| 红冲成功 | \n|connect.funding.refunded| 退款成功|\n|connect.payout.successed | 分发成功 | \n|connect.payout.failed | 分发失败 | \n|connect.payout.hedged|分发红冲|"
-          enum:
-          - connect.member.active
-          - connect.account.enabled
-          - connect.funding.successed
-          - connectfunding.hedged
-          - connect.funding.refunded
-          - connect.payout.successed
-          - 'connect.payout.failed '
-          - connect.payout.hedged
-      required:
-      - id
-      - url
-      - createTime
-      - topic
+    busiType:
+      title: 资金流水业务类型
+      description: "|字段值\t  |\n|-------|\n|入账\t|\n|提现\t|\n|供应商付款\t|\n|VAT缴税\t|\n|增值服务\t|\n|支付费用\t|\n|转入出账\t|\n|转入入账\t|\n|汇兑出账\t|\n|汇兑入账\t|\n|金融还款\t|\n|退款\t|\n|提前宝入账\t|\n|提前宝出账\t|\n|提前宝还款\t|\n|提前宝失败入账\t|\n|提前宝还款撤销\t|\n|提前宝失败出账\t|\n|服务费退款\t|\n|服务费\t|\n|ESG手续费\t|\n|其他入账\t|\n|其他出账\t|\n|VAT WITHHOLDING\t|\n|VAT WITHHOLDING REFUND\t|\n|店铺集中管理入账\t|\n|店铺集中管理出账\t|\n|闪收入账\t|\n|闪收服务费\t|\n|闪收出账\t|\n|闪收超期服务费\t|\n|闪收手续费退还\t|\n|欧税通手续费\t|\n|提现退手续费\t|"
+      type: string
     currency:
       type: string
       title: 币种
@@ -14212,15 +11220,6 @@ components:
 
         2|对公银行卡'
       type: string
-    shopStatus:
-      title: 店铺状态
-      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|0\t|待完善信息  |\n|1\t|待审核\t      |\n|2\t|审核通过\t      |\n|3\t|审核失败\t      |\n|4\t|已注销\t      |\n|5\t|已迁移\t      |\n|6\t|待激活\t      |\n"
-      type: integer
-    creditStatus:
-      title: 入账状态
-      description: "| 字段值 | 状态 | 注释 |\n| -------|-------|-------|\n| 0\t| 挂起 | |\n| 1\t| 加款中 | |\n| 2\t| 加款成功 | 即入账成功，连连官网页面交易明细仅展示此状态单据 |\n| 3\t| 退还中 | |\n| 4\t| 已退还 | |\n| 5\t| 已红冲 | 加款成功后退款红冲 |\n| 6\t| 待加款 | |\n| 7\t| 待退款 | |"
-      type: string
-      x-internal: false
     marketplaceName:
       type: string
       title: marketplaceName
@@ -14261,10 +11260,6 @@ components:
       title: 提现状态
       description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|1\t|提现中\t      |\n|2\t|提现成功\t      |\n|3\t|提现失败\t      |"
       type: integer
-    busiType:
-      title: 资金流水业务类型
-      description: "|字段值\t  |\n|-------|\n|入账\t|\n|提现\t|\n|供应商付款\t|\n|VAT缴税\t|\n|增值服务\t|\n|支付费用\t|\n|转入出账\t|\n|转入入账\t|\n|汇兑出账\t|\n|汇兑入账\t|\n|金融还款\t|\n|退款\t|\n|提前宝入账\t|\n|提前宝出账\t|\n|提前宝还款\t|\n|提前宝失败入账\t|\n|提前宝还款撤销\t|\n|提前宝失败出账\t|\n|服务费退款\t|\n|服务费\t|\n|ESG手续费\t|\n|其他入账\t|\n|其他出账\t|\n|VAT WITHHOLDING\t|\n|VAT WITHHOLDING REFUND\t|\n|店铺集中管理入账\t|\n|店铺集中管理出账\t|\n|闪收入账\t|\n|闪收服务费\t|\n|闪收出账\t|\n|闪收超期服务费\t|\n|闪收手续费退还\t|\n|欧税通手续费\t|\n|提现退手续费\t|"
-      type: string
     authStatus:
       type: object
       x-stoplight:
@@ -14281,6 +11276,15 @@ components:
         AUTH_WAIT|待授权
 
         NO_AUTH|无需授权'
+    creditStatus:
+      title: 入账状态
+      description: "| 字段值 | 状态 | 注释 |\n| -------|-------|-------|\n| 0\t| 挂起 | |\n| 1\t| 加款中 | |\n| 2\t| 加款成功 | 即入账成功，连连官网页面交易明细仅展示此状态单据 |\n| 3\t| 退还中 | |\n| 4\t| 已退还 | |\n| 5\t| 已红冲 | 加款成功后退款红冲 |\n| 6\t| 待加款 | |\n| 7\t| 待退款 | |"
+      type: string
+      x-internal: false
+    shopStatus:
+      title: 店铺状态
+      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|0\t|待完善信息  |\n|1\t|待审核\t      |\n|2\t|审核通过\t      |\n|3\t|审核失败\t      |\n|4\t|已注销\t      |\n|5\t|已迁移\t      |\n|6\t|待激活\t      |\n"
+      type: integer
     tradeCode:
       title: 贸易类型
       type: string
@@ -14354,45 +11358,16 @@ components:
       description: "The LLPAY-Signature header contains a timestamp and one signature. The timestamp is prefixed by t=, and each signature is prefixed by a scheme. Schemes start with v, potentially followed by an integer.\n\n```\nLLPAY-Signature: t=1492774577, v=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd\n```\n\nNote that newlines have been added in the example above for clarity, but a real LLPAY-Signature header will be all one line.\n\nLianlian Pay and clients shall exchange each party’s public key.  The LLPAY-Signature will be signed by with the RSA private key.\n\n**Step 1:** Determine the signature payload\n\nCreate a `payload` string with the following formula:\n\n**HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD[&QUERY_STRING]**\n\n* HTTP_METHOD: The actual method defined for specific API endpoint `POST`\n* URI: The request's URL Path, such as `/profiles/{profileId}`\n* REQUEST_EPOCH: The seconds elapsed since 1970/1/1 00:00:00 GMT, same as value of `t`\n* REQUEST_PAYLOAD: The contents of request body in JSON format. \n* QUERY_STRING: The query string of the URL, URL Encoded, such as `attr1%3Dvalue1%26attr2%3Dvalue2`\n\n<!-- theme: info -->\n>Case 1: QUERY_STRING is empty:\n>\n>**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD\n>\n>---\n>Case 2: REQUEST_PAYLOAD is empty:\n>\n>**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&&QUERY_STRING\n>\n>---\n>Case 3: REQUEST_PAYLOAD and QUERY_STRING both are empty:\n>\n>**Formula is**: HTTP_METHOD&URI&REQUEST_EPOCH&\n\n\nPut typical GET and POST examples here.\n\nExample POST `payload`:\n```\nPOST&/kyc/v1/profiles&19879234&{\"profileId\":\"string\",\"countryOfOrigin\":\"CN\",\"type\":\"COMPANY\",\"email\":\"abc@xyz.com\",\"mobile\":\"string\",\"indicator\":\"string\",\"kyc\":{\"name\":\"string\",\"idNumber\":\"string\",\"idFrontCopy\":\"string\",\"idBackCopy\":\"string\",\"address\":{\"lineOne\":\"string\",\"lineTwo\":\"string\",\"city\":\"string\",\"province\":\"string\",\"region\":\"string\",\"postalCode\":\"string\"}}}\n```\n\nExample GET `payload`:\n```\nGET&/events/v1&19879234&&status%3DMAXIMUM_RETRIES_REACHED\n```\n\n\n\n**Step 2:** Prepare the `LLPAY-Signature` string\n\nAchieve this by concatenating:\n* The timestamp (Seconds elapsed since 1970/1/1 00:00:00 GMT as a string)\n* Use your RSA private key and calculate the string `BASE64(RSAwithSHA256(STEP_1_RESULT)))` from Step 1\n\n### Result Signature\n\nLianLian Pay result headers also contain the `LLPAY-Signature` header as described above but signed with Lianlian Pay's private RSA key.  You may verify the signature corresponds to the Result body by calculating the signature and comparing it to the unencrypted version of `LLPAY-Signature` using the Lianlian Pay's public RSA key.  Here are the steps:\n\n**Step 1:** Determine the signature `payload`\n\nCreate a `payload` string which is the following separated by `&`\n\n* Response Timestamp: Extract t from LLPay-Signature and use it as timestamp\n* Response Payload: The contents of response body in JSON format\n\nExample `payload`:\n```\n19879234&{\"profileId\":\"string\",\"countryOfOrigin\":\"CN\",\"type\":\"COMPANY\",\"email\":\"abc@xyz.com\",\"mobile\":\"string\",\"indicator\":\"string\",\"kyc\":{\"name\":\"string\",\"idNumber\":\"string\",\"idFrontCopy\":\"string\",\"idBackCopy\":\"string\",\"address\":{\"lineOne\":\"string\",\"lineTwo\":\"string\",\"city\":\"string\",\"province\":\"string\",\"region\":\"string\",\"postalCode\":\"string\"}}}\n```\n\n**Step 2:** Use RSA Verify to compare signatures\n\nCompare the LLPay-Signature received with the `payload` calculated in Step 1 using the Lianlian Pay's Public Key using the following algorithm:\n\n```\nRSA.verify( LLPAY-Signature, \n            '19879234&{\"profileId\":\"string\",\"countryOfOrigin\":\"CN\",\"type\":\"COMPANY\",\"email\":\"abc@xyz.com\",\"mobile\":\"string\",\"indicator\":\"string\",\"kyc\":{\"name\":\"string\",\"idNumber\":\"string\",\"idFrontCopy\":\"string\",\"idBackCopy\":\"string\",\"address\":{\"lineOne\":\"string\",\"lineTwo\":\"string\",\"city\":\"string\",\"province\":\"string\",\"region\":\"string\",\"postalCode\":\"string\"}}}', \n            Lianlian Pay Public Key )\n```\n"
 x-refined-from:
 - lianlian-global-b2b-cross-border-distribution-import-openapi.yml
-- lianlian-global-b2b-cross-border-distribution-openapi.yml
 - lianlian-global-b2b-cross-border-document-openapi.yml
-- lianlian-global-b2b-cross-border-event-import-openapi.yml
-- lianlian-global-b2b-cross-border-event-openapi.yml
-- lianlian-global-b2b-cross-border-funding-import-openapi.yml
 - lianlian-global-b2b-cross-border-funding-openapi.yml
-- lianlian-global-b2b-cross-border-fxrate-openapi.yml
 - lianlian-global-b2b-cross-border-payee-openapi.yml
 - lianlian-global-b2b-cross-border-payer-openapi.yml
-- lianlian-global-b2b-cross-border-payout-import-openapi.yml
-- lianlian-global-b2b-cross-border-payout-openapi.yml
 - lianlian-global-b2b-cross-border-shop-openapi.yml
 - lianlian-global-b2b-cross-border-tradefile-import-openapi.yml
-- lianlian-global-b2b-cross-border-tradefile-openapi.yml
 - lianlian-global-b2b-cross-border-virtualaccount-import-openapi.yml
-- lianlian-global-b2b-cross-border-virtualaccount-openapi.yml
 - lianlian-global-b2b-cross-border-webhook-import-openapi.yml
-- lianlian-global-b2b-cross-border-webhook-openapi.yml
-- lianlian-global-b2b-inflow-payout-distribution-openapi.yml
-- lianlian-global-b2b-inflow-payout-document-openapi.yml
-- lianlian-global-b2b-inflow-payout-event-openapi.yml
-- lianlian-global-b2b-inflow-payout-funding-openapi.yml
-- lianlian-global-b2b-inflow-payout-fxrate-openapi.yml
-- lianlian-global-b2b-inflow-payout-hk-payee-openapi.yml
-- lianlian-global-b2b-inflow-payout-payee-openapi.yml
-- lianlian-global-b2b-inflow-payout-payout-openapi.yml
-- lianlian-global-b2b-inflow-payout-shop-openapi.yml
-- lianlian-global-b2b-inflow-payout-tradefile-openapi.yml
-- lianlian-global-b2b-inflow-payout-virtualaccount-openapi.yml
-- lianlian-global-b2b-inflow-payout-webhook-openapi.yml
 - lianlian-global-connect-ota-account-openapi.yml
-- lianlian-global-connect-ota-document-openapi.yml
-- lianlian-global-connect-ota-event-openapi.yml
-- lianlian-global-connect-ota-funding-openapi.yml
-- lianlian-global-connect-ota-fxrate-openapi.yml
 - lianlian-global-connect-ota-member-openapi.yml
-- lianlian-global-connect-ota-payout-openapi.yml
-- lianlian-global-connect-ota-tradefile-openapi.yml
-- lianlian-global-connect-ota-webhook-openapi.yml
 - lianlian-global-llp-api-common-openapi.yml
 - lianlian-global-llp-api-userapi-regular-openapi.yml
 - lianlian-global-llp-api-userapi-supplier-openapi.yml

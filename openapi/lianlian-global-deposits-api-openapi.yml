@@ -169,7 +169,7 @@ paths:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
-      operationId: ''
+      operationId: getDeposits
       description: 获取入金列表信息。
       requestBody:
         content: {}
@@ -224,6 +224,7 @@ paths:
         description: 加款单状态
       security:
       - 客户端凭据授权: []
+      x-operation-id-source: derived
 components:
   schemas:
     Deposit_-_copy:

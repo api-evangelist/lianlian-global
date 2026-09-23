@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Ew Receipts API
   version: '1.0'
-  description: ' The amount received from payer.'
+  description: The amount received from payer.
 servers:
 - url: https://test-global-api.lianlianpay-inc.com/gateway/v1/
   description: SANDBOX

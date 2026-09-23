@@ -465,7 +465,7 @@ paths:
       required: true
       description: 交易单号
     post:
-      summary: Supplement transaction  document
+      summary: Supplement transaction document
       tags:
       - Payouts
       responses:
@@ -498,7 +498,7 @@ paths:
 
         ### 超时方案：
 
-        如果调用Supplement transaction  document接口超时，可使用原报文重试。'
+        如果调用Supplement transaction document接口超时，可使用原报文重试。'
       requestBody:
         content:
           application/json:

@@ -3,9 +3,7 @@ info:
   title: Accept Payments Refund API
   version: '1.0'
   summary: accept payments
-  description: '通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。
-
-    '
+  description: 通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。
 servers:
 - url: https://global-api.lianlian.com/api/v1
 tags:

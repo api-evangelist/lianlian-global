@@ -5,7 +5,7 @@ info:
 servers:
 - url: http://localhost:3000
 tags:
-- name: Topup
+- name: Top Up
 paths:
   /v1/topup:
     parameters: []
@@ -78,7 +78,7 @@ paths:
         name: page_size
         description: 每页查询数量，默认值20
       tags:
-      - Topup
+      - Top Up
   /v1/topup/{topup_id}:
     parameters:
     - schema:
@@ -89,7 +89,7 @@ paths:
     get:
       summary: 充值详情查询
       tags:
-      - Topup
+      - Top Up
       responses:
         '200':
           description: OK

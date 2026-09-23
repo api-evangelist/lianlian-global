@@ -3,9 +3,7 @@ info:
   title: Accept Payments Payment API
   version: '1.0'
   summary: accept payments
-  description: '通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。
-
-    '
+  description: 通过集成LianLian Global在线支付API，实现在网站和移动应用程序上接受银行卡、钱包和本地支付方式的付款。开发者可以通过多种方式与我们的在线支付API集成。 这些范围从使用预构建的集成到构建您自己的UI以完全控制您的支付体验。
 servers:
 - url: https://global-api.lianlian.com/api/v1
 tags:
@@ -20,7 +18,7 @@ paths:
       required: true
       description: 商户系统中该笔订单的唯一编码
     get:
-      summary: Get a payment  detail by ID
+      summary: Get a payment detail by ID
       responses:
         '200':
           description: ''
@@ -337,9 +335,7 @@ paths:
         description: application/json
       description: '### 功能说明：
 
-        当支付需要进行验证时，通过该接口发送支付验证码。
-
-        '
+        当支付需要进行验证时，通过该接口发送支付验证码。'
       x-stoplight:
         id: gv4642wlru10g
   /accept_payments/captchas/verify/{request_id}:
@@ -395,14 +391,42 @@ paths:
         description: application/json
       description: '### 功能说明：
 
-        提交验证码进行验证支付，推进支付流程。
-
-
-        '
+        提交验证码进行验证支付，推进支付流程。'
       x-stoplight:
         id: 99p15q3c1cqqk
 components:
   schemas:
+    Captcha:
+      title: Captcha
+      x-stoplight:
+        id: avwxzy6nqni4l
+      type: object
+      properties:
+        request_id:
+          type: string
+          x-stoplight:
+            id: w06gj2yscma2g
+          description: 商户系统中该笔订单的唯一编码。
+        send_time:
+          type: number
+          x-stoplight:
+            id: 3ytmr9h6lcfo3
+          description: 发送时间，13位时间戳。
+        send_type:
+          type: string
+          x-stoplight:
+            id: l06omig2r96no
+          description: 验证码发送方式：PHONE, EMAIL。
+        country_code:
+          type: string
+          x-stoplight:
+            id: qgc51p9koogga
+          description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码。
+        phone_tail:
+          type: string
+          x-stoplight:
+            id: xbbnvvlqgertf
+          description: 手机号后4位
     Payment:
       title: Payment
       x-stoplight:
@@ -542,37 +566,6 @@ components:
           x-stoplight:
             id: io6j2ri2cd9nb
           description: "业务类型\n枚举 | 说明 \n---------|----------\nYICAIFU|易采付"
-    Captcha:
-      title: Captcha
-      x-stoplight:
-        id: avwxzy6nqni4l
-      type: object
-      properties:
-        request_id:
-          type: string
-          x-stoplight:
-            id: w06gj2yscma2g
-          description: 商户系统中该笔订单的唯一编码。
-        send_time:
-          type: number
-          x-stoplight:
-            id: 3ytmr9h6lcfo3
-          description: 发送时间，13位时间戳。
-        send_type:
-          type: string
-          x-stoplight:
-            id: l06omig2r96no
-          description: 验证码发送方式：PHONE, EMAIL。
-        country_code:
-          type: string
-          x-stoplight:
-            id: qgc51p9koogga
-          description: 移动手机号码所在国家（地区），ISO 3166-2两位字母国家（地区）代码。
-        phone_tail:
-          type: string
-          x-stoplight:
-            id: xbbnvvlqgertf
-          description: 手机号后4位
   securitySchemes:
     Component:
       type: oauth2

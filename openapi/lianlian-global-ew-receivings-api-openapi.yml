@@ -2,7 +2,15 @@ openapi: 3.2.0
 info:
   title: Ew Receivings API
   version: '1.0'
-  description: "Receiving Accounts are accounts that function as local bank accounts. \nThey can be used to collect funds from around the world. You get account details that enable you to collect funds from various platforms such as Amazon, Etsy, etc. \n\nYou can apply Receiving Accounts on LianLian Global's website, and by using Receiving API you could query your Receiving accounts and Receiving transactions detail information.\n\n![Wallet.png](https://stoplight.io/api/v1/projects/cHJqOjEyMDg0Ng/images/ooe1JpNsV1Q)"
+  description: 'Receiving Accounts are accounts that function as local bank accounts.
+
+    They can be used to collect funds from around the world. You get account details that enable you to collect funds from various platforms such as Amazon, Etsy, etc.
+
+
+    You can apply Receiving Accounts on LianLian Global''s website, and by using Receiving API you could query your Receiving accounts and Receiving transactions detail information.
+
+
+    !Wallet.png'
 servers:
 - url: https://test-global-api.lianlianpay-inc.com/gateway/v1/
   description: SANDBOX

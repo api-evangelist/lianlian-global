@@ -134,13 +134,14 @@ paths:
       tags:
       - Users
     post:
-      summary: ''
+      summary: Post users user id
       operationId: post-users-userId
       responses:
         '200':
           description: OK
       tags:
       - Users
+      x-summary-source: derived
 components:
   schemas:
     User:

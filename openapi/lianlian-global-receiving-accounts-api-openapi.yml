@@ -11,7 +11,7 @@ paths:
     parameters: []
     post:
       summary: Open a receiving account
-      operationId: ''
+      operationId: postReceivingAccounts
       responses:
         '200':
           description: ''
@@ -101,6 +101,7 @@ paths:
       - 客户端凭据授权: []
       tags:
       - Receiving Accounts
+      x-operation-id-source: derived
     get:
       summary: Get list of receiving accounts
       parameters:
@@ -191,6 +192,8 @@ paths:
       - 客户端凭据授权: []
       tags:
       - Receiving Accounts
+      operationId: getReceivingAccounts
+      x-operation-id-source: derived
   /receiving_accounts/channel:
     parameters: []
     get:
@@ -232,6 +235,8 @@ paths:
       - 客户端凭据授权: []
       tags:
       - Receiving Accounts
+      operationId: getReceivingAccountsChannel
+      x-operation-id-source: derived
   /receiving_accounts/{id}:
     parameters:
     - schema:
@@ -242,7 +247,7 @@ paths:
       description: global_account的主键
     post:
       summary: Update a receiving account
-      operationId: ''
+      operationId: postReceivingAccountsById
       responses:
         '200':
           description: ''
@@ -291,6 +296,7 @@ paths:
       - 客户端凭据授权: []
       tags:
       - Receiving Accounts
+      x-operation-id-source: derived
     get:
       summary: Get receiving account by ID
       parameters:
@@ -312,12 +318,13 @@ paths:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
-      operationId: ''
+      operationId: getReceivingAccountsById
       description: 根据收款账户唯一ID获取账户详情信息。
       security:
       - 客户端凭据授权: []
       tags:
       - Receiving Accounts
+      x-operation-id-source: derived
   /receiving_accounts/close/{id}:
     parameters:
     - schema:
@@ -328,7 +335,7 @@ paths:
       description: global_account的主键
     post:
       summary: Close a receiving account
-      operationId: ''
+      operationId: postReceivingAccountsCloseById
       responses:
         '200':
           description: ''
@@ -375,6 +382,7 @@ paths:
       - 客户端凭据授权: []
       tags:
       - Receiving Accounts
+      x-operation-id-source: derived
 components:
   schemas:
     Receiving_Accounts_Info:
