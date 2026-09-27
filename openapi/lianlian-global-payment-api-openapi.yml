@@ -362,7 +362,7 @@ paths:
             application/json:
               schema:
                 $ref: ../models/Error.yaml
-      operationId: post-accept_payments-captchas-verify
+      operationId: postAcceptPaymentsCaptchasVerifyByRequestId
       requestBody:
         content:
           application/json:
@@ -394,6 +394,8 @@ paths:
         提交验证码进行验证支付，推进支付流程。'
       x-stoplight:
         id: 99p15q3c1cqqk
+      x-operation-id-source: normalized
+      x-operation-id-original: post-accept_payments-captchas-verify
 components:
   schemas:
     Captcha:

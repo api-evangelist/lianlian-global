@@ -143,7 +143,7 @@
     "lianlian-global-users-api-openapi.yml"
   ],
   "archived": [
-    "deleted 2 superseded output(s) from the previous generation"
+    "deleted 1 superseded output(s) from the previous generation"
   ],
   "errors": [
     "lianlian-global-e-wallet-openapi-file-openapi.yml: dangling $ref: #/components/schemas/File",
@@ -416,8 +416,8 @@
     "tag 'Account' spans 2 source specs (lianlian-global-lppe-coreaccount-openapi.yml, lianlian-global-outbound-payout-ka-balance-openapi.yml): per-path servers applied",
     "tag 'Balance' spans 2 source specs (lianlian-global-lppe-coreaccount-openapi.yml, lianlian-global-outbound-payout-verification-balance-openapi.yml): per-path servers applied",
     "tag 'Transaction Documents' spans 2 source specs (lianlian-global-lppe-reference2-openapi.yml, lianlian-global-lppe-reference3-openapi.yml): per-path servers applied",
-    "superseded outputs removed: lianlian-global-o-auth2-api-openapi.yml, lianlian-global-top-up-api-openapi.yml",
-    "apis.yml register: written (+2 apis, 45 total)"
+    "superseded outputs removed: lianlian-global-top-up-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 45 total)"
   ],
   "skipped": [
     "_original/lianlian-global-standard-remittance-webhook-openapi.yml: archived document superseded by a larger archived document",
@@ -524,7 +524,7 @@
     "lianlian-global-gateway-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lianlian-global-kyc-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lianlian-global-member-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "lianlian-global-o-auth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lianlian-global-oauth2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lianlian-global-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lianlian-global-payers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "lianlian-global-payment-api-openapi.yml: previously refined output, superseded by openapi/_original/",

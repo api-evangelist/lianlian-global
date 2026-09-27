@@ -49,7 +49,7 @@ tags:
 - E-Commerce
 - Card Issuing
 - Remittances
-- Financial-Services
+- Financial Services
 - B2B Payments
 - Digital Wallet
 - China
@@ -64,6 +64,7 @@ tags_raw:
 - B2B Payments
 - Digital Wallet
 - China
+- Financial-Services
 apis:
 - aid: lianlian-global:lianlian-global-account-api
   name: LianLian Global Account API
@@ -2340,8 +2341,6 @@ apis:
   humanURL: https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api
   baseURL: https://global-api.lianlianpay.com/b2b-export/v1
   tags:
-  - Top-Up
-  tags_raw:
   - Top Up
   properties:
   - type: OpenAPI

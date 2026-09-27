@@ -1229,7 +1229,7 @@ paths:
       summary: Get a Network Contact
       tags:
       - Operations
-      operationId: get-beneficiary-info
+      operationId: getEwContactsNetworkById
       description: Get a specific network contact by the `contact_id`.
       responses:
         '200':
@@ -1263,9 +1263,11 @@ paths:
                     user_kyc_status: ACCEPTED
         '400':
           description: Bad Request
+      x-operation-id-source: normalized
+      x-operation-id-original: get-beneficiary-info
     delete:
       summary: Delete a Network Contact
-      operationId: delete-payees-payee_id
+      operationId: deleteEwContactsNetworkById
       responses:
         '200':
           description: OK
@@ -1277,6 +1279,8 @@ paths:
       tags:
       - Operations
       parameters: []
+      x-operation-id-source: normalized
+      x-operation-id-original: delete-payees-payee_id
     servers:
     - url: https://test-global-api.lianlianpay-inc.com/gateway/v1/
       description: SANDBOX
@@ -2775,7 +2779,7 @@ paths:
     parameters: []
     post:
       summary: Create a transation for the provided payee info
-      operationId: post-transaction
+      operationId: postDirectransaction
       responses:
         '200':
           description: OK
@@ -3012,6 +3016,8 @@ paths:
                   type: string
                   description: Reference for Beneficiary
                   maxLength: 200
+      x-operation-id-source: normalized
+      x-operation-id-original: post-transaction
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/global/payout/v1
   /transaction/{transactionId}:
@@ -3110,11 +3116,13 @@ paths:
               schema:
                 type: object
                 properties: {}
-      operationId: get-transaction-transactionId
+      operationId: getDirectransactionByTransactionId
       description: 'Get Transaction Info Request, `directransaction` object will be returned
 
 
         Interface Maximum Concurrency：300'
+      x-operation-id-source: normalized
+      x-operation-id-original: get-transaction-transactionId
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/global/payout/v1
   /virtualCard/{virtualAcctId}:
@@ -6108,8 +6116,10 @@ paths:
               schema:
                 type: object
                 properties: {}
-      operationId: get-bills-billid
+      operationId: getCnyvaByVirtualAcctId
       description: ''
+      x-operation-id-source: normalized
+      x-operation-id-original: get-bills-billid
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1/
   /fundingtrans/{fundingId}:
@@ -6483,7 +6493,7 @@ paths:
       summary: Create Payout
       tags:
       - Operations
-      operationId: post-payout
+      operationId: postPayout
       requestBody:
         content:
           application/json:
@@ -6892,6 +6902,8 @@ paths:
                       x-stoplight:
                         id: kuo2jnh07zrwu
                       description: Beneficiary state or province, mandatory if `paymentChannel` = `CURRENCYCLOUD` or `payeeCountryCode` = `USA/CAN`
+      x-operation-id-source: normalized
+      x-operation-id-original: post-payout
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1/
   /payout/{payoutId}:
@@ -7208,7 +7220,7 @@ paths:
   /tradeFile:
     post:
       summary: Create Trade File
-      operationId: post-tradefile
+      operationId: postTradeFile
       responses:
         '200':
           description: OK
@@ -7493,13 +7505,15 @@ paths:
                   maxLength: 512
                   x-stoplight:
                     id: xpbe5s8b5qpy3
+      x-operation-id-source: normalized
+      x-operation-id-original: post-tradefile
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1/
   /tradeFile/supplementaryAttachment:
     parameters: []
     post:
       summary: Add Trade File Attachment
-      operationId: post-tradefile
+      operationId: postTradeFileSupplementaryAttachment
       responses:
         '200':
           description: OK
@@ -7586,6 +7600,8 @@ paths:
                   type: string
                   description: Document id, supported file extensions are PDF, JPG, GIF, TIF, PNG, JPEG, ZIP, RAR. 5 documents at most. Upload through API [Upload Document](https://developer.lianlianglobal.com/docs/outbound-payout-ka/c6e076e722292-upload-document)
                   maxLength: 256
+      x-operation-id-source: normalized
+      x-operation-id-original: post-tradefile
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1/
   /tradeFile/{tradeFileId}:
@@ -7979,7 +7995,7 @@ paths:
       tags:
       - Operations
       description: You can supplement a virtual account through this API, before submitting the application, the status of the virtual account should be ACTIVE.
-      operationId: post-vadd
+      operationId: postVaSupplement
       x-stoplight:
         id: 256x59rk88kw2
       requestBody:
@@ -8020,6 +8036,8 @@ paths:
                   x-stoplight:
                     id: fai1yxp3f7n89
                   description: "external funding indicator, one of \n\n|Code|Description|\n|----|-----|\n|N|N0|\n|Y|YES|"
+      x-operation-id-source: normalized
+      x-operation-id-original: post-vadd
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1/
   /va/balance/{currency}:
@@ -8882,7 +8900,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rate_2'
-      operationId: get-lockrate
+      operationId: getOutboundCardV1Lockrate
       x-stoplight:
         id: glgd3xlje991f
       description: The Get Lock FX Rate gives the user a guaranteed rate for an agreed period of time.
@@ -8903,6 +8921,8 @@ paths:
           type: string
           maxLength: 3
           minLength: 3
+      x-operation-id-source: normalized
+      x-operation-id-original: get-lockrate
     servers:
     - url: http://global-api-sandbox.lianlianpay-inc.com
   /service-tradeFile:
@@ -9140,7 +9160,7 @@ paths:
   /tuitionevidences:
     post:
       summary: Send Tuition Evidence
-      operationId: post-tuitionevidences
+      operationId: postTuitionevidences
       responses:
         '200':
           description: OK
@@ -9320,6 +9340,8 @@ paths:
                 payChannel:
                   type: string
                   description: Payment channel， mandatory if directToBeneficiary = N
+      x-operation-id-source: normalized
+      x-operation-id-original: post-tuitionevidences
     servers:
     - url: https://global-api.lianlianpay.com/outbound/bill/v1
   /tuitionevidences/{billId}:
@@ -9371,8 +9393,10 @@ paths:
               schema:
                 type: object
                 properties: {}
-      operationId: get-tuitionevidences-billid
+      operationId: getTuitionevidencesByBillId
       description: Get evidence details by bill id
+      x-operation-id-source: normalized
+      x-operation-id-original: get-tuitionevidences-billid
     servers:
     - url: https://global-api.lianlianpay.com/outbound/bill/v1
   /payment:
@@ -9455,7 +9479,7 @@ paths:
       summary: Create Payout
       tags:
       - Operations
-      operationId: post-payout
+      operationId: postPayment
       x-stoplight:
         id: ddgjsw4up22vh
       requestBody:
@@ -9720,6 +9744,8 @@ paths:
                       x-stoplight:
                         id: jsal0j39vaact
                       description: Transfer purpose, please refer to appendix [Transfer Purpose](https://developer.lianlianglobal.com/docs/outbound-payout-ka/branches/v1.0/8fpdenviy3jnc-transfer-purpose)
+      x-operation-id-source: normalized
+      x-operation-id-original: post-payout
     servers:
     - url: https://global-api-sandbox.lianlianpay-inc.com/outbound/card/v1/
   /tradeinfo:
@@ -10210,7 +10236,7 @@ paths:
 
 
         通过提交贸易材料接口可为对接方累计贸易额度，在额度范围内可发起汇兑汇出交易。'
-      operationId: submit-tradefile
+      operationId: postRoot
       responses:
         '200':
           description: OK
@@ -10431,6 +10457,8 @@ paths:
               - tradeAmount
               - tradeName
               - tradeCount
+      x-operation-id-source: normalized
+      x-operation-id-original: submit-tradefile
     servers:
     - url: https://gtest-open-api.lianlianpay-inc.com/remittance/outward/v2/trade
 components:
@@ -10719,6 +10747,23 @@ components:
         valid_ending_before:
           description: The valid end time of the exchange rate.
           type: integer
+    ClearingRule:
+      title: ClearingRule
+      x-tags:
+      - Models
+      x-stoplight:
+        id: 2iks2egmtgm6p
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Field in which the rule takes effect.
+        required:
+          type: boolean
+          description: Is this filed required.
+        field_rule:
+          type: string
+          description: Rule to follow for the field.
     Clearing:
       title: Clearing
       x-tags:
@@ -10785,23 +10830,6 @@ components:
           type: array
           items:
             $ref: ./Items.json#/components/schemas/Item
-    ClearingRule:
-      title: ClearingRule
-      x-tags:
-      - Models
-      x-stoplight:
-        id: 2iks2egmtgm6p
-      type: object
-      properties:
-        field_name:
-          type: string
-          description: Field in which the rule takes effect.
-        required:
-          type: boolean
-          description: Is this filed required.
-        field_rule:
-          type: string
-          description: Rule to follow for the field.
     NetworkPayee:
       title: NetworkPayee
       x-stoplight:
@@ -12133,40 +12161,6 @@ components:
       title: region
       description: "|Bank Region | \tDescription\t|\n|----------|--------|\n|US\t     |The United States\t|\n|CA\t     |Canada\t|\n|GB\t     |The British\t|\n|JP\t     |Japan\t|\n|AU\t     |Australia\t|\n|DE\t     |Germany\t|\n|FR\t     |France\t|\n|IT\t     |Italy\t|\n|ES\t     |Spain\t|\n|HK\t     |Hong Kong\t|\n|AT\t     |Austria\t|\n|AE\t     |United Arab Emirate|"
       x-internal: false
-    RecevingAccount:
-      title: RecevingAccount
-      type: object
-      description: 'Lianlian Global receiving account information, including payee information.
-
-
-        Payee information should be included in request and collection account will be return by Lianlian Global to PSP.'
-      x-tags:
-      - Models
-      properties:
-        accountName:
-          type: string
-          description: receiving account name
-          maxLength: 72
-        accountNo:
-          type: string
-          description: receiving account number
-          maxLength: 72
-        bankBranchName:
-          type: string
-          description: receiving account bank branch name
-          maxLength: 256
-        bankName:
-          type: string
-          description: receiving account bank name, mandatory for corporate payer
-          maxLength: 128
-        cnapsBranchId:
-          type: string
-          description: CNAPS code
-          maxLength: 12
-        bankDistrict:
-          type: string
-          description: Receiving account bank branch address
-          maxLength: 200
     BillFundingTrans:
       title: BillFundingTrans
       type: object
@@ -12223,6 +12217,140 @@ components:
       - amount
       - createTime
       - isSamePayer
+    RecevingAccount:
+      title: RecevingAccount
+      type: object
+      description: 'Lianlian Global receiving account information, including payee information.
+
+
+        Payee information should be included in request and collection account will be return by Lianlian Global to PSP.'
+      x-tags:
+      - Models
+      properties:
+        accountName:
+          type: string
+          description: receiving account name
+          maxLength: 72
+        accountNo:
+          type: string
+          description: receiving account number
+          maxLength: 72
+        bankBranchName:
+          type: string
+          description: receiving account bank branch name
+          maxLength: 256
+        bankName:
+          type: string
+          description: receiving account bank name, mandatory for corporate payer
+          maxLength: 128
+        cnapsBranchId:
+          type: string
+          description: CNAPS code
+          maxLength: 12
+        bankDistrict:
+          type: string
+          description: Receiving account bank branch address
+          maxLength: 200
+    ReFundingTrans:
+      title: ReFundingTrans
+      type: object
+      description: Refunding transication record object in Lianlian Global's system
+      x-tags:
+      - Models
+      properties:
+        refundingId:
+          type: string
+          description: Unique refunding request id
+          maxLength: 32
+        billId:
+          type: string
+          description: bill id from client
+          maxLength: 32
+        amount:
+          type: string
+          description: requested refunding amount
+          maxLength: 24
+        bankAccountType:
+          type: string
+          description: 'Beneficiary account type, one of:
+
+
+            |value|description|
+
+            |------|------------|
+
+            |INDIVIDUAL|Individual account|
+
+            |CORPORATE|Corporate account|'
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
+        bankName:
+          type: string
+          description: beneficiary bank name
+          maxLength: 128
+        bankBranchName:
+          type: string
+          description: Bank branch name
+          maxLength: 256
+        cnapsBranchId:
+          type: string
+          description: CNAPS code，Mandatory is `bankAccountType = CORPORATE`
+          maxLength: 12
+        bankCode:
+          type: string
+          maxLength: 8
+          minLength: 8
+          description: Bank Code defined by Lianlian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List
+        accountName:
+          type: string
+          description: beneficiary account name
+          maxLength: 72
+        accountNo:
+          type: string
+          description: beneficiary account number
+          maxLength: 72
+        rfb:
+          type: string
+          description: rfb
+          maxLength: 40
+        createTime:
+          type: string
+          format: date-time
+          description: Refunding create time
+        status:
+          type: string
+          description: 'refunding status, one of:
+
+
+            | value |description|
+
+            |------|------------|
+
+            |INIT| Init |
+
+            |SUCCESS|Success|
+
+            |PROCESSING|Processing |
+
+            |FAILED|fail|
+
+            '
+          enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+        failReason:
+          type: string
+          description: Refund failure reason
+          maxLength: 128
+      required:
+      - refundingId
+      - billId
+      - amount
+      - bankName
+      - accountName
+      - accountNo
     BillPayInfo:
       title: BillPayInfo
       type: object
@@ -12345,106 +12473,6 @@ components:
       - payerType
       - payerName
       - payerStatus
-    ReFundingTrans:
-      title: ReFundingTrans
-      type: object
-      description: Refunding transication record object in Lianlian Global's system
-      x-tags:
-      - Models
-      properties:
-        refundingId:
-          type: string
-          description: Unique refunding request id
-          maxLength: 32
-        billId:
-          type: string
-          description: bill id from client
-          maxLength: 32
-        amount:
-          type: string
-          description: requested refunding amount
-          maxLength: 24
-        bankAccountType:
-          type: string
-          description: 'Beneficiary account type, one of:
-
-
-            |value|description|
-
-            |------|------------|
-
-            |INDIVIDUAL|Individual account|
-
-            |CORPORATE|Corporate account|'
-          enum:
-          - INDIVIDUAL
-          - CORPORATE
-        bankName:
-          type: string
-          description: beneficiary bank name
-          maxLength: 128
-        bankBranchName:
-          type: string
-          description: Bank branch name
-          maxLength: 256
-        cnapsBranchId:
-          type: string
-          description: CNAPS code，Mandatory is `bankAccountType = CORPORATE`
-          maxLength: 12
-        bankCode:
-          type: string
-          maxLength: 8
-          minLength: 8
-          description: Bank Code defined by Lianlian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List
-        accountName:
-          type: string
-          description: beneficiary account name
-          maxLength: 72
-        accountNo:
-          type: string
-          description: beneficiary account number
-          maxLength: 72
-        rfb:
-          type: string
-          description: rfb
-          maxLength: 40
-        createTime:
-          type: string
-          format: date-time
-          description: Refunding create time
-        status:
-          type: string
-          description: 'refunding status, one of:
-
-
-            | value |description|
-
-            |------|------------|
-
-            |INIT| Init |
-
-            |SUCCESS|Success|
-
-            |PROCESSING|Processing |
-
-            |FAILED|fail|
-
-            '
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - FAILED
-        failReason:
-          type: string
-          description: Refund failure reason
-          maxLength: 128
-      required:
-      - refundingId
-      - billId
-      - amount
-      - bankName
-      - accountName
-      - accountNo
     ExchangeTrans:
       title: ExchangeTrans
       type: object
@@ -13824,22 +13852,6 @@ components:
           type: string
           description: Modify Time, UTC+0
           format: date-time
-    Trade-File-Info_Supplementary_Attachment:
-      title: Trade-File-Info-Supplementary-Attachment
-      x-stoplight:
-        id: y2467svtdpt1s
-      type: object
-      x-tags:
-      - Models
-      properties:
-        tradefileId:
-          type: string
-          description: Unique Id for this Trade Information
-          maxLength: 32
-        createTime:
-          type: string
-          format: date-time
-          description: create time, UTC+0
     Trade-File-Info:
       title: Trade-File-Info
       type: object
@@ -14047,73 +14059,22 @@ components:
           x-stoplight:
             id: ccyrczxpjtsvs
           description: The remaining available payout currency
-    VA-Debit-Record:
-      title: VA- Debit-Record
+    Trade-File-Info_Supplementary_Attachment:
+      title: Trade-File-Info-Supplementary-Attachment
+      x-stoplight:
+        id: y2467svtdpt1s
       type: object
       x-tags:
       - Models
-      x-stoplight:
-        id: 6eyhz91fdd265
-      required:
-      - transactionId
-      - currency
-      - amount
-      - transactionTime
-      - accountId
-      - status
       properties:
-        transactionId:
+        tradefileId:
           type: string
-          description: Unique authorization transaction id defined by LianLian Global
-        currency:
+          description: Unique Id for this Trade Information
+          maxLength: 32
+        createTime:
           type: string
-          description: Transaction currency
-        amount:
-          type: string
-          description: Transaction Amount
-        transactionTime:
-          type: string
-          description: 'Transaction Time
-
-            '
           format: date-time
-        accountId:
-          type: string
-          description: Unique Card ID defined by LianLian Global
-        status:
-          type: string
-          description: 'Transaction status, one of
-
-            |Code|Description|
-
-            |-----|------|
-
-            |PENDING|Pre-debit Succeed|
-
-            |SUCCEED|Debit Succeed|
-
-            |REJECTED|Debit rejected|
-
-            |RECALLING|Debit Recalling|'
-        overLimitStatus:
-          type: string
-          description: 'Transaction overLimitStatus, one of
-
-            |Code|Description|
-
-            |-----|------|
-
-            |UN_OVER|Un OverLimit|
-
-            |OVER_UN_TREATED|Limit Un-Treated|
-
-            |OVER_TREATED|Limit Already-Treated|    '
-        merchantName:
-          type: string
-          description: Transaction Beneficiary Name
-        institutionName:
-          type: string
-          description: Transaction Institution Name
+          description: create time, UTC+0
     VA-Info_copy:
       title: VA-Balance
       x-stoplight:
@@ -14131,43 +14092,6 @@ components:
           type: string
           x-stoplight:
             id: oi9n77k3y6zth
-    VA-EntryOrder:
-      title: VA- Debit-Record
-      x-stoplight:
-        id: lmculeh8br5j9
-      type: object
-      x-tags:
-      - Models
-      required:
-      - transactionId
-      - currency
-      - amount
-      - transactionTime
-      - accountId
-      properties:
-        transactionId:
-          type: string
-          description: Va entry order transaction id defined by LianLian Global
-        currency:
-          type: string
-          description: Transaction currency
-        amount:
-          type: string
-          description: Transaction Amount
-        transactionTime:
-          type: string
-          description: 'Transaction Time
-
-            '
-          format: date-time
-        accountId:
-          type: string
-          description: Unique Card ID defined by LianLian Global
-        verifyCode:
-          type: string
-          description: Verify code
-          x-stoplight:
-            id: xmr1jeyg83vf7
     VA-Info:
       title: VA-Info
       type: object
@@ -14242,6 +14166,110 @@ components:
           x-stoplight:
             id: 6dnt0qwds7g1o
           description: Available balance of virtual account
+    VA-EntryOrder:
+      title: VA- Debit-Record
+      x-stoplight:
+        id: lmculeh8br5j9
+      type: object
+      x-tags:
+      - Models
+      required:
+      - transactionId
+      - currency
+      - amount
+      - transactionTime
+      - accountId
+      properties:
+        transactionId:
+          type: string
+          description: Va entry order transaction id defined by LianLian Global
+        currency:
+          type: string
+          description: Transaction currency
+        amount:
+          type: string
+          description: Transaction Amount
+        transactionTime:
+          type: string
+          description: 'Transaction Time
+
+            '
+          format: date-time
+        accountId:
+          type: string
+          description: Unique Card ID defined by LianLian Global
+        verifyCode:
+          type: string
+          description: Verify code
+          x-stoplight:
+            id: xmr1jeyg83vf7
+    VA-Debit-Record:
+      title: VA- Debit-Record
+      type: object
+      x-tags:
+      - Models
+      x-stoplight:
+        id: 6eyhz91fdd265
+      required:
+      - transactionId
+      - currency
+      - amount
+      - transactionTime
+      - accountId
+      - status
+      properties:
+        transactionId:
+          type: string
+          description: Unique authorization transaction id defined by LianLian Global
+        currency:
+          type: string
+          description: Transaction currency
+        amount:
+          type: string
+          description: Transaction Amount
+        transactionTime:
+          type: string
+          description: 'Transaction Time
+
+            '
+          format: date-time
+        accountId:
+          type: string
+          description: Unique Card ID defined by LianLian Global
+        status:
+          type: string
+          description: 'Transaction status, one of
+
+            |Code|Description|
+
+            |-----|------|
+
+            |PENDING|Pre-debit Succeed|
+
+            |SUCCEED|Debit Succeed|
+
+            |REJECTED|Debit rejected|
+
+            |RECALLING|Debit Recalling|'
+        overLimitStatus:
+          type: string
+          description: 'Transaction overLimitStatus, one of
+
+            |Code|Description|
+
+            |-----|------|
+
+            |UN_OVER|Un OverLimit|
+
+            |OVER_UN_TREATED|Limit Un-Treated|
+
+            |OVER_TREATED|Limit Already-Treated|    '
+        merchantName:
+          type: string
+          description: Transaction Beneficiary Name
+        institutionName:
+          type: string
+          description: Transaction Institution Name
     VCC-Authorization-Trans:
       title: VCC-Authorization-Trans
       type: object
@@ -14304,56 +14332,6 @@ components:
           description: MCC
           x-stoplight:
             id: wlrwkmxmdm0tm
-    VCC-Info:
-      title: VCC-Info
-      type: object
-      description: VCC information defined in LianLian Global's system
-      x-tags:
-      - Models
-      required:
-      - tradeFileId
-      - cardId
-      - limit
-      - bin
-      - createTime
-      - status
-      properties:
-        tradeFileId:
-          type: array
-          description: Unique Trade file Id from client
-          maxItems: 10
-          items:
-            type: string
-            maxLength: 32
-        cardId:
-          type: string
-          description: Unique Card ID defined by LianLian Global
-        cardNo:
-          type: string
-          description: VCC Number
-        limit:
-          type: string
-          description: Limit of this VCC
-        expiryDate:
-          type: string
-          description: VCC expiry date
-        cvv2:
-          type: string
-          description: cvv2
-        bin:
-          type: string
-          description: bin of VCC
-        createTime:
-          type: string
-          description: VCC create time,UTC+0
-          format: date-time
-        modifyTime:
-          type: string
-          description: Modify time, UTC+0
-          format: date-time
-        status:
-          type: string
-          description: "VCC status, one of \n|Code|Description|\n|----|----|\n|CREATING|VCC Creating|\n|ACTIVE|VCC Active|\n|FROZEN|VCC Frozen|\n|EXPIRED|VCC Expired|\n|BLOCKING|VCC Blocking|\n|BLOCKED|VCC Blocked|"
     3DS-OTP:
       title: 3DS-OTP
       type: object
@@ -14443,6 +14421,56 @@ components:
           description: MCC
           x-stoplight:
             id: yzvr9xxy68ct2
+    VCC-Info:
+      title: VCC-Info
+      type: object
+      description: VCC information defined in LianLian Global's system
+      x-tags:
+      - Models
+      required:
+      - tradeFileId
+      - cardId
+      - limit
+      - bin
+      - createTime
+      - status
+      properties:
+        tradeFileId:
+          type: array
+          description: Unique Trade file Id from client
+          maxItems: 10
+          items:
+            type: string
+            maxLength: 32
+        cardId:
+          type: string
+          description: Unique Card ID defined by LianLian Global
+        cardNo:
+          type: string
+          description: VCC Number
+        limit:
+          type: string
+          description: Limit of this VCC
+        expiryDate:
+          type: string
+          description: VCC expiry date
+        cvv2:
+          type: string
+          description: cvv2
+        bin:
+          type: string
+          description: bin of VCC
+        createTime:
+          type: string
+          description: VCC create time,UTC+0
+          format: date-time
+        modifyTime:
+          type: string
+          description: Modify time, UTC+0
+          format: date-time
+        status:
+          type: string
+          description: "VCC status, one of \n|Code|Description|\n|----|----|\n|CREATING|VCC Creating|\n|ACTIVE|VCC Active|\n|FROZEN|VCC Frozen|\n|EXPIRED|VCC Expired|\n|BLOCKING|VCC Blocking|\n|BLOCKED|VCC Blocked|"
     rate_2:
       title: Fx-Rate
       type: object
