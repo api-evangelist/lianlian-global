@@ -10747,23 +10747,6 @@ components:
         valid_ending_before:
           description: The valid end time of the exchange rate.
           type: integer
-    ClearingRule:
-      title: ClearingRule
-      x-tags:
-      - Models
-      x-stoplight:
-        id: 2iks2egmtgm6p
-      type: object
-      properties:
-        field_name:
-          type: string
-          description: Field in which the rule takes effect.
-        required:
-          type: boolean
-          description: Is this filed required.
-        field_rule:
-          type: string
-          description: Rule to follow for the field.
     Clearing:
       title: Clearing
       x-tags:
@@ -10830,6 +10813,23 @@ components:
           type: array
           items:
             $ref: ./Items.json#/components/schemas/Item
+    ClearingRule:
+      title: ClearingRule
+      x-tags:
+      - Models
+      x-stoplight:
+        id: 2iks2egmtgm6p
+      type: object
+      properties:
+        field_name:
+          type: string
+          description: Field in which the rule takes effect.
+        required:
+          type: boolean
+          description: Is this filed required.
+        field_rule:
+          type: string
+          description: Rule to follow for the field.
     NetworkPayee:
       title: NetworkPayee
       x-stoplight:
@@ -11159,6 +11159,62 @@ components:
       - baseCurrency
       - quoteCode
       - tenor
+    edu-info:
+      title: edu-info
+      x-stoplight:
+        id: 143jsr4j6f6u9
+      type: object
+      x-internal: false
+      description: "Educational payment trade material model.It is required when tradeCode in \"223022\", \"223021\", \"229030\"\nTrade Code, one of \n|Code|Description|\n|---|----|\n|223022|Study Abroad Related|\n|223021|Going Abroad for medical treatment|\n|229030|Telemedicine|"
+      properties:
+        beneficiaryName:
+          type: string
+          x-stoplight:
+            id: c07yobyc0ms5m
+          description: The payee or an individual or enterprise related to the payee.For example, schools, educational institutions, etc
+        beneficiaryIdNo:
+          type: string
+          x-stoplight:
+            id: 9s32mkszdgmja
+          description: beneficiary IdNo
+        beneficiaryAddress:
+          type: string
+          x-stoplight:
+            id: izha60mqwtra8
+          description: 'beneficiary address '
+        relationship:
+          type: string
+          x-stoplight:
+            id: razmoh4z3to2g
+          description: "Payee and beneficiary relationship, one of:\n\nIf payee type is \"INDIVIDUAL\"\n\n| value | description |\n|--------|-------------|\n|SELF| payee is beneficiary |\n|FAMILY| Payee is the family member of beneficiary|\n|IMMEDIATE FAMILY| Parents, children, spouse|\n|OTHER RELATIVES|Any relative other than \"Parents, children, spouse\"|\n|FRIEND|Friends|\n|OTHER |other relationship|\n\nIf payee type is \"CORPORATE\" \n\n| value | description |\n|--------|-------------|\n|ORGANIZATION|The company/school to which the student belongs|\n|INTERMEDIARY|Student commissioned agency|\n|OTHER |other relationship|"
+        tradeBackground:
+          type: string
+          x-stoplight:
+            id: fdaun4tc460s7
+          description: 'trade background, one of
+
+
+            |Code|Description|
+
+            |----|----|
+
+            |GLOBAL_TUITION|tuition fee|'
+        directToBeneficiary:
+          type: string
+          x-stoplight:
+            id: wg722ljuc4o3a
+          description: "Whether the fee is paid directly to the beneficiary, one of \n\n|Code|Description|\n|----|-----|\n|N|N0|\n|Y|YES|"
+        payChannel:
+          type: string
+          x-stoplight:
+            id: cmvj652225dvj
+          description: Payment channel， mandatory if `directToBeneficiary = N`
+      required:
+      - beneficiaryName
+      - relationship
+      - tradeBackground
+      x-tags:
+      - Models
     trade-file:
       title: Trade File
       type: object
@@ -11316,62 +11372,6 @@ components:
           x-stoplight:
             id: uf66oceq60k30
           description: HS Code
-    edu-info:
-      title: edu-info
-      x-stoplight:
-        id: 143jsr4j6f6u9
-      type: object
-      x-internal: false
-      description: "Educational payment trade material model.It is required when tradeCode in \"223022\", \"223021\", \"229030\"\nTrade Code, one of \n|Code|Description|\n|---|----|\n|223022|Study Abroad Related|\n|223021|Going Abroad for medical treatment|\n|229030|Telemedicine|"
-      properties:
-        beneficiaryName:
-          type: string
-          x-stoplight:
-            id: c07yobyc0ms5m
-          description: The payee or an individual or enterprise related to the payee.For example, schools, educational institutions, etc
-        beneficiaryIdNo:
-          type: string
-          x-stoplight:
-            id: 9s32mkszdgmja
-          description: beneficiary IdNo
-        beneficiaryAddress:
-          type: string
-          x-stoplight:
-            id: izha60mqwtra8
-          description: 'beneficiary address '
-        relationship:
-          type: string
-          x-stoplight:
-            id: razmoh4z3to2g
-          description: "Payee and beneficiary relationship, one of:\n\nIf payee type is \"INDIVIDUAL\"\n\n| value | description |\n|--------|-------------|\n|SELF| payee is beneficiary |\n|FAMILY| Payee is the family member of beneficiary|\n|IMMEDIATE FAMILY| Parents, children, spouse|\n|OTHER RELATIVES|Any relative other than \"Parents, children, spouse\"|\n|FRIEND|Friends|\n|OTHER |other relationship|\n\nIf payee type is \"CORPORATE\" \n\n| value | description |\n|--------|-------------|\n|ORGANIZATION|The company/school to which the student belongs|\n|INTERMEDIARY|Student commissioned agency|\n|OTHER |other relationship|"
-        tradeBackground:
-          type: string
-          x-stoplight:
-            id: fdaun4tc460s7
-          description: 'trade background, one of
-
-
-            |Code|Description|
-
-            |----|----|
-
-            |GLOBAL_TUITION|tuition fee|'
-        directToBeneficiary:
-          type: string
-          x-stoplight:
-            id: wg722ljuc4o3a
-          description: "Whether the fee is paid directly to the beneficiary, one of \n\n|Code|Description|\n|----|-----|\n|N|N0|\n|Y|YES|"
-        payChannel:
-          type: string
-          x-stoplight:
-            id: cmvj652225dvj
-          description: Payment channel， mandatory if `directToBeneficiary = N`
-      required:
-      - beneficiaryName
-      - relationship
-      - tradeBackground
-      x-tags:
-      - Models
     directransaction:
       title: Direc transaction
       x-stoplight:
@@ -12161,196 +12161,6 @@ components:
       title: region
       description: "|Bank Region | \tDescription\t|\n|----------|--------|\n|US\t     |The United States\t|\n|CA\t     |Canada\t|\n|GB\t     |The British\t|\n|JP\t     |Japan\t|\n|AU\t     |Australia\t|\n|DE\t     |Germany\t|\n|FR\t     |France\t|\n|IT\t     |Italy\t|\n|ES\t     |Spain\t|\n|HK\t     |Hong Kong\t|\n|AT\t     |Austria\t|\n|AE\t     |United Arab Emirate|"
       x-internal: false
-    BillFundingTrans:
-      title: BillFundingTrans
-      type: object
-      description: Bill funding transication record object in Lianlian Global's system
-      x-tags:
-      - Models
-      properties:
-        billId:
-          type: string
-          description: Unique bill id from client
-          maxLength: 32
-        fundingId:
-          type: string
-          description: Funding transaction id in Lianlian Global's system
-          maxLength: 32
-        payerName:
-          type: string
-          description: Payer name
-          maxLength: 128
-        payerBankAccount:
-          type: string
-          description: payer bank account number
-          maxLength: 72
-        payerBankName:
-          type: string
-          description: payer bank name
-          maxLength: 72
-        amount:
-          type: string
-          description: amount in CNY
-          maxLength: 24
-        createTime:
-          type: string
-          description: 'Funding transication time
-
-            UTC+0'
-          maxLength: 64
-        rfb:
-          type: string
-          description: rfb
-          maxLength: 40
-        isSamePayer:
-          type: string
-          description: Whether the actual payer name is the same as the payer name transmitted by the platform
-          enum:
-          - Y
-          - N
-      required:
-      - billId
-      - fundingId
-      - payerName
-      - payerBankAccount
-      - payerBankName
-      - amount
-      - createTime
-      - isSamePayer
-    RecevingAccount:
-      title: RecevingAccount
-      type: object
-      description: 'Lianlian Global receiving account information, including payee information.
-
-
-        Payee information should be included in request and collection account will be return by Lianlian Global to PSP.'
-      x-tags:
-      - Models
-      properties:
-        accountName:
-          type: string
-          description: receiving account name
-          maxLength: 72
-        accountNo:
-          type: string
-          description: receiving account number
-          maxLength: 72
-        bankBranchName:
-          type: string
-          description: receiving account bank branch name
-          maxLength: 256
-        bankName:
-          type: string
-          description: receiving account bank name, mandatory for corporate payer
-          maxLength: 128
-        cnapsBranchId:
-          type: string
-          description: CNAPS code
-          maxLength: 12
-        bankDistrict:
-          type: string
-          description: Receiving account bank branch address
-          maxLength: 200
-    ReFundingTrans:
-      title: ReFundingTrans
-      type: object
-      description: Refunding transication record object in Lianlian Global's system
-      x-tags:
-      - Models
-      properties:
-        refundingId:
-          type: string
-          description: Unique refunding request id
-          maxLength: 32
-        billId:
-          type: string
-          description: bill id from client
-          maxLength: 32
-        amount:
-          type: string
-          description: requested refunding amount
-          maxLength: 24
-        bankAccountType:
-          type: string
-          description: 'Beneficiary account type, one of:
-
-
-            |value|description|
-
-            |------|------------|
-
-            |INDIVIDUAL|Individual account|
-
-            |CORPORATE|Corporate account|'
-          enum:
-          - INDIVIDUAL
-          - CORPORATE
-        bankName:
-          type: string
-          description: beneficiary bank name
-          maxLength: 128
-        bankBranchName:
-          type: string
-          description: Bank branch name
-          maxLength: 256
-        cnapsBranchId:
-          type: string
-          description: CNAPS code，Mandatory is `bankAccountType = CORPORATE`
-          maxLength: 12
-        bankCode:
-          type: string
-          maxLength: 8
-          minLength: 8
-          description: Bank Code defined by Lianlian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List
-        accountName:
-          type: string
-          description: beneficiary account name
-          maxLength: 72
-        accountNo:
-          type: string
-          description: beneficiary account number
-          maxLength: 72
-        rfb:
-          type: string
-          description: rfb
-          maxLength: 40
-        createTime:
-          type: string
-          format: date-time
-          description: Refunding create time
-        status:
-          type: string
-          description: 'refunding status, one of:
-
-
-            | value |description|
-
-            |------|------------|
-
-            |INIT| Init |
-
-            |SUCCESS|Success|
-
-            |PROCESSING|Processing |
-
-            |FAILED|fail|
-
-            '
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - FAILED
-        failReason:
-          type: string
-          description: Refund failure reason
-          maxLength: 128
-      required:
-      - refundingId
-      - billId
-      - amount
-      - bankName
-      - accountName
-      - accountNo
     BillPayInfo:
       title: BillPayInfo
       type: object
@@ -12473,6 +12283,196 @@ components:
       - payerType
       - payerName
       - payerStatus
+    ReFundingTrans:
+      title: ReFundingTrans
+      type: object
+      description: Refunding transication record object in Lianlian Global's system
+      x-tags:
+      - Models
+      properties:
+        refundingId:
+          type: string
+          description: Unique refunding request id
+          maxLength: 32
+        billId:
+          type: string
+          description: bill id from client
+          maxLength: 32
+        amount:
+          type: string
+          description: requested refunding amount
+          maxLength: 24
+        bankAccountType:
+          type: string
+          description: 'Beneficiary account type, one of:
+
+
+            |value|description|
+
+            |------|------------|
+
+            |INDIVIDUAL|Individual account|
+
+            |CORPORATE|Corporate account|'
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
+        bankName:
+          type: string
+          description: beneficiary bank name
+          maxLength: 128
+        bankBranchName:
+          type: string
+          description: Bank branch name
+          maxLength: 256
+        cnapsBranchId:
+          type: string
+          description: CNAPS code，Mandatory is `bankAccountType = CORPORATE`
+          maxLength: 12
+        bankCode:
+          type: string
+          maxLength: 8
+          minLength: 8
+          description: Bank Code defined by Lianlian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List
+        accountName:
+          type: string
+          description: beneficiary account name
+          maxLength: 72
+        accountNo:
+          type: string
+          description: beneficiary account number
+          maxLength: 72
+        rfb:
+          type: string
+          description: rfb
+          maxLength: 40
+        createTime:
+          type: string
+          format: date-time
+          description: Refunding create time
+        status:
+          type: string
+          description: 'refunding status, one of:
+
+
+            | value |description|
+
+            |------|------------|
+
+            |INIT| Init |
+
+            |SUCCESS|Success|
+
+            |PROCESSING|Processing |
+
+            |FAILED|fail|
+
+            '
+          enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+        failReason:
+          type: string
+          description: Refund failure reason
+          maxLength: 128
+      required:
+      - refundingId
+      - billId
+      - amount
+      - bankName
+      - accountName
+      - accountNo
+    RecevingAccount:
+      title: RecevingAccount
+      type: object
+      description: 'Lianlian Global receiving account information, including payee information.
+
+
+        Payee information should be included in request and collection account will be return by Lianlian Global to PSP.'
+      x-tags:
+      - Models
+      properties:
+        accountName:
+          type: string
+          description: receiving account name
+          maxLength: 72
+        accountNo:
+          type: string
+          description: receiving account number
+          maxLength: 72
+        bankBranchName:
+          type: string
+          description: receiving account bank branch name
+          maxLength: 256
+        bankName:
+          type: string
+          description: receiving account bank name, mandatory for corporate payer
+          maxLength: 128
+        cnapsBranchId:
+          type: string
+          description: CNAPS code
+          maxLength: 12
+        bankDistrict:
+          type: string
+          description: Receiving account bank branch address
+          maxLength: 200
+    BillFundingTrans:
+      title: BillFundingTrans
+      type: object
+      description: Bill funding transication record object in Lianlian Global's system
+      x-tags:
+      - Models
+      properties:
+        billId:
+          type: string
+          description: Unique bill id from client
+          maxLength: 32
+        fundingId:
+          type: string
+          description: Funding transaction id in Lianlian Global's system
+          maxLength: 32
+        payerName:
+          type: string
+          description: Payer name
+          maxLength: 128
+        payerBankAccount:
+          type: string
+          description: payer bank account number
+          maxLength: 72
+        payerBankName:
+          type: string
+          description: payer bank name
+          maxLength: 72
+        amount:
+          type: string
+          description: amount in CNY
+          maxLength: 24
+        createTime:
+          type: string
+          description: 'Funding transication time
+
+            UTC+0'
+          maxLength: 64
+        rfb:
+          type: string
+          description: rfb
+          maxLength: 40
+        isSamePayer:
+          type: string
+          description: Whether the actual payer name is the same as the payer name transmitted by the platform
+          enum:
+          - Y
+          - N
+      required:
+      - billId
+      - fundingId
+      - payerName
+      - payerBankAccount
+      - payerBankName
+      - amount
+      - createTime
+      - isSamePayer
     ExchangeTrans:
       title: ExchangeTrans
       type: object
@@ -12722,149 +12722,6 @@ components:
           x-stoplight:
             id: nm4vqqzd7ec2m
           description: YYYY-MM-DD hh:mm:ss
-    CNYPaymentTrans:
-      title: CNYPaymentTrans
-      type: object
-      description: CNY Payment transication record object in LianLian Global's system
-      x-tags:
-      - Models
-      properties:
-        paymentId:
-          type: string
-          description: Unique refunding request id
-          maxLength: 32
-        virtualAcctId:
-          type: string
-          description: unique Virtual Account ID from client
-          maxLength: 64
-        amount:
-          type: string
-          description: requested refunding amount
-          maxLength: 24
-        bankAccountType:
-          type: string
-          description: 'Beneficiary account type, one of:
-
-
-            |value|description|
-
-            |------|------------|
-
-            |INDIVIDUAL|Individual account|
-
-            |CORPORATE|Corporate account|'
-          enum:
-          - INDIVIDUAL
-          - CORPORATE
-        bankName:
-          type: string
-          description: beneficiary bank name
-          maxLength: 128
-        bankBranchName:
-          type: string
-          description: Bank branch name
-          maxLength: 256
-        cnapsBranchId:
-          type: string
-          description: 'CNAPS code
-
-            Mandatory is `bankAccountType = CORPORATE`'
-          maxLength: 12
-        bankCode:
-          type: string
-          description: Bank Code defined by LianLian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List
-          maxLength: 8
-          minLength: 8
-        payeeName:
-          type: string
-          description: beneficiary account name
-          maxLength: 72
-        payeeBankAccount:
-          type: string
-          description: beneficiary account number
-          maxLength: 72
-        rfb:
-          type: string
-          description: rfb
-          maxLength: 40
-        createTime:
-          type: string
-          format: date-time
-          description: Refunding create time
-        modifyTime:
-          type: string
-          description: Refund modify time
-          format: date-time
-        status:
-          type: string
-          description: 'refunding status, one of:
-
-
-            | value |description|
-
-            |------|------------|
-
-            |INIT| Init |
-
-            |SUCCESS|Success|
-
-            |PROCESSING|Processing |
-
-            |FAILED|failed|
-
-            |HEDGED|refund failed after success|'
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - FAILED
-          - HEDGED
-        failReason:
-          type: string
-          description: Refund failure reason
-          maxLength: 128
-      required:
-      - paymentId
-      - amount
-      - bankAccountType
-      - payeeName
-      - payeeBankAccount
-      - createTime
-      - modifyTime
-    RecevingAccount_2:
-      title: CNY Virtual Account
-      type: object
-      description: LianLian Global CNY virtual account information
-      x-tags:
-      - Models
-      properties:
-        virtualAcctId:
-          type: string
-          description: unique Virtual Account ID from client
-          maxLength: 64
-        accountName:
-          type: string
-          description: receiving account name
-          maxLength: 72
-        accountNo:
-          type: string
-          description: receiving account number
-          maxLength: 72
-        bankBranchName:
-          type: string
-          description: receiving account bank branch name
-          maxLength: 256
-        bankName:
-          type: string
-          description: receiving account bank name, mandatory for corporate payer
-          maxLength: 128
-        cnapsBranchId:
-          type: string
-          description: CNAPS code
-          maxLength: 12
-        bankDistrict:
-          type: string
-          description: Receiving account bank branch address
-          maxLength: 200
     FundingTrans:
       title: FundingTrans
       type: object
@@ -13033,6 +12890,149 @@ components:
       - payeeBankAccount
       - createTime
       - status
+    CNYPaymentTrans:
+      title: CNYPaymentTrans
+      type: object
+      description: CNY Payment transication record object in LianLian Global's system
+      x-tags:
+      - Models
+      properties:
+        paymentId:
+          type: string
+          description: Unique refunding request id
+          maxLength: 32
+        virtualAcctId:
+          type: string
+          description: unique Virtual Account ID from client
+          maxLength: 64
+        amount:
+          type: string
+          description: requested refunding amount
+          maxLength: 24
+        bankAccountType:
+          type: string
+          description: 'Beneficiary account type, one of:
+
+
+            |value|description|
+
+            |------|------------|
+
+            |INDIVIDUAL|Individual account|
+
+            |CORPORATE|Corporate account|'
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
+        bankName:
+          type: string
+          description: beneficiary bank name
+          maxLength: 128
+        bankBranchName:
+          type: string
+          description: Bank branch name
+          maxLength: 256
+        cnapsBranchId:
+          type: string
+          description: 'CNAPS code
+
+            Mandatory is `bankAccountType = CORPORATE`'
+          maxLength: 12
+        bankCode:
+          type: string
+          description: Bank Code defined by LianLian Global, mandatory if `bankAccountType = CORPORATE`. Please refer to appendix Bank List
+          maxLength: 8
+          minLength: 8
+        payeeName:
+          type: string
+          description: beneficiary account name
+          maxLength: 72
+        payeeBankAccount:
+          type: string
+          description: beneficiary account number
+          maxLength: 72
+        rfb:
+          type: string
+          description: rfb
+          maxLength: 40
+        createTime:
+          type: string
+          format: date-time
+          description: Refunding create time
+        modifyTime:
+          type: string
+          description: Refund modify time
+          format: date-time
+        status:
+          type: string
+          description: 'refunding status, one of:
+
+
+            | value |description|
+
+            |------|------------|
+
+            |INIT| Init |
+
+            |SUCCESS|Success|
+
+            |PROCESSING|Processing |
+
+            |FAILED|failed|
+
+            |HEDGED|refund failed after success|'
+          enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+          - HEDGED
+        failReason:
+          type: string
+          description: Refund failure reason
+          maxLength: 128
+      required:
+      - paymentId
+      - amount
+      - bankAccountType
+      - payeeName
+      - payeeBankAccount
+      - createTime
+      - modifyTime
+    RecevingAccount_2:
+      title: CNY Virtual Account
+      type: object
+      description: LianLian Global CNY virtual account information
+      x-tags:
+      - Models
+      properties:
+        virtualAcctId:
+          type: string
+          description: unique Virtual Account ID from client
+          maxLength: 64
+        accountName:
+          type: string
+          description: receiving account name
+          maxLength: 72
+        accountNo:
+          type: string
+          description: receiving account number
+          maxLength: 72
+        bankBranchName:
+          type: string
+          description: receiving account bank branch name
+          maxLength: 256
+        bankName:
+          type: string
+          description: receiving account bank name, mandatory for corporate payer
+          maxLength: 128
+        cnapsBranchId:
+          type: string
+          description: CNAPS code
+          maxLength: 12
+        bankDistrict:
+          type: string
+          description: Receiving account bank branch address
+          maxLength: 200
     ExchangeTrans_2:
       title: ExchangeTrans
       type: object
@@ -14075,23 +14075,6 @@ components:
           type: string
           format: date-time
           description: create time, UTC+0
-    VA-Info_copy:
-      title: VA-Balance
-      x-stoplight:
-        id: 34wllpb7co15f
-      type: object
-      description: VA Balance in LianLian Global's system
-      x-tags:
-      - Models
-      properties:
-        currency:
-          type: string
-          x-stoplight:
-            id: tfxsoi2hcigmn
-        availableBalance:
-          type: string
-          x-stoplight:
-            id: oi9n77k3y6zth
     VA-Info:
       title: VA-Info
       type: object
@@ -14166,6 +14149,23 @@ components:
           x-stoplight:
             id: 6dnt0qwds7g1o
           description: Available balance of virtual account
+    VA-Info_copy:
+      title: VA-Balance
+      x-stoplight:
+        id: 34wllpb7co15f
+      type: object
+      description: VA Balance in LianLian Global's system
+      x-tags:
+      - Models
+      properties:
+        currency:
+          type: string
+          x-stoplight:
+            id: tfxsoi2hcigmn
+        availableBalance:
+          type: string
+          x-stoplight:
+            id: oi9n77k3y6zth
     VA-EntryOrder:
       title: VA- Debit-Record
       x-stoplight:
@@ -14270,68 +14270,6 @@ components:
         institutionName:
           type: string
           description: Transaction Institution Name
-    VCC-Authorization-Trans:
-      title: VCC-Authorization-Trans
-      type: object
-      x-tags:
-      - Models
-      required:
-      - transactionId
-      - billingCurrency
-      - billingAmount
-      - transactionTime
-      - transactionType
-      - cardId
-      - status
-      properties:
-        transactionId:
-          type: string
-          description: Unique authorization transaction id defined by LianLian Global
-        billingCurrency:
-          type: string
-          description: Authorization currency
-        billingAmount:
-          type: string
-          description: Authorization Amount
-        transactionTime:
-          type: string
-          description: 'Transaction Time
-
-            '
-          format: date-time
-        transactionType:
-          type: string
-          description: 'Transaction Type, one of
-
-            |Code|Description|
-
-            |----|----|
-
-            |0|Authorization|
-
-            |1|Authorization cancelled|'
-        cardId:
-          type: string
-          description: Unique Card ID defined by LianLian Global
-        status:
-          type: string
-          description: 'Authorization status, one of
-
-            |Code|Description|
-
-            |-----|------|
-
-            |FAILED|Authorization Failed|
-
-            |SUCCEED|Authorization Succeed|'
-        merchantName:
-          type: string
-          description: Merchant Name
-        mcc:
-          type: string
-          description: MCC
-          x-stoplight:
-            id: wlrwkmxmdm0tm
     3DS-OTP:
       title: 3DS-OTP
       type: object
@@ -14421,6 +14359,68 @@ components:
           description: MCC
           x-stoplight:
             id: yzvr9xxy68ct2
+    VCC-Authorization-Trans:
+      title: VCC-Authorization-Trans
+      type: object
+      x-tags:
+      - Models
+      required:
+      - transactionId
+      - billingCurrency
+      - billingAmount
+      - transactionTime
+      - transactionType
+      - cardId
+      - status
+      properties:
+        transactionId:
+          type: string
+          description: Unique authorization transaction id defined by LianLian Global
+        billingCurrency:
+          type: string
+          description: Authorization currency
+        billingAmount:
+          type: string
+          description: Authorization Amount
+        transactionTime:
+          type: string
+          description: 'Transaction Time
+
+            '
+          format: date-time
+        transactionType:
+          type: string
+          description: 'Transaction Type, one of
+
+            |Code|Description|
+
+            |----|----|
+
+            |0|Authorization|
+
+            |1|Authorization cancelled|'
+        cardId:
+          type: string
+          description: Unique Card ID defined by LianLian Global
+        status:
+          type: string
+          description: 'Authorization status, one of
+
+            |Code|Description|
+
+            |-----|------|
+
+            |FAILED|Authorization Failed|
+
+            |SUCCEED|Authorization Succeed|'
+        merchantName:
+          type: string
+          description: Merchant Name
+        mcc:
+          type: string
+          description: MCC
+          x-stoplight:
+            id: wlrwkmxmdm0tm
     VCC-Info:
       title: VCC-Info
       type: object
