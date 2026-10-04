@@ -10577,32 +10577,6 @@ components:
         create_time:
           type: string
           description: The object creation time. Measured in milliseconds since the Unix epoch.
-    AppAuthInfo:
-      title: AppAuthInfo
-      x-stoplight:
-        id: oresisigu1z5m
-      x-tags:
-      - Models
-      type: object
-      properties:
-        app_client_id:
-          type: string
-          description: App client ID.
-        app_name:
-          type: string
-          description: App name.
-        access_token:
-          type: string
-          description: Token be used to access user's auth API.
-        refresh_token:
-          type: string
-          description: Token be used to refresh access token.
-        user_id:
-          type: string
-          description: Unique identifier of the `User`.
-        api_base_url:
-          type: string
-          description: Base url for API server.
     SigningInfo:
       title: AgreementInfo
       x-stoplight:
@@ -10659,6 +10633,32 @@ components:
           description: Additional info to be used by customer support if needed.
           items:
             $ref: ./Items.json#/components/schemas/Item
+    AppAuthInfo:
+      title: AppAuthInfo
+      x-stoplight:
+        id: oresisigu1z5m
+      x-tags:
+      - Models
+      type: object
+      properties:
+        app_client_id:
+          type: string
+          description: App client ID.
+        app_name:
+          type: string
+          description: App name.
+        access_token:
+          type: string
+          description: Token be used to access user's auth API.
+        refresh_token:
+          type: string
+          description: Token be used to refresh access token.
+        user_id:
+          type: string
+          description: Unique identifier of the `User`.
+        api_base_url:
+          type: string
+          description: Base url for API server.
     FileFolder:
       title: File Folder
       type: object
@@ -10747,34 +10747,23 @@ components:
         valid_ending_before:
           description: The valid end time of the exchange rate.
           type: integer
-    Clearing:
-      title: Clearing
+    ClearingRule:
+      title: ClearingRule
       x-tags:
       - Models
       x-stoplight:
-        id: fi400brfjb3ku
+        id: 2iks2egmtgm6p
       type: object
       properties:
-        code:
+        field_name:
           type: string
-          description: Clearing code.
-        country_code:
-          type: string
-          description: Country code of payee's bank account.
-        entity_type:
-          type: string
-          description: Payee bank account type, one of `INDIVIDUAL` and `CORPORATE`
-        send_currency:
-          type: string
-          description: Currency of payment to payee's bank account (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).
-        rules:
-          type: array
-          description: Rules to follow for this `ClearingMethod`.
-          items:
-            $ref: '#/components/schemas/ClearingRule'
-        allowed:
+          description: Field in which the rule takes effect.
+        required:
           type: boolean
-          description: Is this `Clearing` allowed.
+          description: Is this filed required.
+        field_rule:
+          type: string
+          description: Rule to follow for the field.
     BankAccountContact:
       title: BankAccountContact
       type: object
@@ -10813,23 +10802,34 @@ components:
           type: array
           items:
             $ref: ./Items.json#/components/schemas/Item
-    ClearingRule:
-      title: ClearingRule
+    Clearing:
+      title: Clearing
       x-tags:
       - Models
       x-stoplight:
-        id: 2iks2egmtgm6p
+        id: fi400brfjb3ku
       type: object
       properties:
-        field_name:
+        code:
           type: string
-          description: Field in which the rule takes effect.
-        required:
+          description: Clearing code.
+        country_code:
+          type: string
+          description: Country code of payee's bank account.
+        entity_type:
+          type: string
+          description: Payee bank account type, one of `INDIVIDUAL` and `CORPORATE`
+        send_currency:
+          type: string
+          description: Currency of payment to payee's bank account (in three-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format).
+        rules:
+          type: array
+          description: Rules to follow for this `ClearingMethod`.
+          items:
+            $ref: '#/components/schemas/ClearingRule'
+        allowed:
           type: boolean
-          description: Is this filed required.
-        field_rule:
-          type: string
-          description: Rule to follow for the field.
+          description: Is this `Clearing` allowed.
     NetworkPayee:
       title: NetworkPayee
       x-stoplight:
@@ -11159,62 +11159,6 @@ components:
       - baseCurrency
       - quoteCode
       - tenor
-    edu-info:
-      title: edu-info
-      x-stoplight:
-        id: 143jsr4j6f6u9
-      type: object
-      x-internal: false
-      description: "Educational payment trade material model.It is required when tradeCode in \"223022\", \"223021\", \"229030\"\nTrade Code, one of \n|Code|Description|\n|---|----|\n|223022|Study Abroad Related|\n|223021|Going Abroad for medical treatment|\n|229030|Telemedicine|"
-      properties:
-        beneficiaryName:
-          type: string
-          x-stoplight:
-            id: c07yobyc0ms5m
-          description: The payee or an individual or enterprise related to the payee.For example, schools, educational institutions, etc
-        beneficiaryIdNo:
-          type: string
-          x-stoplight:
-            id: 9s32mkszdgmja
-          description: beneficiary IdNo
-        beneficiaryAddress:
-          type: string
-          x-stoplight:
-            id: izha60mqwtra8
-          description: 'beneficiary address '
-        relationship:
-          type: string
-          x-stoplight:
-            id: razmoh4z3to2g
-          description: "Payee and beneficiary relationship, one of:\n\nIf payee type is \"INDIVIDUAL\"\n\n| value | description |\n|--------|-------------|\n|SELF| payee is beneficiary |\n|FAMILY| Payee is the family member of beneficiary|\n|IMMEDIATE FAMILY| Parents, children, spouse|\n|OTHER RELATIVES|Any relative other than \"Parents, children, spouse\"|\n|FRIEND|Friends|\n|OTHER |other relationship|\n\nIf payee type is \"CORPORATE\" \n\n| value | description |\n|--------|-------------|\n|ORGANIZATION|The company/school to which the student belongs|\n|INTERMEDIARY|Student commissioned agency|\n|OTHER |other relationship|"
-        tradeBackground:
-          type: string
-          x-stoplight:
-            id: fdaun4tc460s7
-          description: 'trade background, one of
-
-
-            |Code|Description|
-
-            |----|----|
-
-            |GLOBAL_TUITION|tuition fee|'
-        directToBeneficiary:
-          type: string
-          x-stoplight:
-            id: wg722ljuc4o3a
-          description: "Whether the fee is paid directly to the beneficiary, one of \n\n|Code|Description|\n|----|-----|\n|N|N0|\n|Y|YES|"
-        payChannel:
-          type: string
-          x-stoplight:
-            id: cmvj652225dvj
-          description: Payment channel， mandatory if `directToBeneficiary = N`
-      required:
-      - beneficiaryName
-      - relationship
-      - tradeBackground
-      x-tags:
-      - Models
     trade-file:
       title: Trade File
       type: object
@@ -11372,239 +11316,62 @@ components:
           x-stoplight:
             id: uf66oceq60k30
           description: HS Code
-    directransaction:
-      title: Direc transaction
+    edu-info:
+      title: edu-info
       x-stoplight:
-        id: s1ggyyi7ina4g
+        id: 143jsr4j6f6u9
       type: object
-      description: Direc transaction info record object in Lianlian Pay's system
-      x-tags:
-      - Models
+      x-internal: false
+      description: "Educational payment trade material model.It is required when tradeCode in \"223022\", \"223021\", \"229030\"\nTrade Code, one of \n|Code|Description|\n|---|----|\n|223022|Study Abroad Related|\n|223021|Going Abroad for medical treatment|\n|229030|Telemedicine|"
       properties:
-        transactionId:
-          type: string
-          description: Unique Transaction ID From Merchant's System
-          maxLength: 32
-        pricingCurrency:
-          type: string
-          description: Pricing Currency
-          minLength: 3
-          maxLength: 3
-        sourceCurrency:
-          type: string
-          description: Orginal Currency
-          minLength: 3
-          maxLength: 3
-        sourceAmount:
-          type: string
-          description: Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`
-          maxLength: 10
-        targetCurrency:
-          type: string
-          description: Distribute Currency
-          minLength: 3
-          maxLength: 3
-        targetAmount:
-          type: string
-          description: Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`
-          maxLength: 10
-        payeeType:
-          type: string
-          maxLength: 16
-          x-stoplight:
-            id: gu5a41bxp3hm2
-          description: 'Payee Type, one of
-
-
-            |Code|Description|
-
-            |----|-----|
-
-            |INDIVIDUAL|individual payee|
-
-            |CORPORATE|corporate payee|'
-          enum:
-          - INDIVIDUAL
-          - CORPORATE
-        payeeName:
-          type: string
-          maxLength: 128
-          x-stoplight:
-            id: 0qmvlzpkl4or0
-          description: Payee's name
-        payeeCountryCode:
-          type: string
-          description: Payee's country code,referring to column “code” in Appendix Country Code
-          enum:
-          - CHN
-          - HKG
-          - NZL
-          - JPN
-          - USA
-          - FRA
-          - GBR
-          - AUS
-          - KOR
-          - THA
-          - DEU
-          - ESP
-          minLength: 3
-          maxLength: 3
-        payeeAddress:
-          type: object
-          description: payee's address detail
-          required:
-          - streetAddress
-          properties:
-            city:
-              type: string
-              description: Payee's city
-              maxLength: 32
-            streetAddress:
-              type: string
-              description: Payee's street address
-              maxLength: 256
-        bankAccountNumber:
-          type: string
-          maxLength: 64
-          description: Payee Bank Account Number
-        bankCountryCode:
-          type: string
-          description: Bank Country Code, referring to column “code” in Appendix Country Code
-          enum:
-          - CHN
-          - HKG
-          - NZL
-          - JPN
-          - USA
-          - FRA
-          - GBR
-          - AUS
-          - KOR
-          - THA
-          - DEU
-          - ESP
-          minLength: 3
-          maxLength: 3
-        bankName:
+        beneficiaryName:
           type: string
           x-stoplight:
-            id: 0er858naag4vo
-          maxLength: 64
-          description: Bank name of payee's bank account
-        bankAddress:
+            id: c07yobyc0ms5m
+          description: The payee or an individual or enterprise related to the payee.For example, schools, educational institutions, etc
+        beneficiaryIdNo:
           type: string
           x-stoplight:
-            id: 16p4c9ecme2s2
-          description: Bank address of payee's bank account
-          maxLength: 256
-        paymentMethod:
+            id: 9s32mkszdgmja
+          description: beneficiary IdNo
+        beneficiaryAddress:
           type: string
-          description: 'Payment methods
+          x-stoplight:
+            id: izha60mqwtra8
+          description: 'beneficiary address '
+        relationship:
+          type: string
+          x-stoplight:
+            id: razmoh4z3to2g
+          description: "Payee and beneficiary relationship, one of:\n\nIf payee type is \"INDIVIDUAL\"\n\n| value | description |\n|--------|-------------|\n|SELF| payee is beneficiary |\n|FAMILY| Payee is the family member of beneficiary|\n|IMMEDIATE FAMILY| Parents, children, spouse|\n|OTHER RELATIVES|Any relative other than \"Parents, children, spouse\"|\n|FRIEND|Friends|\n|OTHER |other relationship|\n\nIf payee type is \"CORPORATE\" \n\n| value | description |\n|--------|-------------|\n|ORGANIZATION|The company/school to which the student belongs|\n|INTERMEDIARY|Student commissioned agency|\n|OTHER |other relationship|"
+        tradeBackground:
+          type: string
+          x-stoplight:
+            id: fdaun4tc460s7
+          description: 'trade background, one of
+
 
             |Code|Description|
 
             |----|----|
 
-            |SWIFT|payment through swift|
-
-            |LOCAL|payment through local method|'
-          enum:
-          - SWIFT
-          - LOCAL
-        accountRoutingType:
+            |GLOBAL_TUITION|tuition fee|'
+        directToBeneficiary:
           type: string
-          description: "Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of \n|Code|Description|\n|---|---|\n|ABA|USA local payment routing number|"
-          enum:
-          - ABA
-          maxLength: 16
-        routingNumber:
-          type: string
-          description: Routing number, mandatory if `paymentMethod` = `LOCAL`
-          maxLength: 32
-        poboPayerId:
-          type: string
-          description: Payer unique ID, mandatory if you want to pay on behalf of another entity (POBO)
-          maxLength: 34
-        poboPayerName:
-          type: string
-          description: Payer Name, mandatory if you want to pay on behalf of another entity (POBO)
-          maxLength: 128
-        poboPayerAddress:
-          type: string
-          description: Payer Address, mandatory if you want to pay on behalf of another entity (POBO)
-          maxLength: 105
-        poboPayerRegion:
-          type: string
-          maxLength: 3
           x-stoplight:
-            id: 3y947mfix7p78
-          description: Payer Country Code, referring to column “code” in Appendix Country Code, mandatory if you want to pay on behalf of another entity (POBO)
-          minLength: 3
-        swiftCode:
+            id: wg722ljuc4o3a
+          description: "Whether the fee is paid directly to the beneficiary, one of \n\n|Code|Description|\n|----|-----|\n|N|N0|\n|Y|YES|"
+        payChannel:
           type: string
-          description: Bank swift code
-          maxLength: 11
-        rfb:
-          type: string
-          description: Reference for Beneficiary
-          maxLength: 200
-        rateId:
-          type: string
-          description: Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Create LockFX Rate` API.
-        rate:
-          type: string
-          description: FX rate
-          maxLength: 16
-        refundCurrency:
-          type: string
-          description: Refund Currency
-          minLength: 3
-          maxLength: 3
-        refundAmount:
-          type: string
-          description: Refund Amount
-          maxLength: 10
-        status:
-          type: string
-          description: 'Transaction Status, one of
-
-            |Code|Description|
-
-            |---|---|
-
-            |Processing|Transaction Under Processing|
-
-            |Failed|Transaction Failed|
-
-            |Successed|Transaction Success|
-
-            |Hedged|Transaction failed after Success|
-
-            '
-          enum:
-          - Processing
-          - Failed
-          - Successed
-          - Hedged
-          maxLength: 64
-        failedReason:
-          type: string
-          maxLength: 256
-          description: Failed Reason
+          x-stoplight:
+            id: cmvj652225dvj
+          description: Payment channel， mandatory if `directToBeneficiary = N`
       required:
-      - transactionId
-      - pricingCurrency
-      - sourceCurrency
-      - targetCurrency
-      - payeeType
-      - payeeName
-      - payeeCountryCode
-      - payeeAddress
-      - bankAccountNumber
-      - bankCountryCode
-      - paymentMethod
-      - status
+      - beneficiaryName
+      - relationship
+      - tradeBackground
+      x-tags:
+      - Models
     transaction:
       title: Transaction
       type: object
@@ -11847,6 +11614,239 @@ components:
           type: string
           maxLength: 256
           description: Failed Reason
+    directransaction:
+      title: Direc transaction
+      x-stoplight:
+        id: s1ggyyi7ina4g
+      type: object
+      description: Direc transaction info record object in Lianlian Pay's system
+      x-tags:
+      - Models
+      properties:
+        transactionId:
+          type: string
+          description: Unique Transaction ID From Merchant's System
+          maxLength: 32
+        pricingCurrency:
+          type: string
+          description: Pricing Currency
+          minLength: 3
+          maxLength: 3
+        sourceCurrency:
+          type: string
+          description: Orginal Currency
+          minLength: 3
+          maxLength: 3
+        sourceAmount:
+          type: string
+          description: Original Currency Amount, mandatory if `pricingCurrency` = `sourceCurrency`
+          maxLength: 10
+        targetCurrency:
+          type: string
+          description: Distribute Currency
+          minLength: 3
+          maxLength: 3
+        targetAmount:
+          type: string
+          description: Distribute Currency Amount, mandatory if `pricingCurrency` = `targetCurrency`
+          maxLength: 10
+        payeeType:
+          type: string
+          maxLength: 16
+          x-stoplight:
+            id: gu5a41bxp3hm2
+          description: 'Payee Type, one of
+
+
+            |Code|Description|
+
+            |----|-----|
+
+            |INDIVIDUAL|individual payee|
+
+            |CORPORATE|corporate payee|'
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
+        payeeName:
+          type: string
+          maxLength: 128
+          x-stoplight:
+            id: 0qmvlzpkl4or0
+          description: Payee's name
+        payeeCountryCode:
+          type: string
+          description: Payee's country code,referring to column “code” in Appendix Country Code
+          enum:
+          - CHN
+          - HKG
+          - NZL
+          - JPN
+          - USA
+          - FRA
+          - GBR
+          - AUS
+          - KOR
+          - THA
+          - DEU
+          - ESP
+          minLength: 3
+          maxLength: 3
+        payeeAddress:
+          type: object
+          description: payee's address detail
+          required:
+          - streetAddress
+          properties:
+            city:
+              type: string
+              description: Payee's city
+              maxLength: 32
+            streetAddress:
+              type: string
+              description: Payee's street address
+              maxLength: 256
+        bankAccountNumber:
+          type: string
+          maxLength: 64
+          description: Payee Bank Account Number
+        bankCountryCode:
+          type: string
+          description: Bank Country Code, referring to column “code” in Appendix Country Code
+          enum:
+          - CHN
+          - HKG
+          - NZL
+          - JPN
+          - USA
+          - FRA
+          - GBR
+          - AUS
+          - KOR
+          - THA
+          - DEU
+          - ESP
+          minLength: 3
+          maxLength: 3
+        bankName:
+          type: string
+          x-stoplight:
+            id: 0er858naag4vo
+          maxLength: 64
+          description: Bank name of payee's bank account
+        bankAddress:
+          type: string
+          x-stoplight:
+            id: 16p4c9ecme2s2
+          description: Bank address of payee's bank account
+          maxLength: 256
+        paymentMethod:
+          type: string
+          description: 'Payment methods
+
+            |Code|Description|
+
+            |----|----|
+
+            |SWIFT|payment through swift|
+
+            |LOCAL|payment through local method|'
+          enum:
+          - SWIFT
+          - LOCAL
+        accountRoutingType:
+          type: string
+          description: "Routing number type, mandatory if `paymentMethod` = `LOCAL`, one of \n|Code|Description|\n|---|---|\n|ABA|USA local payment routing number|"
+          enum:
+          - ABA
+          maxLength: 16
+        routingNumber:
+          type: string
+          description: Routing number, mandatory if `paymentMethod` = `LOCAL`
+          maxLength: 32
+        poboPayerId:
+          type: string
+          description: Payer unique ID, mandatory if you want to pay on behalf of another entity (POBO)
+          maxLength: 34
+        poboPayerName:
+          type: string
+          description: Payer Name, mandatory if you want to pay on behalf of another entity (POBO)
+          maxLength: 128
+        poboPayerAddress:
+          type: string
+          description: Payer Address, mandatory if you want to pay on behalf of another entity (POBO)
+          maxLength: 105
+        poboPayerRegion:
+          type: string
+          maxLength: 3
+          x-stoplight:
+            id: 3y947mfix7p78
+          description: Payer Country Code, referring to column “code” in Appendix Country Code, mandatory if you want to pay on behalf of another entity (POBO)
+          minLength: 3
+        swiftCode:
+          type: string
+          description: Bank swift code
+          maxLength: 11
+        rfb:
+          type: string
+          description: Reference for Beneficiary
+          maxLength: 200
+        rateId:
+          type: string
+          description: Rate ID, if you want to use a guaranteed rate to do currency exchange, you must supply a rate ID via `Create LockFX Rate` API.
+        rate:
+          type: string
+          description: FX rate
+          maxLength: 16
+        refundCurrency:
+          type: string
+          description: Refund Currency
+          minLength: 3
+          maxLength: 3
+        refundAmount:
+          type: string
+          description: Refund Amount
+          maxLength: 10
+        status:
+          type: string
+          description: 'Transaction Status, one of
+
+            |Code|Description|
+
+            |---|---|
+
+            |Processing|Transaction Under Processing|
+
+            |Failed|Transaction Failed|
+
+            |Successed|Transaction Success|
+
+            |Hedged|Transaction failed after Success|
+
+            '
+          enum:
+          - Processing
+          - Failed
+          - Successed
+          - Hedged
+          maxLength: 64
+        failedReason:
+          type: string
+          maxLength: 256
+          description: Failed Reason
+      required:
+      - transactionId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - payeeType
+      - payeeName
+      - payeeCountryCode
+      - payeeAddress
+      - bankAccountNumber
+      - bankCountryCode
+      - paymentMethod
+      - status
     Virtual-Account-Information:
       type: object
       title: Virtual Account Information
@@ -12161,128 +12161,6 @@ components:
       title: region
       description: "|Bank Region | \tDescription\t|\n|----------|--------|\n|US\t     |The United States\t|\n|CA\t     |Canada\t|\n|GB\t     |The British\t|\n|JP\t     |Japan\t|\n|AU\t     |Australia\t|\n|DE\t     |Germany\t|\n|FR\t     |France\t|\n|IT\t     |Italy\t|\n|ES\t     |Spain\t|\n|HK\t     |Hong Kong\t|\n|AT\t     |Austria\t|\n|AE\t     |United Arab Emirate|"
       x-internal: false
-    BillPayInfo:
-      title: BillPayInfo
-      type: object
-      description: Bill object in Lianlian Pay's system
-      x-tags:
-      - Models
-      properties:
-        billId:
-          type: string
-          description: Unique bill id from client
-          maxLength: 32
-        paymentAmount:
-          type: string
-          description: payment amount in CNY
-          maxLength: 24
-        createTime:
-          type: string
-          default: sysdate
-          format: date-time
-          description: Bill create time, UTC+0
-          maxLength: 24
-        recevingAccount:
-          $ref: '#/components/schemas/RecevingAccount'
-        relationship:
-          type: string
-          description: "Payer and beneficiary relationship, one of:\n\nIf payer type is \"INDIVIDUAL\"\n\n| value | description |\n|--------|-------------|\n|SELF| payer is beneficiary |\n|FAMILY| Payer is the family member of beneficiary|\n|IMMEDIATE FAMILY| Parents, children, spouse|\n|OTHER RELATIVES|Any relative other than \"Parents, children, spouse\"|\n|FRIEND|Friends|\n|OTHER |other relationship|\n\nIf payer type is \"CORPORATE\" \n\n| value | description |\n|--------|-------------|\n|ORGANIZATION|The company/school to which the student belongs|\n|INTERMEDIARY|Student commissioned agency|\n|OTHER |other relationship|"
-          enum:
-          - SELF
-          - IMMEDIATE FAMILY
-          - OTHER RELATIVES
-          - FRIEND
-          - ORGANIZATION
-          - INTERMEDIARY
-          - OTHER
-        payerContactName:
-          type: string
-          description: payer contact name, mandatory for corporate payer
-          maxLength: 128
-        payerContactNumber:
-          type: string
-          description: Payer contact number
-          maxLength: 32
-        payerID:
-          type: string
-          description: Payer identification number, digitis between first 4 and last 6 in Lianlian Global's return will be musked.
-          maxLength: 64
-        payerIDType:
-          type: string
-          description: 'Payer identification type
-
-
-            | beneficiaryIdType| description |
-
-            |--------|-------------|
-
-            |ID_CARD| ID Card|
-
-            |UNIFIED_CREDIT_CODE|Uniform social credit code|'
-          enum:
-          - ID_CARD
-          - UNIFIED_CREDIT_CODE
-        payerIdExpire:
-          type: string
-          description: Payer ID Expire Date in format of :YYYYMMdd
-          minLength: 8
-          maxLength: 8
-        payerType:
-          type: string
-          description: 'payer type
-
-
-            | value | description |
-
-            |--------|-------------|
-
-            |INDIVIDUAL|Individual|
-
-            |CORPORATE|Corporate |'
-          enum:
-          - INDIVIDUAL
-          - CORPORATE
-        payerName:
-          type: string
-          description: payer name
-          maxLength: 128
-        payerStatus:
-          type: string
-          description: 'payer status, one of
-
-
-            |value|descrption|
-
-            |------|-------------|
-
-            |AUDITING|Under review|
-
-            |APPROVED|Approved|
-
-            |REJECT|Rejected|'
-          enum:
-          - AUDITING
-          - APPROVED
-          - REJECT
-        riskStatus:
-          type: string
-          x-stoplight:
-            id: pcyd1z2yrk6cg
-          description: Risk status, return `PENDING` when intercepted by risk control.
-        failReason:
-          type: string
-          description: payer verify info
-          maxLength: 128
-      required:
-      - billId
-      - paymentAmount
-      - recevingAccount
-      - relationship
-      - payerID
-      - payerIDType
-      - payerType
-      - payerName
-      - payerStatus
     ReFundingTrans:
       title: ReFundingTrans
       type: object
@@ -12417,6 +12295,128 @@ components:
           type: string
           description: Receiving account bank branch address
           maxLength: 200
+    BillPayInfo:
+      title: BillPayInfo
+      type: object
+      description: Bill object in Lianlian Pay's system
+      x-tags:
+      - Models
+      properties:
+        billId:
+          type: string
+          description: Unique bill id from client
+          maxLength: 32
+        paymentAmount:
+          type: string
+          description: payment amount in CNY
+          maxLength: 24
+        createTime:
+          type: string
+          default: sysdate
+          format: date-time
+          description: Bill create time, UTC+0
+          maxLength: 24
+        recevingAccount:
+          $ref: '#/components/schemas/RecevingAccount'
+        relationship:
+          type: string
+          description: "Payer and beneficiary relationship, one of:\n\nIf payer type is \"INDIVIDUAL\"\n\n| value | description |\n|--------|-------------|\n|SELF| payer is beneficiary |\n|FAMILY| Payer is the family member of beneficiary|\n|IMMEDIATE FAMILY| Parents, children, spouse|\n|OTHER RELATIVES|Any relative other than \"Parents, children, spouse\"|\n|FRIEND|Friends|\n|OTHER |other relationship|\n\nIf payer type is \"CORPORATE\" \n\n| value | description |\n|--------|-------------|\n|ORGANIZATION|The company/school to which the student belongs|\n|INTERMEDIARY|Student commissioned agency|\n|OTHER |other relationship|"
+          enum:
+          - SELF
+          - IMMEDIATE FAMILY
+          - OTHER RELATIVES
+          - FRIEND
+          - ORGANIZATION
+          - INTERMEDIARY
+          - OTHER
+        payerContactName:
+          type: string
+          description: payer contact name, mandatory for corporate payer
+          maxLength: 128
+        payerContactNumber:
+          type: string
+          description: Payer contact number
+          maxLength: 32
+        payerID:
+          type: string
+          description: Payer identification number, digitis between first 4 and last 6 in Lianlian Global's return will be musked.
+          maxLength: 64
+        payerIDType:
+          type: string
+          description: 'Payer identification type
+
+
+            | beneficiaryIdType| description |
+
+            |--------|-------------|
+
+            |ID_CARD| ID Card|
+
+            |UNIFIED_CREDIT_CODE|Uniform social credit code|'
+          enum:
+          - ID_CARD
+          - UNIFIED_CREDIT_CODE
+        payerIdExpire:
+          type: string
+          description: Payer ID Expire Date in format of :YYYYMMdd
+          minLength: 8
+          maxLength: 8
+        payerType:
+          type: string
+          description: 'payer type
+
+
+            | value | description |
+
+            |--------|-------------|
+
+            |INDIVIDUAL|Individual|
+
+            |CORPORATE|Corporate |'
+          enum:
+          - INDIVIDUAL
+          - CORPORATE
+        payerName:
+          type: string
+          description: payer name
+          maxLength: 128
+        payerStatus:
+          type: string
+          description: 'payer status, one of
+
+
+            |value|descrption|
+
+            |------|-------------|
+
+            |AUDITING|Under review|
+
+            |APPROVED|Approved|
+
+            |REJECT|Rejected|'
+          enum:
+          - AUDITING
+          - APPROVED
+          - REJECT
+        riskStatus:
+          type: string
+          x-stoplight:
+            id: pcyd1z2yrk6cg
+          description: Risk status, return `PENDING` when intercepted by risk control.
+        failReason:
+          type: string
+          description: payer verify info
+          maxLength: 128
+      required:
+      - billId
+      - paymentAmount
+      - recevingAccount
+      - relationship
+      - payerID
+      - payerIDType
+      - payerType
+      - payerName
+      - payerStatus
     BillFundingTrans:
       title: BillFundingTrans
       type: object
@@ -12473,6 +12473,81 @@ components:
       - amount
       - createTime
       - isSamePayer
+    ExchangeReturn:
+      title: ExchangeReturn
+      type: object
+      description: ''
+      x-tags:
+      - Models
+      properties:
+        exchangeReturnId:
+          type: string
+          description: Unique xechange return id from client
+          maxLength: 32
+        exchangeId:
+          type: string
+          description: Original exhange id from client
+          maxLength: 32
+        returnCurrency:
+          type: string
+          description: return currency
+          maxLength: 3
+        returnAmount:
+          type: string
+          description: return amount
+          maxLength: 24
+        sourceCurrency:
+          type: string
+          description: sourcing currency
+          maxLength: 3
+        sourceAmount:
+          type: string
+          description: sourcing currency
+          maxLength: 24
+        targetCurrency:
+          type: string
+          description: targeting currency
+          maxLength: 3
+        targetAmount:
+          type: string
+          description: targeting amount
+          maxLength: 24
+        rate:
+          type: string
+          description: FX rate
+          maxLength: 12
+        createTime:
+          type: string
+          description: create time, UTC+0
+          maxLength: 20
+        status:
+          type: string
+          description: 'request status
+
+
+            |value |description|
+
+            |------|------------|
+
+            |INIT|Init|
+
+            |PROCESSING|Processing |
+
+            |SUCCESS|Success|
+
+            |FAILED|Failed |'
+          enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+        failReason:
+          type: string
+          description: Failure reason
+          maxLength: 128
+        memo:
+          type: string
+          description: memo
+          maxLength: 40
     ExchangeTrans:
       title: ExchangeTrans
       type: object
@@ -12591,81 +12666,6 @@ components:
       - targetCurrency
       - status
       - createTime
-    ExchangeReturn:
-      title: ExchangeReturn
-      type: object
-      description: ''
-      x-tags:
-      - Models
-      properties:
-        exchangeReturnId:
-          type: string
-          description: Unique xechange return id from client
-          maxLength: 32
-        exchangeId:
-          type: string
-          description: Original exhange id from client
-          maxLength: 32
-        returnCurrency:
-          type: string
-          description: return currency
-          maxLength: 3
-        returnAmount:
-          type: string
-          description: return amount
-          maxLength: 24
-        sourceCurrency:
-          type: string
-          description: sourcing currency
-          maxLength: 3
-        sourceAmount:
-          type: string
-          description: sourcing currency
-          maxLength: 24
-        targetCurrency:
-          type: string
-          description: targeting currency
-          maxLength: 3
-        targetAmount:
-          type: string
-          description: targeting amount
-          maxLength: 24
-        rate:
-          type: string
-          description: FX rate
-          maxLength: 12
-        createTime:
-          type: string
-          description: create time, UTC+0
-          maxLength: 20
-        status:
-          type: string
-          description: 'request status
-
-
-            |value |description|
-
-            |------|------------|
-
-            |INIT|Init|
-
-            |PROCESSING|Processing |
-
-            |SUCCESS|Success|
-
-            |FAILED|Failed |'
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - FAILED
-        failReason:
-          type: string
-          description: Failure reason
-          maxLength: 128
-        memo:
-          type: string
-          description: memo
-          maxLength: 40
     BC-VA:
       title: BC-VA
       x-stoplight:
@@ -12722,67 +12722,41 @@ components:
           x-stoplight:
             id: nm4vqqzd7ec2m
           description: YYYY-MM-DD hh:mm:ss
-    FundingTrans:
-      title: FundingTrans
+    RecevingAccount_2:
+      title: CNY Virtual Account
       type: object
-      description: Funding transication record object in LianLian Global's system
+      description: LianLian Global CNY virtual account information
       x-tags:
       - Models
       properties:
-        fundingId:
-          type: string
-          description: Funding transaction id in LianLian Global's system
-          maxLength: 32
-        fundingType:
-          type: string
-          maxLength: 32
-          x-stoplight:
-            id: 3nh9lldklnyh5
-          description: Online payment type
-          enum:
-          - ALIPAY
-          - WECHATPAY
         virtualAcctId:
           type: string
+          description: unique Virtual Account ID from client
           maxLength: 64
-          description: Unique Virtual Account ID from client
+        accountName:
+          type: string
+          description: receiving account name
+          maxLength: 72
         accountNo:
           type: string
-          description: Receiving account number
+          description: receiving account number
           maxLength: 72
-        payerName:
+        bankBranchName:
           type: string
-          description: Payer name
+          description: receiving account bank branch name
+          maxLength: 256
+        bankName:
+          type: string
+          description: receiving account bank name, mandatory for corporate payer
           maxLength: 128
-        payerBankAccount:
+        cnapsBranchId:
           type: string
-          description: Payer bank account number
-          maxLength: 72
-        payerBankName:
+          description: CNAPS code
+          maxLength: 12
+        bankDistrict:
           type: string
-          description: Payer bank name
-          maxLength: 72
-        amount:
-          type: string
-          description: Amount in CNY
-          maxLength: 24
-        createTime:
-          type: string
-          description: 'Funding transication time
-
-            UTC+0'
-          maxLength: 64
-        rfb:
-          type: string
-          description: Reference for benificiary
-          maxLength: 40
-      required:
-      - fundingId
-      - payerName
-      - payerBankAccount
-      - payerBankName
-      - amount
-      - createTime
+          description: Receiving account bank branch address
+          maxLength: 200
     CNYReFundTrans:
       title: CNYReFundTrans
       type: object
@@ -12890,6 +12864,67 @@ components:
       - payeeBankAccount
       - createTime
       - status
+    FundingTrans:
+      title: FundingTrans
+      type: object
+      description: Funding transication record object in LianLian Global's system
+      x-tags:
+      - Models
+      properties:
+        fundingId:
+          type: string
+          description: Funding transaction id in LianLian Global's system
+          maxLength: 32
+        fundingType:
+          type: string
+          maxLength: 32
+          x-stoplight:
+            id: 3nh9lldklnyh5
+          description: Online payment type
+          enum:
+          - ALIPAY
+          - WECHATPAY
+        virtualAcctId:
+          type: string
+          maxLength: 64
+          description: Unique Virtual Account ID from client
+        accountNo:
+          type: string
+          description: Receiving account number
+          maxLength: 72
+        payerName:
+          type: string
+          description: Payer name
+          maxLength: 128
+        payerBankAccount:
+          type: string
+          description: Payer bank account number
+          maxLength: 72
+        payerBankName:
+          type: string
+          description: Payer bank name
+          maxLength: 72
+        amount:
+          type: string
+          description: Amount in CNY
+          maxLength: 24
+        createTime:
+          type: string
+          description: 'Funding transication time
+
+            UTC+0'
+          maxLength: 64
+        rfb:
+          type: string
+          description: Reference for benificiary
+          maxLength: 40
+      required:
+      - fundingId
+      - payerName
+      - payerBankAccount
+      - payerBankName
+      - amount
+      - createTime
     CNYPaymentTrans:
       title: CNYPaymentTrans
       type: object
@@ -12998,41 +13033,80 @@ components:
       - payeeBankAccount
       - createTime
       - modifyTime
-    RecevingAccount_2:
-      title: CNY Virtual Account
+    ExchangeReturn_2:
+      title: ExchangeReturn
       type: object
-      description: LianLian Global CNY virtual account information
       x-tags:
       - Models
       properties:
-        virtualAcctId:
+        exchangeReturnId:
           type: string
-          description: unique Virtual Account ID from client
-          maxLength: 64
-        accountName:
+          description: Unique xechange return id from client
+          maxLength: 32
+        exchangeId:
           type: string
-          description: receiving account name
-          maxLength: 72
-        accountNo:
+          description: Original exhange id from client
+          maxLength: 32
+        returnCurrency:
           type: string
-          description: receiving account number
-          maxLength: 72
-        bankBranchName:
+          description: FX reverse currency, should be one of the targetCurrency or sourceCurrency of previous currency exchange
+          maxLength: 3
+        returnAmount:
           type: string
-          description: receiving account bank branch name
-          maxLength: 256
-        bankName:
+          description: return amount
+          maxLength: 24
+        sourceCurrency:
           type: string
-          description: receiving account bank name, mandatory for corporate payer
-          maxLength: 128
-        cnapsBranchId:
+          description: sourcing currency
+          maxLength: 3
+        sourceAmount:
           type: string
-          description: CNAPS code
+          description: sourcing currency
+          maxLength: 24
+        targetCurrency:
+          type: string
+          description: targeting currency
+          maxLength: 3
+        targetAmount:
+          type: string
+          description: targeting amount
+          maxLength: 24
+        rate:
+          type: string
+          description: FX rate
           maxLength: 12
-        bankDistrict:
+        status:
           type: string
-          description: Receiving account bank branch address
-          maxLength: 200
+          description: 'request status
+
+
+            |value |description|
+
+            |------|------------|
+
+            |PROCESSING|Processing |
+
+            |SUCCESS|Success|
+
+            |FAILED|Failed |'
+          enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+        failReason:
+          type: string
+          description: Failure reason
+          maxLength: 128
+        createTime:
+          type: string
+          description: create time, UTC+0
+          format: date-time
+          maxLength: 20
+        modifyTime:
+          type: string
+          description: Modify time, UTC+0
+          format: date-time
+          maxLength: 20
     ExchangeTrans_2:
       title: ExchangeTrans
       type: object
@@ -13166,330 +13240,6 @@ components:
       - targetCurrency
       - status
       - createTime
-    ExchangeReturn_2:
-      title: ExchangeReturn
-      type: object
-      x-tags:
-      - Models
-      properties:
-        exchangeReturnId:
-          type: string
-          description: Unique xechange return id from client
-          maxLength: 32
-        exchangeId:
-          type: string
-          description: Original exhange id from client
-          maxLength: 32
-        returnCurrency:
-          type: string
-          description: FX reverse currency, should be one of the targetCurrency or sourceCurrency of previous currency exchange
-          maxLength: 3
-        returnAmount:
-          type: string
-          description: return amount
-          maxLength: 24
-        sourceCurrency:
-          type: string
-          description: sourcing currency
-          maxLength: 3
-        sourceAmount:
-          type: string
-          description: sourcing currency
-          maxLength: 24
-        targetCurrency:
-          type: string
-          description: targeting currency
-          maxLength: 3
-        targetAmount:
-          type: string
-          description: targeting amount
-          maxLength: 24
-        rate:
-          type: string
-          description: FX rate
-          maxLength: 12
-        status:
-          type: string
-          description: 'request status
-
-
-            |value |description|
-
-            |------|------------|
-
-            |PROCESSING|Processing |
-
-            |SUCCESS|Success|
-
-            |FAILED|Failed |'
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - FAILED
-        failReason:
-          type: string
-          description: Failure reason
-          maxLength: 128
-        createTime:
-          type: string
-          description: create time, UTC+0
-          format: date-time
-          maxLength: 20
-        modifyTime:
-          type: string
-          description: Modify time, UTC+0
-          format: date-time
-          maxLength: 20
-    Exchangepayout:
-      title: Payout
-      x-stoplight:
-        id: yb9hz6airkmii
-      type: object
-      description: 'Payout object defined in LianLian Global''s system.
-
-        '
-      x-tags:
-      - Models
-      x-examples: {}
-      properties:
-        payoutId:
-          type: string
-          description: Payout request id from client
-          maxLength: 32
-        tradeFileId:
-          type: string
-          description: Unique trade file ID from client
-          maxLength: 32
-        pricingCurrency:
-          type: string
-          maxLength: 3
-          x-stoplight:
-            id: mc3drydwsx17b
-          description: Pricing Currency
-          minLength: 3
-        sourceCurrency:
-          type: string
-          maxLength: 3
-          x-stoplight:
-            id: jl3nfy9tqjrhu
-          description: Original currency
-        sourceAmount:
-          type: string
-          maxLength: 10
-          x-stoplight:
-            id: cj18adztpyhjt
-          description: "Original Currency Amount, mandatory if \n`pricingCurrency `= `sourceCurrency`"
-        targetCurrency:
-          type: string
-          maxLength: 3
-          x-stoplight:
-            id: sx8maaxrdglgi
-          description: Payout currency
-          minLength: 3
-        targetAmount:
-          type: string
-          maxLength: 10
-          x-stoplight:
-            id: t4afc2prfmdul
-          description: Payout amount, mandatory if `pricingCurrency` = ` targetCurrency`
-        poboPayerInfo:
-          type: object
-          description: Payer Info, mandatory if you want to pay on behalf of another entity (POBO)
-          properties:
-            payerId:
-              type: string
-              maxLength: 64
-              description: Payer unique ID
-            payerName:
-              type: string
-              maxLength: 64
-              description: Payer Name
-            payerAddress:
-              type: string
-              maxLength: 256
-              description: Payer Address
-            payerRegion:
-              type: string
-              x-stoplight:
-                id: tbqabpht176k4
-              description: Payer country, ISO 3166 code
-        payeeBankAccount:
-          type: object
-          description: Beneficiary bank account information
-          properties:
-            payeeCountryCode:
-              type: string
-              description: Beneficiary account country, ISO 3166 code
-              maxLength: 3
-            payeeName:
-              type: string
-              description: beneficiary name
-              maxLength: 128
-            payeeAddress:
-              type: string
-              description: beneficiary address
-              maxLength: 256
-            payeeBankDistrict:
-              type: string
-              description: beneficiary bank account region
-              maxLength: 3
-            payeeBankName:
-              type: string
-              description: Beneficiary bank name
-              maxLength: 128
-            payeeBankType:
-              type: string
-              description: 'beneficiary bank account type, one of:
-
-                |PAYEEBANKTYPE|DESCRIPTION|
-
-                |---|---|
-
-                |IBAN|IBAN|
-
-                |SORT|SORT|
-
-                |ABA|ABA|
-
-                |CC|CC|
-
-                |BSB|BSB|
-
-                |ZENGIN|ZENGIN|
-
-                |BILLERCODE|BILLERCODE|'
-              enum:
-              - IBAN
-              - SORT
-              - ABA
-              - CC
-              - BSB
-              - ZENGIN
-              - BILLERCODE
-            payeeBankCode:
-              type: string
-              description: Beneficiary bank code
-              maxLength: 128
-            payeeBankAddress:
-              type: string
-              description: beneficiary bank address
-              maxLength: 256
-            payeeBankSwiftCode:
-              type: string
-              description: Beneficiary bank SWIFT code
-              maxLength: 128
-            payeeAccountNo:
-              type: string
-              description: Beneficiary account number
-              maxLength: 72
-          required:
-          - payeeCountryCode
-          - payeeName
-          - payeeAddress
-          - payeeBankDistrict
-          - payeeBankName
-          - payeeBankAddress
-          - payeeBankSwiftCode
-          - payeeAccountNo
-        paymentMethod:
-          type: string
-          description: Payment method, one of SWIFT, LOCAL
-          enum:
-          - LOCAL
-          - SWIFT
-        swiftChargeOption:
-          type: string
-          description: '(For SWIFT payments only), specify who should bear SWIFT charges， one of
-
-            |Code|Description|
-
-            |----|---|
-
-            |PAYER|Payer bear the charges|
-
-            |SHARED|Share the charges|
-
-            |PAYEE|Payee bear the charges|'
-        rfb:
-          type: string
-          description: rfb
-          maxLength: 140
-        status:
-          type: string
-          description: 'request status, one of:
-
-
-            | value | description |
-
-            |--------|-------------|
-
-            |PROCESSING|Processing|
-
-            |SUCCESS|Success|
-
-            |FAILED|Failed|
-
-            |HEDGED|hedged|
-
-            '
-          enum:
-          - PROCESSING
-          - SUCCESS
-          - FAILED
-          - HEDGED
-        failReason:
-          type: string
-          description: request failure reason
-          maxLength: 128
-        fxRefundCurrency:
-          type: string
-          x-stoplight:
-            id: 0cv5r7zpvm2jt
-          description: Payout failed or hedged, currency of exchange
-          maxLength: 3
-          minLength: 3
-        fxRefundAmount:
-          type: string
-          maxLength: 10
-          x-stoplight:
-            id: 68i7vm3xoe0b9
-          description: Payout failed or hedged, the amount of the exchange
-        fxRefundRate:
-          type: string
-          maxLength: 10
-          x-stoplight:
-            id: yfy9yx4zeay56
-          description: Payout failed or hedged, exchange rate used
-        refundCurrency:
-          type: string
-          maxLength: 3
-          x-stoplight:
-            id: fgogcufsaog9i
-          description: 'Payout failed or hedged, the currency returned to the   client
-
-            '
-          minLength: 3
-        refundAmount:
-          type: string
-          maxLength: 10
-          x-stoplight:
-            id: ndoskajnxcmwy
-          description: Payout failed or hedged, the amount returned to the   client
-        createTime:
-          type: string
-          description: create time, UTC+0
-          maxLength: 24
-        modifyTime:
-          type: string
-          description: Modify Time, UTC+0
-          maxLength: 24
-      required:
-      - payoutId
-      - tradeFileId
-      - pricingCurrency
-      - sourceCurrency
-      - targetCurrency
-      - status
     Payout_2:
       title: Payout
       type: object
@@ -13799,6 +13549,256 @@ components:
           description: Modify Time, UTC+0
           maxLength: 24
           format: date-time
+    Exchangepayout:
+      title: Payout
+      x-stoplight:
+        id: yb9hz6airkmii
+      type: object
+      description: 'Payout object defined in LianLian Global''s system.
+
+        '
+      x-tags:
+      - Models
+      x-examples: {}
+      properties:
+        payoutId:
+          type: string
+          description: Payout request id from client
+          maxLength: 32
+        tradeFileId:
+          type: string
+          description: Unique trade file ID from client
+          maxLength: 32
+        pricingCurrency:
+          type: string
+          maxLength: 3
+          x-stoplight:
+            id: mc3drydwsx17b
+          description: Pricing Currency
+          minLength: 3
+        sourceCurrency:
+          type: string
+          maxLength: 3
+          x-stoplight:
+            id: jl3nfy9tqjrhu
+          description: Original currency
+        sourceAmount:
+          type: string
+          maxLength: 10
+          x-stoplight:
+            id: cj18adztpyhjt
+          description: "Original Currency Amount, mandatory if \n`pricingCurrency `= `sourceCurrency`"
+        targetCurrency:
+          type: string
+          maxLength: 3
+          x-stoplight:
+            id: sx8maaxrdglgi
+          description: Payout currency
+          minLength: 3
+        targetAmount:
+          type: string
+          maxLength: 10
+          x-stoplight:
+            id: t4afc2prfmdul
+          description: Payout amount, mandatory if `pricingCurrency` = ` targetCurrency`
+        poboPayerInfo:
+          type: object
+          description: Payer Info, mandatory if you want to pay on behalf of another entity (POBO)
+          properties:
+            payerId:
+              type: string
+              maxLength: 64
+              description: Payer unique ID
+            payerName:
+              type: string
+              maxLength: 64
+              description: Payer Name
+            payerAddress:
+              type: string
+              maxLength: 256
+              description: Payer Address
+            payerRegion:
+              type: string
+              x-stoplight:
+                id: tbqabpht176k4
+              description: Payer country, ISO 3166 code
+        payeeBankAccount:
+          type: object
+          description: Beneficiary bank account information
+          properties:
+            payeeCountryCode:
+              type: string
+              description: Beneficiary account country, ISO 3166 code
+              maxLength: 3
+            payeeName:
+              type: string
+              description: beneficiary name
+              maxLength: 128
+            payeeAddress:
+              type: string
+              description: beneficiary address
+              maxLength: 256
+            payeeBankDistrict:
+              type: string
+              description: beneficiary bank account region
+              maxLength: 3
+            payeeBankName:
+              type: string
+              description: Beneficiary bank name
+              maxLength: 128
+            payeeBankType:
+              type: string
+              description: 'beneficiary bank account type, one of:
+
+                |PAYEEBANKTYPE|DESCRIPTION|
+
+                |---|---|
+
+                |IBAN|IBAN|
+
+                |SORT|SORT|
+
+                |ABA|ABA|
+
+                |CC|CC|
+
+                |BSB|BSB|
+
+                |ZENGIN|ZENGIN|
+
+                |BILLERCODE|BILLERCODE|'
+              enum:
+              - IBAN
+              - SORT
+              - ABA
+              - CC
+              - BSB
+              - ZENGIN
+              - BILLERCODE
+            payeeBankCode:
+              type: string
+              description: Beneficiary bank code
+              maxLength: 128
+            payeeBankAddress:
+              type: string
+              description: beneficiary bank address
+              maxLength: 256
+            payeeBankSwiftCode:
+              type: string
+              description: Beneficiary bank SWIFT code
+              maxLength: 128
+            payeeAccountNo:
+              type: string
+              description: Beneficiary account number
+              maxLength: 72
+          required:
+          - payeeCountryCode
+          - payeeName
+          - payeeAddress
+          - payeeBankDistrict
+          - payeeBankName
+          - payeeBankAddress
+          - payeeBankSwiftCode
+          - payeeAccountNo
+        paymentMethod:
+          type: string
+          description: Payment method, one of SWIFT, LOCAL
+          enum:
+          - LOCAL
+          - SWIFT
+        swiftChargeOption:
+          type: string
+          description: '(For SWIFT payments only), specify who should bear SWIFT charges， one of
+
+            |Code|Description|
+
+            |----|---|
+
+            |PAYER|Payer bear the charges|
+
+            |SHARED|Share the charges|
+
+            |PAYEE|Payee bear the charges|'
+        rfb:
+          type: string
+          description: rfb
+          maxLength: 140
+        status:
+          type: string
+          description: 'request status, one of:
+
+
+            | value | description |
+
+            |--------|-------------|
+
+            |PROCESSING|Processing|
+
+            |SUCCESS|Success|
+
+            |FAILED|Failed|
+
+            |HEDGED|hedged|
+
+            '
+          enum:
+          - PROCESSING
+          - SUCCESS
+          - FAILED
+          - HEDGED
+        failReason:
+          type: string
+          description: request failure reason
+          maxLength: 128
+        fxRefundCurrency:
+          type: string
+          x-stoplight:
+            id: 0cv5r7zpvm2jt
+          description: Payout failed or hedged, currency of exchange
+          maxLength: 3
+          minLength: 3
+        fxRefundAmount:
+          type: string
+          maxLength: 10
+          x-stoplight:
+            id: 68i7vm3xoe0b9
+          description: Payout failed or hedged, the amount of the exchange
+        fxRefundRate:
+          type: string
+          maxLength: 10
+          x-stoplight:
+            id: yfy9yx4zeay56
+          description: Payout failed or hedged, exchange rate used
+        refundCurrency:
+          type: string
+          maxLength: 3
+          x-stoplight:
+            id: fgogcufsaog9i
+          description: 'Payout failed or hedged, the currency returned to the   client
+
+            '
+          minLength: 3
+        refundAmount:
+          type: string
+          maxLength: 10
+          x-stoplight:
+            id: ndoskajnxcmwy
+          description: Payout failed or hedged, the amount returned to the   client
+        createTime:
+          type: string
+          description: create time, UTC+0
+          maxLength: 24
+        modifyTime:
+          type: string
+          description: Modify Time, UTC+0
+          maxLength: 24
+      required:
+      - payoutId
+      - tradeFileId
+      - pricingCurrency
+      - sourceCurrency
+      - targetCurrency
+      - status
     Receipt:
       title: Receipt
       type: object
@@ -13852,6 +13852,22 @@ components:
           type: string
           description: Modify Time, UTC+0
           format: date-time
+    Trade-File-Info_Supplementary_Attachment:
+      title: Trade-File-Info-Supplementary-Attachment
+      x-stoplight:
+        id: y2467svtdpt1s
+      type: object
+      x-tags:
+      - Models
+      properties:
+        tradefileId:
+          type: string
+          description: Unique Id for this Trade Information
+          maxLength: 32
+        createTime:
+          type: string
+          format: date-time
+          description: create time, UTC+0
     Trade-File-Info:
       title: Trade-File-Info
       type: object
@@ -14059,22 +14075,90 @@ components:
           x-stoplight:
             id: ccyrczxpjtsvs
           description: The remaining available payout currency
-    Trade-File-Info_Supplementary_Attachment:
-      title: Trade-File-Info-Supplementary-Attachment
+    VA-Info_copy:
+      title: VA-Balance
       x-stoplight:
-        id: y2467svtdpt1s
+        id: 34wllpb7co15f
       type: object
+      description: VA Balance in LianLian Global's system
       x-tags:
       - Models
       properties:
-        tradefileId:
+        currency:
           type: string
-          description: Unique Id for this Trade Information
-          maxLength: 32
-        createTime:
+          x-stoplight:
+            id: tfxsoi2hcigmn
+        availableBalance:
           type: string
+          x-stoplight:
+            id: oi9n77k3y6zth
+    VA-Debit-Record:
+      title: VA- Debit-Record
+      type: object
+      x-tags:
+      - Models
+      x-stoplight:
+        id: 6eyhz91fdd265
+      required:
+      - transactionId
+      - currency
+      - amount
+      - transactionTime
+      - accountId
+      - status
+      properties:
+        transactionId:
+          type: string
+          description: Unique authorization transaction id defined by LianLian Global
+        currency:
+          type: string
+          description: Transaction currency
+        amount:
+          type: string
+          description: Transaction Amount
+        transactionTime:
+          type: string
+          description: 'Transaction Time
+
+            '
           format: date-time
-          description: create time, UTC+0
+        accountId:
+          type: string
+          description: Unique Card ID defined by LianLian Global
+        status:
+          type: string
+          description: 'Transaction status, one of
+
+            |Code|Description|
+
+            |-----|------|
+
+            |PENDING|Pre-debit Succeed|
+
+            |SUCCEED|Debit Succeed|
+
+            |REJECTED|Debit rejected|
+
+            |RECALLING|Debit Recalling|'
+        overLimitStatus:
+          type: string
+          description: 'Transaction overLimitStatus, one of
+
+            |Code|Description|
+
+            |-----|------|
+
+            |UN_OVER|Un OverLimit|
+
+            |OVER_UN_TREATED|Limit Un-Treated|
+
+            |OVER_TREATED|Limit Already-Treated|    '
+        merchantName:
+          type: string
+          description: Transaction Beneficiary Name
+        institutionName:
+          type: string
+          description: Transaction Institution Name
     VA-Info:
       title: VA-Info
       type: object
@@ -14149,23 +14233,6 @@ components:
           x-stoplight:
             id: 6dnt0qwds7g1o
           description: Available balance of virtual account
-    VA-Info_copy:
-      title: VA-Balance
-      x-stoplight:
-        id: 34wllpb7co15f
-      type: object
-      description: VA Balance in LianLian Global's system
-      x-tags:
-      - Models
-      properties:
-        currency:
-          type: string
-          x-stoplight:
-            id: tfxsoi2hcigmn
-        availableBalance:
-          type: string
-          x-stoplight:
-            id: oi9n77k3y6zth
     VA-EntryOrder:
       title: VA- Debit-Record
       x-stoplight:
@@ -14203,73 +14270,6 @@ components:
           description: Verify code
           x-stoplight:
             id: xmr1jeyg83vf7
-    VA-Debit-Record:
-      title: VA- Debit-Record
-      type: object
-      x-tags:
-      - Models
-      x-stoplight:
-        id: 6eyhz91fdd265
-      required:
-      - transactionId
-      - currency
-      - amount
-      - transactionTime
-      - accountId
-      - status
-      properties:
-        transactionId:
-          type: string
-          description: Unique authorization transaction id defined by LianLian Global
-        currency:
-          type: string
-          description: Transaction currency
-        amount:
-          type: string
-          description: Transaction Amount
-        transactionTime:
-          type: string
-          description: 'Transaction Time
-
-            '
-          format: date-time
-        accountId:
-          type: string
-          description: Unique Card ID defined by LianLian Global
-        status:
-          type: string
-          description: 'Transaction status, one of
-
-            |Code|Description|
-
-            |-----|------|
-
-            |PENDING|Pre-debit Succeed|
-
-            |SUCCEED|Debit Succeed|
-
-            |REJECTED|Debit rejected|
-
-            |RECALLING|Debit Recalling|'
-        overLimitStatus:
-          type: string
-          description: 'Transaction overLimitStatus, one of
-
-            |Code|Description|
-
-            |-----|------|
-
-            |UN_OVER|Un OverLimit|
-
-            |OVER_UN_TREATED|Limit Un-Treated|
-
-            |OVER_TREATED|Limit Already-Treated|    '
-        merchantName:
-          type: string
-          description: Transaction Beneficiary Name
-        institutionName:
-          type: string
-          description: Transaction Institution Name
     3DS-OTP:
       title: 3DS-OTP
       type: object
@@ -14295,6 +14295,56 @@ components:
         transactionAmount:
           type: string
           description: Transaction amount
+    VCC-Info:
+      title: VCC-Info
+      type: object
+      description: VCC information defined in LianLian Global's system
+      x-tags:
+      - Models
+      required:
+      - tradeFileId
+      - cardId
+      - limit
+      - bin
+      - createTime
+      - status
+      properties:
+        tradeFileId:
+          type: array
+          description: Unique Trade file Id from client
+          maxItems: 10
+          items:
+            type: string
+            maxLength: 32
+        cardId:
+          type: string
+          description: Unique Card ID defined by LianLian Global
+        cardNo:
+          type: string
+          description: VCC Number
+        limit:
+          type: string
+          description: Limit of this VCC
+        expiryDate:
+          type: string
+          description: VCC expiry date
+        cvv2:
+          type: string
+          description: cvv2
+        bin:
+          type: string
+          description: bin of VCC
+        createTime:
+          type: string
+          description: VCC create time,UTC+0
+          format: date-time
+        modifyTime:
+          type: string
+          description: Modify time, UTC+0
+          format: date-time
+        status:
+          type: string
+          description: "VCC status, one of \n|Code|Description|\n|----|----|\n|CREATING|VCC Creating|\n|ACTIVE|VCC Active|\n|FROZEN|VCC Frozen|\n|EXPIRED|VCC Expired|\n|BLOCKING|VCC Blocking|\n|BLOCKED|VCC Blocked|"
     VCC-Settlement-Trans:
       title: VCC-Settlement-Trans
       type: object
@@ -14421,56 +14471,6 @@ components:
           description: MCC
           x-stoplight:
             id: wlrwkmxmdm0tm
-    VCC-Info:
-      title: VCC-Info
-      type: object
-      description: VCC information defined in LianLian Global's system
-      x-tags:
-      - Models
-      required:
-      - tradeFileId
-      - cardId
-      - limit
-      - bin
-      - createTime
-      - status
-      properties:
-        tradeFileId:
-          type: array
-          description: Unique Trade file Id from client
-          maxItems: 10
-          items:
-            type: string
-            maxLength: 32
-        cardId:
-          type: string
-          description: Unique Card ID defined by LianLian Global
-        cardNo:
-          type: string
-          description: VCC Number
-        limit:
-          type: string
-          description: Limit of this VCC
-        expiryDate:
-          type: string
-          description: VCC expiry date
-        cvv2:
-          type: string
-          description: cvv2
-        bin:
-          type: string
-          description: bin of VCC
-        createTime:
-          type: string
-          description: VCC create time,UTC+0
-          format: date-time
-        modifyTime:
-          type: string
-          description: Modify time, UTC+0
-          format: date-time
-        status:
-          type: string
-          description: "VCC status, one of \n|Code|Description|\n|----|----|\n|CREATING|VCC Creating|\n|ACTIVE|VCC Active|\n|FROZEN|VCC Frozen|\n|EXPIRED|VCC Expired|\n|BLOCKING|VCC Blocking|\n|BLOCKED|VCC Blocked|"
     rate_2:
       title: Fx-Rate
       type: object

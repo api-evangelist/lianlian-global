@@ -11164,6 +11164,42 @@ components:
       - status
       - createTime
       - modifyTime
+    marketplaceName:
+      type: string
+      title: marketplaceName
+      description: '亚马逊入账来源
+
+        marketplaceName|注释
+
+        -|-
+
+        Amazon.ca|加拿大站
+
+        Amazon.co.uk|英国站
+
+        Amazon.com|美国站
+
+        Amazon.com.mx|墨西哥站
+
+        Amazon.de|德国站
+
+        Amazon.es|西班牙站
+
+        Amazon.fr|法国站
+
+        Amazon.it|意大利站
+
+        Amazon.nl|荷兰站
+
+        Amazon.se|瑞典站
+
+        SI CA Prod Marketplace|加拿大站
+
+        SI Prod ES Marketplace|西班牙站
+
+        SI Prod IT Marketplace|意大利站
+
+        SI UK Prod Marketplace|英国站'
     cardType:
       title: 提现银行卡类型
       description: '字段值|注释
@@ -11175,14 +11211,6 @@ components:
         1|信用卡
 
         2|对公银行卡'
-      type: string
-    shopStatus:
-      title: 店铺状态
-      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|0\t|待完善信息  |\n|1\t|待审核\t      |\n|2\t|审核通过\t      |\n|3\t|审核失败\t      |\n|4\t|已注销\t      |\n|5\t|已迁移\t      |\n|6\t|待激活\t      |\n"
-      type: integer
-    busiType:
-      title: 资金流水业务类型
-      description: "|字段值\t  |\n|-------|\n|入账\t|\n|提现\t|\n|供应商付款\t|\n|VAT缴税\t|\n|增值服务\t|\n|支付费用\t|\n|转入出账\t|\n|转入入账\t|\n|汇兑出账\t|\n|汇兑入账\t|\n|金融还款\t|\n|退款\t|\n|提前宝入账\t|\n|提前宝出账\t|\n|提前宝还款\t|\n|提前宝失败入账\t|\n|提前宝还款撤销\t|\n|提前宝失败出账\t|\n|服务费退款\t|\n|服务费\t|\n|ESG手续费\t|\n|其他入账\t|\n|其他出账\t|\n|VAT WITHHOLDING\t|\n|VAT WITHHOLDING REFUND\t|\n|店铺集中管理入账\t|\n|店铺集中管理出账\t|\n|闪收入账\t|\n|闪收服务费\t|\n|闪收出账\t|\n|闪收超期服务费\t|\n|闪收手续费退还\t|\n|欧税通手续费\t|\n|提现退手续费\t|"
       type: string
     currency:
       type: string
@@ -11230,15 +11258,6 @@ components:
         |CZK|捷克克朗|
 
         '
-    creditStatus:
-      title: 入账状态
-      description: "| 字段值 | 状态 | 注释 |\n| -------|-------|-------|\n| 0\t| 挂起 | |\n| 1\t| 加款中 | |\n| 2\t| 加款成功 | 即入账成功，连连官网页面交易明细仅展示此状态单据 |\n| 3\t| 退还中 | |\n| 4\t| 已退还 | |\n| 5\t| 已红冲 | 加款成功后退款红冲 |\n| 6\t| 待加款 | |\n| 7\t| 待退款 | |"
-      type: string
-      x-internal: false
-    withdrawStatus:
-      title: 提现状态
-      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|1\t|提现中\t      |\n|2\t|提现成功\t      |\n|3\t|提现失败\t      |"
-      type: integer
     authStatus:
       type: object
       x-stoplight:
@@ -11255,42 +11274,23 @@ components:
         AUTH_WAIT|待授权
 
         NO_AUTH|无需授权'
-    marketplaceName:
+    creditStatus:
+      title: 入账状态
+      description: "| 字段值 | 状态 | 注释 |\n| -------|-------|-------|\n| 0\t| 挂起 | |\n| 1\t| 加款中 | |\n| 2\t| 加款成功 | 即入账成功，连连官网页面交易明细仅展示此状态单据 |\n| 3\t| 退还中 | |\n| 4\t| 已退还 | |\n| 5\t| 已红冲 | 加款成功后退款红冲 |\n| 6\t| 待加款 | |\n| 7\t| 待退款 | |"
       type: string
-      title: marketplaceName
-      description: '亚马逊入账来源
-
-        marketplaceName|注释
-
-        -|-
-
-        Amazon.ca|加拿大站
-
-        Amazon.co.uk|英国站
-
-        Amazon.com|美国站
-
-        Amazon.com.mx|墨西哥站
-
-        Amazon.de|德国站
-
-        Amazon.es|西班牙站
-
-        Amazon.fr|法国站
-
-        Amazon.it|意大利站
-
-        Amazon.nl|荷兰站
-
-        Amazon.se|瑞典站
-
-        SI CA Prod Marketplace|加拿大站
-
-        SI Prod ES Marketplace|西班牙站
-
-        SI Prod IT Marketplace|意大利站
-
-        SI UK Prod Marketplace|英国站'
+      x-internal: false
+    shopStatus:
+      title: 店铺状态
+      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|0\t|待完善信息  |\n|1\t|待审核\t      |\n|2\t|审核通过\t      |\n|3\t|审核失败\t      |\n|4\t|已注销\t      |\n|5\t|已迁移\t      |\n|6\t|待激活\t      |\n"
+      type: integer
+    withdrawStatus:
+      title: 提现状态
+      description: "|字段值\t  |注释\t    |\n|-------|-------------|\n|1\t|提现中\t      |\n|2\t|提现成功\t      |\n|3\t|提现失败\t      |"
+      type: integer
+    busiType:
+      title: 资金流水业务类型
+      description: "|字段值\t  |\n|-------|\n|入账\t|\n|提现\t|\n|供应商付款\t|\n|VAT缴税\t|\n|增值服务\t|\n|支付费用\t|\n|转入出账\t|\n|转入入账\t|\n|汇兑出账\t|\n|汇兑入账\t|\n|金融还款\t|\n|退款\t|\n|提前宝入账\t|\n|提前宝出账\t|\n|提前宝还款\t|\n|提前宝失败入账\t|\n|提前宝还款撤销\t|\n|提前宝失败出账\t|\n|服务费退款\t|\n|服务费\t|\n|ESG手续费\t|\n|其他入账\t|\n|其他出账\t|\n|VAT WITHHOLDING\t|\n|VAT WITHHOLDING REFUND\t|\n|店铺集中管理入账\t|\n|店铺集中管理出账\t|\n|闪收入账\t|\n|闪收服务费\t|\n|闪收出账\t|\n|闪收超期服务费\t|\n|闪收手续费退还\t|\n|欧税通手续费\t|\n|提现退手续费\t|"
+      type: string
     tradeCode:
       title: 贸易类型
       type: string

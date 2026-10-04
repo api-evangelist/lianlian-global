@@ -462,6 +462,48 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AddressInfo:
+      title: AddressInfo
+      x-stoplight:
+        id: sffkf7yn3obsk
+      description: 地址信息
+      type: object
+      x-internal: false
+      properties:
+        province:
+          type: string
+          description: 省/州
+          maxLength: 128
+        city:
+          type: string
+          description: 市
+          maxLength: 128
+        district:
+          type: string
+          description: 区
+          maxLength: 128
+        postal_code:
+          type: string
+          description: 邮编
+          maxLength: 128
+        address:
+          type: string
+          description: 地址
+          maxLength: 128
+        address_proof_type:
+          type: string
+          description: 地址证明类型
+          enum:
+          - UTILITY_BILLS
+          - BANK_STATEMENT
+          - GOVERNMENT_DOCUMENTS
+        address_attachment:
+          type: string
+          description: 地址附件，经营地址必填，填写file_id
+          maxLength: 128
+      required:
+      - city
+      - address
     IndividualKycInfo:
       title: IndvidualKycInfo
       x-stoplight:
@@ -535,155 +577,6 @@ components:
       - region
       - name
       - email
-    CorporateStaffInfo:
-      title: CorporateStaffInfo
-      x-stoplight:
-        id: sffkf7yn3obsk
-      description: 企业相关人员
-      type: object
-      x-internal: false
-      properties:
-        share_ratio:
-          type: string
-          description: 股权占比,`staff_type`=`BENEFICIARY`必填
-        name:
-          type: string
-          description: 全名
-          maxLength: 512
-        birthday:
-          type: string
-          description: 生日，YYYYMMDD
-        contact_address:
-          type: object
-          description: 居住地址
-          properties:
-            ? ''
-            : $ref: '#/components/schemas/AddressInfo'
-        nationality:
-          type: string
-          description: 国籍
-          enum:
-          - TH
-          - SG
-          - ID
-          - MY
-        cert_region:
-          type: string
-          enum:
-          - TH
-          - SG
-          - ID
-          - MY
-          description: 证件发行国
-        cert_type:
-          type: string
-          description: 证件类型
-          enum:
-          - PASSPORT
-          - DRIVER_LICENSE
-          - CITIZEN_IDENTICATION
-        cert_no:
-          type: string
-          description: 证件号
-          maxLength: 128
-        cert_issue_date:
-          type: string
-          description: 证件发放日期，YYYYMMDD
-        cert_expiration_date:
-          type: string
-          description: 证件失效日期，YYYYMMDD
-        is_cert_permanent:
-          description: 证件是否永久有效
-          type: boolean
-        cert_no_attachments:
-          type: string
-          description: 证件号证明附件，填写file_id，多个用英文 ; 隔开
-          maxLength: 128
-      required:
-      - name
-      - birthday
-      - contact_address
-      - nationality
-      - cert_region
-      - cert_type
-      - cert_no
-    AddressInfo:
-      title: AddressInfo
-      x-stoplight:
-        id: sffkf7yn3obsk
-      description: 地址信息
-      type: object
-      x-internal: false
-      properties:
-        province:
-          type: string
-          description: 省/州
-          maxLength: 128
-        city:
-          type: string
-          description: 市
-          maxLength: 128
-        district:
-          type: string
-          description: 区
-          maxLength: 128
-        postal_code:
-          type: string
-          description: 邮编
-          maxLength: 128
-        address:
-          type: string
-          description: 地址
-          maxLength: 128
-        address_proof_type:
-          type: string
-          description: 地址证明类型
-          enum:
-          - UTILITY_BILLS
-          - BANK_STATEMENT
-          - GOVERNMENT_DOCUMENTS
-        address_attachment:
-          type: string
-          description: 地址附件，经营地址必填，填写file_id
-          maxLength: 128
-      required:
-      - city
-      - address
-    IndividualCert:
-      title: Individual Cert
-      x-stoplight:
-        id: sffkf7yn3obsk
-      description: 个人证件信息
-      type: object
-      x-internal: false
-      properties:
-        cert_type:
-          type: string
-          description: 个人证件类型
-          enum:
-          - PASSPORT
-          - DRIVER_LICENSE
-          - CITIZEN_IDENTICATION
-        cert_no:
-          type: string
-          description: 证件号
-          maxLength: 128
-        'cert_issue_date ':
-          type: string
-          description: 证件发放日期，YYYYMMDD
-        'cert_expiration_date ':
-          type: string
-          description: 证件失效日期，YYYYMMDD
-        is_cert_permanent:
-          description: 证件是否永久有效
-          type: boolean
-        attachments:
-          type: string
-          description: 证件正面，证件反面，手持证件，填写file_id
-      required:
-      - cert_type
-      - cert_no
-      - attachments
     CorporateCert:
       title: Corporate Cert
       x-stoplight:
@@ -828,5 +721,112 @@ components:
       - staffs
       - status
       - create_time
+    IndividualCert:
+      title: Individual Cert
+      x-stoplight:
+        id: sffkf7yn3obsk
+      description: 个人证件信息
+      type: object
+      x-internal: false
+      properties:
+        cert_type:
+          type: string
+          description: 个人证件类型
+          enum:
+          - PASSPORT
+          - DRIVER_LICENSE
+          - CITIZEN_IDENTICATION
+        cert_no:
+          type: string
+          description: 证件号
+          maxLength: 128
+        'cert_issue_date ':
+          type: string
+          description: 证件发放日期，YYYYMMDD
+        'cert_expiration_date ':
+          type: string
+          description: 证件失效日期，YYYYMMDD
+        is_cert_permanent:
+          description: 证件是否永久有效
+          type: boolean
+        attachments:
+          type: string
+          description: 证件正面，证件反面，手持证件，填写file_id
+      required:
+      - cert_type
+      - cert_no
+      - attachments
+    CorporateStaffInfo:
+      title: CorporateStaffInfo
+      x-stoplight:
+        id: sffkf7yn3obsk
+      description: 企业相关人员
+      type: object
+      x-internal: false
+      properties:
+        share_ratio:
+          type: string
+          description: 股权占比,`staff_type`=`BENEFICIARY`必填
+        name:
+          type: string
+          description: 全名
+          maxLength: 512
+        birthday:
+          type: string
+          description: 生日，YYYYMMDD
+        contact_address:
+          type: object
+          description: 居住地址
+          properties:
+            ? ''
+            : $ref: '#/components/schemas/AddressInfo'
+        nationality:
+          type: string
+          description: 国籍
+          enum:
+          - TH
+          - SG
+          - ID
+          - MY
+        cert_region:
+          type: string
+          enum:
+          - TH
+          - SG
+          - ID
+          - MY
+          description: 证件发行国
+        cert_type:
+          type: string
+          description: 证件类型
+          enum:
+          - PASSPORT
+          - DRIVER_LICENSE
+          - CITIZEN_IDENTICATION
+        cert_no:
+          type: string
+          description: 证件号
+          maxLength: 128
+        cert_issue_date:
+          type: string
+          description: 证件发放日期，YYYYMMDD
+        cert_expiration_date:
+          type: string
+          description: 证件失效日期，YYYYMMDD
+        is_cert_permanent:
+          description: 证件是否永久有效
+          type: boolean
+        cert_no_attachments:
+          type: string
+          description: 证件号证明附件，填写file_id，多个用英文 ; 隔开
+          maxLength: 128
+      required:
+      - name
+      - birthday
+      - contact_address
+      - nationality
+      - cert_region
+      - cert_type
+      - cert_no
 x-stoplight:
   id: behyom2ungysn
