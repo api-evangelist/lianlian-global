@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/llglobal/b2c-openapi-integration/HEAD/references/specs/merchant.json",
+ "requested_url": "https://raw.githubusercontent.com/llglobal/b2c-openapi-integration/HEAD/references/specs/merchant.json",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 9975,
+ "sha256": "d6645e6276f0a4a5100485441fac54917d56b0c117da9beb9dc9515ea1d25fc3",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
