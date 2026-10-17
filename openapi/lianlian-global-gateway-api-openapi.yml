@@ -4440,16 +4440,6 @@ paths:
     - url: http://localhost:3000
 components:
   schemas:
-    accountType:
-      title: accountType
-      x-stoplight:
-        id: q84ii4tzor2yr
-      type: string
-      description: '账户类型枚举（不传则查询主资金账户）：
-
-        - 主资金账户（VCC_ACCOUNT）
-
-        - 子资金账户（SUB_ACCOUNT）'
     transactionType:
       title: transactionType
       x-stoplight:
@@ -4520,6 +4510,16 @@ components:
         - 争议退款（DISPUTE_REFUND）
 
         '
+    accountType:
+      title: accountType
+      x-stoplight:
+        id: q84ii4tzor2yr
+      type: string
+      description: '账户类型枚举（不传则查询主资金账户）：
+
+        - 主资金账户（VCC_ACCOUNT）
+
+        - 子资金账户（SUB_ACCOUNT）'
 x-refined-from:
 - lianlian-global-cards-open-api-balance-apis-openapi.yml
 - lianlian-global-cards-open-api-card-apis-openapi.yml
