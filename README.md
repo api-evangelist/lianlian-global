@@ -64,64 +64,217 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LianLian Global (连连国际) is the cross-border payments arm of LianLian DigiTech, providing licensed collection, disbursement, foreign exchange and card issuing rails for e-commerce sellers, marketplaces, travel platforms and B2B traders moving money between China and the rest of the world.
+LianLian Global (连连国际) is the cross-border payments arm of LianLian DigiTech, providing licensed collection, disbursement, foreign exchange and card issuing rails for e-commerce sellers, marketplaces, travel platforms and B2B traders moving money between China and the rest of the world. Its developer platform publishes 18 distinct API products on a Stoplight portal at developer.lianlianglobal.com — covering B2C marketplace collection, multi-currency e-wallets, global payout, B2B import/export settlement, standard remittance, tuition and travel payments, embedded Connect accounts, virtual and physical card issuing, and the OAuth 2.0 LPPE platform surface — backed by 173 published OpenAPI/Swagger specifications describing more than 550 operations. LianLian authenticates with API keys and OAuth 2.0, signs every request and webhook with RSA SHA-256 via the LLPAY-Signature header, and ships first-party Java and TypeScript SDKs, a Python sandbox CLI and three published AI agent skills from its LLGlobal GitHub organization.
 
-Its developer platform publishes 18 distinct API products on a Stoplight portal at [developer.lianlianglobal.com](https://developer.lianlianglobal.com), backed by 173 OpenAPI/Swagger specifications describing more than 550 operations.
+**Areas:** Payments · Cross-Border Payments · Foreign Exchange · E-Commerce · Card Issuing · Remittances · Financial Services · B2B Payments · Digital Wallet · China
 
-## APIs
+## LianLian Global on APIs.io
 
-| Product | Operations | Docs |
-| --- | --- | --- |
-| B2C Services API (`llp-api`) | 47 | [docs](https://developer.lianlianglobal.com/docs/llp-api/4b402d5ab3edd-api-introduction-v1-2) |
-| LPPE Platform API (`lppe`) | 73 | [docs](https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction) |
-| B2B Cross-Border (`b2b-cross-border`) | 50 | [docs](https://developer.lianlianglobal.com/docs/b2b-cross-border/ZG9jOjQ1Mg-open-api) |
-| Outbound Payout — Card (`outbound-payout-ka`) | 54 | [docs](https://developer.lianlianglobal.com/docs/outbound-payout-ka/4b402d5ab3edd-api-introduction) |
-| Global Payout (`global-payout`) | 45 | [docs](https://developer.lianlianglobal.com/docs/global-payout/ZG9jOjQ1Mg-api-introduction) |
-| e-Wallet OpenAPI (`e-wallet-openapi`) | 39 | [docs](https://developer.lianlianglobal.com/docs/e-wallet-openapi/72b66de24898e-introduction) |
-| Outbound Payout Service | 37 | [docs](https://developer.lianlianglobal.com/docs/outbound-payout-service/4b402d5ab3edd-api-introduction) |
-| B2B Inflow & Payout | 30 | [docs](https://developer.lianlianglobal.com/docs/B2B-inflow-payout/ZG9jOjQ1Mg-open-api) |
-| Payout — Tuition | 29 | [docs](https://developer.lianlianglobal.com/docs/global-payout-tuition/4b402d5ab3edd-api-introduction) |
-| Outbound Payout Verification | 27 | [docs](https://developer.lianlianglobal.com/docs/outbound-payout-verification/ztrytr7ruzey9-balance-api) |
-| Cards Open API | 26 | [docs](https://developer.lianlianglobal.com/docs/cards-open-api/4b402d5ab3edd-introduction) |
-| Outbound Payout (Bill Pay) | 26 | [docs](https://developer.lianlianglobal.com/docs/outbound-payout/4b402d5ab3edd-api-introduction) |
-| Connect for OTA | 23 | [docs](https://developer.lianlianglobal.com/docs/connect-ota/4b402d5ab3edd-open-api) |
-| Connect | 19 | [docs](https://developer.lianlianglobal.com/docs/connect/ydcoebflkrejd-connect-api) |
-| Standard Remittance | 18 | [docs](https://developer.lianlianglobal.com/docs/standard-remittance/4b402d5ab3edd-api-introduction) |
-| Payout FX | 6 | [docs](https://developer.lianlianglobal.com/docs/global-payout-fx/e13ca9b34d037-exchange) |
-| LLG Payments v2 | 5 | [docs](https://developer.lianlianglobal.com/docs/llg-payments/4b402d5ab3edd-summary) |
-| TripLink Balance | 4 | [docs](https://developer.lianlianglobal.com/docs/triplink/d04slm5ra253f-) |
+Everything profiled for LianLian Global is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lianlian-global/](https://apis.io/providers/lianlian-global/)** — or go straight to one of the APIs or properties below.
 
-## Authentication
+### APIs (45)
 
-Two models run side by side:
+- [LianLian Global Account API](https://apis.io/apis/lianlian-global/lianlian-global-account-api/) — The Account API from LianLian Global — 2 operation(s) for account.
+- [LianLian Global Accounts API](https://apis.io/apis/lianlian-global/lianlian-global-accounts-api/) — The Accounts API from LianLian Global — 6 operation(s) for accounts.
+- [LianLian Global Agreement API](https://apis.io/apis/lianlian-global/lianlian-global-agreement-api/) — The Agreement API from LianLian Global — 2 operation(s) for agreement.
+- [LianLian Global Balance API](https://apis.io/apis/lianlian-global/lianlian-global-balance-api/) — The Balance API from LianLian Global — 3 operation(s) for balance.
+- [LianLian Global Beneficiaries API](https://apis.io/apis/lianlian-global/lianlian-global-beneficiaries-api/) — The Beneficiaries API from LianLian Global — 2 operation(s) for beneficiaries.
+- [LianLian Global Captchas API](https://apis.io/apis/lianlian-global/lianlian-global-captchas-api/) — The Captchas API from LianLian Global — 1 operation(s) for captchas.
+- [LianLian Global Card Payouts API](https://apis.io/apis/lianlian-global/lianlian-global-card-payouts-api/) — The Card Payouts API from LianLian Global — 1 operation(s) for card payouts.
+- [LianLian Global Checkout API](https://apis.io/apis/lianlian-global/lianlian-global-checkout-api/) — The Checkout API from LianLian Global — 1 operation(s) for checkout.
+- [LianLian Global Compliances API](https://apis.io/apis/lianlian-global/lianlian-global-compliances-api/) — The Compliances API from LianLian Global — 2 operation(s) for compliances.
+- [LianLian Global Conversion API](https://apis.io/apis/lianlian-global/lianlian-global-conversion-api/) — The Conversion API from LianLian Global — 2 operation(s) for conversion.
+- [LianLian Global Conversions API](https://apis.io/apis/lianlian-global/lianlian-global-conversions-api/) — The Conversions API from LianLian Global — 2 operation(s) for conversions.
+- [LianLian Global 接口 API](https://apis.io/apis/lianlian-global/lianlian-global-default-api/) — The 接口 API from LianLian Global — 63 operation(s) for 接口.
+- [LianLian Global Deposits API](https://apis.io/apis/lianlian-global/lianlian-global-deposits-api/) — The Deposits API from LianLian Global — 2 operation(s) for deposits.
+- [LianLian Global Ew Oauth2 API](https://apis.io/apis/lianlian-global/lianlian-global-ew-oauth2-api/) — The Ew Oauth2 API from LianLian Global — 1 operation(s) for ew oauth2.
+- [LianLian Global Ew Receipts API](https://apis.io/apis/lianlian-global/lianlian-global-ew-receipts-api/) — The Ew Receipts API from LianLian Global — 1 operation(s) for ew receipts.
+- [LianLian Global Ew Receiving API](https://apis.io/apis/lianlian-global/lianlian-global-ew-receiving-api/) — The Ew Receiving API from LianLian Global — 2 operation(s) for ew receiving.
+- [LianLian Global Ew Receivings API](https://apis.io/apis/lianlian-global/lianlian-global-ew-receivings-api/) — The Ew Receivings API from LianLian Global — 1 operation(s) for ew receivings.
+- [LianLian Global Ew Recharges API](https://apis.io/apis/lianlian-global/lianlian-global-ew-recharges-api/) — The Ew Recharges API from LianLian Global — 1 operation(s) for ew recharges.
+- [LianLian Global Ew Transactions API](https://apis.io/apis/lianlian-global/lianlian-global-ew-transactions-api/) — The Ew Transactions API from LianLian Global — 1 operation(s) for ew transactions.
+- [LianLian Global Ew Withdrawals API](https://apis.io/apis/lianlian-global/lianlian-global-ew-withdrawals-api/) — The Ew Withdrawals API from LianLian Global — 1 operation(s) for ew withdrawals.
+- [LianLian Global Files API](https://apis.io/apis/lianlian-global/lianlian-global-files-api/) — The Files API from LianLian Global — 2 operation(s) for files.
+- [LianLian Global Gateway API](https://apis.io/apis/lianlian-global/lianlian-global-gateway-api/) — The Gateway API from LianLian Global — 24 operation(s) for gateway.
+- [LianLian Global Kyc API](https://apis.io/apis/lianlian-global/lianlian-global-kyc-api/) — The Kyc API from LianLian Global — 5 operation(s) for kyc.
+- [LianLian Global Member API](https://apis.io/apis/lianlian-global/lianlian-global-member-api/) — The Member API from LianLian Global — 1 operation(s) for member.
+- [LianLian Global Operations API](https://apis.io/apis/lianlian-global/lianlian-global-operations-api/) — The Operations API from LianLian Global — 117 operation(s) for operations.
+- [LianLian Global Payers API](https://apis.io/apis/lianlian-global/lianlian-global-payers-api/) — The Payers API from LianLian Global — 2 operation(s) for payers.
+- [LianLian Global Payment API](https://apis.io/apis/lianlian-global/lianlian-global-payment-api/) — The Payment API from LianLian Global — 4 operation(s) for payment.
+- [LianLian Global Payout API](https://apis.io/apis/lianlian-global/lianlian-global-payout-api/) — The Payout API from LianLian Global — 2 operation(s) for payout.
+- [LianLian Global Payouts API](https://apis.io/apis/lianlian-global/lianlian-global-payouts-api/) — The Payouts API from LianLian Global — 7 operation(s) for payouts.
+- [LianLian Global Query API](https://apis.io/apis/lianlian-global/lianlian-global-query-api/) — The Query API from LianLian Global — 1 operation(s) for query.
+- [LianLian Global Quote API](https://apis.io/apis/lianlian-global/lianlian-global-quote-api/) — The Quote API from LianLian Global — 1 operation(s) for quote.
+- [LianLian Global Quotes API](https://apis.io/apis/lianlian-global/lianlian-global-quotes-api/) — The Quotes API from LianLian Global — 2 operation(s) for quotes.
+- [LianLian Global Receipts API](https://apis.io/apis/lianlian-global/lianlian-global-receipts-api/) — The Receipts API from LianLian Global — 3 operation(s) for receipts.
+- [LianLian Global Receiving Accounts API](https://apis.io/apis/lianlian-global/lianlian-global-receiving-accounts-api/) — The Receiving Accounts API from LianLian Global — 4 operation(s) for receiving accounts.
+- [LianLian Global Refund API](https://apis.io/apis/lianlian-global/lianlian-global-refund-api/) — The Refund API from LianLian Global — 2 operation(s) for refund.
+- [LianLian Global Reports API](https://apis.io/apis/lianlian-global/lianlian-global-reports-api/) — The Reports API from LianLian Global — 3 operation(s) for reports.
+- [LianLian Global Statement API](https://apis.io/apis/lianlian-global/lianlian-global-statement-api/) — The Statement API from LianLian Global — 1 operation(s) for statement.
+- [LianLian Global Transaction API](https://apis.io/apis/lianlian-global/lianlian-global-transaction-api/) — The Transaction API from LianLian Global — 2 operation(s) for transaction.
+- [LianLian Global Transaction Documents API](https://apis.io/apis/lianlian-global/lianlian-global-transaction-documents-api/) — The Transaction Documents API from LianLian Global — 5 operation(s) for transaction documents.
+- [LianLian Global Transfer API](https://apis.io/apis/lianlian-global/lianlian-global-transfer-api/) — The Transfer API from LianLian Global — 2 operation(s) for transfer.
+- [LianLian Global User API](https://apis.io/apis/lianlian-global/lianlian-global-user-api/) — The User API from LianLian Global — 1 operation(s) for user.
+- [LianLian Global Users API](https://apis.io/apis/lianlian-global/lianlian-global-users-api/) — The Users API from LianLian Global — 1 operation(s) for users.
+- [LianLian Global Verifications API](https://apis.io/apis/lianlian-global/lianlian-global-verifications-api/) — The Verifications API from LianLian Global — 2 operation(s) for verifications.
+- [LianLian Global Oauth2 API](https://apis.io/apis/lianlian-global/lianlian-global-oauth2-api/) — The Oauth2 API from LianLian Global — 1 operation(s) for oauth2.
+- [LianLian Global Top Up API](https://apis.io/apis/lianlian-global/lianlian-global-top-up-api/) — The Top Up API from LianLian Global — 2 operation(s) for top up.
 
-- **OAuth 2.0** on the LPPE platform surface — `client_credentials` and `authorization_code`, token at `/api/v1/oauth2/token`.
-- **API key + RSA request signature** on the B2C and payout products — `Authorization: Basic base64(developerId:masterToken)` plus an `LLPAY-Signature: t=<epoch>,v=<signature>` header, SHA256WithRSA over `HTTP_METHOD&URI&REQUEST_EPOCH&REQUEST_PAYLOAD`.
+### Published properties
 
-Webhooks are signed the same way and carry `LLPAY-Hook-ID`, `LLPAY-Event-Name`, `LLPAY-Delivery-ID` and `LLPAY-Delivery-Time` headers, with a 16-attempt retry ladder from 10 seconds to 2 hours.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Artifacts
+#### AsyncAPI (1)
 
-| Directory | What it holds |
-| --- | --- |
-| `openapi/` | 173 harvested OpenAPI 3.1 / Swagger 2.0 specifications |
-| `overlays/` | 18 OpenAPI Overlay 1.0.0 documents, one per API product |
-| `authentication/`, `scopes/` | Security schemes and the documented OAuth scope format |
-| `conventions/` | Idempotency, pagination, metadata, tracing, versioning, error envelope |
-| `errors/` | Error envelope and the 13 published common error codes |
-| `asyncapi/` | Webhook catalogue — 42 LPPE events, signature and retry contract |
-| `skills/` | 2 provider-published Agent Skills (verbatim) + 3 generated flows |
-| `packages/`, `cli/` | First-party SDKs from the LLGlobal GitHub org and the EW DevTool CLI |
-| `sandbox/` | Sandbox/production host separation and credential provisioning |
-| `changelog/`, `lifecycle/` | Dated change history and versioning posture |
-| `conformance/`, `data-model/`, `mcp/`, `llms/`, `well-known/`, `security/`, `agentic-access/` | Standards posture, entity graph, candidate MCP surface, llms.txt, probe results |
+Event-driven and webhook contracts.
 
-## Links
+- [Lianlian Global Webhooks](https://apis.io/asyncapis/lianlian-global/lianlian-global-webhooks/)
 
-- Website — https://www.lianlianglobal.com
-- Developer portal — https://developer.lianlianglobal.com
-- GitHub — https://github.com/LLGlobal
-- Support — https://support.us.lianlianglobal.com/hc/en-us
-- Sign up — https://account.lianlianglobal.com/signupguide
+#### MCP servers (1)
 
-Backed by: hongshan
+Model Context Protocol servers that expose the API to agents.
+
+- [lianlian-global-mcp.yml](https://apis.io/servers/lianlian-global/lianlian-global-mcp-yml/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Lianlian Global Agentic Access](https://apis.io/agentic-access/lianlian-global/lianlian-global-agentic-access/)
+
+#### Collections (47)
+
+Postman and Open Collection request collections.
+
+- [Distribution Account API](https://apis.io/collections/lianlian-global/open-lianlian-global-account-api/)
+- [Distribution Account Accounts API](https://apis.io/collections/lianlian-global/open-lianlian-global-accounts-api/)
+- [Distribution Account Agreement API](https://apis.io/collections/lianlian-global/open-lianlian-global-agreement-api/)
+- [Distribution Account Balance API](https://apis.io/collections/lianlian-global/open-lianlian-global-balance-api/)
+- [Distribution Account Beneficiaries API](https://apis.io/collections/lianlian-global/open-lianlian-global-beneficiaries-api/)
+- [Distribution Account Captchas API](https://apis.io/collections/lianlian-global/open-lianlian-global-captchas-api/)
+- [Distribution Account Card Payouts API](https://apis.io/collections/lianlian-global/open-lianlian-global-card-payouts-api/)
+- [Distribution Account Checkout API](https://apis.io/collections/lianlian-global/open-lianlian-global-checkout-api/)
+- [Distribution Account Compliances API](https://apis.io/collections/lianlian-global/open-lianlian-global-compliances-api/)
+- [Distribution Account Conversion API](https://apis.io/collections/lianlian-global/open-lianlian-global-conversion-api/)
+- [Distribution Account Conversions API](https://apis.io/collections/lianlian-global/open-lianlian-global-conversions-api/)
+- [Distribution Account 接口 API](https://apis.io/collections/lianlian-global/open-lianlian-global-default-api/)
+- [Distribution Account Deposits API](https://apis.io/collections/lianlian-global/open-lianlian-global-deposits-api/)
+- [Distribution Account Ew Oauth2 API](https://apis.io/collections/lianlian-global/open-lianlian-global-ew-oauth2-api/)
+- [Distribution Account Ew Receipts API](https://apis.io/collections/lianlian-global/open-lianlian-global-ew-receipts-api/)
+- [Distribution Account Ew Receiving API](https://apis.io/collections/lianlian-global/open-lianlian-global-ew-receiving-api/)
+- [Distribution Account Ew Receivings API](https://apis.io/collections/lianlian-global/open-lianlian-global-ew-receivings-api/)
+- [Distribution Account Ew Recharges API](https://apis.io/collections/lianlian-global/open-lianlian-global-ew-recharges-api/)
+- [Distribution Account Ew Transactions API](https://apis.io/collections/lianlian-global/open-lianlian-global-ew-transactions-api/)
+- [Distribution Account Ew Withdrawals API](https://apis.io/collections/lianlian-global/open-lianlian-global-ew-withdrawals-api/)
+- [Distribution Account Files API](https://apis.io/collections/lianlian-global/open-lianlian-global-files-api/)
+- [Distribution Account Gateway API](https://apis.io/collections/lianlian-global/open-lianlian-global-gateway-api/)
+- [Distribution Account Get API](https://apis.io/collections/lianlian-global/open-lianlian-global-get-api/)
+- [Distribution Account Kyc API](https://apis.io/collections/lianlian-global/open-lianlian-global-kyc-api/)
+- [Distribution Account Member API](https://apis.io/collections/lianlian-global/open-lianlian-global-member-api/)
+- …and 22 more published on APIs.io
+
+#### Overlays (18)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Lianlian Global B2B Cross Border Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-b2b-cross-border-overlay/)
+- [Lianlian Global B2B Inflow Payout Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-b2b-inflow-payout-overlay/)
+- [Lianlian Global Cards Open Api Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-cards-open-api-overlay/)
+- [Lianlian Global Connect Ota Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-connect-ota-overlay/)
+- [Lianlian Global Connect Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-connect-overlay/)
+- [Lianlian Global E Wallet Openapi Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-e-wallet-openapi-overlay/)
+- [Lianlian Global Global Payout Fx Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-global-payout-fx-overlay/)
+- [Lianlian Global Global Payout Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-global-payout-overlay/)
+- [Lianlian Global Global Payout Tuition Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-global-payout-tuition-overlay/)
+- [Lianlian Global Llg Payments Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-llg-payments-overlay/)
+- [Lianlian Global Llp Api Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-llp-api-overlay/)
+- [Lianlian Global Lppe Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-lppe-overlay/)
+- [Lianlian Global Outbound Payout Ka Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-outbound-payout-ka-overlay/)
+- [Lianlian Global Outbound Payout Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-outbound-payout-overlay/)
+- [Lianlian Global Outbound Payout Service Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-outbound-payout-service-overlay/)
+- [Lianlian Global Outbound Payout Verification Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-outbound-payout-verification-overlay/)
+- [Lianlian Global Standard Remittance Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-standard-remittance-overlay/)
+- [Lianlian Global Triplink Overlay](https://apis.io/overlays/lianlian-global/lianlian-global-triplink-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Lianlian Global Authentication](https://apis.io/security/lianlian-global/lianlian-global-authentication/)
+- [Lianlian Global Domain Security](https://apis.io/security/lianlian-global/lianlian-global-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Lianlian Global Scopes](https://apis.io/scopes/lianlian-global/lianlian-global-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.lianlianglobal.com)
+- [Documentation](https://developer.lianlianglobal.com)
+- [Getting started](https://developer.lianlianglobal.com/docs/lppe/b6b6c2d4906e9-authentication)
+- [API reference](https://developer.lianlianglobal.com/docs/lppe/72b66de24898e-introduction)
+- [Sign up](https://account.lianlianglobal.com/signupguide)
+- [Support](https://support.us.lianlianglobal.com/hc/en-us)
+- [Blog](https://www.lianlianglobal.com/in-the-news)
+- [Terms of service](https://us.lianlianglobal.com/legal/terms)
+- [Privacy policy](https://us.lianlianglobal.com/legal/privacy-policy)
+- [GitHub](https://github.com/LLGlobal)
+
+## API Evangelist rating
+
+**Kin Score 43.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 52.6 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 85.7 |
+| Access clarity | 6.6 |
+
+**Agent readiness 44.1** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 24.1** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lianlian-global/](https://apis.io/providers/lianlian-global/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LianLian Global: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lianlian-global/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
